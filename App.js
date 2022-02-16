@@ -56,8 +56,23 @@ const LoginForm = () => {
   const [password, onChangePassword] = React.useState(null);
 
   const submitForm = () => {
-    // Submit email and password
-    console.log(`Email is ${email}`);
+    return fetch('https://urlHere.com', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      })
+    }).then((response) => {
+      if (response.ok) {
+        return json(response)
+      } else {
+        return Promise.reject('Networking Error occurred')
+      }
+    }).then((json) => {
+        console.log(json);
+    }).catch((e) => {
+      console.log(e);
+    })
   };
 
   return (
