@@ -2,6 +2,8 @@ package com.login;
 
 import com.facebook.react.ReactActivity;
 
+import android.os.Bundle;
+
 public class MainActivity extends ReactActivity {
 
   /**
@@ -12,4 +14,14 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "Login";
   }
+
+  /**
+   * Required to avoid crashes related to View state being not persisted consistently across Activity restarts.
+   * See https://reactnavigation.org/docs/getting-started/
+   */
+
+  @Override
+    protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(null);
+}
 }
