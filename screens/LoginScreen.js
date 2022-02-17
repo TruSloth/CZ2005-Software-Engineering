@@ -54,21 +54,17 @@ const LoginScreen = ({navigation}) => {
 const LoginForm = () => {
     const [email, onChangeEmail] = React.useState(null);
     const [password, onChangePassword] = React.useState(null);
-  
+
     const submitForm = () => {
-      return fetch('https://urlHere.com', {
+      return fetch('http://10.27.225.240:5000/api/members/', {
         method: 'POST',
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           email: email,
           password: password,
         })
-      }).then((response) => {
-        if (response.ok) {
-          return json(response)
-        } else {
-          return Promise.reject('Networking Error occurred')
-        }
-      }).then((json) => {
+      }).then((response) => response.json()
+      ).then((json) => {
           console.log(json);
       }).catch((e) => {
         console.log(e);
