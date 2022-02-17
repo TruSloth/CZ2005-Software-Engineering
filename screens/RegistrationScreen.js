@@ -1,6 +1,6 @@
-//import { StatusBar } from 'expo-status-bar';
+
 import React, {useState} from 'react';
-import { Image, TouchableOpacity,StyleSheet, Text, TextInput, View, SafeAreaView, Button, Alert } from 'react-native';
+import { Image, TouchableOpacity,StyleSheet, StatusBar, Text, TextInput, View, SafeAreaView, Button, Alert, useColorScheme } from 'react-native';
 import { textDecorationColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 //import { TouchableOpacity } from 'react-native-web';
 
@@ -13,8 +13,12 @@ const RegistrationScreen = () => {
     setRegister(!register);
     Alert.alert("Registration","Success!",[{text:"Continue"}]);
   }
+
+  const isDarkMode = useColorScheme() === 'dark';
+
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <Image source={{uri: "https://reactjs.org/logo-og.png"}} style={styles.image}></Image>
       <Text style={styles.textheading}>Enter Name:</Text>
       <TextInput
@@ -45,7 +49,6 @@ const RegistrationScreen = () => {
         <Text style={{color: 'white', fontSize: 15, fontWeight: 'bold'}}>Register</Text>
        </TouchableOpacity>
         
-      <StatusBar style="auto" />
     </SafeAreaView>
   );
 }
