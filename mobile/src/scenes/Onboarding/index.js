@@ -85,7 +85,7 @@ const OnboardingScreen = ({navigation}) => {
 	);
 };
 
-loadInformation = () => {
+const loadInformation = () => {
 	fetch('https://localhost:5000/api/members/1')
 		.then((response) => response.json())
 		.then((response) => console.log(response));

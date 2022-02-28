@@ -1,0 +1,82 @@
+import React from 'react';
+
+import {ScrollView, Image, View, Text, StyleSheet} from 'react-native';
+import LoginForm from '../../molecules/LoginForm';
+import AltLoginOptions from '../../molecules/AltLoginOptions';
+
+const LoginContent = ({submitForm}) => {
+	const reactNativeLogo = '../../../assets/react-native-logo.png';
+	return (
+		<ScrollView
+			style={styles.centeredContainer}
+			contentContainerStyle={{flexGrow: 1}}
+		>
+			<Image
+				source={require(reactNativeLogo)}
+				style={[
+					styles.largeLogo,
+					{
+						alignSelf: 'center',
+						backgroundColor: '#FCDDEC',
+						borderWidth: 2,
+						borderColor: '#7879F1',
+					},
+				]}
+			/>
+			<View style={{flex: 1, justifyContent: 'center'}}>
+				<Text
+					style={[
+						styles.titleText,
+						{padding: 5, alignSelf: 'center'},
+					]}
+				>
+					Welcome Back!
+				</Text>
+				<Text
+					style={[
+						styles.subtitleText,
+						{padding: 5, alignSelf: 'center'},
+					]}
+				>
+					Login to your account
+				</Text>
+			</View>
+			<LoginForm submitForm={submitForm}></LoginForm>
+			<AltLoginOptions></AltLoginOptions>
+			<View style={{flexDirection: 'row'}}>
+				<Text style={styles.subText}>Don't have an account? </Text>
+				<Text style={styles.clickableText}>Register</Text>
+			</View>
+		</ScrollView>
+	);
+};
+
+const styles = StyleSheet.create({
+	centeredContainer: {
+		alignSelf: 'center',
+		flex: 1,
+	},
+	titleText: {
+		fontSize: 30,
+		fontWeight: 'bold',
+		color: '#7879F1',
+	},
+	subtitleText: {
+		fontSize: 15,
+		color: '#A5A6F6',
+	},
+	subText: {
+		fontSize: 15,
+		color: '#7879F1',
+	},
+	largeLogo: {
+		width: 100,
+		height: 100,
+	},
+	clickableText: {
+		color: '#F178B6',
+		textDecorationLine: 'underline',
+	},
+});
+
+export default LoginContent;

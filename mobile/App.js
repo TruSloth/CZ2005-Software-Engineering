@@ -1,29 +1,18 @@
 import React from 'react';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LoginScreen, RegistrationScreen, OnboardingScreen } from './screens/index';
+import {NavigationContainer} from '@react-navigation/native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-
-
-const Stack = createNativeStackNavigator();
+import AuthNavigator from './src/navigations/auth-navigator';
 
 const App = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-        <Stack.Screen name="Registration" component={RegistrationScreen} />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ title: 'Login' }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
+	return (
+		<SafeAreaProvider>
+			<NavigationContainer>
+				<AuthNavigator></AuthNavigator>
+			</NavigationContainer>
+		</SafeAreaProvider>
+	);
 };
-
-
 
 export default App;
