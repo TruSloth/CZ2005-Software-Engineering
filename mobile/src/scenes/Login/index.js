@@ -1,17 +1,13 @@
 import React from 'react';
 import {
 	SafeAreaView,
-	ScrollView,
 	StatusBar,
-	StyleSheet,
-	Text,
-	TextInput,
 	useColorScheme,
-	View,
-	Image,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleLogIn } from '../../store/auth/actions';
 
 import LoginContent from '../../components/organisms/LoginContent';
 
@@ -21,6 +17,9 @@ const LoginScreen = ({navigation}) => {
 	const backgroundStyle = {
 		backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
 	};
+
+	const auth = useSelector(state => state.auth);
+	const dispatch = useDispatch();
 
 	const submitForm = () => {
 		// return fetch('http://10.27.225.240:5000/api/members/', {
@@ -38,7 +37,7 @@ const LoginScreen = ({navigation}) => {
 		// 	.catch((e) => {
 		// 		console.log(e);
 		// 	});
-		navigation.navigate('Home');
+		dispatch(toggleLogIn(true));
 	};
 
 	return (

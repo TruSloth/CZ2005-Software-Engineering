@@ -3,17 +3,17 @@ import {Button, StyleSheet, Text, View} from 'react-native';
 import RoundButton from '../RoundButton';
 
 const CardDescription = (props) => {
-	const {title, subtitle, subtextLine1, subtextLine2} = props
+	const {title, titleStyle, subtitle, subtitleStyle, subtextLine1, subtextLine1Style, subtextLine2, subtextLine2Style} = props
 	return (
 		<View style={styles.cardDescriptionBox}>
 			<View style={{flexDirection: 'row', justifyContent: "space-between"}}>
-				<Text>{title}</Text>
-				<Text>{subtitle}</Text>
+				<Text style={titleStyle}>{title}</Text>
+				<Text style={subtitleStyle}>{subtitle}</Text>
 			</View>
 			<View style={styles.subtextBox}>
 				<View style={styles.subtext}>
-					<Text>{subtextLine1}</Text>
-					<Text>{subtextLine2}</Text>
+					<Text style={subtextLine1Style}>{subtextLine1}</Text>
+					<Text style={subtextLine2Style}>{subtextLine2}</Text>
 				</View>
 				<RoundButton title={'Queue'} onPress={() => {console.log('button pressed')}} style={styles.queueButton}></RoundButton>
 			</View>

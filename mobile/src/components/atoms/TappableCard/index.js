@@ -22,9 +22,13 @@ const TappableCard = (props) => {
 				/>
 				<CardDescription
 					title={cardTitle}
+					titleStyle={styles.cardTitle}
 					subtitle={cardSubtitle}
+					subtitleStyle={styles.cardSubtitle}
 					subtextLine1={cardSubtextLine1}
+					subtextLine1Style={styles.cardSubtextLine1}
 					subtextLine2={cardSubtextLine2}
+					subtextLine2Style={styles.cardSubtextLine2}
 				></CardDescription>
 			</Card>
 		</TouchableOpacity>
@@ -39,7 +43,22 @@ const styles = StyleSheet.create({
 		borderWidth: 0,
 	},
 
-	tappableCardDescription: {},
+	cardTitle: {
+		fontWeight: '700',
+		color: '#7879F1',
+	},
+
+	cardSubtitle: {
+		color: '#7879F1',
+	},
+
+	cardSubtextLine1: {
+		color: '#7879F1',
+	},
+
+	cardSubtextLine2: {
+		color: '#7879F1',
+	}
 });
 
 export default TappableCard;

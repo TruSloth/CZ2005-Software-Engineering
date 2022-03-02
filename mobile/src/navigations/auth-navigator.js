@@ -6,8 +6,6 @@ import LoginScreen from '../scenes/Login';
 import RegistrationScreen from '../scenes/Registration';
 import OnboardingScreen from '../scenes/Onboarding';
 
-import HomeScreen from '../scenes/Home';
-
 /**
  * Stack navigators for the authentication set of screens
  */
@@ -29,7 +27,6 @@ const AuthNavigator = () => {
 				component={RegistrationScreen}
 			></Stack.Screen>
 			<Stack.Screen name='Login' component={LoginScreen}></Stack.Screen>
-			<Stack.Screen name='Home' component={HomeScreen}></Stack.Screen>
 		</Stack.Navigator>
 	);
 };

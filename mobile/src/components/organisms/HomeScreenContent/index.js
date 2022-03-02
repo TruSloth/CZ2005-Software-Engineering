@@ -132,6 +132,7 @@ const HomeScreenContent = () => {
 						></FlatList>
 					}
 					title={'Previously Visited'}
+					titleStyle={styles.sectionHeader}
 				></HorizontalSection>
 				<HorizontalSection
 					child={
@@ -151,6 +152,7 @@ const HomeScreenContent = () => {
 						></FlatList>
 					}
 					title={'Nearby Restaurants'}
+					titleStyle={styles.sectionHeader}
 				></HorizontalSection>
 			</ScrollView>
 		</View>
@@ -175,6 +177,12 @@ const styles = StyleSheet.create({
 		zIndex: 1,
 		height: 50,
 		justifyContent: 'center'
+	},
+
+	sectionHeader: {
+		fontWeight: '700',
+		fontSize: 16,
+		color: '#7879F1',
 	},
 
 	searchBarInput: {
