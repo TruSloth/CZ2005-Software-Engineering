@@ -31,6 +31,8 @@ async function validateLoginInput(data) {
 }
 
 router.post("/users/register", async (req, res) => {
+
+  console.log('received request with ' + req)
   // Ensure the input meets our requirements
   const { errors, isValid } = await validateLoginInput(req.body);
   if (!isValid) {

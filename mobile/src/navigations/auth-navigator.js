@@ -5,6 +5,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../scenes/Login';
 import RegistrationScreen from '../scenes/Registration';
 import OnboardingScreen from '../scenes/Onboarding';
+import TempVerifyScreen from '../scenes/TempVerify';
+import {useSelector} from 'react-redux';
 
 /**
  * Stack navigators for the authentication set of screens
@@ -13,6 +15,8 @@ import OnboardingScreen from '../scenes/Onboarding';
 const Stack = createNativeStackNavigator();
 
 const AuthNavigator = () => {
+	const auth = useSelector((state) => state.auth);
+
 	return (
 		<Stack.Navigator
 			screenOptions={{headerShown: false}}
@@ -23,9 +27,14 @@ const AuthNavigator = () => {
 				component={OnboardingScreen}
 			></Stack.Screen>
 			<Stack.Screen
+				name='Verification'
+				component={TempVerifyScreen}
+			></Stack.Screen>
+			<Stack.Screen
 				name='Registration'
 				component={RegistrationScreen}
 			></Stack.Screen>
+
 			<Stack.Screen name='Login' component={LoginScreen}></Stack.Screen>
 		</Stack.Navigator>
 	);

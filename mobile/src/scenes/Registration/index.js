@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import {CommonActions} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import {
 	Image,
 	TouchableOpacity,
@@ -6,23 +7,33 @@ import {
 	StatusBar,
 	Text,
 	TextInput,
-	View,
 	SafeAreaView,
-	Button,
-	Alert,
 	useColorScheme,
 } from 'react-native';
-import {textDecorationColor} from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
-//import { TouchableOpacity } from 'react-native-web';
 
-//import { Button } from 'react-native-web';
+import {useDispatch, useSelector} from 'react-redux';
 
-const RegistrationScreen = () => {
-	const [name, setName] = useState('');
-	const [register, setRegister] = useState(false);
+import {register} from '../../store/auth/actions';
+
+const RegistrationScreen = ({navigation}) => {
+	const dispatch = useDispatch();
+
+	const auth = useSelector((state) => state.auth);
+
+	const [registrationDetails, setRegistrationDetails] = useState({
+		userName: '',
+		email: '',
+		password: '',
+	});
+
 	const onPressHandler = () => {
-		setRegister(!register);
-		Alert.alert('Registration', 'Success!', [{text: 'Continue'}]);
+		dispatch(register(registrationDetails));
+
+		setTimeout(() => {
+			navigation.navigate('Verification')
+		}, 10000)
+
+		
 	};
 
 	const isDarkMode = useColorScheme() === 'dark';
@@ -42,6 +53,13 @@ const RegistrationScreen = () => {
 				keyboardType='default'
 				style={styles.input}
 				placeholder='e.g. John Tan'
+				onChangeText={(text) =>
+					setRegistrationDetails({
+						...registrationDetails,
+						userName: text,
+					})
+				}
+				value={registrationDetails['userName']}
 			/>
 
 			<Text style={styles.textheading}>Enter email:</Text>
@@ -49,6 +67,13 @@ const RegistrationScreen = () => {
 				keyboardType='email-address'
 				style={styles.input}
 				placeholder='e.g. abc@mail.com'
+				onChangeText={(text) =>
+					setRegistrationDetails({
+						...registrationDetails,
+						email: text,
+					})
+				}
+				value={registrationDetails['email']}
 			/>
 
 			<Text style={styles.textheading}>Enter password:</Text>
@@ -56,6 +81,13 @@ const RegistrationScreen = () => {
 				secureTextEntry={true}
 				style={styles.input}
 				placeholder='e.g !jdiU%h*j'
+				onChangeText={(text) =>
+					setRegistrationDetails({
+						...registrationDetails,
+						password: text,
+					})
+				}
+				value={registrationDetails['password']}
 			/>
 
 			<TouchableOpacity style={styles.button} onPress={onPressHandler}>
