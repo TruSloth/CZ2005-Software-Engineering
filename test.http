@@ -12,7 +12,7 @@ Content-Type: application/json
 # Content-Type: application/json
 
 # {
-#     "userName":"NGTZ",
+#     "email":"NGTZ@gmail.com",
 #     "password": "NGTZ"
 # }
 
