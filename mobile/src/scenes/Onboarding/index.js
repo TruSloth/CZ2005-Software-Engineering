@@ -1,161 +1,142 @@
-import React from 'react';
+import React, {useState, useRef} from 'react';
+
 import {
-	Button,
-	Alert,
 	StyleSheet,
-	View,
-	Image,
-	ScrollView,
-	Animated,
 	Text,
-	Dimensions,
+	View,
+	FlatList,
+	Animated,
+	TouchableOpacity,
 } from 'react-native';
 
-const {width} = Dimensions.get('window');
+import Paginator from '../../components/atoms/Paginator';
+import OnboardingItem from '../../components/atoms/OnboardingItem';
+
 const OnboardingScreen = ({navigation}) => {
+	const [currentIndex, setCurrentIndex] = useState(0);
+
+	const scrollX = useRef(new Animated.Value(0)).current;
+	const slidesRef = useRef(null);
+
+	const viewableItemsChanged = useRef(({viewableItems}) => {
+		setCurrentIndex(viewableItems[0].index);
+	}).current;
+
+	const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current; //need be at least 50% before screen change
+
+	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
+
+	const data = [
+		{
+			id: '1',
+			title: 'Yae Miko',
+			description:
+				'Some ambitions have the power to heal wounds, to bring victory, to inspire hope. But some ambitions, outlive their masters, long after their soul ascends.',
+			imageSource: {
+				uri: reactNativeLogo,
+			},
+		},
+
+		{
+			id: '2',
+			title: 'Raiden Shogun',
+			description:
+				'All the world holds dear is but a backdrop of constant motion. I stand before it alone and unchanging.',
+			imageSource: {
+				uri: reactNativeLogo,
+			},
+		},
+
+		{
+			id: '3',
+			title: 'Sangonomiya Kokomi',
+			description:
+				'The moon shines bright over the depths of the seas as the tides come and go. It seems that as I go from strength to strength, so does my state of mind flow.',
+			imageSource: {
+				uri: reactNativeLogo,
+			},
+		},
+	];
+
 	return (
-		<>
-			<View style={styles.container}>
-				<Image
-					source={{
-						uri: 'https://progameguides.com/wp-content/uploads/2022/01/Genshin-Impact-Character-Yae-Miko.jpg',
-					}}
-					style={{width: 320, height: 320}}
+		<View style={styles.container}>
+			<View style={{flex: 3}}>
+				<FlatList
+					data={data}
+					renderItem={({item}) => <OnboardingItem item={item} />}
+					horizontal
+					showsHorizontalScrollIndicator={false}
+					pagingEnabled
+					bounces={false}
+					keyExtractor={(item) => item.id}
+					onScroll={Animated.event(
+						[{nativeEvent: {contentOffset: {x: scrollX}}}],
+						{
+							useNativeDriver: false,
+						}
+					)}
+					scrollEventThrottle={32}
+					onViewableItemsChanged={viewableItemsChanged}
+					viewabilityConfig={viewConfig}
+					ref={slidesRef}
 				/>
 			</View>
 
-			<View style={styles.box}>
-				<Text style={styles.title}>Yae Miko </Text>
-				<ScrollView
-					style={styles.box}
-					pagingEnabled={true}
-					horizontal
-					showsHorizontalScrollIndicator={false}
-					decelerationRate={0}
+			<View style={{flex: 0.3}}>
+				<Paginator data={data} scrollX={scrollX} />
+			</View>
+
+			<View style={{flexDirection: 'row'}}>
+				<TouchableOpacity
+					style={[styles.btn]}
+					onPress={() => navigation.navigate('Registration')}
 				>
-					<View style={styles.view}>
-						<Text style={styles.text}>
-							This is when I first fell in love with her. Because
-							of how delicate her clothing looked I was certain
-							she was a catalyst character and I’m glad to be
-							right. I also believed she would be electro because
-							of the color of eyes and jewelry. Also glad to be
-							right on that one. So she was fulfilling exactly
-							what I wanted from her
-						</Text>
-					</View>
-					<View style={styles.view}>
-						<Text style={styles.text}>
-							I was adamant I wanted her but pulled for Raiden
-							after hearing leak rumors she would be pushed back
-							until 2022. But I’m actually blown away by how in
-							love I am with Raiden and currently have a team
-							composition that does not want to electro units
-							although I’m certain they will synergize well
-							together.
-						</Text>
-					</View>
-					<View style={styles.view}>
-						<Text style={styles.text}>
-							I’m like holding my breath for her kit to be leaked
-							so I can finally answer the question which one of
-							them will be my forever electro queen
-						</Text>
-					</View>
-				</ScrollView>
+					<Text
+						style={{
+							fontWeight: 'bold',
+							fontSize: 15,
+							color: '#493d8a',
+						}}
+					>
+						Register
+					</Text>
+				</TouchableOpacity>
+				<View style={{width: 15}} />
+				<TouchableOpacity
+					style={[styles.btn]}
+					onPress={() => navigation.navigate('Login')}
+				>
+					<Text
+						style={{
+							fontWeight: 'bold',
+							fontSize: 15,
+							color: '#493d8a',
+						}}
+					>
+						Login
+					</Text>
+				</TouchableOpacity>
 			</View>
-			<View style={styles.buttonbox}>
-				<View style={styles.button1}>
-					<Button
-						title='Login'
-						color='#7879F1'
-						onPress={() => navigation.navigate('Login')}
-					/>
-				</View>
-
-				<View style={styles.button1}>
-					<Button
-						title='Register'
-						color='#7879F1'
-						onPress={() => navigation.navigate('Registration')}
-					/>
-				</View>
-			</View>
-		</>
+		</View>
 	);
-};
-
-const loadInformation = () => {
-	fetch('https://localhost:5000/api/members/1')
-		.then((response) => response.json())
-		.then((response) => console.log(response));
 };
 
 const styles = StyleSheet.create({
 	container: {
-		marginTop: 25,
-		backgroundColor: '#FBE4FF',
-		flex: 5,
-		alignItems: 'center', // ignore this - we'll come back to it
-		justifyContent: 'center', // ignore this - we'll come back to it
-		flexDirection: 'column',
-	},
-	box: {
-		flex: 2.5,
-		backgroundColor: '#FBE4FF',
-	},
-	buttonbox: {
-		flex: 2,
-		flexDirection: 'row',
-		backgroundColor: '#FBE4FF',
-	},
-
-	button1: {
-		flex: 1,
-	},
-
-	dotbox: {
-		flex: 0.5,
-	},
-	text: {
-		// ignore this - we'll come back to it
-		fontSize: 15,
-		fontWeight: '300',
-		textAlign: 'center',
-		marginTop: 20,
-		color: '#7879F1',
-	},
-	title: {
-		fontSize: 25,
-		fontWeight: '500',
-		textAlign: 'center',
-		color: '#7879F1',
-	},
-	scrollView: {
-		backgroundColor: 'FBE4FF',
-	},
-	view: {
-		marginLeft: 25,
-		marginRight: 25,
-		width: width - 50,
-		height: 190,
+		flex: 0.65,
+		backgroundColor: '#fff',
 		alignItems: 'center',
+		justifyContent: 'center',
 	},
-	wrapDot: {
-		flex: 1,
-		position: 'absolute',
-		bottom: 0,
-		flexDirection: 'row',
-		alignSelf: 'center',
-		color: 'black',
-	},
-	dotActive: {
-		margin: 3,
-		color: 'black',
-	},
-	dot: {
-		margin: 3,
-		color: 'white',
+	btn: {
+		borderWidth: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: 35,
+		width: 120,
+		borderRadius: 7,
+		backgroundColor: '#fff',
+		borderColor: '#493d8a',
 	},
 });
 

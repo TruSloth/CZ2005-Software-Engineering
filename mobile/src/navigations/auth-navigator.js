@@ -4,7 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import LoginScreen from '../scenes/Login';
 import RegistrationScreen from '../scenes/Registration';
-import OnboardingScreen from '../scenes/Onboarding';
+import OnboardingScreen from '../scenes/Onboarding/';
 import TempVerifyScreen from '../scenes/TempVerify';
 import {useSelector} from 'react-redux';
 
