@@ -18,3 +18,4 @@ app.use("/", register);
 app.use("/", login);
 
 app.listen(4000, () => console.log("Server is up"));
+

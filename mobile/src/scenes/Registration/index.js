@@ -1,5 +1,4 @@
-import {CommonActions} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
 	Image,
 	TouchableOpacity,
@@ -10,6 +9,8 @@ import {
 	SafeAreaView,
 	useColorScheme,
 } from 'react-native';
+
+import TempVerifyScreen from '../TempVerify';
 
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -29,16 +30,26 @@ const RegistrationScreen = ({navigation}) => {
 	const onPressHandler = () => {
 		dispatch(register(registrationDetails));
 
-		setTimeout(() => {
-			navigation.navigate('Verification')
-		}, 10000)
-
-		
+		if (auth.loading === false) {
+			if (auth.success === true) {
+				navigation.navigate('Verification');
+			} else {
+				console.log('registration error');
+				setRegistrationDetails({
+					userName: '',
+					email: '',
+					password: '',
+				});
+				console.log(auth);
+			}
+		}
 	};
 
 	const isDarkMode = useColorScheme() === 'dark';
 
-	return (
+	return auth.success ? (
+		<TempVerifyScreen></TempVerifyScreen>
+	) : (
 		<SafeAreaView style={styles.container}>
 			<StatusBar
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}

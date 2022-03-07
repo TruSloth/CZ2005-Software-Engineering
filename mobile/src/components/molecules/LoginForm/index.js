@@ -24,7 +24,7 @@ const LoginForm = ({submitForm}) => {
 			<Text style={[styles.clickableText, {alignSelf: 'flex-end'}]}>
 				Forgot Password?
 			</Text>
-			<RoundButton title='Login' onPress={submitForm}></RoundButton>
+			<RoundButton title='Login' onPress={() => {submitForm(email, password)}}></RoundButton>
 		</View>
 	);
 };
