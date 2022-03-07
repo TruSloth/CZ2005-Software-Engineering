@@ -15,6 +15,8 @@ import TappableCard from '../../atoms/TappableCard';
 import HorizontalSection from '../../atoms/HorizontalSection';
 import TopBanner from '../../molecules/TopBanner';
 import CategoryFilter from '../../atoms/CategoryFilter';
+import AppBottomSheet from '../../molecules/AppBottomSheet';
+import StoreInfoContent from '../../molecules/StoreInfoContent';
 
 const HomeScreenContent = () => {
 		const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
@@ -60,6 +62,12 @@ const HomeScreenContent = () => {
 			subtextLine1: '10 in Queue',
 		},
 	]);
+
+	const sheetRef = useRef(null);
+
+	const openStoreInfo = () => {
+		sheetRef.current.snapTo(0);
+	}
 
 	const [search, setSearch] = useState('');
 
@@ -126,6 +134,7 @@ const HomeScreenContent = () => {
 										cardSubtitle={item.subtitle}
 										cardSubtextLine1={item.subtextLine1}
 										cardSubtextLine2={item.subtextLine2}
+										onPress={openStoreInfo}
 									></TappableCard>
 								);
 							}}
@@ -155,6 +164,7 @@ const HomeScreenContent = () => {
 					titleStyle={styles.sectionHeader}
 				></HorizontalSection>
 			</ScrollView>
+			<AppBottomSheet ref={sheetRef} renderContent={StoreInfoContent}></AppBottomSheet>
 		</View>
 	);
 };
