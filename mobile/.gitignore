@@ -60,6 +60,6 @@ buck-out/
 /ios/Pods/
 
 # Services
-/services/config.js
+/src/services/config.js
 
 
