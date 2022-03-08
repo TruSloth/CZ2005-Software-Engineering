@@ -19,7 +19,7 @@ const AppWrapper = () => {
 			<GestureHandlerRootView style={{flex: 1}}>
 			<NavigationContainer>
 				{auth.isLoggedIn ? (
-					<AppNavigator></AppNavigator>
+					<AppNavigator></AppNavigator>					
 				) : (
 					<AuthNavigator></AuthNavigator>
 				)}

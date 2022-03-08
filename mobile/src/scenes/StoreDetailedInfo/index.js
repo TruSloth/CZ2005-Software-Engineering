@@ -18,7 +18,7 @@ const images = [
   "https://reactjs.org/logo-og.png",
   "https://www.pngkey.com/png/detail/21-219723_hamburger-png-picture-burger-png-cartoon.png",
 ];
-const MoreInfoScreen = () => {
+const StoreDetailedInfoScreen = () => {
   const [queue, setQueue] = useState(false);
   const onPressHandler = () => {
     setQueue(!queue);
@@ -147,4 +147,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MoreInfoScreen;
+export default StoreDetailedInfoScreen;

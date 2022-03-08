@@ -1,8 +1,10 @@
-import React from "react";
-import { View, Image, TouchableOpacity, Text, StyleSheet } from "react-native";
+import React from 'react';
+import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
 
-const StoreInfoContent = () => {
-    const reactNativeLogo = 'https://reactjs.org/logo-og.png';
+const StoreInfoContent = (props) => {
+	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
+
+  const {moreInfoOnPress} = props
 
 	return (
 		<View
@@ -39,7 +41,7 @@ const StoreInfoContent = () => {
 					<TouchableOpacity style={styles.button}>
 						<Text styles={styles.buttonText}>Chat</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.button}>
+					<TouchableOpacity style={styles.button} onPress={moreInfoOnPress}>
 						<Text styles={styles.buttonText}>More Info</Text>
 					</TouchableOpacity>
 				</View>
@@ -49,69 +51,69 @@ const StoreInfoContent = () => {
 };
 
 const styles = StyleSheet.create({
-    heading: {
-        fontSize: 20,
-        textAlign: "left",
-        justifyContent: "flex-start",
-        marginTop: 20,
-        marginBottom: 5,
-        fontWeight: "bold",
-        color: "#7879F1",
-      },
-      subheading: {
-        fontSize: 15,
-        textAlign: "left",
-        justifyContent: "flex-start",
-        color: "#7879F1",
-        marginBottom: 10,
-        fontWeight: "bold",
-      },
-      waitTime: {
-        fontSize: 20,
-        textAlign: "right",
-        // justifyContent: "flex-end",
-        alignSelf: "flex-end",
-        marginTop: 20,
-        marginBottom: 5,
-        marginLeft: "44%",
-        fontWeight: "bold",
-        color: "black",
-      },
-      rating: {
-        fontSize: 15,
-        textAlign: "right",
-        justifyContent: "flex-end",
-        color: "#7879F1",
-        marginBottom: 10,
-        marginLeft: "53%",
-        fontWeight: "bold",
-      },
-    texts: {
-        color: "#7879F1",
-        width: "70%",
-      },
-      button: {
-        borderRadius: 50,
-        borderWidth: 1,
-        padding: 8,
-        // paddingBottom: ,
-        margin: "5%",
-        borderColor: "#7879F1",
-        alignItems: "center",
-        width: "85%",
-        height: "15%",
-        alignContent: "flex-end",
-      },
-      buttonText: {
-        fontWeight: "bold",
-        color: "#7879F1",
-      },
-      images: {
-        width: "100%",
-        height: "40%",
-        marginTop: 5,
-        borderRadius: 10,
-      },
-})
+	heading: {
+		fontSize: 20,
+		textAlign: 'left',
+		justifyContent: 'flex-start',
+		marginTop: 20,
+		marginBottom: 5,
+		fontWeight: 'bold',
+		color: '#7879F1',
+	},
+	subheading: {
+		fontSize: 15,
+		textAlign: 'left',
+		justifyContent: 'flex-start',
+		color: '#7879F1',
+		marginBottom: 10,
+		fontWeight: 'bold',
+	},
+	waitTime: {
+		fontSize: 20,
+		textAlign: 'right',
+		// justifyContent: "flex-end",
+		alignSelf: 'flex-end',
+		marginTop: 20,
+		marginBottom: 5,
+		marginLeft: '44%',
+		fontWeight: 'bold',
+		color: 'black',
+	},
+	rating: {
+		fontSize: 15,
+		textAlign: 'right',
+		justifyContent: 'flex-end',
+		color: '#7879F1',
+		marginBottom: 10,
+		marginLeft: '53%',
+		fontWeight: 'bold',
+	},
+	texts: {
+		color: '#7879F1',
+		width: '70%',
+	},
+	button: {
+		borderRadius: 50,
+		borderWidth: 1,
+		padding: 8,
+		// paddingBottom: ,
+		margin: '5%',
+		borderColor: '#7879F1',
+		alignItems: 'center',
+		width: '85%',
+		height: '15%',
+		alignContent: 'flex-end',
+	},
+	buttonText: {
+		fontWeight: 'bold',
+		color: '#7879F1',
+	},
+	images: {
+		width: '100%',
+		height: '40%',
+		marginTop: 5,
+		borderRadius: 10,
+	},
+});
 
 export default StoreInfoContent;

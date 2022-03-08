@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TouchableOpacity, Text } from 'react-native';
 
-import HomeScreen from '../scenes/Home';
+import HomeNavigator from './home-navigator';
 import { Icon } from 'react-native-elements';
 import AccountNavigator from './account-navigator';
 
@@ -46,10 +46,12 @@ const AppNavigator = () => {
             tabBarItemStyle: {borderTopColor: '#7879F1'},
             lazy: false
         })}>
-            <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}}></Tab.Screen>
-            <Tab.Screen name="Chat" component={HomeScreen} ></Tab.Screen>
-            <Tab.Screen name="Notifications" component={HomeScreen} ></Tab.Screen>
-            <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
+            <Tab.Group>
+                <Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}></Tab.Screen>
+                <Tab.Screen name="Chat" component={HomeNavigator} ></Tab.Screen>
+                <Tab.Screen name="Notifications" component={HomeNavigator} ></Tab.Screen>
+                <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
+            </Tab.Group>          
         </Tab.Navigator>
     )
 }

@@ -3,12 +3,9 @@ import React, {useRef, useState} from 'react';
 import {
 	FlatList,
 	View,
-	Text,
 	StyleSheet,
 	Platform,
-	Image,
 	ScrollView,
-	ImageSourcePropType,
 } from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import TappableCard from '../../atoms/TappableCard';
@@ -18,7 +15,7 @@ import CategoryFilter from '../../atoms/CategoryFilter';
 import AppBottomSheet from '../../molecules/AppBottomSheet';
 import StoreInfoContent from '../../molecules/StoreInfoContent';
 
-const HomeScreenContent = () => {
+const HomeScreenContent = ({navigation}) => {
 		const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
 		{
 			title: 'Location 1',
@@ -67,6 +64,10 @@ const HomeScreenContent = () => {
 
 	const openStoreInfo = () => {
 		sheetRef.current.snapTo(0);
+	}
+
+	const moreInfoOnPress = () => {
+		navigation.navigate('StoreDetailedInfo')
 	}
 
 	const [search, setSearch] = useState('');
@@ -164,7 +165,7 @@ const HomeScreenContent = () => {
 					titleStyle={styles.sectionHeader}
 				></HorizontalSection>
 			</ScrollView>
-			<AppBottomSheet ref={sheetRef} renderContent={StoreInfoContent}></AppBottomSheet>
+			<AppBottomSheet ref={sheetRef} renderContent={StoreInfoContent} moreInfoOnPress={moreInfoOnPress}></AppBottomSheet>
 		</View>
 	);
 };

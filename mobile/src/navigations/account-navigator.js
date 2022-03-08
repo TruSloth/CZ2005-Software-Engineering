@@ -6,7 +6,7 @@ import AccountScreen from '../scenes/Account';
 import HistoryScreen from '../scenes/History';
 
 /**
- * Stack navigators for the authentication set of screens
+ * Stack navigators for the account set of screens
  */
 
 const Stack = createNativeStackNavigator();

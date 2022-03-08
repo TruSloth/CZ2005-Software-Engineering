@@ -8,7 +8,7 @@ const HomeScreen = ({navigation}) => {
 	return (
 		<SafeAreaView style={{flex: 1}}>
 			<StatusBar />
-			<HomeScreenContent></HomeScreenContent>
+			<HomeScreenContent navigation={navigation}></HomeScreenContent>
 		</SafeAreaView>
 	);
 };

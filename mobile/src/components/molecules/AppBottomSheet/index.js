@@ -20,7 +20,7 @@ const AppBottomSheet = forwardRef((props, ref) => {
         snapPoints={[450, 300, 0]}
         initialSnap={2}
         borderRadius={40}
-        renderContent={renderContent}
+        renderContent={() => renderContent(props)}
         enabledGestureInteraction={true}
         enabledContentGestureInteraction={true}
       />
