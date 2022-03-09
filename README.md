@@ -18,7 +18,7 @@ Terminal 2: Navigate to `PATH/TO/PROJECT/ROOT/mobile/` and run `npx react-native
 
 ### Terminal 3 (Express)
 
-Terminal 3: Navigate to `PATH/TO/PROJECT/ROOT/mobile/` and run `npm run start`
+Terminal 3: Navigate to `PATH/TO/PROJECT/ROOT/Backend/` and run `npm run start`
 
 ## Project Structure
 
