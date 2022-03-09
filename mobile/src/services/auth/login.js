@@ -10,3 +10,4 @@ export const login = async (loginDetails) => {
 		password: loginDetails.password,
 	});
 };
+
