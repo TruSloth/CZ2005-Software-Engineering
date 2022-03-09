@@ -24,7 +24,10 @@ The current file tree is listed here. Android & ios files and folders have been 
 
 ```
 |-- Root
+    |-- .gitignore
     |-- README.md
+    |-- .vscode
+    |   |-- settings.json
     |-- Backend
     |   |-- .env
     |   |-- .gitignore
@@ -127,6 +130,10 @@ The current file tree is listed here. Android & ios files and folders have been 
         |   |       |-- index.js
         |   |-- services
         |   |   |-- config.js
+        |   |   |-- auth
+        |   |       |-- login.js
+        |   |       |-- register.js
+        |   |       |-- verify.js
         |   |-- store
         |       |-- index.js
         |       |-- auth
@@ -135,4 +142,5 @@ The current file tree is listed here. Android & ios files and folders have been 
         |           |-- reducers.js
         |-- __tests__
             |-- App-test.js
+
 ```

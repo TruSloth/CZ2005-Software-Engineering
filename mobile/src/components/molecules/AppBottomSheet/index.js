@@ -1,12 +1,7 @@
 //import "react-native-gesture-handler";
 import React, { forwardRef } from "react";
 import {
-  Button,
   StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
 } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
 

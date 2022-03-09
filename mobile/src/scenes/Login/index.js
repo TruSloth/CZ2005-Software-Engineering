@@ -1,15 +1,13 @@
 import React from 'react';
-import {
-	SafeAreaView,
-	StatusBar,
-	useColorScheme,
-} from 'react-native';
+import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import { useDispatch, useSelector } from 'react-redux';
-import { login} from '../../store/auth/actions';
+import {useDispatch} from 'react-redux';
+import {toggleLogIn} from '../../store/auth/actions';
 
 import LoginContent from '../../components/organisms/LoginContent';
+import {login} from '../../services/auth/login';
+import {useMutation} from 'react-query';
 
 const LoginScreen = ({navigation}) => {
 	const isDarkMode = useColorScheme() === 'dark';
@@ -18,12 +16,16 @@ const LoginScreen = ({navigation}) => {
 		backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
 	};
 
-	const auth = useSelector(state => state.auth);
 	const dispatch = useDispatch();
 
-	const submitForm = (email, password) => {
-		dispatch(login({email: email, password: password}))
+	const loginMutation = useMutation(login);
 
+	const submitForm = (email, password) => {
+		loginMutation.mutate({email: email, password: password});
+
+		if (loginMutation.isSuccess) {
+			dispatch(toggleLogIn(true));
+		}
 	};
 
 	return (

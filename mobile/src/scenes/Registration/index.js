@@ -10,16 +10,11 @@ import {
 	useColorScheme,
 } from 'react-native';
 
-import TempVerifyScreen from '../TempVerify';
-
-import {useDispatch, useSelector} from 'react-redux';
-
-import {register} from '../../store/auth/actions';
+import {register} from '../../services/auth/register';
+import {useMutation} from 'react-query';
 
 const RegistrationScreen = ({navigation}) => {
-	const dispatch = useDispatch();
-
-	const auth = useSelector((state) => state.auth);
+	const registerMutation = useMutation(register);
 
 	const [registrationDetails, setRegistrationDetails] = useState({
 		userName: '',
@@ -27,29 +22,33 @@ const RegistrationScreen = ({navigation}) => {
 		password: '',
 	});
 
-	const onPressHandler = () => {
-		dispatch(register(registrationDetails));
+	const onPressHandler = async () => {
+		try {
+			const response = await registerMutation.mutateAsync(
+				registrationDetails
+			);
 
-		if (auth.loading === false) {
-			if (auth.success === true) {
-				navigation.navigate('Verification');
+			if (response.status == 200) {
+				const tempUserName = response.data.userName;
+
+				navigation.navigate('Verification', {
+					tempUserName: tempUserName,
+				});
 			} else {
-				console.log('registration error');
 				setRegistrationDetails({
 					userName: '',
 					email: '',
 					password: '',
 				});
-				console.log(auth);
 			}
+		} catch (e) {
+			console.log(e);
 		}
 	};
 
 	const isDarkMode = useColorScheme() === 'dark';
 
-	return auth.success ? (
-		<TempVerifyScreen></TempVerifyScreen>
-	) : (
+	return (
 		<SafeAreaView style={styles.container}>
 			<StatusBar
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}

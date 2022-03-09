@@ -10,20 +10,35 @@ import {
 	useColorScheme,
 } from 'react-native';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 
-import { verify } from '../../store/auth/actions';
+import { useMutation } from 'react-query';
+
+import { verify } from '../../services/auth/verify'
+import { toggleLogIn } from '../../store/auth/actions';
 
 
-const TempVerifyScreen = () => {
+const TempVerifyScreen = ({route}) => {
+	const {tempUserName} = route.params
+
 	const dispatch = useDispatch();
 
-	const auth = useSelector(state => state.auth)
+	const verifyMutation = useMutation(verify)
 
 	const [authid, setAuthid] = useState('');
 
-	const onPressHandler = () => {
-		dispatch(verify(authid))
+	const onPressHandler = async () => {
+		try {
+			const response = await verifyMutation.mutateAsync({tempUserName: tempUserName, verificationCode: authid})
+
+			if (response.status === 200) {
+				dispatch(toggleLogIn(true))
+			} else {
+				console.log('Verification code invalid')
+			}
+		} catch (e) {
+			console.log(e)
+		}
 	};
 
 	const isDarkMode = useColorScheme() === 'dark';

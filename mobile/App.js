@@ -7,9 +7,12 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 import store from './src/store';
 import {Provider, useSelector} from 'react-redux';
+import { QueryClientProvider, QueryClient} from 'react-query';
 
 import AuthNavigator from './src/navigations/auth-navigator';
 import AppNavigator from './src/navigations/app-navigator';
+
+const queryClient = new QueryClient();
 
 const AppWrapper = () => {
 	const auth = useSelector((state) => state.auth);
@@ -31,10 +34,12 @@ const AppWrapper = () => {
 
 const App = () => {
 	return (
-		
-			<Provider store={store}>
-				<AppWrapper></AppWrapper>
-			</Provider>
+			<QueryClientProvider client={queryClient}>
+				<Provider store={store}>
+					<AppWrapper></AppWrapper>
+				</Provider>
+			</QueryClientProvider>
+			
 	);
 };
 
