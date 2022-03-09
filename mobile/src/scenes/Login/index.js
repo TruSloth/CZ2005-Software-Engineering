@@ -20,12 +20,17 @@ const LoginScreen = ({navigation}) => {
 
 	const loginMutation = useMutation(login);
 
-	const submitForm = (email, password) => {
-		loginMutation.mutate({email: email, password: password});
+	const submitForm = async (email, password) => {
+		try {
+			const response = await loginMutation.mutateAsync({email: email, password: password});
 
-		if (loginMutation.isSuccess) {
-			dispatch(toggleLogIn(true));
+			if (response.status === 200) {
+				dispatch(toggleLogIn(true));
+			}
+		} catch (e) {
+			console.log(e)
 		}
+	
 	};
 
 	return (

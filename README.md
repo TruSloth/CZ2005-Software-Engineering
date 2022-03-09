@@ -1,6 +1,6 @@
 # For Development
 
-Remember to ensure that all dependencies are installed by running `npm install` in **both** `PATH/TO/PROJECT/ROOT/mobile/` and `PATH/TO/PROJECT/ROOT/mobile/` _(You have to do them seperately)_
+Remember to ensure that all dependencies are installed by running `npm install` in **both** `PATH/TO/PROJECT/ROOT/mobile/` and `PATH/TO/PROJECT/ROOT/Backend/` _(You have to do them seperately)_
 
 Additionally, a file called `config.js` must be created in `PATH/TO/PROJECT/ROOT/mobile/services/` with the line `export const LOCALHOST = 'YOUR_IPV4_ADDRESS'`. The value `YOUR_IPV4_ADDRESS` can be found by running `ipconfig` in your terminal.
 
