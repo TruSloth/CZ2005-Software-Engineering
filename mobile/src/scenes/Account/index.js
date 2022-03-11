@@ -1,11 +1,18 @@
+
 import React from "react";
 
 import { Button } from "react-native-elements";
+import {SafeAreaView, StatusBar} from 'react-native';
+
+import AccountScreenContent from "../../components/organisms/AccountScreenContent";
 
 const AccountScreen = ({navigation}) => {
     return (
-        <Button title={"History"} onPress={() => navigation.navigate('History')}></Button>
-    )
+		<SafeAreaView style={{flex: 1}}>
+			<StatusBar />
+			<AccountScreenContent></AccountScreenContent>
+		</SafeAreaView>
+	);
 }
 
 export default AccountScreen;

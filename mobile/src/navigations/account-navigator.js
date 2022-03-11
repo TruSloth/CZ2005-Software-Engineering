@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import AccountScreen from '../scenes/Account';
 import HistoryScreen from '../scenes/History';
+import {StyleSheet} from 'react-native';
 
 /**
  * Stack navigators for the account set of screens
@@ -24,15 +25,19 @@ const AccountNavigator = () => {
 			<Stack.Screen
 				name='History'
 				component={HistoryScreen}
-				options={{
-					headerTitleAlign: 'center',
-                    headerTintColor: '#EF5DA8',
-					headerTitleStyle: {color: '#7879F1'},
-                    headerShadowVisible: false
-				}}
+				options={styles.historyScreenOptions}
 			></Stack.Screen>
 		</Stack.Navigator>
 	);
 };
+
+const styles = StyleSheet.create({
+	historyScreenOptions: {
+		headerTitleAlign: 'center',
+		headerTintColor: '#EF5DA8',
+		headerTitleStyle: {color: '#7879F1'},
+		headerShadowVisible: false,
+	},
+});
 
 export default AccountNavigator;

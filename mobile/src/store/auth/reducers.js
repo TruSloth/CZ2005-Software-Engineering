@@ -11,7 +11,7 @@ const authReducer = (state = initialState, action) => {
 		case TOGGLE_LOGGED_IN:
 			return {
 				...state,
-				isLoggedIn: true,
+				isLoggedIn: action.payload,
 			}
 
 		default:

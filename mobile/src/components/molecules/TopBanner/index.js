@@ -3,12 +3,24 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
 
 const TopBanner = (props) => {
-	const {title, subtitle, avatarImage, onLayout, style} = props;
+	const {
+		title,
+		subtitle,
+		avatarImage,
+		onLayout,
+		settingsOnPress,
+		style,
+		bannerContentContainerStyle,
+		titleStyle,
+		subtitleStyle,
+		leftAvatar,
+		actionBar,
+	} = props;
 
 	return (
 		<View style={style} onLayout={onLayout}>
-			<View style={styles.actionBar}>
-				<TouchableOpacity>
+			{actionBar ? <View style={styles.actionBar}>
+				<TouchableOpacity onPress={settingsOnPress}>
 					<Icon
 						name={'settings'}
 						tvParallaxProperties={undefined}
@@ -35,20 +47,36 @@ const TopBanner = (props) => {
 						></Icon>
 					</TouchableOpacity>
 				</View>
-			</View>
+			</View> : <></>}
+			
 			<View
-				style={[styles.rowContainer, {justifyContent: 'space-between'}]}
+				style={[styles.rowContainer, bannerContentContainerStyle]}
 			>
+				{leftAvatar ? (
+					<Avatar
+						size={64}
+						rounded
+						source={{uri: avatarImage}}
+						imageProps={styles.avatarImage}
+					></Avatar>
+				) : (
+					<></>
+				)}
 				<View>
-					<Text style={styles.titleTextBox}>{title}</Text>
-					<Text style={styles.subtitleTextBox}>{subtitle}</Text>
+					<Text style={[styles.titleTextBox, titleStyle]}>{title}</Text>
+					<Text style={[styles.subtitleTextBox, subtitleStyle]}>{subtitle}</Text>
 				</View>
-				<Avatar
-					size={64}
-					rounded
-                    source={{uri: avatarImage}}
-					imageProps={styles.avatarImage}
-				></Avatar>
+
+				{leftAvatar ? (
+					<></>
+				) : (
+					<Avatar
+						size={64}
+						rounded
+						source={{uri: avatarImage}}
+						imageProps={styles.avatarImage}
+					></Avatar>
+				)}
 			</View>
 		</View>
 	);
@@ -69,10 +97,22 @@ const styles = StyleSheet.create({
 		fontSize: 32,
 	},
 
+	titleTextBoxTight: {
+		marginVertical: 5,
+		color: '#7879F1',
+		fontSize: 32,
+	},
+
 	subtitleTextBox: {
 		marginVertical: 10,
 		color: '#7879F1',
 	},
+
+	subtitleTextBoxTight: {
+		marginVertical: 5,
+		color: '#7879F1',
+	},
+
 
 	actionBar: {
 		flexDirection: 'row',
@@ -84,6 +124,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		paddingHorizontal: 20,
+		justifyContent: 'space-between'
 	},
 
 	avatarImage: {

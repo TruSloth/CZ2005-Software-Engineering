@@ -89,6 +89,10 @@ const HomeScreenContent = ({navigation}) => {
 		}
 	};
 
+	const settingsOnPress = () => {
+		navigation.navigate('AppSettings');
+	}
+
 	const [search, setSearch] = useState('');
 
 	const [bannerHeight, setBannerHeight] = useState(0);
@@ -106,6 +110,8 @@ const HomeScreenContent = ({navigation}) => {
 					title={'Hi, John!'}
 					subtitle={'Where are you going to queue next?'}
 					avatarImage={reactNativeLogo}
+					settingsOnPress={settingsOnPress}
+					actionBar={true}
 					style={styles.homeBanner}
 					onLayout={(e) => {
 						e.persist();
