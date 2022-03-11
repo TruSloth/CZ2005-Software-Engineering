@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
-  BackHandler,
 } from "react-native";
-//import {useFonts, Montserrat} from '@expo-google-fonts/montserrat';
-//import { AppLoading} from 'expo-app-loading';
+
+import AppBottomSheet from "../../components/molecules/AppBottomSheet";
+import QueueSheetContent from "../../components/molecules/QueueSheetContent";
+
 const { width } = Dimensions.get("window");
 const height = (width * 100) / 90;
 
@@ -19,14 +20,27 @@ const images = [
   "https://www.pngkey.com/png/detail/21-219723_hamburger-png-picture-burger-png-cartoon.png",
 ];
 const StoreDetailedInfoScreen = () => {
-  const [queue, setQueue] = useState(false);
-  const onPressHandler = () => {
-    setQueue(!queue);
-  };
+  const sheetRef = useRef(null);
 
-  /*let[fontsLoaded] = useFonts({
-    Montserrat
-  }); */
+	const openQueue = () => {
+		sheetRef.current.snapTo(0);
+	};
+
+	const closeQueue = () => {
+    sheetRef.current.snapTo(2);
+		setQueuePax(0);
+	};
+
+	const queueIncrement = () => {
+        setQueuePax(queuePax + 1);
+    }
+	const queueDecrement = () => {
+		if (queuePax > 0) {
+			setQueuePax(queuePax - 1);
+		}
+	};
+
+	const [queuePax, setQueuePax] = useState(0);
 
   return (
     <View style={styles.container}>
@@ -63,11 +77,20 @@ const StoreDetailedInfoScreen = () => {
         veniam, quis{" "}
       </Text>
 
-      <TouchableOpacity style={styles.button} onPress={onPressHandler}>
+      <TouchableOpacity style={styles.button} onPress={openQueue}>
         <Text style={{ color: "#EF5DA8", fontSize: 15, fontWeight: "bold" }}>
           Queue
         </Text>
       </TouchableOpacity>
+      <AppBottomSheet
+					ref={sheetRef}
+					renderContent={QueueSheetContent}
+					onCloseEnd={closeQueue}
+					count={queuePax}
+					onPressPlus={queueIncrement}
+					onPressMinus={queueDecrement}
+					onPressCancel={closeQueue}
+			></AppBottomSheet>
     </View>
   );
 };
@@ -77,8 +100,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    // justifyContent: 'center',
-    paddingTop: 50,
   },
   scroll: {
     width,

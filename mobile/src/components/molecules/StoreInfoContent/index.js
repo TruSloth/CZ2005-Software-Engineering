@@ -4,15 +4,11 @@ import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
 const StoreInfoContent = (props) => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
-  const {moreInfoOnPress} = props
+	const {moreInfoOnPress, queueOnPress} = props;
 
 	return (
 		<View
-			style={{
-				backgroundColor: 'white',
-				padding: 16,
-				height: 450,
-			}}
+			style={styles.container}
 		>
 			<Image
 				style={styles.images}
@@ -35,13 +31,17 @@ const StoreInfoContent = (props) => {
 				<View style={{flexDirection: 'column'}}>
 					<TouchableOpacity
 						style={[styles.button, {backgroundColor: '#8fbc8f'}]}
+						onPress={queueOnPress}
 					>
 						<Text styles={styles.buttonText}>Queue</Text>
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.button}>
 						<Text styles={styles.buttonText}>Chat</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.button} onPress={moreInfoOnPress}>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={moreInfoOnPress}
+					>
 						<Text styles={styles.buttonText}>More Info</Text>
 					</TouchableOpacity>
 				</View>
@@ -51,6 +51,12 @@ const StoreInfoContent = (props) => {
 };
 
 const styles = StyleSheet.create({
+	container: {
+		backgroundColor: 'white',
+		padding: 16,
+		height: 450,
+	},
+
 	heading: {
 		fontSize: 20,
 		textAlign: 'left',
@@ -71,7 +77,6 @@ const styles = StyleSheet.create({
 	waitTime: {
 		fontSize: 20,
 		textAlign: 'right',
-		// justifyContent: "flex-end",
 		alignSelf: 'flex-end',
 		marginTop: 20,
 		marginBottom: 5,
@@ -96,7 +101,6 @@ const styles = StyleSheet.create({
 		borderRadius: 50,
 		borderWidth: 1,
 		padding: 8,
-		// paddingBottom: ,
 		margin: '5%',
 		borderColor: '#7879F1',
 		alignItems: 'center',

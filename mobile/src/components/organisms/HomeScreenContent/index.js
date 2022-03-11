@@ -1,12 +1,6 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
-import {
-	FlatList,
-	View,
-	StyleSheet,
-	Platform,
-	ScrollView,
-} from 'react-native';
+import {FlatList, View, StyleSheet, Platform, ScrollView} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import TappableCard from '../../atoms/TappableCard';
 import HorizontalSection from '../../atoms/HorizontalSection';
@@ -14,9 +8,11 @@ import TopBanner from '../../molecules/TopBanner';
 import CategoryFilter from '../../atoms/CategoryFilter';
 import AppBottomSheet from '../../molecules/AppBottomSheet';
 import StoreInfoContent from '../../molecules/StoreInfoContent';
+import QueueSheetContent from '../../molecules/QueueSheetContent';
+import {set} from 'react-native-reanimated';
 
 const HomeScreenContent = ({navigation}) => {
-		const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
+	const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
 		{
 			title: 'Location 1',
 			subtitle: '5 Stars',
@@ -64,15 +60,42 @@ const HomeScreenContent = ({navigation}) => {
 
 	const openStoreInfo = () => {
 		sheetRef.current.snapTo(0);
+	};
+
+	const openQueue = () => {
+		setIsQueueSheetOpen(true);
+	};
+
+	const closeQueue = () => {
+		setIsQueueSheetOpen(false);
+		setQueuePax(0)
+	};
+
+	const onPressCardDescQueue = () => {
+		setIsQueueSheetOpen(true);
+		sheetRef.current.snapTo(0);
 	}
 
 	const moreInfoOnPress = () => {
-		navigation.navigate('StoreDetailedInfo')
-	}
+		navigation.navigate('StoreDetailedInfo');
+	};
+
+	const queueIncrement = () => {
+        setQueuePax(queuePax + 1);
+    }
+	const queueDecrement = () => {
+		if (queuePax > 0) {
+			setQueuePax(queuePax - 1);
+		}
+	};
 
 	const [search, setSearch] = useState('');
 
 	const [bannerHeight, setBannerHeight] = useState(0);
+
+	const [queuePax, setQueuePax] = useState(0);
+
+	const [isQueueSheetOpen, setIsQueueSheetOpen] = useState(false);
 
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
@@ -86,20 +109,24 @@ const HomeScreenContent = ({navigation}) => {
 					style={styles.homeBanner}
 					onLayout={(e) => {
 						e.persist();
-						setBannerHeight(e && e.nativeEvent ? e.nativeEvent.layout.height : 0)
+						setBannerHeight(
+							e && e.nativeEvent ? e.nativeEvent.layout.height : 0
+						);
 					}}
 				></TopBanner>
 				<SearchBar
-					onChangeText={text => setSearch(text)}
+					onChangeText={(text) => setSearch(text)}
 					value={search}
 					platform={Platform.OS === 'ios' ? 'ios' : 'android'}
 					onClear={(text) => setSearch('')}
 					round={false}
 					placeholder={'Search'}
 					placeholderTextColor={'#7879F1'}
-					containerStyle={[styles.searchBar, {top: bannerHeight + 25}]}
+					containerStyle={[
+						styles.searchBar,
+						{top: bannerHeight + 25},
+					]}
 					inputContainerStyle={styles.searchBarInput}
-
 				></SearchBar>
 				<HorizontalSection
 					child={
@@ -136,6 +163,7 @@ const HomeScreenContent = ({navigation}) => {
 										cardSubtextLine1={item.subtextLine1}
 										cardSubtextLine2={item.subtextLine2}
 										onPress={openStoreInfo}
+										onPressCardDesc={onPressCardDescQueue}
 									></TappableCard>
 								);
 							}}
@@ -165,7 +193,17 @@ const HomeScreenContent = ({navigation}) => {
 					titleStyle={styles.sectionHeader}
 				></HorizontalSection>
 			</ScrollView>
-			<AppBottomSheet ref={sheetRef} renderContent={StoreInfoContent} moreInfoOnPress={moreInfoOnPress}></AppBottomSheet>
+			<AppBottomSheet
+					ref={sheetRef}
+					renderContent={isQueueSheetOpen ? QueueSheetContent : StoreInfoContent}
+					moreInfoOnPress={moreInfoOnPress}
+					queueOnPress={openQueue}
+					onCloseEnd={closeQueue}
+					count={queuePax}
+					onPressPlus={queueIncrement}
+					onPressMinus={queueDecrement}
+					onPressCancel={closeQueue}
+			></AppBottomSheet>
 		</View>
 	);
 };
@@ -175,8 +213,8 @@ const styles = StyleSheet.create({
 
 	categoryRow: {
 		flexDirection: 'row',
-		justifyContent: "space-evenly",
-		paddingVertical: 20
+		justifyContent: 'space-evenly',
+		paddingVertical: 20,
 	},
 
 	searchBar: {
@@ -187,7 +225,7 @@ const styles = StyleSheet.create({
 		elevation: 5,
 		zIndex: 1,
 		height: 50,
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
 
 	sectionHeader: {
@@ -196,12 +234,10 @@ const styles = StyleSheet.create({
 		color: '#7879F1',
 	},
 
-	searchBarInput: {
-
-	},
+	searchBarInput: {},
 
 	homeBanner: {
-		marginVertical: 20
+		marginVertical: 20,
 	},
 });
 

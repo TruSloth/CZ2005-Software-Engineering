@@ -8,10 +8,10 @@ import CardDescription from '../CardDescription';
 const TappableCard = (props) => {
 	const reactNativeLogo = '../../../assets/react-native-logo.png';
 
-	const {cardTitle, cardSubtitle, cardSubtextLine1, cardSubtextLine2, onPress} = props;
+	const {cardTitle, cardSubtitle, cardSubtextLine1, cardSubtextLine2, onPress, onPressCardDesc} = props;
 
 	return (
-		<TouchableOpacity onPress={() => onPress()}>
+		<TouchableOpacity onPress={onPress}>
 			<Card
 				containerStyle={styles.tappableCard}
 				wrapperStyle={styles.tappableCardDescription}
@@ -29,6 +29,7 @@ const TappableCard = (props) => {
 					subtextLine1Style={styles.cardSubtextLine1}
 					subtextLine2={cardSubtextLine2}
 					subtextLine2Style={styles.cardSubtextLine2}
+					onPressCardDesc={onPressCardDesc}
 				></CardDescription>
 			</Card>
 		</TouchableOpacity>
