@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const register = require("./routes/register");
 const login = require("./routes/login");
+const queue = require("./routes/queue");
 
 dotenv.config();
 
@@ -16,6 +17,6 @@ app.use(express.json());
 app.use(cors());
 app.use("/", register);
 app.use("/", login);
+app.use("/", queue);
 
 app.listen(4000, () => console.log("Server is up"));
-
