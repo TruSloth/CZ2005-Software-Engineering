@@ -8,6 +8,8 @@ import {
 	TextInput,
 	SafeAreaView,
 	useColorScheme,
+	View,
+	ActivityIndicator,
 } from 'react-native';
 
 import {register} from '../../services/auth/register';
@@ -15,6 +17,8 @@ import {useMutation} from 'react-query';
 
 const RegistrationScreen = ({navigation}) => {
 	const registerMutation = useMutation(register);
+
+	const isLoading = registerMutation.isLoading;
 
 	const [registrationDetails, setRegistrationDetails] = useState({
 		userName: '',
@@ -100,13 +104,26 @@ const RegistrationScreen = ({navigation}) => {
 				value={registrationDetails['password']}
 			/>
 
-			<TouchableOpacity style={styles.button} onPress={onPressHandler}>
-				<Text
-					style={{color: 'white', fontSize: 15, fontWeight: 'bold'}}
+			{isLoading ? (
+				<View style={styles.button}>
+					<ActivityIndicator color={'#7879F1'}></ActivityIndicator>
+				</View>
+			) : (
+				<TouchableOpacity
+					style={styles.button}
+					onPress={onPressHandler}
 				>
-					Register
-				</Text>
-			</TouchableOpacity>
+					<Text
+						style={{
+							color: 'white',
+							fontSize: 15,
+							fontWeight: 'bold',
+						}}
+					>
+						Register
+					</Text>
+				</TouchableOpacity>
+			)}
 		</SafeAreaView>
 	);
 };

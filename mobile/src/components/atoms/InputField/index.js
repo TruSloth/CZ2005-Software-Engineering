@@ -2,7 +2,9 @@ import React from 'react';
 
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 
-const InputField = ({title, placeholder, updateFieldFunc}) => {
+const InputField = (props) => {
+	const {title, placeholder, updateFieldFunc, secureTextEntry} = props
+
 	return (
 		<View style={{marginVertical: 10}}>
 			<Text style={{fontSize: 20, fontWeight: 'bold', color: '#7879F1'}}>
@@ -12,6 +14,7 @@ const InputField = ({title, placeholder, updateFieldFunc}) => {
 				placeholder={placeholder}
 				placeholderTextColor='#A5A6F6'
 				style={styles.inputField}
+				secureTextEntry={secureTextEntry}
 				onChangeText={(text) => updateFieldFunc(text)}
 			/>
 		</View>

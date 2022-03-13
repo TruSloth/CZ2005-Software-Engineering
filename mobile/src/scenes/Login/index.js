@@ -12,6 +12,10 @@ import {useMutation} from 'react-query';
 const LoginScreen = ({navigation}) => {
 	const isDarkMode = useColorScheme() === 'dark';
 
+	const registerOnPress = () => {
+		navigation.navigate('Registration')
+	}
+
 	const backgroundStyle = {
 		backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
 	};
@@ -19,6 +23,8 @@ const LoginScreen = ({navigation}) => {
 	const dispatch = useDispatch();
 
 	const loginMutation = useMutation(login);
+
+	const isLoading = loginMutation.isLoading;
 
 	const submitForm = async (email, password) => {
 		try {
@@ -38,7 +44,7 @@ const LoginScreen = ({navigation}) => {
 			<StatusBar
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}
 			/>
-			<LoginContent submitForm={submitForm}></LoginContent>
+			<LoginContent submitForm={submitForm} registerOnPress={registerOnPress} loading={isLoading}></LoginContent>
 		</SafeAreaView>
 	);
 };
