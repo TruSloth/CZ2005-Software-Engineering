@@ -30,9 +30,8 @@ async function validateLoginInput(data) {
   return { errors, isValid: isEmpty(errors) };
 }
 
+// Registration Page
 router.post("/users/register", async (req, res) => {
-
-  console.log('received request with ' + req)
   // Ensure the input meets our requirements
   const { errors, isValid } = await validateLoginInput(req.body);
   if (!isValid) {
@@ -63,6 +62,7 @@ router.post("/users/register", async (req, res) => {
     });
 });
 
+// Verification Page
 router.post("/users/register/:id", async (req, res) => {
   // Retrieving the user id
   const user = await signUpTemplate.findOne({
@@ -84,8 +84,16 @@ router.post("/users/register/:id", async (req, res) => {
   }
 });
 
-router.get("/users/register", (req, res) => {
-  res.render();
+// Flush out all users
+router.post("/users/clear", (req, res) => {
+  signUpTemplate
+    .deleteMany({})
+    .then(function () {
+      res.json({ status: "success" });
+    })
+    .catch(function () {
+      res.status(400);
+    });
 });
 
 module.exports = router;
