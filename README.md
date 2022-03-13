@@ -2,7 +2,13 @@
 
 Remember to ensure that all dependencies are installed by running `npm install` in **both** `PATH/TO/PROJECT/ROOT/mobile/` and `PATH/TO/PROJECT/ROOT/Backend/` _(You have to do them seperately)_
 
-Additionally, a file called `config.js` must be created in `PATH/TO/PROJECT/ROOT/mobile/services/` with the line `export const LOCALHOST = 'YOUR_IPV4_ADDRESS'`. The value `YOUR_IPV4_ADDRESS` can be found by running `ipconfig` in your terminal.
+Additionally, a file called `config.js` must be created in `PATH/TO/PROJECT/ROOT/mobile/services/`. It should contain
+
+```
+export const LOCALHOST = 'YOUR_IPV4_ADDRESS'
+```
+
+The value `YOUR_IPV4_ADDRESS` can be found by running `ipconfig` in your terminal.
 
 ## How to Run
 
@@ -28,8 +34,6 @@ The current file tree is listed here. Android & ios files and folders have been 
 |-- Root
     |-- .gitignore
     |-- README.md
-    |-- .vscode
-    |   |-- settings.json
     |-- Backend
     |   |-- .env
     |   |-- .gitignore
@@ -37,9 +41,11 @@ The current file tree is listed here. Android & ios files and folders have been 
     |   |-- package.json
     |   |-- server.js
     |   |-- models
+    |   |   |-- queueUser.js
     |   |   |-- signup.js
     |   |-- routes
     |   |   |-- login.js
+    |   |   |-- queue.js
     |   |   |-- register.js
     |   |-- tools
     |       |-- nodemailer.js
@@ -94,13 +100,21 @@ The current file tree is listed here. Android & ios files and folders have been 
         |   |   |   |   |-- index.js
         |   |   |   |-- HistoryEntry
         |   |   |   |   |-- index.js
+        |   |   |   |-- HorizontalBlock
+        |   |   |   |   |-- index.js
         |   |   |   |-- LoginForm
+        |   |   |   |   |-- index.js
+        |   |   |   |-- QueueSheetContent
         |   |   |   |   |-- index.js
         |   |   |   |-- StoreInfoContent
         |   |   |   |   |-- index.js
         |   |   |   |-- TopBanner
         |   |   |       |-- index.js
         |   |   |-- organisms
+        |   |       |-- AccountScreenContent
+        |   |       |   |-- index.js
+        |   |       |-- AppSettingsScreenContent
+        |   |       |   |-- index.js
         |   |       |-- HistoryScreenContent
         |   |       |   |-- index.js
         |   |       |-- HomeScreenContent
@@ -115,6 +129,8 @@ The current file tree is listed here. Android & ios files and folders have been 
         |   |-- scenes
         |   |   |-- Account
         |   |   |   |-- index.js
+        |   |   |-- AppSettings
+        |   |   |   |-- index.js
         |   |   |-- History
         |   |   |   |-- index.js
         |   |   |-- Home
@@ -123,8 +139,9 @@ The current file tree is listed here. Android & ios files and folders have been 
         |   |   |   |-- index.js
         |   |   |-- Onboarding
         |   |   |   |-- index.js
-        |   |   |   |-- oldOnboardingScreen.js
         |   |   |-- Registration
+        |   |   |   |-- index.js
+        |   |   |-- SplashScreen
         |   |   |   |-- index.js
         |   |   |-- StoreDetailedInfo
         |   |   |   |-- index.js
@@ -144,5 +161,4 @@ The current file tree is listed here. Android & ios files and folders have been 
         |           |-- reducers.js
         |-- __tests__
             |-- App-test.js
-
 ```
