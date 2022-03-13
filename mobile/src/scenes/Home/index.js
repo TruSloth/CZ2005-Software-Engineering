@@ -1,10 +1,11 @@
 import React from 'react';
 
 import {SafeAreaView, StatusBar} from 'react-native';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { joinQueue } from '../../services/queue/joinQueue';
 
 import HomeScreenContent from '../../components/organisms/HomeScreenContent';
+import { getQueue } from '../../services/queue/getQueue';
 
 const HomeScreen = ({navigation}) => {
 	const joinQueueMutation = useMutation(joinQueue);
@@ -19,7 +20,6 @@ const HomeScreen = ({navigation}) => {
 		} catch (e) {
 			console.log(e)
 		}
-	
 	};
 
 	return (
