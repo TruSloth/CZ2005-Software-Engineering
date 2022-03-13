@@ -10,8 +10,11 @@ import AppBottomSheet from '../../molecules/AppBottomSheet';
 import StoreInfoContent from '../../molecules/StoreInfoContent';
 import QueueSheetContent from '../../molecules/QueueSheetContent';
 import {set} from 'react-native-reanimated';
+import { useSelector } from 'react-redux';
 
-const HomeScreenContent = ({navigation}) => {
+const HomeScreenContent = (props) => {
+	const {navigation, joinServiceProviderQueue} = props;
+
 	const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
 		{
 			title: 'Location 1',
@@ -58,6 +61,8 @@ const HomeScreenContent = ({navigation}) => {
 
 	const sheetRef = useRef(null);
 
+	const account = useSelector((state) => state.account)
+
 	const openStoreInfo = () => {
 		sheetRef.current.snapTo(0);
 	};
@@ -89,6 +94,10 @@ const HomeScreenContent = ({navigation}) => {
 		}
 	};
 
+	const onQueueConfirm = () => {
+		joinServiceProviderQueue(account.userName, 'Temporary Store Name')
+	}
+
 	const settingsOnPress = () => {
 		navigation.navigate('AppSettings');
 	}
@@ -107,7 +116,7 @@ const HomeScreenContent = ({navigation}) => {
 		<View style={{flex: 1}}>
 			<ScrollView style={styles.homeScreenContent}>
 				<TopBanner
-					title={'Hi, John!'}
+					title={`Hi, ${account.userName}`}
 					subtitle={'Where are you going to queue next?'}
 					avatarImage={reactNativeLogo}
 					settingsOnPress={settingsOnPress}
@@ -209,6 +218,7 @@ const HomeScreenContent = ({navigation}) => {
 					onPressPlus={queueIncrement}
 					onPressMinus={queueDecrement}
 					onPressCancel={closeQueue}
+					onPressConfirm={onQueueConfirm}
 			></AppBottomSheet>
 		</View>
 	);

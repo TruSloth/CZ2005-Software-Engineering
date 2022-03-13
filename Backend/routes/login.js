@@ -18,7 +18,7 @@ router.post("/users/login", async (req, res) => {
     return;
   }
 
-  res.status(200).json({ success: true, verified: user.verified });
+  res.status(200).json({ success: true, verified: user.verified, userName: user.userName });
 });
 
 module.exports = router;

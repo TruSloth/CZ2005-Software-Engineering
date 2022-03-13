@@ -4,6 +4,7 @@ import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useDispatch} from 'react-redux';
 import {toggleLogIn} from '../../store/auth/actions';
+import { setCurrentUser } from '../../store/account/actions';
 
 import LoginContent from '../../components/organisms/LoginContent';
 import {login} from '../../services/auth/login';
@@ -31,6 +32,7 @@ const LoginScreen = ({navigation}) => {
 			const response = await loginMutation.mutateAsync({email: email, password: password});
 
 			if (response.status === 200) {
+				dispatch(setCurrentUser(response.data.userName))
 				dispatch(toggleLogIn(true));
 			}
 		} catch (e) {

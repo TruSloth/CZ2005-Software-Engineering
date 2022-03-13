@@ -12,6 +12,10 @@ import {
 import AppBottomSheet from "../../components/molecules/AppBottomSheet";
 import QueueSheetContent from "../../components/molecules/QueueSheetContent";
 
+import { useMutation } from 'react-query';
+import { joinQueue } from '../../services/queue/joinQueue';
+import { useSelector } from "react-redux";
+
 const { width } = Dimensions.get("window");
 const height = (width * 100) / 90;
 
@@ -20,7 +24,24 @@ const images = [
   "https://www.pngkey.com/png/detail/21-219723_hamburger-png-picture-burger-png-cartoon.png",
 ];
 const StoreDetailedInfoScreen = () => {
+  const joinQueueMutation = useMutation(joinQueue);
+
+	const joinServiceProviderQueue = async (user, store) => {
+		try {
+			const response = await joinQueueMutation.mutateAsync({user: user, store: store});
+
+			if (response.status === 200) {
+				console.log('Joined a queue!')
+			}
+		} catch (e) {
+			console.log(e)
+		}
+	
+	};
+
   const sheetRef = useRef(null);
+
+  const account = useSelector((state) => state.account)
 
 	const openQueue = () => {
 		sheetRef.current.snapTo(0);
@@ -39,6 +60,10 @@ const StoreDetailedInfoScreen = () => {
 			setQueuePax(queuePax - 1);
 		}
 	};
+
+  const onQueueConfirm = () => {
+    joinServiceProviderQueue(account.userName, 'Temporary Store Name')
+  }
 
 	const [queuePax, setQueuePax] = useState(0);
 
@@ -90,6 +115,7 @@ const StoreDetailedInfoScreen = () => {
 					onPressPlus={queueIncrement}
 					onPressMinus={queueDecrement}
 					onPressCancel={closeQueue}
+          onPressConfirm={onQueueConfirm}
 			></AppBottomSheet>
     </View>
   );

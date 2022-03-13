@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import { useDispatch } from 'react-redux';
+import { setCurrentUser } from '../../../store/account/actions';
 import { toggleLogIn } from '../../../store/auth/actions';
 
 import HorizontalBlock from '../../molecules/HorizontalBlock';
@@ -46,6 +47,7 @@ const AppSettingsScreenContent = () => {
         title: 'Logout',
         onPress: () => {
             console.log('logging out')
+			dispatch(setCurrentUser(null))
             dispatch(toggleLogIn(false))
         },
     },];
