@@ -7,8 +7,10 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider, useSelector} from 'react-redux';
 import { QueryClientProvider, QueryClient} from 'react-query';
 import { PersistGate } from 'redux-persist/integration/react';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
-//import store from './src/store';
+
+import { GOOGLE_WEBCLIENT_ID } from './src/services/config';
 import storeConfig from './src/store';
 import AuthNavigator from './src/navigations/auth-navigator';
 import AppNavigator from './src/navigations/app-navigator';
@@ -37,6 +39,11 @@ const AppWrapper = () => {
 
 const App = () => {
 	const {store, persistor} = storeConfig();
+
+	GoogleSignin.configure({
+		webClientId: GOOGLE_WEBCLIENT_ID, // client ID of type WEB for your server (needed to verify user ID and offline access)
+		offlineAccess: false, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+	  });
 
 	return (
 			<QueryClientProvider client={queryClient}>

@@ -1,9 +1,10 @@
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import { useDispatch } from 'react-redux';
+
+import { googleIsSignedIn, googleSignOut } from '../../../services/auth/google/googleSignIn';
 import { setCurrentUser } from '../../../store/account/actions';
 import { toggleLogIn } from '../../../store/auth/actions';
-
 import HorizontalBlock from '../../molecules/HorizontalBlock';
 
 const AppSettingsScreenContent = () => {
@@ -45,10 +46,18 @@ const AppSettingsScreenContent = () => {
     },];
 	const miscSettings = [{
         title: 'Logout',
-        onPress: () => {
-            console.log('logging out')
-			dispatch(setCurrentUser(null))
-            dispatch(toggleLogIn(false))
+        onPress: async () => {
+			try {
+				const isGoogleSignedIn = await googleIsSignedIn();
+				if (isGoogleSignedIn) {
+					await googleSignOut();
+				}
+
+				dispatch(setCurrentUser(null))
+            	dispatch(toggleLogIn(false))
+			} catch (e) {
+				console.log(e)
+			}
         },
     },];
 

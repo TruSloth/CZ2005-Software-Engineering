@@ -1,5 +1,13 @@
 const mongoose = require("mongoose");
 
+function isPasswordRequired() {
+  if (this.googleRegistered === true) {
+    return false;
+  }
+  
+  return true;
+}
+
 const signUpTemplate = new mongoose.Schema({
   userName: {
     type: String,
@@ -11,9 +19,14 @@ const signUpTemplate = new mongoose.Schema({
     required: true,
   },
 
+  googleRegistered: {
+    type: Boolean,
+    required: true,
+  },
+
   password: {
     type: String,
-    required: true,
+    required: isPasswordRequired, 
   },
 
   date: {

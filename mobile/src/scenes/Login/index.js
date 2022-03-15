@@ -8,6 +8,8 @@ import { setCurrentUser } from '../../store/account/actions';
 
 import LoginContent from '../../components/organisms/LoginContent';
 import {login} from '../../services/auth/login';
+import { googleLogin } from '../../services/auth/google/googleLogin';
+import { googleSignIn } from '../../services/auth/google/googleSignIn';
 import {useMutation} from 'react-query';
 
 const LoginScreen = ({navigation}) => {
@@ -25,9 +27,11 @@ const LoginScreen = ({navigation}) => {
 
 	const loginMutation = useMutation(login);
 
+	const googleLoginMutation = useMutation(googleLogin);
+
 	const isLoading = loginMutation.isLoading;
 
-	const submitForm = async (email, password) => {
+	const login = async (email, password) => {
 		try {
 			const response = await loginMutation.mutateAsync({email: email, password: password});
 
@@ -41,12 +45,27 @@ const LoginScreen = ({navigation}) => {
 	
 	};
 
+	const onPressGoogleSignin = async () => {
+		try {
+			const userInfo = await googleSignIn();
+
+			const response = await googleLoginMutation.mutateAsync(userInfo)
+			
+			if (response.status === 200) {
+				dispatch(setCurrentUser(response.data.userName))
+				dispatch(toggleLogIn(true))
+			}
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
 	return (
 		<SafeAreaView style={[backgroundStyle, {flex: 1, padding: 10}]}>
 			<StatusBar
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}
 			/>
-			<LoginContent submitForm={submitForm} registerOnPress={registerOnPress} loading={isLoading}></LoginContent>
+			<LoginContent submitForm={login} registerOnPress={registerOnPress} loading={isLoading} onPressGoogleSignin={onPressGoogleSignin}></LoginContent>
 		</SafeAreaView>
 	);
 };

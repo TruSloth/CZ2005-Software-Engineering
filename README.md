@@ -2,13 +2,34 @@
 
 Remember to ensure that all dependencies are installed by running `npm install` in **both** `PATH/TO/PROJECT/ROOT/mobile/` and `PATH/TO/PROJECT/ROOT/Backend/` _(You have to do them seperately)_
 
-Additionally, a file called `config.js` must be created in `PATH/TO/PROJECT/ROOT/mobile/services/`. It should contain
+Additionally, several config files need to be manually added for security.
+
+1. A file called `config.js` must be created in `PATH/TO/PROJECT/ROOT/mobile/services/`. It should contain
 
 ```
 export const LOCALHOST = 'YOUR_IPV4_ADDRESS'
+export const export const GOOGLE_WEBCLIENT_ID = 'GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION'
 ```
 
-The value `YOUR_IPV4_ADDRESS` can be found by running `ipconfig` in your terminal.
+> The value `YOUR_IPV4_ADDRESS` can be found by running `ipconfig` in your terminal.
+
+> The value `GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION` can be found in the firebase or google cloud console for the project.
+
+2. A file called `.env` must be created in `PATH/TO/PROJECT/ROOT/Backend/`. It should contain
+
+```
+DATABASE_ACCESS = 'LINK_TO_DATABASE_FOR_USERS'
+QUEUE  = "LINK_TO_DATABASE_FOR_QUEUES"
+AUTHENTICATION_TOKEN = "123"
+REDIS_URL = "redis:6379" // Is this necessary?
+CLIENT_ID = 'GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION'
+```
+
+> The value `GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION` can be found in the firebase or google cloud console for the project.
+
+3. The file `google-services.json` must be manually added to the project at `/PATH/TO/PROJECT/ROOT/mobile/android/app`.
+
+> This file can be downloaded from the application's firebase console, under `project settings`.
 
 ## How to Run
 
@@ -28,12 +49,14 @@ Terminal 3: Navigate to `PATH/TO/PROJECT/ROOT/Backend/` and run `npm run start`
 
 ## Project Structure
 
-The current file tree is listed here. Android & ios files and folders have been omitted for brevity.
+The current file tree is listed here. Most Android & ios files and folders have been omitted for brevity.
 
 ```
 |-- Root
     |-- .gitignore
     |-- README.md
+    |-- .vscode
+    |   |-- settings.json
     |-- Backend
     |   |-- .env
     |   |-- .gitignore
@@ -68,6 +91,21 @@ The current file tree is listed here. Android & ios files and folders have been 
         |-- package-lock.json
         |-- package.json
         |-- android
+        |   |-- build.gradle
+        |   |-- gradle.properties
+        |   |-- gradlew
+        |   |-- gradlew.bat
+        |   |-- settings.gradle
+        |   |-- .gradle
+        |   |-- app
+        |   |   |-- BUCK
+        |   |   |-- build.gradle
+        |   |   |-- build_defs.bzl
+        |   |   |-- debug.keystore
+        |   |   |-- google-services.json
+        |   |   |-- proguard-rules.pro
+        |   |   |-- build
+        |   |   |-- src
         |-- ios
         |-- src
         |   |-- assets
@@ -92,7 +130,7 @@ The current file tree is listed here. Android & ios files and folders have been 
         |   |   |   |-- TappableCard
         |   |   |       |-- index.js
         |   |   |-- molecules
-        |   |   |   |-- AltLoginOptions
+        |   |   |   |-- AltAuthOptions
         |   |   |   |   |-- index.js
         |   |   |   |-- AppBottomSheet
         |   |   |   |   |-- index.js
@@ -150,15 +188,27 @@ The current file tree is listed here. Android & ios files and folders have been 
         |   |-- services
         |   |   |-- config.js
         |   |   |-- auth
-        |   |       |-- login.js
-        |   |       |-- register.js
-        |   |       |-- verify.js
+        |   |   |   |-- login.js
+        |   |   |   |-- register.js
+        |   |   |   |-- verify.js
+        |   |   |   |-- google
+        |   |   |       |-- googleLogin.js
+        |   |   |       |-- googleRegister.js
+        |   |   |       |-- googleSignIn.js
+        |   |   |-- queue
+        |   |       |-- getQueue.js
+        |   |       |-- joinQueue.js
         |   |-- store
         |       |-- index.js
+        |       |-- account
+        |       |   |-- actions.js
+        |       |   |-- constants.js
+        |       |   |-- reducers.js
         |       |-- auth
         |           |-- actions.js
         |           |-- constants.js
         |           |-- reducers.js
         |-- __tests__
             |-- App-test.js
+
 ```

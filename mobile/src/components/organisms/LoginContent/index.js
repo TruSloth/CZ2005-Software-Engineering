@@ -2,10 +2,10 @@ import React from 'react';
 
 import {ScrollView, Image, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import LoginForm from '../../molecules/LoginForm';
-import AltLoginOptions from '../../molecules/AltLoginOptions';
+import AltAuthOptions from '../../molecules/AltAuthOptions';
 
 const LoginContent = (props) => {
-	const {submitForm, registerOnPress, loading} = props;
+	const {submitForm, registerOnPress, loading, onPressGoogleSignin} = props;
 
 	const reactNativeLogo = '../../../assets/react-native-logo.png';
 
@@ -45,7 +45,7 @@ const LoginContent = (props) => {
 				</Text>
 			</View>
 			<LoginForm submitForm={submitForm} loading={loading}></LoginForm>
-			<AltLoginOptions></AltLoginOptions>
+			<AltAuthOptions altAuthTitle={'Or login with'} onPressGoogleLogin={onPressGoogleSignin}></AltAuthOptions>
 			<View style={{flexDirection: 'row'}}>
 				<Text style={styles.subText}>Don't have an account? </Text>
 				<TouchableOpacity onPress={registerOnPress}>
