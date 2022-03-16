@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TouchableOpacity, Text } from 'react-native';
 
 import ChatScreen from '../scenes/Chat';
+import NotificationsScreen from '../scenes/Notifications';
 
 import HomeNavigator from './home-navigator';
 import { Icon } from 'react-native-elements';
@@ -51,7 +52,7 @@ const AppNavigator = () => {
             <Tab.Group>
                 <Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}></Tab.Screen>
                 <Tab.Screen name="Chat" component={ChatScreen} ></Tab.Screen>
-                <Tab.Screen name="Notifications" component={HomeNavigator} ></Tab.Screen>
+                <Tab.Screen name="Notifications" component={NotificationsScreen} ></Tab.Screen>
                 <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
             </Tab.Group>          
         </Tab.Navigator>

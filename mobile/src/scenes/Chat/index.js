@@ -1,17 +1,11 @@
-import React from "react";
-import { View } from "react-native";
-import QRCodeScanner from 'react-native-qrcode-scanner';
+import React, { useState, useCallback } from "react";
+import { GiftedChat } from "react-native-gifted-chat";
+import ChatScreenContent from "../../components/organisms/ChatScreenContent";
 
 const ChatScreen = () => {
-    const onRead = (e) => {
-        console.log('found a qr code!')
-        console.log(e)
-    }
 
     return (
-        <View>
-            <QRCodeScanner onRead={onRead}></QRCodeScanner>
-        </View>
+        <ChatScreenContent></ChatScreenContent>
     )
 }
 
