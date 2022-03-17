@@ -31,7 +31,7 @@ const LoginScreen = ({navigation}) => {
 
 	const isLoading = loginMutation.isLoading;
 
-	const login = async (email, password) => {
+	const onPressLogin = async (email, password) => {
 		try {
 			const response = await loginMutation.mutateAsync({email: email, password: password});
 
@@ -65,7 +65,7 @@ const LoginScreen = ({navigation}) => {
 			<StatusBar
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}
 			/>
-			<LoginContent submitForm={login} registerOnPress={registerOnPress} loading={isLoading} onPressGoogleSignin={onPressGoogleSignin}></LoginContent>
+			<LoginContent submitForm={onPressLogin} registerOnPress={registerOnPress} loading={isLoading} onPressGoogleSignin={onPressGoogleSignin}></LoginContent>
 		</SafeAreaView>
 	);
 };
