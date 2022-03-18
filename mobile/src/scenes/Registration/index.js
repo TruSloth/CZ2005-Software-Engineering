@@ -8,13 +8,27 @@ import {
 	TextInput,
 	SafeAreaView,
 	useColorScheme,
+	View,
+	ActivityIndicator,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
 
 import {register} from '../../services/auth/register';
+import { googleRegister } from '../../services/auth/google/googleRegister';
 import {useMutation} from 'react-query';
+import AltAuthOptions from '../../components/molecules/AltAuthOptions';
+import { googleSignIn } from '../../services/auth/google/googleSignIn';
+import { toggleLogIn } from '../../store/auth/actions';
+import { setCurrentUser } from '../../store/account/actions';
 
 const RegistrationScreen = ({navigation}) => {
+	const dispatch = useDispatch();
+
 	const registerMutation = useMutation(register);
+
+	const googleRegisterMutation = useMutation(googleRegister)
+
+	const isLoading = registerMutation.isLoading;
 
 	const [registrationDetails, setRegistrationDetails] = useState({
 		userName: '',
@@ -22,13 +36,13 @@ const RegistrationScreen = ({navigation}) => {
 		password: '',
 	});
 
-	const onPressHandler = async () => {
+	const onPressRegister = async () => {
 		try {
 			const response = await registerMutation.mutateAsync(
 				registrationDetails
 			);
 
-			if (response.status == 200) {
+			if (response.status === 200) {
 				const tempUserName = response.data.userName;
 
 				navigation.navigate('Verification', {
@@ -46,6 +60,21 @@ const RegistrationScreen = ({navigation}) => {
 		}
 	};
 
+	const onPressGoogleSignin = async () => {
+		try {
+			const userInfo = await googleSignIn();
+
+			const response = await googleRegisterMutation.mutateAsync(userInfo)
+			
+			if (response.status === 200) {
+				dispatch(setCurrentUser(response.data.userName))
+				dispatch(toggleLogIn(true))
+			}
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
 	const isDarkMode = useColorScheme() === 'dark';
 
 	return (
@@ -59,7 +88,6 @@ const RegistrationScreen = ({navigation}) => {
 			></Image>
 			<Text style={styles.textheading}>Enter Name:</Text>
 			<TextInput
-				// multiline
 				keyboardType='default'
 				style={styles.input}
 				placeholder='e.g. John Tan'
@@ -100,13 +128,30 @@ const RegistrationScreen = ({navigation}) => {
 				value={registrationDetails['password']}
 			/>
 
-			<TouchableOpacity style={styles.button} onPress={onPressHandler}>
-				<Text
-					style={{color: 'white', fontSize: 15, fontWeight: 'bold'}}
+			{isLoading ? (
+				<View style={styles.button}>
+					<ActivityIndicator color={'#7879F1'}></ActivityIndicator>
+				</View>
+			) : (
+				<TouchableOpacity
+					style={styles.button}
+					onPress={onPressRegister}
 				>
-					Register
-				</Text>
-			</TouchableOpacity>
+					<Text
+						style={{
+							color: 'white',
+							fontSize: 15,
+							fontWeight: 'bold',
+						}}
+					>
+						Register
+					</Text>
+				</TouchableOpacity>
+			)}
+			<View style={{flex: 1, flexgrow: 1}}>
+			<AltAuthOptions altAuthTitle={'Or register with'} onPressGoogleLogin={onPressGoogleSignin}></AltAuthOptions>
+			</View>
+			
 		</SafeAreaView>
 	);
 };
@@ -115,8 +160,8 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
+		flexgrow: 1,
+		alignSelf: 'center'
 	},
 	image: {
 		height: 250,
@@ -124,6 +169,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-around',
 		margin: 30,
 		marginTop: 10,
+		alignSelf: 'center'
 	},
 	input: {
 		height: 40,
@@ -141,11 +187,13 @@ const styles = StyleSheet.create({
 		margin: 10,
 		alignItems: 'center',
 		borderRadius: 50,
+		alignSelf: 'center'
 	},
 	textheading: {
 		fontSize: 20,
 		width: '85%',
 		textAlign: 'left',
+		marginLeft: 12
 	},
 });
 

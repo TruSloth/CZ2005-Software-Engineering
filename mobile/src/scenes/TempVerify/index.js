@@ -8,36 +8,44 @@ import {
 	TextInput,
 	SafeAreaView,
 	useColorScheme,
+	View,
+	ActivityIndicator,
 } from 'react-native';
 
-import { useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
-import { useMutation } from 'react-query';
+import {useMutation} from 'react-query';
 
-import { verify } from '../../services/auth/verify'
-import { toggleLogIn } from '../../store/auth/actions';
-
+import {verify} from '../../services/auth/verify';
+import {toggleLogIn} from '../../store/auth/actions';
+import { setCurrentUser } from '../../store/account/actions';
 
 const TempVerifyScreen = ({route}) => {
-	const {tempUserName} = route.params
+	const {tempUserName} = route.params;
 
 	const dispatch = useDispatch();
 
-	const verifyMutation = useMutation(verify)
+	const verifyMutation = useMutation(verify);
+
+	const isLoading = verifyMutation.isLoading;
 
 	const [authid, setAuthid] = useState('');
 
 	const onPressHandler = async () => {
 		try {
-			const response = await verifyMutation.mutateAsync({tempUserName: tempUserName, verificationCode: authid})
+			const response = await verifyMutation.mutateAsync({
+				tempUserName: tempUserName,
+				verificationCode: authid,
+			});
 
 			if (response.status === 200) {
-				dispatch(toggleLogIn(true))
+				dispatch(setCurrentUser(tempUserName));
+				dispatch(toggleLogIn(true));
 			} else {
-				console.log('Verification code invalid')
+				console.log('Verification code invalid');
 			}
 		} catch (e) {
-			console.log(e)
+			console.log(e);
 		}
 	};
 
@@ -60,14 +68,26 @@ const TempVerifyScreen = ({route}) => {
 				onChangeText={(text) => setAuthid(text)}
 				value={authid}
 			/>
-
-			<TouchableOpacity style={styles.button} onPress={onPressHandler}>
-				<Text
-					style={{color: 'white', fontSize: 15, fontWeight: 'bold'}}
+			{isLoading ? (
+				<View style={styles.button}>
+					<ActivityIndicator color={'#7879F1'}></ActivityIndicator>
+				</View>
+			) : (
+				<TouchableOpacity
+					style={styles.button}
+					onPress={onPressHandler}
 				>
-					Verify
-				</Text>
-			</TouchableOpacity>
+					<Text
+						style={{
+							color: 'white',
+							fontSize: 15,
+							fontWeight: 'bold',
+						}}
+					>
+						Verify
+					</Text>
+				</TouchableOpacity>
+			)}
 		</SafeAreaView>
 	);
 };

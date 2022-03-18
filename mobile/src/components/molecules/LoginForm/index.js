@@ -1,13 +1,16 @@
 import React from 'react';
 
 import {View, Text, StyleSheet} from 'react-native';
+import { useState } from 'react';
 
 import RoundButton from '../../atoms/RoundButton';
 import InputField from '../../atoms/InputField';
 
-const LoginForm = ({submitForm}) => {
-	const [email, onChangeEmail] = React.useState(null);
-	const [password, onChangePassword] = React.useState(null);
+const LoginForm = (props) => {
+	const {submitForm, loading} = props
+
+	const [email, onChangeEmail] = useState(null);
+	const [password, onChangePassword] = useState(null);
 
 	return (
 		<View style={{flex: 1, flexGrow: 0}}>
@@ -19,12 +22,13 @@ const LoginForm = ({submitForm}) => {
 			<InputField
 				title='Password'
 				placeholder='Your password'
+				secureTextEntry={true}
 				updateFieldFunc={onChangePassword}
 			></InputField>
 			<Text style={[styles.clickableText, {alignSelf: 'flex-end'}]}>
 				Forgot Password?
 			</Text>
-			<RoundButton title='Login' onPress={() => {submitForm(email, password)}}></RoundButton>
+			<RoundButton title='Login' onPress={() => {submitForm(email, password)}} loading={loading}></RoundButton>
 		</View>
 	);
 };

@@ -3,6 +3,26 @@ const isEmpty = require("is-empty");
 const sendMail = require("../tools/nodemailer");
 const router = express.Router();
 const signUpTemplate = require("../models/signup");
+const dotenv = require("dotenv");
+const {OAuth2Client} = require('google-auth-library');
+
+dotenv.config();
+
+const client = new OAuth2Client(process.env.CLIENT_ID);
+
+async function verify(token) {
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: process.env.CLIENT_ID
+  });
+
+  const payload = ticket.getPayload();
+
+  if (payload['aud'] !== process.env.CLIENT_ID) {
+    throw 'Token unintended for app'
+  }
+  return payload
+}
 
 async function validateLoginInput(data) {
   let errors = {};
@@ -22,6 +42,7 @@ async function validateLoginInput(data) {
   if (
     await signUpTemplate.findOne({
       userName: data.userName,
+      googleRegistered: false,
     })
   ) {
     errors.userName = "Username already exists";
@@ -42,6 +63,7 @@ router.post("/users/register", async (req, res) => {
   const newUser = new signUpTemplate({
     userName: req.body.userName,
     email: req.body.email,
+    googleRegistered: false,
     password: req.body.password,
     verified: false,
   });
@@ -60,6 +82,45 @@ router.post("/users/register", async (req, res) => {
     .catch((error) => {
       console.log(error);
     });
+});
+
+// Google Registration Page
+router.post("/users/register/google", async (req, res) => {
+  // Verify the identity of the request
+  try {
+    const payload = await verify(req.body.idToken)
+
+    const user = {
+      email: payload['email'],
+      userName: payload['given_name']
+    }
+
+    // Ensure the input meets our requirements
+    const { errors, isValid } = await validateLoginInput(user);
+    if (!isValid) {
+      res.status(401).json(errors);
+      return;
+    }
+
+    // Creating a new user
+    const newUser = new signUpTemplate({
+      userName: user.userName,
+      email: user.email,
+      googleRegistered: true,
+      verified: true,
+    });
+
+    await newUser
+    .save()
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });   
+  } catch (e) {
+    console.log(e)
+  }
 });
 
 // Verification Page

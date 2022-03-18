@@ -1,11 +1,15 @@
 import React from 'react';
 
-import {TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text, StyleSheet, View, ActivityIndicator} from 'react-native';
 
 const RoundButton = (props) => {
-	const {style, title, onPress} = props;
+	const {style, title, onPress, loading} = props;
 
-	return (
+	return loading ? (
+		<View style={[styles.loginButton, style]}>
+			<ActivityIndicator color={'#7879F1'}></ActivityIndicator>
+		</View>
+	) : (
 		<TouchableOpacity style={[styles.loginButton, style]} onPress={onPress}>
 			<Text style={[{alignContent: 'center', color: '#7879F1'}]}>
 				{title}
