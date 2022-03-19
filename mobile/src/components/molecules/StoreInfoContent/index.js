@@ -4,7 +4,7 @@ import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
 const StoreInfoContent = (props) => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
-	const {moreInfoOnPress, queueOnPress} = props;
+	const {moreInfoOnPress, queueOnPress, chatOnPress} = props;
 
 	return (
 		<View
@@ -35,7 +35,7 @@ const StoreInfoContent = (props) => {
 					>
 						<Text styles={styles.buttonText}>Queue</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.button}>
+					<TouchableOpacity style={styles.button} onPress={chatOnPress}>
 						<Text styles={styles.buttonText}>Chat</Text>
 					</TouchableOpacity>
 					<TouchableOpacity

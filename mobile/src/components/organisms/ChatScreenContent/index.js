@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {Icon} from 'react-native-elements';
 import {
 	GiftedChat,
@@ -10,6 +10,12 @@ import {
 	Message
 } from 'react-native-gifted-chat';
 import {useSelector} from 'react-redux';
+
+import { LogBox } from 'react-native';
+
+LogBox.ignoreAllLogs();
+LogBox.ignoreLogs(["EventEmitter.removeListener"]);
+LogBox.ignoreLogs(['Warning:']);
 
 const ChatInputToolbar = (props) => {
 	return (
@@ -57,7 +63,6 @@ const ChatInputComposer = (props) => {
 				borderWidth: 1,
 				borderRadius: 20,
 				borderColor: '#7879F1',
-				backgroundColor: 'red',
 				marginLeft: 0,
 			}}
 		></Composer>
@@ -67,7 +72,6 @@ const ChatInputComposer = (props) => {
 const ChatMessage = (props) => {
 	return (<Message
     {...props}
-    // renderDay={() => <Text>Date</Text>}
     containerStyle={{
       left: { backgroundColor: 'lime', marginTop: 5 },
       right: { backgroundColor: 'gold', marginTop: 5 },
@@ -127,31 +131,31 @@ const ChatScreenContent = () => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
 	const account = useSelector((state) => state.account);
+	const socket = useSelector((state) => state.socket).socket;
 
-	const [messages, setMessages] = useState([
-		{
-			_id: 'John',
-			text: 'Hello there',
-			user: {
-				_id: 'Adam',
-				name: 'Adam',
-				avatar: reactNativeLogo,
-			},
-		},
-	]);
+	const [messages, setMessages] = useState([]);
+
+	const receiveMessage = useCallback((messages = []) => {
+		setMessages((previousMessages) => {
+			return GiftedChat.append(previousMessages, messages[0])
+		})
+	}, [])
+
+	useEffect(() => {
+		socket.on('received-message', (receivedMessage) => receiveMessage(receivedMessage))
+
+		return () => {
+			socket.off('receiving-message')
+		}
+	}, [socket])
 
 	const sendMessage = useCallback((messages = []) => {
-		messages[0].user = {
-			_id: 'John',
-			name: 'John',
-			avatar: reactNativeLogo,
-		};
-
-		messages[0].position = 'right';
-		setMessages((previousMessages) =>
-			GiftedChat.append(previousMessages, messages)
-		);
-	}, []);
+		setMessages((previousMessages) => {
+			return (GiftedChat.append(previousMessages, messages))
+		})
+		socket.emit('send-chat-message', messages, 'Location 1')
+	} , [])
+	
 
 	return (
 		<GiftedChat
@@ -160,14 +164,14 @@ const ChatScreenContent = () => {
 			showUserAvatar={true}
 			alwaysShowSend
 			renderInputToolbar={ChatInputToolbar}
-			renderMessage={ChatMessage}
 			renderComposer={ChatInputComposer}
 			renderSend={ChatSendButton}
 			renderMessageText={ChatMessageText}
 			renderBubble={ChatBubble}
 			user={{
-				_id: 'John',
+				_id: account.userName,
 				name: account.userName,
+				avatar: reactNativeLogo
 			}}
 		></GiftedChat>
 	);

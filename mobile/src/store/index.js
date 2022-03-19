@@ -1,5 +1,6 @@
 import authReducer from './auth/reducers';
 import accountReducer from './account/reducers';
+import socketReducer from './socket/reducers';
 import {combineReducers, createStore} from 'redux';
 import {persistStore, persistReducer} from 'redux-persist';
 import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
 		},
 		accountReducer
 	),
+	socket: socketReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

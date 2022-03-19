@@ -9,7 +9,6 @@ import { QueryClientProvider, QueryClient} from 'react-query';
 import { PersistGate } from 'redux-persist/integration/react';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
-
 import { GOOGLE_WEBCLIENT_ID } from './src/services/config';
 import storeConfig from './src/store';
 import AuthNavigator from './src/navigations/auth-navigator';
@@ -22,6 +21,7 @@ const queryClient = new QueryClient();
 const AppWrapper = () => {
 	const auth = useSelector((state) => state.auth);
 
+	
 	return (
 		<SafeAreaProvider>
 			<GestureHandlerRootView style={{flex: 1}}>

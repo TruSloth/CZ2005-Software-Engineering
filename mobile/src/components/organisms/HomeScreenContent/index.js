@@ -81,6 +81,10 @@ const HomeScreenContent = (props) => {
 		sheetRef.current.snapTo(0);
 	}
 
+	const onPressChat = () => {
+		navigation.navigate('LiveChat');
+	}
+
 	const moreInfoOnPress = () => {
 		navigation.navigate('StoreDetailedInfo');
 	};
@@ -213,6 +217,7 @@ const HomeScreenContent = (props) => {
 					renderContent={isQueueSheetOpen ? QueueSheetContent : StoreInfoContent}
 					moreInfoOnPress={moreInfoOnPress}
 					queueOnPress={openQueue}
+					chatOnPress={onPressChat}
 					onCloseEnd={closeQueue}
 					count={queuePax}
 					onPressPlus={queueIncrement}

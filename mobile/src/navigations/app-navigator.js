@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TouchableOpacity, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { io } from 'socket.io-client';
 
 import NotificationsScreen from '../scenes/Notifications';
 
