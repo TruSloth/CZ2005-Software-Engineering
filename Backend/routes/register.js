@@ -25,6 +25,7 @@ async function verify(token) {
 }
 
 async function validateLoginInput(data) {
+  console.log(JSON.stringify(data))
   let errors = {};
   // Check the password and confirmed password are equal
   if (data.password != data.confirmationPassword) {
@@ -47,12 +48,15 @@ async function validateLoginInput(data) {
   ) {
     errors.userName = "Username already exists";
   }
-
+  console.log('no errors')
   return { errors, isValid: isEmpty(errors) };
+
 }
+
 
 // Registration Page
 router.post("/users/register", async (req, res) => {
+  console.log('registering')
   // Ensure the input meets our requirements
   const { errors, isValid } = await validateLoginInput(req.body);
   if (!isValid) {
