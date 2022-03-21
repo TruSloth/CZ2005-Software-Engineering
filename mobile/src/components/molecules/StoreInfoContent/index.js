@@ -24,7 +24,9 @@ const StoreInfoContent = (props) => {
 		<View style={styles.container1}>
 		<QRCodeScanner 
 		onRead={onRead}
-		cameraStyle={{ height: '35%',  width: '45%', alignSelf: 'center', justifyContent: 'center' }}
+				containerStyle={{height: 300}}
+		cameraProps={{ratio: "1:1"}}
+		cameraStyle={{ height: '50%',  width: '50%', borderRadius: 10, alignSelf: 'center', justifyContent: 'center' }}
 			></QRCodeScanner>
 			</View >
 		</View>
