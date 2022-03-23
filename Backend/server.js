@@ -8,13 +8,13 @@ const login = require("./routes/login");
 const queue = require("./routes/queue");
 const {createServer} = require('http');
 const {Server} = require('socket.io');
-const { stringify } = require("querystring");
 
 dotenv.config();
 
+
 mongoose.connect(process.env.DATABASE_ACCESS, () =>
-  console.log("Database connected")
-);
+    console.log("Database connected"));
+
 
 app.use(express.json());
 app.use(cors());
