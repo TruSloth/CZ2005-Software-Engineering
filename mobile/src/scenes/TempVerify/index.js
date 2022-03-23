@@ -17,8 +17,7 @@ import {useDispatch} from 'react-redux';
 import {useMutation} from 'react-query';
 
 import {verify} from '../../services/auth/verify';
-import {toggleLogIn} from '../../store/auth/actions';
-import { setCurrentUser } from '../../store/account/actions';
+import { setCurrentUser, toggleLogIn } from '../../store/account/actions';
 
 const TempVerifyScreen = ({route}) => {
 	const {tempUserName} = route.params;

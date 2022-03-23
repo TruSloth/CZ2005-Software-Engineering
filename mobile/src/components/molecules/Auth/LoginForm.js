@@ -6,6 +6,8 @@ import { useState } from 'react';
 import RoundButton from '../../atoms/RoundButton';
 import InputField from '../../atoms/InputField';
 
+// Renders a login form consisting of email and password entries, as well as a submission button
+
 const LoginForm = (props) => {
 	const {submitForm, loading} = props
 

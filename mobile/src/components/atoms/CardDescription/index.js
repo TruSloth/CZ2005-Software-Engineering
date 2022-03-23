@@ -1,6 +1,8 @@
 import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import RoundButton from '../RoundButton';
+
+// Renders a View containing the content for a Card. Used with TappableCard.
 
 const CardDescription = (props) => {
 	const {title, titleStyle, subtitle, subtitleStyle, subtextLine1, subtextLine1Style, subtextLine2, subtextLine2Style, onPressCardDesc} = props

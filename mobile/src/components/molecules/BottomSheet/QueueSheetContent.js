@@ -1,6 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
+// Renders the BottomSheet content for queuing functions
+
 const QueueSheetContent = (props) => {
 	const {count, onPressPlus, onPressMinus, onPressConfirm, onPressCancel} =
 		props;

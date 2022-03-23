@@ -8,7 +8,7 @@ Additionally, several config files need to be manually added for security.
 
 ```
 export const LOCALHOST = 'YOUR_IPV4_ADDRESS'
-export const export const GOOGLE_WEBCLIENT_ID = 'GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION'
+export const GOOGLE_WEBCLIENT_ID = 'GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION'
 ```
 
 > The value `YOUR_IPV4_ADDRESS` can be found by running `ipconfig` in your terminal.
@@ -26,6 +26,8 @@ CLIENT_ID = 'GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION'
 ```
 
 > The value `GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION` can be found in the firebase or google cloud console for the project.
+
+> The values `LINK_TO_DATABASE_FOR_USERS` and `LINK_TO_DATABASE_FOR_QUEUES` need to be entered as well. (Refer to Telegram)
 
 3. The file `google-services.json` must be manually added to the project at `/PATH/TO/PROJECT/ROOT/mobile/android/app`.
 
@@ -55,8 +57,6 @@ The current file tree is listed here. Most Android & ios files and folders have 
 |-- Root
     |-- .gitignore
     |-- README.md
-    |-- .vscode
-    |   |-- settings.json
     |-- Backend
     |   |-- .env
     |   |-- .gitignore
@@ -90,6 +90,7 @@ The current file tree is listed here. Most Android & ios files and folders have 
         |-- metro.config.js
         |-- package-lock.json
         |-- package.json
+        |-- .vscode
         |-- android
         |   |-- build.gradle
         |   |-- gradle.properties
@@ -130,21 +131,21 @@ The current file tree is listed here. Most Android & ios files and folders have 
         |   |   |   |-- TappableCard
         |   |   |       |-- index.js
         |   |   |-- molecules
-        |   |   |   |-- AltAuthOptions
+        |   |   |   |-- Auth
+        |   |   |   |   |-- AltAuthOptions.js
         |   |   |   |   |-- index.js
-        |   |   |   |-- AppBottomSheet
+        |   |   |   |   |-- LoginForm.js
+        |   |   |   |-- BottomSheet
+        |   |   |   |   |-- AppBottomSheet.js
         |   |   |   |   |-- index.js
+        |   |   |   |   |-- QRCodeReader.js
+        |   |   |   |   |-- QueueSheetContent.js
+        |   |   |   |   |-- StoreInfoContent.js
         |   |   |   |-- BottomTabBar
         |   |   |   |   |-- index.js
         |   |   |   |-- HistoryEntry
         |   |   |   |   |-- index.js
         |   |   |   |-- HorizontalBlock
-        |   |   |   |   |-- index.js
-        |   |   |   |-- LoginForm
-        |   |   |   |   |-- index.js
-        |   |   |   |-- QueueSheetContent
-        |   |   |   |   |-- index.js
-        |   |   |   |-- StoreInfoContent
         |   |   |   |   |-- index.js
         |   |   |   |-- TopBanner
         |   |   |       |-- index.js
@@ -153,27 +154,34 @@ The current file tree is listed here. Most Android & ios files and folders have 
         |   |       |   |-- index.js
         |   |       |-- AppSettingsScreenContent
         |   |       |   |-- index.js
+        |   |       |-- ChatScreenContent
+        |   |       |   |-- index.js
         |   |       |-- HistoryScreenContent
         |   |       |   |-- index.js
         |   |       |-- HomeScreenContent
         |   |       |   |-- index.js
-        |   |       |-- LoginContent
+        |   |       |-- LoginScreenContent
         |   |           |-- index.js
         |   |-- navigations
         |   |   |-- account-navigator.js
         |   |   |-- app-navigator.js
         |   |   |-- auth-navigator.js
+        |   |   |-- chat-navigator.js
         |   |   |-- home-navigator.js
         |   |-- scenes
         |   |   |-- Account
         |   |   |   |-- index.js
         |   |   |-- AppSettings
         |   |   |   |-- index.js
+        |   |   |-- Chat
+        |   |   |   |-- index.js
         |   |   |-- History
         |   |   |   |-- index.js
         |   |   |-- Home
         |   |   |   |-- index.js
         |   |   |-- Login
+        |   |   |   |-- index.js
+        |   |   |-- Notifications
         |   |   |   |-- index.js
         |   |   |-- Onboarding
         |   |   |   |-- index.js
@@ -196,19 +204,26 @@ The current file tree is listed here. Most Android & ios files and folders have 
         |   |   |       |-- googleRegister.js
         |   |   |       |-- googleSignIn.js
         |   |   |-- queue
-        |   |       |-- getQueue.js
-        |   |       |-- joinQueue.js
+        |   |   |   |-- getQueue.js
+        |   |   |   |-- joinQueue.js
+        |   |   |-- serviceProviders
+        |   |       |-- getNearbyServiceProviders.js
         |   |-- store
         |       |-- index.js
         |       |-- account
         |       |   |-- actions.js
         |       |   |-- constants.js
         |       |   |-- reducers.js
-        |       |-- auth
-        |           |-- actions.js
-        |           |-- constants.js
+        |       |-- auth-awaitingDeletion
+        |       |   |-- actions.js
+        |       |   |-- constants.js
+        |       |   |-- reducers.js
+        |       |-- serviceProviders
+        |       |   |-- actions.js
+        |       |   |-- constants.js
+        |       |   |-- reducers.js
+        |       |-- socket
         |           |-- reducers.js
         |-- __tests__
             |-- App-test.js
-
 ```

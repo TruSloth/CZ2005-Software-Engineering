@@ -1,15 +1,15 @@
 import React from 'react';
 import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
 
+// Renders the BottomSheet content for short-form Store Info
+
 const StoreInfoContent = (props) => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
 	const {moreInfoOnPress, queueOnPress, chatOnPress} = props;
 
 	return (
-		<View
-			style={styles.container}
-		>
+		<View style={styles.container}>
 			<Image
 				style={styles.images}
 				source={{uri: reactNativeLogo}}
@@ -35,7 +35,10 @@ const StoreInfoContent = (props) => {
 					>
 						<Text styles={styles.buttonText}>Queue</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.button} onPress={chatOnPress}>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={chatOnPress}
+					>
 						<Text styles={styles.buttonText}>Chat</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
@@ -46,6 +49,7 @@ const StoreInfoContent = (props) => {
 					</TouchableOpacity>
 				</View>
 			</View>
+			
 		</View>
 	);
 };

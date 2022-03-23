@@ -2,6 +2,8 @@ import React from 'react';
 
 import {TouchableOpacity, Text, StyleSheet, View, ActivityIndicator} from 'react-native';
 
+// Renders a Round Corner Button with a loading indicator
+
 const RoundButton = (props) => {
 	const {style, title, onPress, loading} = props;
 

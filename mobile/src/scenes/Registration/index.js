@@ -12,14 +12,13 @@ import {
 	ActivityIndicator,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
+import {useMutation} from 'react-query';
 
 import {register} from '../../services/auth/register';
 import { googleRegister } from '../../services/auth/google/googleRegister';
-import {useMutation} from 'react-query';
-import AltAuthOptions from '../../components/molecules/AltAuthOptions';
+import { AltAuthOptions } from '../../components/molecules/Auth';
 import { googleSignIn } from '../../services/auth/google/googleSignIn';
-import { toggleLogIn } from '../../store/auth/actions';
-import { setCurrentUser } from '../../store/account/actions';
+import { setCurrentUser, toggleLogIn } from '../../store/account/actions';
 
 const RegistrationScreen = ({navigation}) => {
 	const dispatch = useDispatch();

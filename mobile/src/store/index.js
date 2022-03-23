@@ -1,4 +1,4 @@
-import authReducer from './auth/reducers';
+
 import accountReducer from './account/reducers';
 import socketReducer from './socket/reducers';
 import {combineReducers, createStore} from 'redux';
@@ -11,19 +11,10 @@ const persistConfig = {
 	storage: AsyncStorage,
 	stateReconciler: hardSet,
 	debug: true,
-	whitelist: ['auth', 'account'],
+	whitelist: ['account'],
 };
 
 const rootReducer = combineReducers({
-	auth: persistReducer(
-		{
-			key: 'auth',
-			storage: AsyncStorage,
-			stateReconciler: hardSet,
-			debug: true,
-		},
-		authReducer
-	),
 	account: persistReducer(
 		{
 			key: 'account',

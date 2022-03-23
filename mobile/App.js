@@ -19,14 +19,13 @@ import SplashScreen from './src/scenes/SplashScreen';
 const queryClient = new QueryClient();
 
 const AppWrapper = () => {
-	const auth = useSelector((state) => state.auth);
+	const account = useSelector((state) => state.account);
 
-	
 	return (
 		<SafeAreaProvider>
 			<GestureHandlerRootView style={{flex: 1}}>
 			<NavigationContainer>
-				{auth.isLoggedIn ? (
+				{account.isLoggedIn ? (
 					<AppNavigator></AppNavigator>					
 				) : (
 					<AuthNavigator></AuthNavigator>

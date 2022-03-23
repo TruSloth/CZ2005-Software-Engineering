@@ -1,7 +1,9 @@
 import React from 'react';
 
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {GoogleSignin, GoogleSigninButton} from '@react-native-google-signin/google-signin';
+import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
+
+// Renders a row of alternative authentication options as logos
 
 const AltAuthOptions = (props) => {
 	const {onPressGoogleLogin, altAuthTitle} = props;
@@ -26,14 +28,6 @@ const AltAuthOptions = (props) => {
 					color={GoogleSigninButton.Color.Light}
 					onPress={onPressGoogleLogin}
 				></GoogleSigninButton>
-				{/* <TouchableOpacity onPress={onPressGoogleLogin}>
-					<Image
-						source={{
-							uri: 'https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png',
-						}}
-						style={styles.tinyLogo}
-					/>
-				</TouchableOpacity> */}
 			</View>
 		</View>
 	);

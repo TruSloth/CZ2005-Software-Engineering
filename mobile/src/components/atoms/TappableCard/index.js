@@ -5,6 +5,8 @@ import {Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
 import {Card} from 'react-native-elements';
 import CardDescription from '../CardDescription';
 
+// Renders a Tile-Card that can be tapped. Relies on CardDescription for its content
+
 const TappableCard = (props) => {
 	const reactNativeLogo = '../../../assets/react-native-logo.png';
 

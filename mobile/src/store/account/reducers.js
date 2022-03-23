@@ -1,9 +1,13 @@
 import {
 	SET_CURRENT_USER,
+	TOGGLE_LOGGED_IN,
 } from './constants';
 
 const initialState = {
+	isLoggedIn: false,
 	userName: null,
+	profilePic: null,
+	points: 0,
 };
 
 const accountReducer = (state = initialState, action) => {
@@ -14,7 +18,11 @@ const accountReducer = (state = initialState, action) => {
 				...state,
 				userName: action.payload,
 			}
-
+		case TOGGLE_LOGGED_IN:
+			return {
+				...state,
+				isLoggedIn: action.payload,
+			}
 		default:
 			return state;
 	}

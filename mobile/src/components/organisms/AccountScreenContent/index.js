@@ -1,14 +1,14 @@
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import HorizontalBlock from '../../molecules/HorizontalBlock';
 import TopBanner from '../../molecules/TopBanner';
 
 const AccountScreenContent = () => {
-	const dispatch = useDispatch();
-
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
+
+	const account = useSelector((state) => state.account);
 
 	const accountPoints = [
 		{
@@ -70,7 +70,7 @@ const AccountScreenContent = () => {
 	return (
 		<ScrollView>
 			<TopBanner
-				title={'John Doe'}
+				title={`${account.userName}`}
 				subtitle={'Edit Profile'}
 				leftAvatar={true}
 				avatarImage={reactNativeLogo}

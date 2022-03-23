@@ -4,6 +4,8 @@ import { View, TouchableOpacity, Text } from "react-native";
 
 import { Icon } from "react-native-elements";
 
+// This seems unused at the moment...
+
 const BottomTabBar = ({ state, descriptors, navigation }) => {
     return (
       <View style={{ flexDirection: 'row' }}>

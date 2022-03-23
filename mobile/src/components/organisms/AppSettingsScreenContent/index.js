@@ -3,8 +3,7 @@ import {ScrollView, StyleSheet} from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { googleIsSignedIn, googleSignOut } from '../../../services/auth/google/googleSignIn';
-import { setCurrentUser } from '../../../store/account/actions';
-import { toggleLogIn } from '../../../store/auth/actions';
+import { setCurrentUser, toggleLogIn } from '../../../store/account/actions';
 import HorizontalBlock from '../../molecules/HorizontalBlock';
 
 const AppSettingsScreenContent = () => {

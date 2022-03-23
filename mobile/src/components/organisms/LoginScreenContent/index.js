@@ -1,8 +1,10 @@
 import React from 'react';
 
 import {ScrollView, Image, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import LoginForm from '../../molecules/LoginForm';
-import AltAuthOptions from '../../molecules/AltAuthOptions';
+//import LoginForm from '../../molecules/Auth/LoginForm';
+//import AltAuthOptions from '../../molecules/Auth/AltAuthOptions';
+
+import { LoginForm, AltAuthOptions } from '../../molecules/Auth';
 
 const LoginContent = (props) => {
 	const {submitForm, registerOnPress, loading, onPressGoogleSignin} = props;

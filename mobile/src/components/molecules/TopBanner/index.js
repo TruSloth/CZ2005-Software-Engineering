@@ -2,6 +2,8 @@ import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
 
+// Renders a banner to be positioned at the top of the screen. Can optionally contain a action bar.
+
 const TopBanner = (props) => {
 	const {
 		title,

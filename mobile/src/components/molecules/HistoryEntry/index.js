@@ -3,10 +3,10 @@ import {Text, View, StyleSheet, Image} from 'react-native';
 
 import HorizontalSection from '../../atoms/HorizontalSection';
 
+// Renders a horizontal entry for a previously visited location
+
 const HistoryEntry = (props) => {
 	const {date, time, imageSource, location, ratings, points} = props;
-
-    console.log(imageSource)
 
 	return (
 		<HorizontalSection

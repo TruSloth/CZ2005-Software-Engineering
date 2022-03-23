@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, FlatList, View} from 'react-native';
-import TappableCard from '../TappableCard';
+import {StyleSheet, Text, View} from 'react-native';
+
+// Renders a View with horizontal borders above and below the child content
 
 const HorizontalSection = (props) => {
 	const {child, style, title, titleStyle} = props;

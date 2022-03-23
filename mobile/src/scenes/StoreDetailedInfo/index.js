@@ -9,8 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 
-import AppBottomSheet from "../../components/molecules/AppBottomSheet";
-import QueueSheetContent from "../../components/molecules/QueueSheetContent";
+import { AppBottomSheet, QueueSheetContent } from "../../components/molecules/BottomSheet";
 
 import { useMutation } from 'react-query';
 import { joinQueue } from '../../services/queue/joinQueue';

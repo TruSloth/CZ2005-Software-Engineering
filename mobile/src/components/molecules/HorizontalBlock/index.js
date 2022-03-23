@@ -3,6 +3,8 @@ import {StyleSheet, TouchableOpacity} from 'react-native';
 
 import HorizontalSection from '../../atoms/HorizontalSection';
 
+// Renders a composite component that enhances a HorizontalSection with a header portion, and multiple child sections
+
 const HorizontalBlock = (props) => {
 	const {blockTitle, blockElements, blockTitleStyle, blockElementTitlesStyle, style} = props;
 

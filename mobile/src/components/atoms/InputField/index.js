@@ -2,6 +2,8 @@ import React from 'react';
 
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 
+// Custom rendering of text input field with label
+
 const InputField = (props) => {
 	const {title, placeholder, updateFieldFunc, secureTextEntry} = props
 

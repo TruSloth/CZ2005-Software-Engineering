@@ -1,18 +1,21 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import {FlatList, View, StyleSheet, Platform, ScrollView} from 'react-native';
+import {FlatList, View, StyleSheet, Platform, ScrollView, Text} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import TappableCard from '../../atoms/TappableCard';
 import HorizontalSection from '../../atoms/HorizontalSection';
 import TopBanner from '../../molecules/TopBanner';
 import CategoryFilter from '../../atoms/CategoryFilter';
-import AppBottomSheet from '../../molecules/AppBottomSheet';
-import StoreInfoContent from '../../molecules/StoreInfoContent';
-import QueueSheetContent from '../../molecules/QueueSheetContent';
-import {set} from 'react-native-reanimated';
+// import AppBottomSheet from '../../molecules/BottomSheet/AppBottomSheet';
+// import StoreInfoContent from '../../molecules/BottomSheet/StoreInfoContent';
+// import QueueSheetContent from '../../molecules/BottomSheet/QueueSheetContent';
+import {AppBottomSheet, StoreInfoContent, QueueSheetContent} from '../../molecules/BottomSheet';
 import { useSelector } from 'react-redux';
 
+
+
 const HomeScreenContent = (props) => {
+
 	const {navigation, joinServiceProviderQueue} = props;
 
 	const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
@@ -35,6 +38,7 @@ const HomeScreenContent = (props) => {
 			subtextLine2: '~ 5 mins',
 		},
 	]);
+	
 
 	const [nearbyRestaurantsData, setNearbyRestaurantsData] = useState([
 		{
@@ -212,7 +216,7 @@ const HomeScreenContent = (props) => {
 					titleStyle={styles.sectionHeader}
 				></HorizontalSection>
 			</ScrollView>
-			<AppBottomSheet
+			<AppBottomSheet 
 					ref={sheetRef}
 					renderContent={isQueueSheetOpen ? QueueSheetContent : StoreInfoContent}
 					moreInfoOnPress={moreInfoOnPress}
@@ -224,7 +228,9 @@ const HomeScreenContent = (props) => {
 					onPressMinus={queueDecrement}
 					onPressCancel={closeQueue}
 					onPressConfirm={onQueueConfirm}
-			></AppBottomSheet>
+			>
+				 
+			</AppBottomSheet>
 		</View>
 	);
 };
