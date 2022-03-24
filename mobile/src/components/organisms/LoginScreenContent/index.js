@@ -6,7 +6,7 @@ import {ScrollView, Image, View, Text, StyleSheet, TouchableOpacity} from 'react
 
 import { LoginForm, AltAuthOptions } from '../../molecules/Auth';
 
-const LoginContent = (props) => {
+const LoginScreenContent = (props) => {
 	const {submitForm, registerOnPress, loading, onPressGoogleSignin} = props;
 
 	const reactNativeLogo = '../../../assets/react-native-logo.png';
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default LoginContent;
+export default LoginScreenContent;
