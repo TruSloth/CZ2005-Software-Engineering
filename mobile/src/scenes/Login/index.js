@@ -5,7 +5,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useDispatch} from 'react-redux';
 import { setCurrentUser, toggleLogIn } from '../../store/account/actions';
 
-import LoginContent from '../../components/organisms/LoginContent';
+import LoginScreenContent from '../../components/organisms/LoginScreenContent';
 import {login} from '../../services/auth/login';
 import { googleLogin } from '../../services/auth/google/googleLogin';
 import { googleSignIn } from '../../services/auth/google/googleSignIn';
@@ -64,7 +64,7 @@ const LoginScreen = ({navigation}) => {
 			<StatusBar
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}
 			/>
-			<LoginContent submitForm={onPressLogin} registerOnPress={registerOnPress} loading={isLoading} onPressGoogleSignin={onPressGoogleSignin}></LoginContent>
+			<LoginScreenContent submitForm={onPressLogin} registerOnPress={registerOnPress} loading={isLoading} onPressGoogleSignin={onPressGoogleSignin}></LoginScreenContent>
 		</SafeAreaView>
 	);
 };

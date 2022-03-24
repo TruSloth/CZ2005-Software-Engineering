@@ -4,7 +4,7 @@ Remember to ensure that all dependencies are installed by running `npm install` 
 
 Additionally, several config files need to be manually added for security.
 
-1. A file called `config.js` must be created in `PATH/TO/PROJECT/ROOT/mobile/services/`. It should contain
+1. A file called `config.js` must be created in `PATH/TO/PROJECT/ROOT/mobile/src/services/`. It should contain
 
 ```
 export const LOCALHOST = 'YOUR_IPV4_ADDRESS'
