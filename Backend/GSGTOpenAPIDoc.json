@@ -1,0 +1,361 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "GSGT OpenAPI",
+        "version": "1.0"
+    },
+    "tags": [{"name": "Authentication"}],
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "description": "Model of a user in the database",
+                "properties": {
+                    "userName": {
+                        "type": "string",
+                        "description": "The username associated with user",
+                        "format": "byte"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "The email address associated with user",
+                        "format": "byte"
+                    },
+                    "googleRegistered": {
+                        "type": "boolean",
+                        "description": "Whether this user registered using their google account"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "The password used to secure this user's account",
+                        "format": "password"
+                    },
+                    "date": {
+                        "type": "string",
+                        "description": "The date on which this user was created",
+                        "format": "date"
+                    },
+                    "verified": {
+                        "type": "boolean",
+                        "description": "Whether this user's email address has been verified"
+                    }
+                },
+                "required": [
+                    "userName",
+                    "email",
+                    "googleRegistered",
+                    "password",
+                    "verified"
+                ]
+            },
+            "ServiceProvider": {
+                "type": "object",
+                "description": "Model of a Service Provider in the database. Contains all relevant information about the ServiceProvider",
+                "properties": {
+                    "venueAddress": {
+                        "type": "string",
+                        "description": "The physical address associated with this Service Provider",
+                        "format": "byte"
+                    },
+                    "venueID": {
+                        "type": "string",
+                        "description": "The unique id associated with this Service Provider. Provided by BestTimeAPI",
+                        "format": "byte"
+                    },
+                    "venueLat": {
+                        "type": "number",
+                        "description": "Latitude of this Service Provider's address",
+                        "format": "double"
+                    },
+                    "venueLng": {
+                        "type": "number",
+                        "description": "Longitude of this Service Provider's address",
+                        "format": "double"
+                    },
+                    "venueName": {
+                        "type": "string",
+                        "description": "The name of this Service Provider",
+                        "format": "byte"
+                    },
+                    "venueType": {
+                        "type": "string",
+                        "description": "The category associated with this Service Provider"
+                    },
+                    "imageAddress": {
+                        "type": "string",
+                        "description": "Image URL for images associated with this Service Provider",
+                        "format": "uri"
+                    }
+                },
+                "required": [
+                    "venueAddress",
+                    "venueID",
+                    "venueLat",
+                    "venueLng",
+                    "venueName",
+                    "venueType"
+                ]
+            },
+            "QueueUser": {
+                "type": "object",
+                "description": "Model of a user currently in a queue",
+                "properties": {
+                    "user": {
+                        "type": "string",
+                        "description": "The username associated with this user",
+                        "format": "byte"
+                    },
+                    "venueID": {
+                        "type": "string",
+                        "description": "The unique id associated with the Service Provider the user is queuing at.",
+                        "format": "byte"
+                    },
+                    "queueNumber": {
+                        "type": "integer",
+                        "description": "The queue number indicating this user's position in the queue.",
+                        "format": "int32"
+                    },
+                    "pax": {
+                        "type": "integer",
+                        "description": "The number of guests queuing with this user",
+                        "format": "int32"
+                    }
+                },
+                "required": [
+                    "user",
+                    "venueID",
+                    "queueNumber",
+                    "pax"
+                ]
+            }
+        },
+        "responses": {
+            "loginSuccess": {
+                "description": "Response from a successful login",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "verified": {
+                                    "type": "boolean"
+                                },
+                                "username": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "registrationSuccess": {
+                "description": "Response from a successful registration",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    }
+                }
+            },
+            "authFailed": {
+                "description": "Authentication failed due to invalid credentials."
+            },
+            "authInvalid": {
+                "description": "Invalid authentication credential format."
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "https://localhost:4000",
+            "description": "Development Server"
+        },
+        {
+            "url": "https://{productionIP}:{port}",
+            "description": "Production Server",
+            "variables": {
+                "productionIP": {
+                    "default": "aws",
+                    "description": "IP address is provided by AWS."
+                },
+                "port": {
+                    "enum": [
+                        "80"
+                    ],
+                    "default": "80"
+                }
+            }
+        }
+    ],
+    "paths": {
+        "/users/login": {
+            "post": {
+                "description": "Attempt to log the user in using the provided authentication details",
+                "tags": ["Authentication"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "required": ["email", "password"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Returns the user's username and verified status",
+                        "$ref": "#/components/responses/loginSuccess"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/authFailed"
+                    }
+                }
+            }
+        },
+        "/users/login/google": {
+            "post": {
+                "description": "Attempt to log the user in via google",
+                "tags": ["Authentication"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "description": "Google Client Id Token",
+                                "properties": {
+                                    "idToken": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["idToken"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Returns the user's username and verified status",
+                        "$ref": "#/components/responses/loginSuccess"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/authFailed"
+                    }
+                }
+            }
+        },
+        "/users/register": {
+            "post": {
+                "description": "Attempt to register the user using the provided authentication details",
+                "tags": ["Authentication"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/registrationSuccess"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/authInvalid"
+                    }
+                }
+            }
+        },
+        "/users/register/google": {
+            "post": {
+                "description": "Attempt to register the user using their google account",
+                "tags": ["Authentication"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "description": "Google Client Id Token",
+                                "properties": {
+                                    "idToken": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["idToken"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/registrationSuccess"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/authInvalid"
+                    }
+                }
+            }
+        },
+        "/users/register/:id": {
+            "post": {
+                "description": "Attempt to verify the user's email address",
+                "tags": ["Authentication"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "description": "Verification details",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "User's identification"
+                                    },
+                                    "authid": {
+                                        "type": "string",
+                                        "description": "User submitted verification code"
+                                    }
+                                },
+                                "required": ["id", "authid"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Succesfully verified user email",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "verified": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/authFailed"
+                    }
+                }
+            }
+        }
+    }
+}

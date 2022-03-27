@@ -5,6 +5,14 @@ import {useSelector} from 'react-redux';
 import HorizontalBlock from '../../molecules/HorizontalBlock';
 import TopBanner from '../../molecules/TopBanner';
 
+/**
+ * Renders the content for the Account Screen.
+ *
+ * @category Components
+ * @exports AccountScreenContent
+ * @subcategory Organisms
+ */
+
 const AccountScreenContent = () => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 

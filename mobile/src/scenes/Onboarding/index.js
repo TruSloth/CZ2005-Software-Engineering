@@ -32,9 +32,7 @@ const OnboardingScreen = ({navigation}) => {
 			title: 'Yae Miko',
 			description:
 				'Some ambitions have the power to heal wounds, to bring victory, to inspire hope. But some ambitions, outlive their masters, long after their soul ascends.',
-			imageSource: {
-				uri: reactNativeLogo,
-			},
+			imageSource: reactNativeLogo,
 		},
 
 		{
@@ -42,9 +40,7 @@ const OnboardingScreen = ({navigation}) => {
 			title: 'Raiden Shogun',
 			description:
 				'All the world holds dear is but a backdrop of constant motion. I stand before it alone and unchanging.',
-			imageSource: {
-				uri: reactNativeLogo,
-			},
+			imageSource: reactNativeLogo,
 		},
 
 		{
@@ -52,9 +48,7 @@ const OnboardingScreen = ({navigation}) => {
 			title: 'Sangonomiya Kokomi',
 			description:
 				'The moon shines bright over the depths of the seas as the tides come and go. It seems that as I go from strength to strength, so does my state of mind flow.',
-			imageSource: {
-				uri: reactNativeLogo,
-			},
+			imageSource: reactNativeLogo,
 		},
 	];
 

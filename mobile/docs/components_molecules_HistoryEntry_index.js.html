@@ -1,0 +1,235 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/molecules/HistoryEntry/index.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Organisms</h3><ul><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/molecules/HistoryEntry/index.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import {Text, View, StyleSheet, Image} from 'react-native';
+
+import HorizontalSection from '../../atoms/HorizontalSection';
+
+/**
+ * Renders a horizontal entry for a previously visited location.
+ *
+ * @category Components
+ * @exports HistoryEntry
+ * @subcategory Molecules
+ *
+ * @example &lt;caption>Default example&lt;/caption>
+ * return(
+ *   &lt;HistoryEntry
+ 		date={'26/03/22'}
+        time={'12:00'}
+        imageSource={'IMAGE_URL'}
+        location={'McDonalds'}
+        ratings={4.6}							
+		points={50}
+ *   &lt;/HistoryEntry>
+ * )
+ *
+ * @property {String} date Date to be displayed within `HistoryEntry`
+ * @property {String} time Time to be displayed within `HistoryEntry`
+ * @property {String} imageSource Image URL to be used
+ * @property {String} location Name of location displayed within `HistoryEntry`
+ * @property {Float} ratings Ratings score for `location` displayed within `HistoryEntry`
+ * @property {Int} points Points the user attained from visiting `location`
+ */
+
+const HistoryEntry = (props) => {
+	const {date, time, imageSource, location, ratings, points} = props;
+
+	return (
+		&lt;HorizontalSection
+			title={date}
+			titleStyle={styles.date}
+			style={styles.horizontalSection}
+			child={
+				&lt;View style={styles.historyEntry}>
+					&lt;Text style={styles.time}>{time}&lt;/Text>
+					&lt;View style={styles.row}>
+						&lt;Image
+							source={{uri: imageSource}}
+							style={styles.locationImage}
+						>&lt;/Image>
+						&lt;View>
+							&lt;Text style={styles.location}>{location}&lt;/Text>
+							&lt;Text style={styles.ratings}>{ratings}&lt;/Text>
+						&lt;/View>
+						&lt;Text style={styles.points}>{points}&lt;/Text>
+					&lt;/View>
+				&lt;/View>
+			}
+		>&lt;/HorizontalSection>
+	);
+};
+
+const styles = StyleSheet.create({
+	horizontalSection: {
+		paddingVertical: 20,
+		borderTopWidth: 0,
+	},
+
+	historyEntry: {
+		flex: 1,
+		paddingHorizontal: 10,
+	},
+
+	date: {
+		paddingHorizontal: 10,
+		color: '#7879F1',
+		fontWeight: '700',
+	},
+
+	time: {
+		marginVertical: 10,
+		color: '#7879F1',
+		fontWeight: '700',
+	},
+
+	location: {
+		marginVertical: 5,
+		color: '#7879F1',
+		fontWeight: '700',
+	},
+
+	ratings: {
+		marginVertical: 5,
+		color: '#7879F1',
+	},
+
+	points: {
+		color: '#7879F1',
+		fontWeight: '700',
+	},
+
+	row: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+	},
+
+	locationImage: {
+		width: 96,
+		height: 96,
+		borderWidth: 1,
+		borderColor: '#7879F1',
+	},
+});
+
+export default HistoryEntry;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

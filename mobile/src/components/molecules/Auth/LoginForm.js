@@ -6,7 +6,24 @@ import { useState } from 'react';
 import RoundButton from '../../atoms/RoundButton';
 import InputField from '../../atoms/InputField';
 
-// Renders a login form consisting of email and password entries, as well as a submission button
+/**
+ * Renders a login form consisting of email and password entries, as well as a submission button.
+ *
+ * @category Components
+ * @exports LoginForm
+ * @subcategory Molecules
+ *
+ * @example <caption>Default example</caption>
+ * return(
+ *   <LoginForm
+ 		submitForm={() => {console.log('Form submitted')}}							
+		loading={false}
+ *   </LoginForm>
+ * )
+ *
+ * @property {Function} submitForm Callback used when the form is to be submitted
+ * @property {Boolean} loading Whether the form is in the process of being submitted
+ */
 
 const LoginForm = (props) => {
 	const {submitForm, loading} = props

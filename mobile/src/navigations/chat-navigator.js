@@ -5,11 +5,17 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ChatScreen from '../scenes/Chat';
 import {StyleSheet} from 'react-native';
 
-/**
- * Stack navigators for the account set of screens
- */
-
 const Stack = createNativeStackNavigator();
+
+/**
+ * Stack navigators for the **chat** set of screens
+ * 
+ * Controls navigation for `ChatScreen`.
+ * 
+ * @category Navigations
+ * @exports ChatNavigator
+ * 
+ */
 
 const ChatNavigator = () => {
 	return (

@@ -2,7 +2,28 @@ import React from 'react';
 
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 
-// Custom rendering of text input field with label
+/**
+ * Custom rendering of text input field with label.
+ *
+ * @category Components
+ * @exports InputField
+ * @subcategory Atoms
+ *
+ * @example <caption>Default example</caption>
+ * return(
+ *   <InputField							
+ * 		title={'Email'}
+ * 		placeholder={'JohnTan@email.com'}
+ * 		updateFieldFunc={(text) => {console.log(`Input changed to ${text}`)}}
+ * 		secureTextEntry={false}
+ *   </InputField>
+ * )
+ *
+ * @property {String} title Label for `InputField`
+ * @property {String} placeholder Placeholder text to be used for `InputField`
+ * @property {Function} updateFieldFunc Callback to be used when the text in `InputField` changes
+ * @property {Boolean} secureTextEntry Whether the text input should be hidden
+ */
 
 const InputField = (props) => {
 	const {title, placeholder, updateFieldFunc, secureTextEntry} = props

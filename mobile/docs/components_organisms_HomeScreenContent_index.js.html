@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/organisms/HomeScreenContent/index.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Organisms</h3><ul><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/organisms/HomeScreenContent/index.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useEffect, useRef, useState} from 'react';
+
+import {FlatList, View, StyleSheet, Platform, ScrollView, Text} from 'react-native';
+import {SearchBar} from 'react-native-elements';
+import { useSelector } from 'react-redux';
+
+import TappableCard from '../../atoms/TappableCard';
+import HorizontalSection from '../../atoms/HorizontalSection';
+import TopBanner from '../../molecules/TopBanner';
+import CategoryFilter from '../../atoms/CategoryFilter';
+import {AppBottomSheet, StoreInfoContent, QueueSheetContent} from '../../molecules/BottomSheet';
+
+/**
+ * Renders the content for the Application Home Screen.
+ *
+ * @category Components
+ * @exports HomeScreenContent
+ * @subcategory Organisms
+ * 
+ * @property {Function} joinServiceProviderQueue Callback to be passed to {@link module:QueueSheetContent|QueueSheetContent}
+ */
+
+const HomeScreenContent = (props) => {
+
+	const {navigation, joinServiceProviderQueue} = props;
+
+	const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
+		{
+			title: 'Location 1',
+			subtitle: '5 Stars',
+			subtextLine1: '10 in Queue',
+			subtextLine2: '~ 5 mins',
+		},
+		{
+			title: 'Location 2',
+			subtitle: '4 Stars',
+			subtextLine1: '5 in Queue',
+			subtextLine2: '~ 5 mins',
+		},
+		{
+			title: 'Location 3',
+			subtitle: '3 Stars',
+			subtextLine1: '3 in Queue',
+			subtextLine2: '~ 5 mins',
+		},
+	]);
+	
+
+	const [nearbyRestaurantsData, setNearbyRestaurantsData] = useState([
+		{
+			title: 'Location 1',
+			subtitle: '5 stars',
+			subtextLine1: '10 in Queue',
+		},
+		{
+			title: 'Location 2',
+			subtitle: '5 stars',
+			subtextLine1: '10 in Queue',
+		},
+		{
+			title: 'Location 3',
+			subtitle: '5 stars',
+			subtextLine1: '10 in Queue',
+		},
+		{
+			title: 'Location 4',
+			subtitle: '5 stars',
+			subtextLine1: '10 in Queue',
+		},
+	]);
+
+	const sheetRef = useRef(null);
+
+	const account = useSelector((state) => state.account)
+
+	const openStoreInfo = () => {
+		sheetRef.current.snapTo(0);
+	};
+
+	const openQueue = () => {
+		setIsQueueSheetOpen(true);
+	};
+
+	const closeQueue = () => {
+		setIsQueueSheetOpen(false);
+		setQueuePax(0)
+	};
+
+	const onPressCardDescQueue = () => {
+		setIsQueueSheetOpen(true);
+		sheetRef.current.snapTo(0);
+	}
+
+	const onPressChat = () => {
+		navigation.navigate('LiveChat');
+	}
+
+	const moreInfoOnPress = () => {
+		navigation.navigate('StoreDetailedInfo');
+	};
+
+	const queueIncrement = () => {
+        setQueuePax(queuePax + 1);
+    }
+	const queueDecrement = () => {
+		if (queuePax > 0) {
+			setQueuePax(queuePax - 1);
+		}
+	};
+
+	const onQueueConfirm = () => {
+		joinServiceProviderQueue(account.userName, 'Temporary Store Name')
+	}
+
+	const settingsOnPress = () => {
+		navigation.navigate('AppSettings');
+	}
+
+	const [search, setSearch] = useState('');
+
+	const [bannerHeight, setBannerHeight] = useState(0);
+
+	const [queuePax, setQueuePax] = useState(0);
+
+	const [isQueueSheetOpen, setIsQueueSheetOpen] = useState(false);
+
+	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
+
+	return (
+		&lt;View style={{flex: 1}}>
+			&lt;ScrollView style={styles.homeScreenContent}>
+				&lt;TopBanner
+					title={`Hi, ${account.userName}`}
+					subtitle={'Where are you going to queue next?'}
+					avatarImage={reactNativeLogo}
+					settingsOnPress={settingsOnPress}
+					actionBar={true}
+					style={styles.homeBanner}
+					onLayout={(e) => {
+						e.persist();
+						setBannerHeight(
+							e &amp;&amp; e.nativeEvent ? e.nativeEvent.layout.height : 0
+						);
+					}}
+				>&lt;/TopBanner>
+				&lt;SearchBar
+					onChangeText={(text) => setSearch(text)}
+					value={search}
+					platform={Platform.OS === 'ios' ? 'ios' : 'android'}
+					onClear={(text) => setSearch('')}
+					round={false}
+					placeholder={'Search'}
+					placeholderTextColor={'#7879F1'}
+					containerStyle={[
+						styles.searchBar,
+						{top: bannerHeight + 25},
+					]}
+					inputContainerStyle={styles.searchBarInput}
+				>&lt;/SearchBar>
+				&lt;HorizontalSection
+					child={
+						&lt;View style={styles.categoryRow}>
+							&lt;CategoryFilter
+								imageSource={reactNativeLogo}
+								title={'Food'}
+							>&lt;/CategoryFilter>
+							&lt;CategoryFilter
+								imageSource={reactNativeLogo}
+								title={'Food'}
+							>&lt;/CategoryFilter>
+							&lt;CategoryFilter
+								imageSource={reactNativeLogo}
+								title={'Food'}
+							>&lt;/CategoryFilter>
+							&lt;CategoryFilter
+								imageSource={reactNativeLogo}
+								title={'Food'}
+							>&lt;/CategoryFilter>
+						&lt;/View>
+					}
+				>&lt;/HorizontalSection>
+				&lt;HorizontalSection
+					child={
+						&lt;FlatList
+							horizontal
+							data={previouslyVisitedData}
+							renderItem={({item}) => {
+								return (
+									&lt;TappableCard
+										cardTitle={item.title}
+										cardSubtitle={item.subtitle}
+										cardSubtextLine1={item.subtextLine1}
+										cardSubtextLine2={item.subtextLine2}
+										onPress={openStoreInfo}
+										onPressCardDesc={onPressCardDescQueue}
+									>&lt;/TappableCard>
+								);
+							}}
+						>&lt;/FlatList>
+					}
+					title={'Previously Visited'}
+					titleStyle={styles.sectionHeader}
+				>&lt;/HorizontalSection>
+				&lt;HorizontalSection
+					child={
+						&lt;FlatList
+							horizontal
+							data={nearbyRestaurantsData}
+							renderItem={({item}) => {
+								return (
+									&lt;TappableCard
+										cardTitle={item.title}
+										cardSubtitle={item.subtitle}
+										cardSubtextLine1={item.subtextLine1}
+										cardSubtextLine2={item.subtextLine2}
+									>&lt;/TappableCard>
+								);
+							}}
+						>&lt;/FlatList>
+					}
+					title={'Nearby Restaurants'}
+					titleStyle={styles.sectionHeader}
+				>&lt;/HorizontalSection>
+			&lt;/ScrollView>
+			&lt;AppBottomSheet 
+					ref={sheetRef}
+					renderContent={isQueueSheetOpen ? QueueSheetContent : StoreInfoContent}
+					moreInfoOnPress={moreInfoOnPress}
+					queueOnPress={openQueue}
+					chatOnPress={onPressChat}
+					onCloseEnd={closeQueue}
+					count={queuePax}
+					onPressPlus={queueIncrement}
+					onPressMinus={queueDecrement}
+					onPressCancel={closeQueue}
+					onPressConfirm={onQueueConfirm}
+			>
+				 
+			&lt;/AppBottomSheet>
+		&lt;/View>
+	);
+};
+
+const styles = StyleSheet.create({
+	homeScreenContent: {},
+
+	categoryRow: {
+		flexDirection: 'row',
+		justifyContent: 'space-evenly',
+		paddingVertical: 20,
+	},
+
+	searchBar: {
+		marginHorizontal: 20,
+		borderRadius: 10,
+		position: 'absolute',
+		width: '90%',
+		elevation: 5,
+		zIndex: 1,
+		height: 50,
+		justifyContent: 'center',
+	},
+
+	sectionHeader: {
+		fontWeight: '700',
+		fontSize: 16,
+		color: '#7879F1',
+	},
+
+	searchBarInput: {},
+
+	homeBanner: {
+		marginVertical: 20,
+	},
+});
+
+export default HomeScreenContent;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

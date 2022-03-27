@@ -2,7 +2,30 @@ import React from 'react';
 
 import {TouchableOpacity, Text, StyleSheet, View, ActivityIndicator} from 'react-native';
 
-// Renders a Round Corner Button with a loading indicator
+/**
+ * Renders a Round Cornered Button with an optional loading indicator.
+ *
+ * @category Components
+ * @exports RoundButton
+ * @subcategory Atoms
+ *
+ * @example <caption>Default example</caption>
+ * return(
+ *   <RoundButton							
+ * 		style={{
+			backgroundColor: '#7879F1'
+ 		}}
+		title={'Submit'}
+		onPress={() => {console.log('Button Pressed')}}
+		loading={false}
+ *   </RoundButton>
+ * )
+ *
+ * @property {object(style)} style Additional style to be passed to `RoundButton`
+ * @property {String} title Text to be used inside `RoundButton`
+ * @property {Function} onPress Callback used when `RoundButton` is pressed
+ * @property {Boolean} loading Whether `RoundButton` should display a loading indicator instead of `title`
+ */
 
 const RoundButton = (props) => {
 	const {style, title, onPress, loading} = props;

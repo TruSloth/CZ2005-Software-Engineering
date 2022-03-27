@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/molecules/BottomSheet/QueueSheetContent.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Organisms</h3><ul><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/molecules/BottomSheet/QueueSheetContent.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+
+/**
+ * Renders {@link module:AppBottomSheet|AppBottomSheet} content for queueing functionality.
+ *
+ * @category Components
+ * @exports QueueSheetContent
+ * @subcategory Molecules
+ *
+ * @example &lt;caption>Default example&lt;/caption>
+ * 
+ * return(
+ *   &lt;AppBottomSheet
+ 		renderContent={QueueSheetContent}							
+		onCloseEnd={() => {console.log('Closed')}}
+		count={count}
+		onPressPlus={() => {console.log('Queue was incremented')}}
+		onPressMinus={() => {console.log('Queue was decremented')}}
+		onPressConfirm={() => {console.log('Queue was submitted')}}
+		onPressCancel={() => {console.log('Queue was cancelled')}}
+ *   &lt;/AppBottomSheet>
+ * )
+ *
+ * @property {Int} count Currently selected number of pax
+ * @property {Function} onPressPlus Callback used when queue is incremented
+ * @property {Function} onPressMinus Callback used when queue is decremented
+ * @property {Function} onPressConfirm Callback used when queue is confirmed
+ * @property {Function} onPressCancel Callback used when queue is cancelled or `AppBottomSheet` is closed
+ */
+
+const QueueSheetContent = (props) => {
+	const {count, onPressPlus, onPressMinus, onPressConfirm, onPressCancel} =
+		props;
+
+	return (
+		&lt;View style={styles.container}>
+			&lt;Text style={styles.title2}>Please select no. of pax:&lt;/Text>
+
+			&lt;View flexDirection='row'>
+				&lt;TouchableOpacity style={[styles.btn1]} onPress={onPressMinus}>
+					&lt;Text style={styles.btnTextMinus}>-&lt;/Text>
+				&lt;/TouchableOpacity>
+
+				&lt;Text style={styles.title}>{count}&lt;/Text>
+
+				&lt;TouchableOpacity style={[styles.btn1]} onPress={onPressPlus}>
+					&lt;Text style={styles.btnTextPlus}>+&lt;/Text>
+				&lt;/TouchableOpacity>
+			&lt;/View>
+			&lt;View>
+				&lt;TouchableOpacity
+					style={[styles.btn2]}
+					onPress={onPressConfirm}
+				>
+					&lt;Text style={styles.btnTextConfirm}>Confirm&lt;/Text>
+				&lt;/TouchableOpacity>
+				&lt;View style={{width: 15}} />
+				&lt;TouchableOpacity style={[styles.btn2]} onPress={onPressCancel}>
+					&lt;Text style={styles.btnTextCancel}>Cancel&lt;/Text>
+				&lt;/TouchableOpacity>
+			&lt;/View>
+		&lt;/View>
+	);
+};
+
+const styles = StyleSheet.create({
+	container: {
+		padding: 16,
+		height: 450,
+		backgroundColor: 'white',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	btn1: {
+		marginTop: 15,
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: 75,
+		width: 120,
+		backgroundColor: '#fff',
+		borderColor: '#fff',
+	},
+
+	btn2: {
+		marginTop: 15,
+		borderWidth: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: 35,
+		width: 120,
+		borderRadius: 7,
+		backgroundColor: '#fff',
+		borderColor: '#493d8a',
+	},
+
+	btnTextPlus: {
+		fontWeight: 'bold',
+		fontSize: 25,
+		color: '#493d8a',
+	},
+
+	btnTextMinus: {
+		fontWeight: 'bold',
+		fontSize: 25,
+		color: '#493d8a',
+	},
+
+	btnTextConfirm: {
+		fontWeight: 'bold',
+		fontSize: 15,
+		color: '#493d8a',
+	},
+
+	btnTextCancel: {
+		fontWeight: 'bold',
+		fontSize: 15,
+		color: '#F178B6',
+	},
+
+	title: {
+		fontSize: 80,
+		color: '#493d8a',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	title2: {
+		fontSize: 25,
+		color: '#493d8a',
+	},
+});
+
+export default QueueSheetContent;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

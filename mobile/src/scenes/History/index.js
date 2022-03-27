@@ -1,7 +1,5 @@
 import React from "react";
 
-import { Button } from "react-native-elements";
-import { View } from "react-native";
 import HistoryScreenContent from "../../components/organisms/HistoryScreenContent";
 
 const HistoryScreen = () => {

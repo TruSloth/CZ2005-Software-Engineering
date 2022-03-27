@@ -2,7 +2,42 @@ import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
 
-// Renders a banner to be positioned at the top of the screen. Can optionally contain a action bar.
+/**
+ * Renders a banner to be positioned at the top of the screen. Can optionally contain a action bar.
+ *
+ * @category Components
+ * @exports TopBanner
+ * @subcategory Molecules
+ *
+ * @example <caption>Default example</caption>
+ * return(
+ *   <TopBanner
+ 		title={'BannerTitle'}
+        subtitle={'BannerSubtitle'}
+        avatarImage={'IMAGE_URL'}
+        onLayout={() => {
+			console.log('Setting layout')
+		}}
+		settingsOnPress={() => {
+			console.log('Settings button was pressed')
+		}}							
+		leftAvatar={false}
+		actionBar={true}
+ *   </TopBanner>
+ * )
+ *
+ * @property {String} title Header text to be displayed within `TopBanner`
+ * @property {String} subtitle Subheader text found directly below `title`
+ * @property {String} avatarImage Avatar Image URL to be used
+ * @property {Function} onLayout Callback to be used to set the position of the floating search bar
+ * @property {Function} settingsOnPress Callback to be used when the settings button is pressed
+ * @property {object(style)} style Additional style to be passed to `TopBanner`
+ * @property {object(style)} bannerContentContainerStyle Additional style for the content container
+ * @property {object(style)} titleStyle Additional style for `title`
+ * @property {object(style)} subtitleStyle Additional style for `subtitle`
+ * @property {Boolean} leftAvatar Whether `avatarImage` should appear on the left
+ * @property {Boolean} actionBar Whether an action bar should be displayed on top of the content container
+ */
 
 const TopBanner = (props) => {
 	const {

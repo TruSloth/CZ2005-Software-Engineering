@@ -8,11 +8,19 @@ import OnboardingScreen from '../scenes/Onboarding/';
 import TempVerifyScreen from '../scenes/TempVerify';
 import {useSelector} from 'react-redux';
 
-/**
- * Stack navigators for the authentication set of screens
- */
+
 
 const Stack = createNativeStackNavigator();
+
+/**
+ * Stack navigators for the **authentication** set of screens
+ * 
+ * Controls navigation for `OnboardingScreen`, `RegistrationScreen`, `LoginScreen` and `TempVerifyScreen`.
+ * 
+ * @category Navigations
+ * @exports AuthNavigator
+ * 
+ */
 
 const AuthNavigator = () => {
 	const auth = useSelector((state) => state.auth);

@@ -6,6 +6,14 @@ import { googleIsSignedIn, googleSignOut } from '../../../services/auth/google/g
 import { setCurrentUser, toggleLogIn } from '../../../store/account/actions';
 import HorizontalBlock from '../../molecules/HorizontalBlock';
 
+/**
+ * Renders the content for the App Settings Screen.
+ *
+ * @category Components
+ * @exports AppSettingsScreenContent
+ * @subcategory Organisms
+ */
+
 const AppSettingsScreenContent = () => {
     const dispatch = useDispatch();
 

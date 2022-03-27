@@ -10,11 +10,17 @@ import HomeNavigator from './home-navigator';
 import ChatNavigator from './chat-navigator';
 import AccountNavigator from './account-navigator';
 
-/**
- * Tab navigator for main application
- */
-
 const Tab = createBottomTabNavigator();
+
+/**
+ * Tab navigator for the main application.
+ * 
+ * Controls tab based navigation for `Home`, `Chat`, `Notifications` and `Account` tabs.
+ * 
+ * @category Navigations
+ * @exports AppNavigator
+ * 
+ */
 
 const AppNavigator = () => {
     return (

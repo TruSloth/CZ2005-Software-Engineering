@@ -1,7 +1,29 @@
 import React from 'react';
 import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
 
-// Renders the BottomSheet content for short-form Store Info
+/**
+ * Renders {@link module:AppBottomSheet|AppBottomSheet} content for short-form Store Info.
+ *
+ * @category Components
+ * @exports StoreInfoContent
+ * @subcategory Molecules
+ *
+ * @example <caption>Default example</caption>
+ * 
+ * return(
+ *   <AppBottomSheet
+ 		renderContent={StoreInfoContent}							
+		onCloseEnd={() => {console.log('Closed')}}
+		moreInfoOnPress={() => {console.log('Displaying More info')}}
+		queueOnPress={() => {console.log('Opening Queue')}}
+		chatOnPress={() => {console.log('Opening Chat')}}
+ *   </AppBottomSheet>
+ * )
+ *
+ * @property {Function} moreInfoOnPress Callback used when moreInfo option is pressed
+ * @property {Function} queueOnPress Callback used when queue option is pressed
+ * @property {Function} chatOnPress Callback used when chat option is pressed
+ */
 
 const StoreInfoContent = (props) => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';

@@ -1,7 +1,33 @@
 import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
-// Renders the BottomSheet content for queuing functions
+/**
+ * Renders {@link module:AppBottomSheet|AppBottomSheet} content for queueing functionality.
+ *
+ * @category Components
+ * @exports QueueSheetContent
+ * @subcategory Molecules
+ *
+ * @example <caption>Default example</caption>
+ * 
+ * return(
+ *   <AppBottomSheet
+ 		renderContent={QueueSheetContent}							
+		onCloseEnd={() => {console.log('Closed')}}
+		count={count}
+		onPressPlus={() => {console.log('Queue was incremented')}}
+		onPressMinus={() => {console.log('Queue was decremented')}}
+		onPressConfirm={() => {console.log('Queue was submitted')}}
+		onPressCancel={() => {console.log('Queue was cancelled')}}
+ *   </AppBottomSheet>
+ * )
+ *
+ * @property {Int} count Currently selected number of pax
+ * @property {Function} onPressPlus Callback used when queue is incremented
+ * @property {Function} onPressMinus Callback used when queue is decremented
+ * @property {Function} onPressConfirm Callback used when queue is confirmed
+ * @property {Function} onPressCancel Callback used when queue is cancelled or `AppBottomSheet` is closed
+ */
 
 const QueueSheetContent = (props) => {
 	const {count, onPressPlus, onPressMinus, onPressConfirm, onPressCancel} =

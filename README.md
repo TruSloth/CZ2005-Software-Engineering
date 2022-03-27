@@ -1,3 +1,11 @@
+# Team Generic SG Team's CZ2006 Project
+
+All documentation of the project (eg. Class diagrams, Sequence diagrams) can be found in `Documents/`.
+
+Server-side code can be found in `Backend/` with documentation found in `Backend/GSGTOpenAPIDoc.json`. Server-side documentation follows the OpenAPI standard.
+
+Client-side code can be found in `mobile/` with documentation found in `mobile/docs/`. Client-side documentation was done using _jsdoc_ and can be viewed by opening the `index.html` file in the browser.
+
 # For Development
 
 Remember to ensure that all dependencies are installed by running `npm install` in **both** `PATH/TO/PROJECT/ROOT/mobile/` and `PATH/TO/PROJECT/ROOT/Backend/` _(You have to do them seperately)_
@@ -7,11 +15,11 @@ Additionally, several config files need to be manually added for security.
 1. A file called `config.js` must be created in `PATH/TO/PROJECT/ROOT/mobile/src/services/`. It should contain
 
 ```
-export const LOCALHOST = 'YOUR_IPV4_ADDRESS'
+export const LOCALHOST = 'YOUR_IPV4_ADDRESS' or 'AWS_IP_ADDRESS'
 export const GOOGLE_WEBCLIENT_ID = 'GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION'
 ```
 
-> The value `YOUR_IPV4_ADDRESS` can be found by running `ipconfig` in your terminal.
+> The value `YOUR_IPV4_ADDRESS` can be found by running `ipconfig` in your terminal. Alternatively, if you are looking to test the AWS server, replace this with `AWS_IP_ADDRESS`, which can be obtained from @nicholaswko.
 
 > The value `GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION` can be found in the firebase or google cloud console for the project.
 
@@ -51,7 +59,7 @@ Terminal 3: Navigate to `PATH/TO/PROJECT/ROOT/Backend/` and run `npm run start`
 
 ## Project Structure
 
-The current file tree is listed here. Most Android & ios files and folders have been omitted for brevity.
+The current file tree is listed here. Most Android, ios and docs files and folders have been omitted for brevity.
 
 ```
 |-- Root
@@ -60,18 +68,32 @@ The current file tree is listed here. Most Android & ios files and folders have 
     |-- Backend
     |   |-- .env
     |   |-- .gitignore
+    |   |-- GSGTOpenAPIDoc.json
     |   |-- package-lock.json
     |   |-- package.json
     |   |-- server.js
     |   |-- models
     |   |   |-- queueUser.js
+    |   |   |-- serviceProviderData.js
     |   |   |-- signup.js
     |   |-- routes
     |   |   |-- login.js
     |   |   |-- queue.js
     |   |   |-- register.js
+    |   |   |-- serviceProvider.js
     |   |-- tools
     |       |-- nodemailer.js
+    |-- Documents
+    |   |-- CZ2006-ClassDiagram_Detailed.pdf
+    |   |-- CZ2006-ClassDiagram_Stereotypes.pdf
+    |   |-- CZ2006-DesignPatterns.pdf
+    |   |-- CZ2006-DialogMap.pdf
+    |   |-- CZ2006-OutlineV2.pdf
+    |   |-- CZ2006-SequenceDiagram.pdf
+    |   |-- CZ2006-SoftwareArchitectureDiagram.pdf
+    |   |-- CZ2006-UIMockups.pdf
+    |   |-- CZ2006-UseCaseDescriptionsV2.pdf
+    |   |-- CZ2006-UseCaseModel_v2.pdf
     |-- mobile
         |-- .buckconfig
         |-- .eslintrc.js
@@ -85,11 +107,14 @@ The current file tree is listed here. Most Android & ios files and folders have 
         |-- babel.config.js
         |-- Gemfile
         |-- Gemfile.lock
+        |-- Gruntfile.js
         |-- index.js
         |-- jsconfig.json
+        |-- jsdoc.json
         |-- metro.config.js
         |-- package-lock.json
         |-- package.json
+        |-- styleguide.config.js
         |-- .vscode
         |-- android
         |   |-- build.gradle
@@ -107,6 +132,7 @@ The current file tree is listed here. Most Android & ios files and folders have 
         |   |   |-- proguard-rules.pro
         |   |   |-- build
         |   |   |-- src
+        |-- docs
         |-- ios
         |-- src
         |   |-- assets
@@ -196,6 +222,7 @@ The current file tree is listed here. Most Android & ios files and folders have 
         |   |-- services
         |   |   |-- config.js
         |   |   |-- auth
+        |   |   |   |-- index.js
         |   |   |   |-- login.js
         |   |   |   |-- register.js
         |   |   |   |-- verify.js

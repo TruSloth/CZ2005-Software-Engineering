@@ -17,6 +17,11 @@ const serviceProviderData = new mongoose.Schema({
     required: true,
   },
 
+  venueLng: {
+    type: Decimal128,
+    required: true,
+  },
+
   venueName: {
     type: String,
     required: true,

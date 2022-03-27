@@ -2,17 +2,23 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {FlatList, View, StyleSheet, Platform, ScrollView, Text} from 'react-native';
 import {SearchBar} from 'react-native-elements';
+import { useSelector } from 'react-redux';
+
 import TappableCard from '../../atoms/TappableCard';
 import HorizontalSection from '../../atoms/HorizontalSection';
 import TopBanner from '../../molecules/TopBanner';
 import CategoryFilter from '../../atoms/CategoryFilter';
-// import AppBottomSheet from '../../molecules/BottomSheet/AppBottomSheet';
-// import StoreInfoContent from '../../molecules/BottomSheet/StoreInfoContent';
-// import QueueSheetContent from '../../molecules/BottomSheet/QueueSheetContent';
 import {AppBottomSheet, StoreInfoContent, QueueSheetContent} from '../../molecules/BottomSheet';
-import { useSelector } from 'react-redux';
 
-
+/**
+ * Renders the content for the Application Home Screen.
+ *
+ * @category Components
+ * @exports HomeScreenContent
+ * @subcategory Organisms
+ * 
+ * @property {Function} joinServiceProviderQueue Callback to be passed to {@link module:QueueSheetContent|QueueSheetContent}
+ */
 
 const HomeScreenContent = (props) => {
 

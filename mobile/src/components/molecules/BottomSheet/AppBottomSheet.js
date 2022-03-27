@@ -1,7 +1,25 @@
 import React, { forwardRef } from "react";
 import BottomSheet from "reanimated-bottom-sheet";
 
-// Renders a opinionated BottomSheet
+/**
+ * Renders a opinionated {@link https://github.com/osdnk/react-native-reanimated-bottom-sheet|BottomSheet}.
+ *
+ * @category Components
+ * @exports AppBottomSheet
+ * @subcategory Molecules
+ *
+ * @example <caption>Default example</caption>
+ * return(
+ *   <AppBottomSheet
+ 		renderContent={MyReactComponent}							
+		onCloseEnd={() => {console.log('Closed')}}
+ *   </AppBottomSheet>
+ * )
+ *
+ * @property {object(ref)} ref Reference to `AppBottomSheet` to be forwarded
+ * @property {ReactNativeComponent} renderContent Functional component to be rendered within `AppBottomSheet`
+ * @property {Function} onCloseEnd Callback used when `AppBottomSheet` is closed
+ */
 
 const AppBottomSheet = forwardRef((props, ref) => {
 

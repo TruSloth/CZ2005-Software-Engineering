@@ -7,11 +7,17 @@ import StoreDetailedInfoScreen from '../scenes/StoreDetailedInfo';
 import HomeScreen from '../scenes/Home';
 import AppSettingsScreen from '../scenes/AppSettings';
 
-/**
- * Stack navigators for the store info set of screens
- */
-
 const Stack = createNativeStackNavigator();
+
+/**
+ * Stack navigators for the **home** set of screens
+ * 
+ * Controls navigation for `HomeScreen`, `StoreDetailedInfoScreen`, `AppSettingsScreen`.
+ * 
+ * @category Navigations
+ * @exports HomeNavigator
+ * 
+ */
 
 const HomeNavigator = () => {
 	return (

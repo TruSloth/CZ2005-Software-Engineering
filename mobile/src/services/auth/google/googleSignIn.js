@@ -1,5 +1,14 @@
 import {GoogleSignin, statusCodes} from '@react-native-google-signin/google-signin'
 
+/** 
+ * Signs the user into their google account via Google Signin.
+ * 
+ * @memberof auth
+ * @function googleSignIn
+ * @async
+ * @returns {userInfo}
+ */
+
 export const googleSignIn = async () => {
     try {
         await GoogleSignin.hasPlayServices();
@@ -18,6 +27,15 @@ export const googleSignIn = async () => {
     }
 }
 
+/** 
+ * Checks if the user is currently signed into google.
+ * 
+ * @memberof auth
+ * @function googleIsSignedIn
+ * @async
+ * @returns {Boolean}
+ */
+
 export const googleIsSignedIn = async () => {
     try {
         await GoogleSignin.hasPlayServices();
@@ -27,6 +45,15 @@ export const googleIsSignedIn = async () => {
         console.log(e)
     }
 }
+
+/** 
+ * Signs the user out of their google account.
+ * 
+ * @memberof auth
+ * @function googleSignOut
+ * @async
+ * @returns {response}
+ */
 
 export const googleSignOut = async () => {
     try {

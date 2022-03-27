@@ -2,12 +2,36 @@ import React from 'react';
 
 import {StyleSheet, Text, View, Image, useWindowDimensions} from 'react-native';
 
+/**
+ * Content to be used for {@link module:Paginator|Paginator}.
+ *
+ * @category Components
+ * @exports OnboardingItem
+ * @subcategory Atoms
+ *
+ * @example <caption>Default example</caption>
+ * return(
+ *   <OnboardingItem							
+ * 		item={{
+			imageSource: 'IMAGE_URL',
+			title: 'itemTitle',
+			description: 'itemDescription'
+		}}
+ *   </OnboardingItem>
+ * )
+ *
+ * @property {object(imageSource, title, description)} item 
+ * The item data to be used.
+ *  
+ * Must contain an image URI, title text and text description
+ */
+
 const OnboardingItem = ({item}) => {
 	const {width} = useWindowDimensions();
 	return (
 		<View style={[styles.container, {width}]}>
 			<Image
-				source={item.imageSource}
+				source={{uri: item.imageSource}}
 				style={[styles.image, {width, resizeMode: 'contain'}]}
 			/>
 

@@ -6,12 +6,17 @@ const queueTemplate = new mongoose.Schema({
     required: true,
   },
 
-  store: {
+  venueID: {
     type: String,
     required: true,
   },
 
   queueNumber: {
+    type: Number,
+    required: true,
+  },
+
+  pax: {
     type: Number,
     required: true,
   },
