@@ -1,6 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import {FlatList, View, StyleSheet, Platform, ScrollView, Text} from 'react-native';
+import {
+	FlatList,
+	View,
+	StyleSheet,
+	Platform,
+	ScrollView,
+	Text,
+	Button,
+	Alert,
+} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import TappableCard from '../../atoms/TappableCard';
 import HorizontalSection from '../../atoms/HorizontalSection';
@@ -9,14 +18,21 @@ import CategoryFilter from '../../atoms/CategoryFilter';
 // import AppBottomSheet from '../../molecules/BottomSheet/AppBottomSheet';
 // import StoreInfoContent from '../../molecules/BottomSheet/StoreInfoContent';
 // import QueueSheetContent from '../../molecules/BottomSheet/QueueSheetContent';
-import {AppBottomSheet, StoreInfoContent, QueueSheetContent} from '../../molecules/BottomSheet';
-import { useSelector } from 'react-redux';
-
-
+import {
+	AppBottomSheet,
+	StoreInfoContent,
+	QueueSheetContent,
+} from '../../molecules/BottomSheet';
+import {useSelector} from 'react-redux';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+// import PushNotification from 'react-native-push-notification';
 
 const HomeScreenContent = (props) => {
-
 	const {navigation, joinServiceProviderQueue} = props;
+
+	// useEffect(() => {
+	// 	createChannels();
+	// });
 
 	const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
 		{
@@ -38,7 +54,6 @@ const HomeScreenContent = (props) => {
 			subtextLine2: '~ 5 mins',
 		},
 	]);
-	
 
 	const [nearbyRestaurantsData, setNearbyRestaurantsData] = useState([
 		{
@@ -65,8 +80,16 @@ const HomeScreenContent = (props) => {
 
 	const sheetRef = useRef(null);
 
-	const account = useSelector((state) => state.account)
+	const account = useSelector((state) => state.account);
 
+	// const createChannels = () => {
+	// 	PushNotification.createChannel({
+	// 		channelId: 'test-channel',
+	// 		channelName: 'Test Channel',
+	// 	});
+	// };
+
+	// const handleNotification = () => {};
 	const openStoreInfo = () => {
 		sheetRef.current.snapTo(0);
 	};
@@ -77,25 +100,25 @@ const HomeScreenContent = (props) => {
 
 	const closeQueue = () => {
 		setIsQueueSheetOpen(false);
-		setQueuePax(0)
+		setQueuePax(0);
 	};
 
 	const onPressCardDescQueue = () => {
 		setIsQueueSheetOpen(true);
 		sheetRef.current.snapTo(0);
-	}
+	};
 
 	const onPressChat = () => {
 		navigation.navigate('LiveChat');
-	}
+	};
 
 	const moreInfoOnPress = () => {
 		navigation.navigate('StoreDetailedInfo');
 	};
 
 	const queueIncrement = () => {
-        setQueuePax(queuePax + 1);
-    }
+		setQueuePax(queuePax + 1);
+	};
 	const queueDecrement = () => {
 		if (queuePax > 0) {
 			setQueuePax(queuePax - 1);
@@ -103,12 +126,20 @@ const HomeScreenContent = (props) => {
 	};
 
 	const onQueueConfirm = () => {
-		joinServiceProviderQueue(account.userName, 'Temporary Store Name')
-	}
+		joinServiceProviderQueue(account.userName, 'Temporary Store Name');
+	};
 
 	const settingsOnPress = () => {
 		navigation.navigate('AppSettings');
-	}
+	};
+
+	const BizHomeOnPress = () => {
+		navigation.navigate('BusinessHome');
+	};
+
+	const BizProfileOnPress = () => {
+		navigation.navigate('BusinessProfile');
+	};
 
 	const [search, setSearch] = useState('');
 
@@ -128,6 +159,9 @@ const HomeScreenContent = (props) => {
 					subtitle={'Where are you going to queue next?'}
 					avatarImage={reactNativeLogo}
 					settingsOnPress={settingsOnPress}
+					BizHomeOnPress={BizHomeOnPress}
+					BizProfileOnPress={BizProfileOnPress}
+					BizPr
 					actionBar={true}
 					style={styles.homeBanner}
 					onLayout={(e) => {
@@ -137,6 +171,7 @@ const HomeScreenContent = (props) => {
 						);
 					}}
 				></TopBanner>
+
 				<SearchBar
 					onChangeText={(text) => setSearch(text)}
 					value={search}
@@ -151,6 +186,7 @@ const HomeScreenContent = (props) => {
 					]}
 					inputContainerStyle={styles.searchBarInput}
 				></SearchBar>
+
 				<HorizontalSection
 					child={
 						<View style={styles.categoryRow}>
@@ -216,21 +252,21 @@ const HomeScreenContent = (props) => {
 					titleStyle={styles.sectionHeader}
 				></HorizontalSection>
 			</ScrollView>
-			<AppBottomSheet 
-					ref={sheetRef}
-					renderContent={isQueueSheetOpen ? QueueSheetContent : StoreInfoContent}
-					moreInfoOnPress={moreInfoOnPress}
-					queueOnPress={openQueue}
-					chatOnPress={onPressChat}
-					onCloseEnd={closeQueue}
-					count={queuePax}
-					onPressPlus={queueIncrement}
-					onPressMinus={queueDecrement}
-					onPressCancel={closeQueue}
-					onPressConfirm={onQueueConfirm}
-			>
-				 
-			</AppBottomSheet>
+			<AppBottomSheet
+				ref={sheetRef}
+				renderContent={
+					isQueueSheetOpen ? QueueSheetContent : StoreInfoContent
+				}
+				moreInfoOnPress={moreInfoOnPress}
+				queueOnPress={openQueue}
+				chatOnPress={onPressChat}
+				onCloseEnd={closeQueue}
+				count={queuePax}
+				onPressPlus={queueIncrement}
+				onPressMinus={queueDecrement}
+				onPressCancel={closeQueue}
+				onPressConfirm={onQueueConfirm}
+			></AppBottomSheet>
 		</View>
 	);
 };
@@ -265,6 +301,10 @@ const styles = StyleSheet.create({
 
 	homeBanner: {
 		marginVertical: 20,
+	},
+	button: {
+		height: 50,
+		width: 50,
 	},
 });
 

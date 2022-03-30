@@ -3,22 +3,29 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StyleSheet} from 'react-native';
 
-import StoreDetailedInfoScreen from '../scenes/StoreDetailedInfo';
-import HomeScreen from '../scenes/Home';
+//import InsertCustomer from '../scenes/StoreDetailedInfo';
+
 import AppSettingsScreen from '../scenes/AppSettings';
 import BusinessHomeScreen from '../scenes/BusinessHome';
 import InsertCustomerScreen from '../scenes/InsertCustomer';
-import CustomerDetailsScreen from '../scenes/CustomerDetails';
-import BusinessProfileScreen from '../scenes/BusinessProfile';
+import CustomerDetailsScreen from 'scenes/CustomerDetails';
+
 /**
  * Stack navigators for the store info set of screens
  */
 
 const Stack = createNativeStackNavigator();
 
-const HomeNavigator = () => {
+const BusinessNavigator = () => {
 	return (
-		<Stack.Navigator initialRouteName='HomePage'>
+		<Stack.Navigator initialRouteName='BusinessHome'>
+			<Stack.Screen
+				name='BusinessHome'
+				component={BusinessHomeScreen}
+				options={{
+					headerShown: false,
+				}}
+			></Stack.Screen>
 			<Stack.Screen
 				name='HomePage'
 				component={HomeScreen}
@@ -26,37 +33,27 @@ const HomeNavigator = () => {
 					headerShown: false,
 				}}
 			></Stack.Screen>
-			<Stack.Screen
+			{/* <Stack.Screen
 				name='InsertCustomer'
 				component={InsertCustomerScreen}
 				options={{title: ''}}
-			></Stack.Screen>
-			<Stack.Screen
-				name='CustomerDetails'
-				component={CustomerDetailsScreen}
-				options={{title: ''}}
-			></Stack.Screen>
-			<Stack.Screen
-				name='BusinessProfile'
-				component={BusinessProfileScreen}
-				options={{title: ''}}
-			></Stack.Screen>
-			<Stack.Screen
-				name='StoreDetailedInfo'
-				component={StoreDetailedInfoScreen}
-				options={{title: ''}}
-			></Stack.Screen>
+			></Stack.Screen> */}
 			<Stack.Screen
 				name='AppSettings'
 				component={AppSettingsScreen}
 				options={styles.appSettingsScreenOptions}
 			></Stack.Screen>
+			{/* <Stack.Screen
+				name='CustomerDetails'
+				component={CustomerDetailsScreen}
+				options={{title: ''}}
+			></Stack.Screen> */}
 			{/* NEWLY ADDED  */}
-			<Stack.Screen
+			{/* <Stack.Screen
 				name='BusinessHome'
 				component={BusinessHomeScreen}
 				options={{title: ''}}
-			></Stack.Screen>
+			></Stack.Screen> */}
 		</Stack.Navigator>
 	);
 };
@@ -71,4 +68,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default HomeNavigator;
+export default BusinessNavigator;
