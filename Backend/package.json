@@ -9,6 +9,7 @@
   "author": "Yi Hao",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.26.1",
     "bcrypt": "^5.0.1",
     "bee-queue": "^1.4.0",
     "bull": "^4.7.0",

@@ -14,7 +14,7 @@ import {LOCALHOST} from '../config';
  */
 
 export const register = async (registrationDetails) => {
-	return axios.post(`http://${LOCALHOST}:80/users/register/`, {
+	return axios.post(`http://${LOCALHOST}/users/register/`, {
 		userName: registrationDetails.userName,
 		email: registrationDetails.email,
 		password: registrationDetails.password,
