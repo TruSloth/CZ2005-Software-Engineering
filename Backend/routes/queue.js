@@ -23,13 +23,17 @@ async function determineQueueNumber(data) {
 
 // End user to join the queue
 router.post("/join-queue", async (req, res) => {
+  console.log(req)
   const previousHighest = await determineQueueNumber(req.body);
 
   const newEntry = new queueTemplate({
     user: req.body.user,
-    store: req.body.store,
+    venueID: req.body.store,
     queueNumber: previousHighest + 1,
+    pax: req.body.pax
   });
+
+  console.log(newEntry)
 
   await newEntry
     .save()
@@ -37,7 +41,7 @@ router.post("/join-queue", async (req, res) => {
       res.json(data);
     })
     .catch((error) => {
-      console.log(error);
+      console.log(error)
     });
 });
 

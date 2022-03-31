@@ -8,9 +8,33 @@ dotenv.config();
 
 // Retrive store information from BestTimeAPI
 router.get("/serviceProvider/update-all", async(req, res) => {
-  const response = await axios.post();
+  const searchResults = await axios.post('https://besttime.app/api/v1/venues/search', null, {
+    params: {
+      'api_key_private': process.env.BESTTIME_API_KEY,
+      'q': 'food and drink in Singapore',
+      'num': 20,
+      'fast': false,
+      'format': 'raw'
+    }
+  });
 
-  const serviceProviders = response.venues.map((venue) => {
+  const venueSearchProgressURL = searchResults.data._links.venue_search_progress;
+  //const venueSearchJobID = searchResults.data.job_id;
+
+  let inProgress = true;
+  
+  while(inProgress) {
+    let jobProgress = await axios.get(venueSearchProgressURL);
+    console.log('checking')
+    console.log(jobProgress)
+    if (jobProgress.data.job_finished === true) {
+      inProgress = false;
+    }
+  }
+
+  const response = await axios.get(venueSearchProgressURL)
+
+  const serviceProviders = response.data.venues.map((venue) => {
     return {
       venueAddress: venue.venue_address,
       venueID: venue.venue_id,
@@ -20,7 +44,9 @@ router.get("/serviceProvider/update-all", async(req, res) => {
     }
   })
 
-  stallTemplate.bulkSave(serviceProviders)
+  res.send(serviceProviders)
+
+  //stallTemplate.bulkSave(serviceProviders)
 })
 
 // Store a stall information into our database
