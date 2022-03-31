@@ -15,7 +15,7 @@ Additionally, several config files need to be manually added for security.
 1. A file called `config.js` must be created in `PATH/TO/PROJECT/ROOT/mobile/src/services/`. It should contain
 
 ```
-export const LOCALHOST = 'YOUR_IPV4_ADDRESS' or 'AWS_IP_ADDRESS'
+export const LOCALHOST = 'YOUR_IPV4_ADDRESS:4000' or 'AWS_IP_ADDRESS:80'
 export const GOOGLE_WEBCLIENT_ID = 'GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION'
 ```
 
