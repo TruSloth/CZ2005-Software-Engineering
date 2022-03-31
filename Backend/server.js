@@ -49,4 +49,4 @@ io.on("connection", (socket) => {
   })
 })
 
-httpServer.listen(4000, () => console.log("Server is up"));
+httpServer.listen(80, () => console.log("Server is up"));

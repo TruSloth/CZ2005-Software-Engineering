@@ -60,11 +60,13 @@ const RegistrationScreen = ({navigation}) => {
 	};
 
 	const onPressGoogleSignin = async () => {
+		console.log('google register pressed')
 		try {
 			const userInfo = await googleSignIn();
-
+			console.log(JSON.stringify(userInfo))
 			const response = await googleRegisterMutation.mutateAsync(userInfo)
-			
+			console.log('response obtained')
+			console.log(JSON.stringify(response))
 			if (response.status === 200) {
 				dispatch(setCurrentUser(response.data.userName))
 				dispatch(toggleLogIn(true))

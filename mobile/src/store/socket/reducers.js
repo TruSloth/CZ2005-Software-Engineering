@@ -1,7 +1,7 @@
 import {LOCALHOST} from '../../services/config'
 import { io } from "socket.io-client";
 
-const socket = io(`ws://${LOCALHOST}:4000/`, {
+const socket = io(`ws://${LOCALHOST}/`, {
     autoConnect: false
 })
 
