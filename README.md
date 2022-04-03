@@ -31,11 +31,14 @@ QUEUE  = "LINK_TO_DATABASE_FOR_QUEUES"
 AUTHENTICATION_TOKEN = "123"
 REDIS_URL = "redis:6379" // Is this necessary?
 CLIENT_ID = 'GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION'
+BESTTIME_API_KEY = 'BESTTIME_API_PRIVATE_KEY'
 ```
 
 > The value `GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION` can be found in the firebase or google cloud console for the project.
 
 > The values `LINK_TO_DATABASE_FOR_USERS` and `LINK_TO_DATABASE_FOR_QUEUES` need to be entered as well. (Refer to Telegram)
+
+> The value `BESTIME_API_KEY` can be found in the BestTimeAPI console under settings.
 
 3. The file `google-services.json` must be manually added to the project at `/PATH/TO/PROJECT/ROOT/mobile/android/app`.
 
@@ -43,7 +46,7 @@ CLIENT_ID = 'GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION'
 
 ## How to Run
 
-Open up 3 terminals and follow the instructions for each.
+Open up 3 terminals and follow the instructions for each. If you are testing using the AWS server, you can skip the steps for Terminal 3.
 
 ### Terminal 1 (Metro)
 
@@ -84,16 +87,6 @@ The current file tree is listed here. Most Android, ios and docs files and folde
     |   |-- tools
     |       |-- nodemailer.js
     |-- Documents
-    |   |-- CZ2006-ClassDiagram_Detailed.pdf
-    |   |-- CZ2006-ClassDiagram_Stereotypes.pdf
-    |   |-- CZ2006-DesignPatterns.pdf
-    |   |-- CZ2006-DialogMap.pdf
-    |   |-- CZ2006-OutlineV2.pdf
-    |   |-- CZ2006-SequenceDiagram.pdf
-    |   |-- CZ2006-SoftwareArchitectureDiagram.pdf
-    |   |-- CZ2006-UIMockups.pdf
-    |   |-- CZ2006-UseCaseDescriptionsV2.pdf
-    |   |-- CZ2006-UseCaseModel_v2.pdf
     |-- mobile
         |-- .buckconfig
         |-- .eslintrc.js
@@ -238,10 +231,6 @@ The current file tree is listed here. Most Android, ios and docs files and folde
         |   |-- store
         |       |-- index.js
         |       |-- account
-        |       |   |-- actions.js
-        |       |   |-- constants.js
-        |       |   |-- reducers.js
-        |       |-- auth-awaitingDeletion
         |       |   |-- actions.js
         |       |   |-- constants.js
         |       |   |-- reducers.js

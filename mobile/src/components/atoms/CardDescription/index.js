@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import RoundButton from '../RoundButton';
 
 /**
@@ -85,6 +85,9 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		paddingVertical: 5,
 		backgroundColor: 'transparent',
+		width: Dimensions.get('window').width * 0.48,
+		height: Dimensions.get('window').height * 0.18,
+		justifyContent: 'space-evenly'
 	},
 
 	subtextBox: {

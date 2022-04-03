@@ -10,7 +10,7 @@ dotenv.config();
 async function determineQueueNumber(data) {
   const previousHighest = await queueTemplate
     .find({
-      store: data.store,
+      venueID: data.store,
     })
     .findOne()
     .sort({ queueNumber: -1 });
@@ -23,7 +23,6 @@ async function determineQueueNumber(data) {
 
 // End user to join the queue
 router.post("/join-queue", async (req, res) => {
-  console.log(req)
   const previousHighest = await determineQueueNumber(req.body);
 
   const newEntry = new queueTemplate({
@@ -32,8 +31,6 @@ router.post("/join-queue", async (req, res) => {
     queueNumber: previousHighest + 1,
     pax: req.body.pax
   });
-
-  console.log(newEntry)
 
   await newEntry
     .save()

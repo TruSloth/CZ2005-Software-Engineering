@@ -4,60 +4,90 @@ const router = express.Router();
 const dotenv = require("dotenv");
 const stallTemplate = require("../models/serviceProviderData");
 
+//const venueImages = require('./venueImage.json');
+
+const geolib = require('geolib');
+
 dotenv.config();
 
 // Retrive store information from BestTimeAPI
-router.get("/serviceProvider/update-all", async(req, res) => {
-  const searchResults = await axios.post('https://besttime.app/api/v1/venues/search', null, {
-    params: {
-      'api_key_private': process.env.BESTTIME_API_KEY,
-      'q': 'food and drink in Singapore',
-      'num': 20,
-      'fast': false,
-      'format': 'raw'
+// Pull data from the BestimeAPI to the database. This endpoint is meant to be used during development only.
+// Vary the query by setting queryString (String to use to search BestTimeAPI) and resultCount (Number of results to retrive where 20 <= resultCount <= 200)
+router.get("/serviceProvider/update-all", async (req, res) => {
+  const searchResults = await axios.post(
+    "https://besttime.app/api/v1/venues/search",
+    null,
+    {
+      params: {
+        api_key_private: process.env.BESTTIME_API_KEY,
+        q: req.body.queryString,
+        num: req.body.resultCount,
+        fast: false,
+        format: "raw",
+      },
     }
-  });
+  );
 
-  const venueSearchProgressURL = searchResults.data._links.venue_search_progress;
-  //const venueSearchJobID = searchResults.data.job_id;
+  const venueSearchProgressURL =
+    searchResults.data._links.venue_search_progress;
 
   let inProgress = true;
-  
-  while(inProgress) {
+  let venueSearchFilterURL;
+
+  while (inProgress) {
     let jobProgress = await axios.get(venueSearchProgressURL);
-    console.log('checking')
-    console.log(jobProgress)
+    console.log("checking");
+    console.log(jobProgress);
     if (jobProgress.data.job_finished === true) {
       inProgress = false;
+      venueSearchFilterURL = jobProgress.data._links.venue_filter_api;
     }
   }
 
-  const response = await axios.get(venueSearchProgressURL)
+  const response = await axios.get(venueSearchFilterURL);
+  console.log(response.data.venues);
 
   const serviceProviders = response.data.venues.map((venue) => {
     return {
       venueAddress: venue.venue_address,
       venueID: venue.venue_id,
-      venueLat: venue.venue_lat,
-      venueLng: venue.venue_lon,
-      venueName: venue.venue_name
-    }
-  })
+      location: {
+        type: "Point",
+        coordinates: [venue.venue_lng, venue.venue_lat],
+      },
+      venueName: venue.venue_name,
+      venueType: venue.venue_type,
+      venueRatings: venue.rating,
+      numReviews: venue.reviews,
+    };
+  });
 
-  res.send(serviceProviders)
-
-  //stallTemplate.bulkSave(serviceProviders)
-})
+  await stallTemplate.collection
+    .insertMany(serviceProviders, {
+      ordered: false,
+    })
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.json(error);
+    });
+});
 
 // Store a stall information into our database
 router.post("/serviceProvider/add-stall", async (req, res) => {
   const stall = new stallTemplate({
     venueAddress: req.body.venueAddress,
     venueID: req.body.venueID,
-    venueLat: req.body.venueLat,
-    venueLng: req.body.venueLng,
+    location: {
+      type: "Point",
+      coordinates: [req.body.venueLng, req.body.venueLat],
+    },
     venueName: req.body.venueName,
     venueType: req.body.venueType,
+    venueRatings: req.body.rating,
+    numReviews: req.body.reviews,
   });
 
   await stall
@@ -75,6 +105,53 @@ router.get("/serviceProvider/get-stall", async (req, res) => {
   const stalls = await stallTemplate.find();
   res.send(stalls);
 });
+
+// Retrieve all nearby stores in our database.
+// Nearby stores are those within 10 minute walking distance (calculated using 5 km/hr walking speed)
+router.get("/serviceProvider/find-nearest", async (req, res) => {
+  console.log(req)
+  const stalls = await stallTemplate.find();
+  const checkingRadius = 833; // in meters
+
+  const nearbyStalls = stalls.filter((stall) => {
+    return geolib.isPointWithinRadius(
+      {
+        latitude: stall.location.coordinates[1],
+        longitude: stall.location.coordinates[0]
+      },
+      {
+        latitude: req.query.currentLat,
+        longitude: req.query.currentLng
+      },
+      checkingRadius
+    )
+  })
+
+  res.send(nearbyStalls)
+});
+
+// DEVELOPMENT ONLY: 
+// Update all stalls in database with image addresses found in venueImage.json
+// router.post("/serviceProvider/addImages", async (req, res) => {
+//   venueImages.forEach(async (venue) => {
+//     await stallTemplate.updateMany(
+//       {
+//         venueName: {
+//           $regex: venue.venueName
+//         }
+//       },
+//       {
+//         $set: {
+//           "imageAddress": venue.imageAddress
+//         }
+//       } 
+//     ).then().catch((e) => {
+//       console.log(e)
+//     })
+//   })
+    
+//   res.send('done')
+// })
 
 // Retrieve store by names
 router.get("/serviceProvider/search-stall", async (req, res) => {
@@ -97,6 +174,18 @@ router.get("/serviceProvider/search-stall", async (req, res) => {
   } else {
     res.send(stalls);
   }
+});
+
+// Flush out all serviceProviders
+router.post("/serviceProvider/clear", (req, res) => {
+  stallTemplate
+    .deleteMany({})
+    .then(function () {
+      res.json({ status: "success" });
+    })
+    .catch(function () {
+      res.status(400);
+    });
 });
 
 module.exports = router;

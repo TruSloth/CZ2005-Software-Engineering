@@ -28,27 +28,36 @@ import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
 const StoreInfoContent = (props) => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
-	const {moreInfoOnPress, queueOnPress, chatOnPress} = props;
+	const {
+		moreInfoOnPress,
+		queueOnPress,
+		chatOnPress,
+		storeImage,
+		heading,
+		waitTime,
+		subHeading,
+		rating,
+		numReviews,
+		text,
+	} = props;
 
 	return (
 		<View style={styles.container}>
 			<Image
 				style={styles.images}
-				source={{uri: reactNativeLogo}}
+				source={{uri: storeImage || reactNativeLogo}}
 			></Image>
 			<View style={{flexDirection: 'row'}}>
-				<Text style={styles.heading}>Location 1 ♡</Text>
+				<Text style={styles.heading}>{heading}</Text>
 				<Text style={[styles.waitTime]}>~15 mins</Text>
 			</View>
 			<View style={{flexDirection: 'row'}}>
 				<Text style={styles.subheading}>8 in queue</Text>
-				<Text style={styles.rating}>⭐ 4.4 (505)</Text>
+				<Text style={styles.rating}>{rating} ⭐ ({numReviews})</Text>
 			</View>
 			<View style={{flexDirection: 'row'}}>
 				<Text style={styles.texts}>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-					do eiusmod tempor incididunt ut labore et dolore magna
-					aliqua.
+					{text}
 				</Text>
 				<View style={{flexDirection: 'column'}}>
 					<TouchableOpacity
@@ -71,7 +80,6 @@ const StoreInfoContent = (props) => {
 					</TouchableOpacity>
 				</View>
 			</View>
-			
 		</View>
 	);
 };

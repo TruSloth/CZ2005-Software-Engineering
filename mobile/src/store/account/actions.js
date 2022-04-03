@@ -3,6 +3,8 @@ import {
 	TOGGLE_LOGGED_IN
 } from './constants';
 
+import GetLocation from 'react-native-get-location';
+
 export const setCurrentUser = (userName) => {
 	return {
 		type: SET_CURRENT_USER,
@@ -16,3 +18,7 @@ export const toggleLogIn = (loggedIn) => {
 		payload: loggedIn,
 	};
 };
+
+// export const updateCurrentLocation = () => {
+// 	Get
+// }

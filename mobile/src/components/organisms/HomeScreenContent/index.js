@@ -1,14 +1,28 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import {FlatList, View, StyleSheet, Platform, ScrollView, Text} from 'react-native';
+import {
+	FlatList,
+	View,
+	StyleSheet,
+	Platform,
+	ScrollView,
+	Text,
+} from 'react-native';
 import {SearchBar} from 'react-native-elements';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
+import {useQuery} from 'react-query';
 
+import {getNearbyServiceProviders} from '../../../services/serviceProviders/getNearbyServiceProviders';
 import TappableCard from '../../atoms/TappableCard';
 import HorizontalSection from '../../atoms/HorizontalSection';
 import TopBanner from '../../molecules/TopBanner';
 import CategoryFilter from '../../atoms/CategoryFilter';
-import {AppBottomSheet, StoreInfoContent, QueueSheetContent} from '../../molecules/BottomSheet';
+import {
+	AppBottomSheet,
+	StoreInfoContent,
+	QueueSheetContent,
+} from '../../molecules/BottomSheet';
+
 
 /**
  * Renders the content for the Application Home Screen.
@@ -16,13 +30,12 @@ import {AppBottomSheet, StoreInfoContent, QueueSheetContent} from '../../molecul
  * @category Components
  * @exports HomeScreenContent
  * @subcategory Organisms
- * 
+ *
  * @property {Function} joinServiceProviderQueue Callback to be passed to {@link module:QueueSheetContent|QueueSheetContent}
  */
 
 const HomeScreenContent = (props) => {
-
-	const {navigation, joinServiceProviderQueue} = props;
+	const {navigation, joinServiceProviderQueue, nearbyVenuesData} = props;
 
 	const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
 		{
@@ -44,36 +57,15 @@ const HomeScreenContent = (props) => {
 			subtextLine2: '~ 5 mins',
 		},
 	]);
-	
 
-	const [nearbyRestaurantsData, setNearbyRestaurantsData] = useState([
-		{
-			title: 'Location 1',
-			subtitle: '5 stars',
-			subtextLine1: '10 in Queue',
-		},
-		{
-			title: 'Location 2',
-			subtitle: '5 stars',
-			subtextLine1: '10 in Queue',
-		},
-		{
-			title: 'Location 3',
-			subtitle: '5 stars',
-			subtextLine1: '10 in Queue',
-		},
-		{
-			title: 'Location 4',
-			subtitle: '5 stars',
-			subtextLine1: '10 in Queue',
-		},
-	]);
+	const [currentlyOpenStore, setCurrentlyOpenStore] = useState({});
 
 	const sheetRef = useRef(null);
 
-	const account = useSelector((state) => state.account)
+	const account = useSelector((state) => state.account);
 
-	const openStoreInfo = () => {
+	const openStoreInfo = (venue) => {
+		setCurrentlyOpenStore(venue)
 		sheetRef.current.snapTo(0);
 	};
 
@@ -83,25 +75,28 @@ const HomeScreenContent = (props) => {
 
 	const closeQueue = () => {
 		setIsQueueSheetOpen(false);
-		setQueuePax(0)
+		setQueuePax(0);
 	};
 
-	const onPressCardDescQueue = () => {
+	const onPressCardDescQueue = (venue) => {
+		setCurrentlyOpenStore(venue)
 		setIsQueueSheetOpen(true);
 		sheetRef.current.snapTo(0);
-	}
+	};
 
 	const onPressChat = () => {
 		navigation.navigate('LiveChat');
-	}
+	};
 
 	const moreInfoOnPress = () => {
-		navigation.navigate('StoreDetailedInfo');
+		navigation.navigate('StoreDetailedInfo', {
+			storeInformation: currentlyOpenStore
+		});
 	};
 
 	const queueIncrement = () => {
-        setQueuePax(queuePax + 1);
-    }
+		setQueuePax(queuePax + 1);
+	};
 	const queueDecrement = () => {
 		if (queuePax > 0) {
 			setQueuePax(queuePax - 1);
@@ -109,12 +104,12 @@ const HomeScreenContent = (props) => {
 	};
 
 	const onQueueConfirm = () => {
-		joinServiceProviderQueue(account.userName, 'Temporary Store Name')
-	}
+		joinServiceProviderQueue(account.userName, currentlyOpenStore.venueID, queuePax);
+	};
 
 	const settingsOnPress = () => {
 		navigation.navigate('AppSettings');
-	}
+	};
 
 	const [search, setSearch] = useState('');
 
@@ -203,40 +198,54 @@ const HomeScreenContent = (props) => {
 				></HorizontalSection>
 				<HorizontalSection
 					child={
-						<FlatList
-							horizontal
-							data={nearbyRestaurantsData}
-							renderItem={({item}) => {
-								return (
-									<TappableCard
-										cardTitle={item.title}
-										cardSubtitle={item.subtitle}
-										cardSubtextLine1={item.subtextLine1}
-										cardSubtextLine2={item.subtextLine2}
-									></TappableCard>
-								);
-							}}
-						></FlatList>
+						nearbyVenuesData ? (
+							<FlatList
+								horizontal
+								data={nearbyVenuesData}
+								renderItem={(item) => {
+									return (
+										<TappableCard
+											cardImage={item.item.imageAddress}
+											cardTitle={item.item.venueName}
+											cardSubtitle={`${item.item.venueRatings.$numberDecimal} ⭐`}
+											cardSubtextLine1={item.subtextLine1}
+											cardSubtextLine2={item.subtextLine2}
+											onPress={() => openStoreInfo(item.item)}
+											onPressCardDesc={() => onPressCardDescQueue(item.item)}
+										></TappableCard>
+									);
+								}}
+							></FlatList>
+						) : (
+							<Text>Hello</Text>
+						)
 					}
 					title={'Nearby Restaurants'}
 					titleStyle={styles.sectionHeader}
 				></HorizontalSection>
 			</ScrollView>
-			<AppBottomSheet 
-					ref={sheetRef}
-					renderContent={isQueueSheetOpen ? QueueSheetContent : StoreInfoContent}
-					moreInfoOnPress={moreInfoOnPress}
-					queueOnPress={openQueue}
-					chatOnPress={onPressChat}
-					onCloseEnd={closeQueue}
-					count={queuePax}
-					onPressPlus={queueIncrement}
-					onPressMinus={queueDecrement}
-					onPressCancel={closeQueue}
-					onPressConfirm={onQueueConfirm}
-			>
-				 
-			</AppBottomSheet>
+			<AppBottomSheet
+				ref={sheetRef}
+				renderContent={
+					isQueueSheetOpen ? QueueSheetContent : StoreInfoContent
+				}
+				moreInfoOnPress={moreInfoOnPress}
+				queueOnPress={openQueue}
+				chatOnPress={onPressChat}
+				onCloseEnd={closeQueue}
+				count={queuePax}
+				onPressPlus={queueIncrement}
+				onPressMinus={queueDecrement}
+				onPressCancel={closeQueue}
+				onPressConfirm={onQueueConfirm}
+				storeImage={currentlyOpenStore.imageAddress}
+				heading={currentlyOpenStore.venueName}
+				//waitTime={}
+				//subHeading={}
+				rating={currentlyOpenStore.venueRatings ? currentlyOpenStore.venueRatings.$numberDecimal : 0}
+				numReviews={currentlyOpenStore.numReviews}
+				text={currentlyOpenStore.venueAddress}
+			></AppBottomSheet>
 		</View>
 	);
 };
