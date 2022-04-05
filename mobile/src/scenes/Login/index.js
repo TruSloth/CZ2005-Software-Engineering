@@ -32,10 +32,10 @@ const LoginScreen = ({navigation}) => {
 
 	const onPressLogin = async (email, password) => {
 		try {
-			const response = await loginMutation.mutateAsync({email: email, password: password});
+			const response = await loginMutation.mutateAsync({email: email, password: password, accountType: 'User'});
 
 			if (response.status === 200) {
-				dispatch(setCurrentUser(response.data.userName))
+				dispatch(setCurrentUser({username: response.data.userName, accountType: 'User'}))
 				dispatch(toggleLogIn(true));
 			}
 		} catch (e) {
@@ -46,12 +46,13 @@ const LoginScreen = ({navigation}) => {
 
 	const onPressGoogleSignin = async () => {
 		try {
-			const userInfo = await googleSignIn();
+			let userInfo = await googleSignIn();
+			userInfo.user.accountType = 'User'
 
 			const response = await googleLoginMutation.mutateAsync(userInfo)
 			
 			if (response.status === 200) {
-				dispatch(setCurrentUser(response.data.userName))
+				dispatch(setCurrentUser({username: response.data.userName, accountType: 'User'}))
 				dispatch(toggleLogIn(true))
 			}
 		} catch (e) {

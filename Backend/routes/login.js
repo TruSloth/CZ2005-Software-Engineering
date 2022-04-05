@@ -25,9 +25,11 @@ async function verify(token) {
 router.post("/users/login", async (req, res) => {
   const user = await signUpTemplate.findOne({
     email: req.body.email,
+    accountType: req.body.accountType
   });
 
-  // Search for the user email in db
+  // Search for the user email in db. 
+  // Either the account type does not match or email does nto exists
   if (!user) {
     res.status(401).json({ email: "invalid" });
     return;
@@ -38,7 +40,7 @@ router.post("/users/login", async (req, res) => {
     return;
   }
 
-  res.status(200).json({ success: true, verified: user.verified, userName: user.userName });
+  res.status(200).json({ success: true, verified: user.verified, userName: user.userName, isServiceProviderAccount: user.isServiceProviderAccount });
 });
 
 // Google Login Page
@@ -53,10 +55,12 @@ router.post("/users/login/google", async (req, res) => {
 
     const user = await signUpTemplate.findOne({
       email: googleUser.email,
+      accountType: req.body.accountType,
       googleRegistered: true,
     });
 
     // Search for the user email in db
+    // Either the account type does not match or email does nto exists
     if (!user) {
       res.status(401).json({ email: "invalid" });
       return;

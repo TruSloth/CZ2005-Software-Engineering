@@ -6,6 +6,7 @@ import {
 const initialState = {
 	isLoggedIn: false,
 	userName: null,
+	accountType: null,
 	profilePic: null,
 	points: 0,
 };
@@ -13,10 +14,10 @@ const initialState = {
 const accountReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_CURRENT_USER:
-            console.log('updating account')
 			return {
 				...state,
-				userName: action.payload,
+				userName: action.payload.username,
+				accountType: action.payload.accountType
 			}
 		case TOGGLE_LOGGED_IN:
 			return {

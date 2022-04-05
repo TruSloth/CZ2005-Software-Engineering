@@ -33,6 +33,7 @@ const RegistrationScreen = ({navigation}) => {
 		userName: '',
 		email: '',
 		password: '',
+		accountType: 'User'
 	});
 
 	const onPressRegister = async () => {
@@ -52,6 +53,7 @@ const RegistrationScreen = ({navigation}) => {
 					userName: '',
 					email: '',
 					password: '',
+					accountType: 'User'
 				});
 			}
 		} catch (e) {
@@ -60,15 +62,14 @@ const RegistrationScreen = ({navigation}) => {
 	};
 
 	const onPressGoogleSignin = async () => {
-		console.log('google register pressed')
 		try {
-			const userInfo = await googleSignIn();
-			console.log(JSON.stringify(userInfo))
+			let userInfo = await googleSignIn();
+			console.log(userInfo)
+			userInfo.user.accountType = 'User';
+
 			const response = await googleRegisterMutation.mutateAsync(userInfo)
-			console.log('response obtained')
-			console.log(JSON.stringify(response))
 			if (response.status === 200) {
-				dispatch(setCurrentUser(response.data.userName))
+				dispatch(setCurrentUser({username: response.data.userName, accountType: 'User'}))
 				dispatch(toggleLogIn(true))
 			}
 		} catch (e) {

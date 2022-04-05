@@ -38,7 +38,7 @@ const TempVerifyScreen = ({route}) => {
 			});
 
 			if (response.status === 200) {
-				dispatch(setCurrentUser(tempUserName));
+				dispatch(setCurrentUser({username: tempUserName, accountType: 'User'}));
 				dispatch(toggleLogIn(true));
 			} else {
 				console.log('Verification code invalid');

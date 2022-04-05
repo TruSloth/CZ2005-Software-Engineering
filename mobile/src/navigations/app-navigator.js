@@ -9,6 +9,7 @@ import NotificationsScreen from '../scenes/Notifications';
 import HomeNavigator from './home-navigator';
 import ChatNavigator from './chat-navigator';
 import AccountNavigator from './account-navigator';
+import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,6 +24,8 @@ const Tab = createBottomTabNavigator();
  */
 
 const AppNavigator = () => {
+    const account = useSelector((state) => state.account);
+
     return (
         <Tab.Navigator screenOptions={({route}) => ({
             tabBarIcon: ({focused, color, size}) => {
@@ -56,12 +59,21 @@ const AppNavigator = () => {
             tabBarItemStyle: {borderTopColor: '#7879F1'},
             lazy: false
         })}>
-            <Tab.Group>
-                <Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}></Tab.Screen>
-                <Tab.Screen name="Chat" component={ChatNavigator} options={{headerShown: false}}></Tab.Screen>
-                <Tab.Screen name="Notifications" component={NotificationsScreen} ></Tab.Screen>
-                <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
-            </Tab.Group>          
+            {(() => {
+                    switch(account.accountType) {
+                        case 'User':
+                            return (<Tab.Group>
+                                        <Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}></Tab.Screen>
+                                        <Tab.Screen name="Chat" component={ChatNavigator} options={{headerShown: false}}></Tab.Screen>
+                                        <Tab.Screen name="Notifications" component={NotificationsScreen} ></Tab.Screen>
+                                        <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
+                                    </Tab.Group>);
+                        case 'ServiceProvider':
+                            return (<></>);
+                    }
+                })()
+            }
+                      
         </Tab.Navigator>
     )
 }

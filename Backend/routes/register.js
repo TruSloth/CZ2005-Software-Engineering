@@ -67,6 +67,7 @@ router.post("/users/register", async (req, res) => {
     userName: req.body.userName,
     email: req.body.email,
     googleRegistered: false,
+    accountType: req.body.accountType,
     password: req.body.password,
     verified: false,
   });
@@ -110,6 +111,7 @@ router.post("/users/register/google", async (req, res) => {
       userName: user.userName,
       email: user.email,
       googleRegistered: true,
+      accountType: req.body.accountType,
       verified: true,
     });
 

@@ -17,6 +17,7 @@ export const register = async (registrationDetails) => {
 	return axios.post(`http://${LOCALHOST}/users/register/`, {
 		userName: registrationDetails.userName,
 		email: registrationDetails.email,
+		accountType: registrationDetails.accountType,
 		password: registrationDetails.password,
 		confirmationPassword: registrationDetails.password,
 	});
