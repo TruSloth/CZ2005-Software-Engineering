@@ -99,14 +99,13 @@ const StoreDetailedInfoScreen = ({route}) => {
 
 			<Text style={styles.waitTimes}>
 				Waiting time:
-				<Text style={styles.imptInfo}> 25 mins</Text>
+				<Text style={styles.imptInfo}>{` ${storeInformation.waitTime} mins`}</Text>
 			</Text>
 
 			<Text style={styles.desc}>
-				There are
+				There {storeInformation.queueLength === 1 ? 'is ' : 'are '} 
 				<Text style={styles.imptInfo}>
-					{' '}
-					10 people
+					{storeInformation.queueLength} {storeInformation.queueLength === 1  ? 'person' : 'people'}
 					<Text style={[styles.waitTimes, {fontSize: 20}]}>
 						{' '}
 						in line{' '}

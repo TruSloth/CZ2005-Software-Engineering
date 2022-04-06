@@ -47,12 +47,12 @@ const StoreInfoContent = (props) => {
 				style={styles.images}
 				source={{uri: storeImage || reactNativeLogo}}
 			></Image>
-			<View style={{flexDirection: 'row'}}>
+			<View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
 				<Text style={styles.heading}>{heading}</Text>
-				<Text style={[styles.waitTime]}>~15 mins</Text>
+				<Text style={[styles.waitTime]}>{waitTime}</Text>
 			</View>
 			<View style={{flexDirection: 'row'}}>
-				<Text style={styles.subheading}>8 in queue</Text>
+				<Text style={styles.subheading}>{subHeading}</Text>
 				<Text style={styles.rating}>{rating} ⭐ ({numReviews})</Text>
 			</View>
 			<View style={{flexDirection: 'row'}}>
@@ -111,10 +111,11 @@ const styles = StyleSheet.create({
 	waitTime: {
 		fontSize: 20,
 		textAlign: 'right',
-		alignSelf: 'flex-end',
+		//alignSelf: 'flex-end',
 		marginTop: 20,
 		marginBottom: 5,
-		marginLeft: '44%',
+		paddingRight: 8,
+		//marginLeft: '44%',
 		fontWeight: 'bold',
 		color: 'black',
 	},

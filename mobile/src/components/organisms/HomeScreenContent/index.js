@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
 
 import {
 	FlatList,
@@ -7,10 +7,13 @@ import {
 	Platform,
 	ScrollView,
 	Text,
+	RefreshControl,
 } from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
-import {useQuery} from 'react-query';
+import {useQuery, useQueryClient} from 'react-query';
+import GetLocation from 'react-native-get-location';
+import {isPointWithinRadius} from 'geolib';
 
 import {getNearbyServiceProviders} from '../../../services/serviceProviders/getNearbyServiceProviders';
 import TappableCard from '../../atoms/TappableCard';
@@ -22,7 +25,7 @@ import {
 	StoreInfoContent,
 	QueueSheetContent,
 } from '../../molecules/BottomSheet';
-
+import {getQueue} from '../../../services/queue/getQueue';
 
 /**
  * Renders the content for the Application Home Screen.
@@ -35,7 +38,22 @@ import {
  */
 
 const HomeScreenContent = (props) => {
-	const {navigation, joinServiceProviderQueue, nearbyVenuesData} = props;
+	const {
+		navigation,
+		joinServiceProviderQueue,
+		serviceProviderData,
+		nearbyVenuesData,
+	} = props;
+
+	const queryClient = useQueryClient();
+
+	const [refreshing, setRefreshing] = useState(false);
+
+	const onRefresh = useCallback(() => {
+		setRefreshing(true);
+		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
+		setRefreshing(false);
+	}, []);
 
 	const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
 		{
@@ -58,14 +76,12 @@ const HomeScreenContent = (props) => {
 		},
 	]);
 
-	const [currentlyOpenStore, setCurrentlyOpenStore] = useState({});
-
 	const sheetRef = useRef(null);
 
 	const account = useSelector((state) => state.account);
 
 	const openStoreInfo = (venue) => {
-		setCurrentlyOpenStore(venue)
+		setCurrentlyOpenStore(venue);
 		sheetRef.current.snapTo(0);
 	};
 
@@ -79,7 +95,7 @@ const HomeScreenContent = (props) => {
 	};
 
 	const onPressCardDescQueue = (venue) => {
-		setCurrentlyOpenStore(venue)
+		setCurrentlyOpenStore(venue);
 		setIsQueueSheetOpen(true);
 		sheetRef.current.snapTo(0);
 	};
@@ -90,7 +106,7 @@ const HomeScreenContent = (props) => {
 
 	const moreInfoOnPress = () => {
 		navigation.navigate('StoreDetailedInfo', {
-			storeInformation: currentlyOpenStore
+			storeInformation: currentlyOpenStore,
 		});
 	};
 
@@ -103,15 +119,52 @@ const HomeScreenContent = (props) => {
 		}
 	};
 
-	const onQueueConfirm = () => {
-		joinServiceProviderQueue(account.userName, currentlyOpenStore.venueID, queuePax);
+	const onQueueConfirm = async () => {
+		closeQueue();
+		sheetRef.current.snapTo(2);
+		await joinServiceProviderQueue(
+			account.userName,
+			currentlyOpenStore.venueID,
+			queuePax
+		);
+		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
 	};
 
 	const settingsOnPress = () => {
 		navigation.navigate('AppSettings');
 	};
 
+	const searchFilterFunction = (text) => {
+		// Check if searched text is not blank
+		if (text) {
+			// Inserted text is not blank
+			// Filter the masterDataSource
+			// Update FilteredDataSource
+			const newData = masterDataSource.filter(function (item) {
+				const itemData = item.venueName.toLowerCase();
+				const textData = text.toLowerCase();
+				return itemData.indexOf(textData) > -1; // Check for character index in the data, will return -1 if non existent
+			});
+			setFilteredDataSource(newData);
+			console.log(filteredDataSource.length);
+			if (filteredDataSource.length < 5)
+				[console.log(filteredDataSource)];
+			setSearch(text);
+		} else {
+			// Inserted text is blank
+			// Update FilteredDataSource with masterDataSource
+			setFilteredDataSource(masterDataSource);
+			setSearch(text);
+		}
+	};
+
 	const [search, setSearch] = useState('');
+
+	const [currentlyOpenStore, setCurrentlyOpenStore] = useState({});
+
+	const [filteredDataSource, setFilteredDataSource] = useState([]);
+
+	const [masterDataSource, setMasterDataSource] = useState([]);
 
 	const [bannerHeight, setBannerHeight] = useState(0);
 
@@ -119,11 +172,26 @@ const HomeScreenContent = (props) => {
 
 	const [isQueueSheetOpen, setIsQueueSheetOpen] = useState(false);
 
+	useEffect(() => {
+		if (serviceProviderData !== null) {
+			setFilteredDataSource(serviceProviderData);
+			setMasterDataSource(serviceProviderData);
+		}
+	}, [serviceProviderData]);
+
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
 	return (
 		<View style={{flex: 1}}>
-			<ScrollView style={styles.homeScreenContent}>
+			<ScrollView
+				style={styles.homeScreenContent}
+				refreshControl={
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={onRefresh}
+					></RefreshControl>
+				}
+			>
 				<TopBanner
 					title={`Hi, ${account.userName}`}
 					subtitle={'Where are you going to queue next?'}
@@ -139,7 +207,7 @@ const HomeScreenContent = (props) => {
 					}}
 				></TopBanner>
 				<SearchBar
-					onChangeText={(text) => setSearch(text)}
+					onChangeText={(text) => searchFilterFunction(text)}
 					value={search}
 					platform={Platform.OS === 'ios' ? 'ios' : 'android'}
 					onClear={(text) => setSearch('')}
@@ -208,10 +276,14 @@ const HomeScreenContent = (props) => {
 											cardImage={item.item.imageAddress}
 											cardTitle={item.item.venueName}
 											cardSubtitle={`${item.item.venueRatings.$numberDecimal} ⭐`}
-											cardSubtextLine1={item.subtextLine1}
-											cardSubtextLine2={item.subtextLine2}
-											onPress={() => openStoreInfo(item.item)}
-											onPressCardDesc={() => onPressCardDescQueue(item.item)}
+											cardSubtextLine1={`${item.item.queueLength} in Queue`}
+											cardSubtextLine2={`~ ${item.item.waitTime} mins`}
+											onPress={() =>
+												openStoreInfo(item.item)
+											}
+											onPressCardDesc={() =>
+												onPressCardDescQueue(item.item)
+											}
 										></TappableCard>
 									);
 								}}
@@ -240,9 +312,13 @@ const HomeScreenContent = (props) => {
 				onPressConfirm={onQueueConfirm}
 				storeImage={currentlyOpenStore.imageAddress}
 				heading={currentlyOpenStore.venueName}
-				//waitTime={}
-				//subHeading={}
-				rating={currentlyOpenStore.venueRatings ? currentlyOpenStore.venueRatings.$numberDecimal : 0}
+				waitTime={`~ ${currentlyOpenStore.waitTime} mins`}
+				subHeading={`${currentlyOpenStore.queueLength} in queue`}
+				rating={
+					currentlyOpenStore.venueRatings
+						? currentlyOpenStore.venueRatings.$numberDecimal
+						: 0
+				}
 				numReviews={currentlyOpenStore.numReviews}
 				text={currentlyOpenStore.venueAddress}
 			></AppBottomSheet>

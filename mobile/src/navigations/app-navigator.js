@@ -26,6 +26,8 @@ const Tab = createBottomTabNavigator();
 const AppNavigator = () => {
     const account = useSelector((state) => state.account);
 
+    console.log(account)
+
     return (
         <Tab.Navigator screenOptions={({route}) => ({
             tabBarIcon: ({focused, color, size}) => {
@@ -70,6 +72,15 @@ const AppNavigator = () => {
                                     </Tab.Group>);
                         case 'ServiceProvider':
                             return (<></>);
+                        // Temporary fix. Default case shouldn't occur.
+                        default:
+                            console.log('Error. Account Type not found')
+                            return (<Tab.Group>
+                                <Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}></Tab.Screen>
+                                <Tab.Screen name="Chat" component={ChatNavigator} options={{headerShown: false}}></Tab.Screen>
+                                <Tab.Screen name="Notifications" component={NotificationsScreen} ></Tab.Screen>
+                                <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
+                            </Tab.Group>);
                     }
                 })()
             }

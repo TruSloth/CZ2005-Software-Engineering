@@ -60,8 +60,8 @@ const AppSettingsScreenContent = () => {
 					await googleSignOut();
 				}
 
-				dispatch(setCurrentUser(null))
-            	dispatch(toggleLogIn(false))
+				dispatch(toggleLogIn(false))
+				dispatch(setCurrentUser({username: null, accountType: null}))
 			} catch (e) {
 				console.log(e)
 			}

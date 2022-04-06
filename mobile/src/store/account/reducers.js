@@ -1,6 +1,7 @@
 import {
 	SET_CURRENT_USER,
 	TOGGLE_LOGGED_IN,
+	UPDATE_CURRENT_QUEUE,
 } from './constants';
 
 const initialState = {
@@ -8,6 +9,7 @@ const initialState = {
 	userName: null,
 	accountType: null,
 	profilePic: null,
+	currentQueue: null,
 	points: 0,
 };
 
@@ -23,6 +25,11 @@ const accountReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoggedIn: action.payload,
+			}
+		case UPDATE_CURRENT_QUEUE:
+			return {
+				...state,
+				currentQueue: action.payload
 			}
 		default:
 			return state;

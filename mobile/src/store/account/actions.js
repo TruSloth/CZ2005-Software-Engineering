@@ -1,6 +1,7 @@
 import {
 	SET_CURRENT_USER,
-	TOGGLE_LOGGED_IN
+	TOGGLE_LOGGED_IN,
+	UPDATE_CURRENT_QUEUE
 } from './constants';
 
 
@@ -17,4 +18,11 @@ export const toggleLogIn = (loggedIn) => {
 		payload: loggedIn,
 	};
 };
+
+export const updateCurrentQueue = (serviceProviderID) => {
+	return {
+		type: UPDATE_CURRENT_QUEUE,
+		payload: serviceProviderID
+	}
+}
 

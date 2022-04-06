@@ -73,7 +73,7 @@ router.post("/push-queue", async (req, res) => {
 // Display queue of a certain store
 router.get("/view-queue", async (req, res) => {
   const storeQueue = await queueTemplate
-    .find({ store: req.body.store }, { queueNumber: 1, user: 1, _id: 0 })
+    .find({ store: req.query.store }, { queueNumber: 1, user: 1, _id: 0 })
     .sort({ queueNumber: 1 });
 
   if (storeQueue.length === 0) {
