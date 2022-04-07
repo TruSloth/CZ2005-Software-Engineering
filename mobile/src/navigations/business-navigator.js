@@ -8,8 +8,8 @@ import {StyleSheet} from 'react-native';
 import AppSettingsScreen from '../scenes/AppSettings';
 import BusinessHomeScreen from '../scenes/BusinessHome';
 import InsertCustomerScreen from '../scenes/InsertCustomer';
-import CustomerDetailsScreen from 'scenes/CustomerDetails';
-
+import CustomerDetailsScreen from '../scenes/CustomerDetails';
+import BusinessProfileScreen from '../scenes/BusinessProfile';
 /**
  * Stack navigators for the store info set of screens
  */
@@ -26,28 +26,33 @@ const BusinessNavigator = () => {
 					headerShown: false,
 				}}
 			></Stack.Screen>
-			<Stack.Screen
+			{/* <Stack.Screen
 				name='HomePage'
 				component={HomeScreen}
 				options={{
 					headerShown: false,
 				}}
-			></Stack.Screen>
-			{/* <Stack.Screen
+			></Stack.Screen> */}
+			<Stack.Screen
 				name='InsertCustomer'
 				component={InsertCustomerScreen}
 				options={{title: ''}}
-			></Stack.Screen> */}
+			></Stack.Screen>
 			<Stack.Screen
 				name='AppSettings'
 				component={AppSettingsScreen}
 				options={styles.appSettingsScreenOptions}
 			></Stack.Screen>
-			{/* <Stack.Screen
+			<Stack.Screen
 				name='CustomerDetails'
 				component={CustomerDetailsScreen}
 				options={{title: ''}}
-			></Stack.Screen> */}
+			></Stack.Screen>
+			<Stack.Screen
+				name='BusinessProfile'
+				component={BusinessProfileScreen}
+				options={{title: ''}}
+			></Stack.Screen>
 			{/* NEWLY ADDED  */}
 			{/* <Stack.Screen
 				name='BusinessHome'

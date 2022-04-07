@@ -11,9 +11,9 @@ import {
 //import LoginForm from '../../molecules/Auth/LoginForm';
 //import AltAuthOptions from '../../molecules/Auth/AltAuthOptions';
 
-import {LoginForm, AltAuthOptions} from '../../molecules/Auth';
+import {LoginForm, AltAuthOptions, BizAuthOptions} from '../../molecules/Auth';
 
-const LoginScreenContent = (props) => {
+const BusinessLoginScreenContent = (props) => {
 	const {
 		submitForm,
 		registerOnPress,
@@ -22,7 +22,11 @@ const LoginScreenContent = (props) => {
 		navigation,
 	} = props;
 
-	const BizLoginOnPress = () => {
+	// const BizLoginOnPress = () => {
+	// 	navigation.navigate('BusinessLogin');
+	// };
+
+	const LoginOnPress = () => {
 		navigation.navigate('BusinessLogin');
 	};
 
@@ -49,6 +53,16 @@ const LoginScreenContent = (props) => {
 				<Text
 					style={[
 						styles.titleText,
+						{color: '#F178B6'},
+						{textDecorationLine: 'underline'},
+						{padding: 5, alignSelf: 'center'},
+					]}
+				>
+					BUSINESS
+				</Text>
+				<Text
+					style={[
+						styles.titleText,
 						{padding: 5, alignSelf: 'center'},
 					]}
 				>
@@ -60,26 +74,30 @@ const LoginScreenContent = (props) => {
 						{padding: 5, alignSelf: 'center'},
 					]}
 				>
-					Login to your account
+					Login to your business account
 				</Text>
 			</View>
 			<LoginForm submitForm={submitForm} loading={loading}></LoginForm>
+			{/* <BizAuthOptions
+				altAuthTitle={'Or login with'}
+				onPressGoogleLogin={onPressGoogleSignin}
+			></BizAuthOptions> */}
 			<AltAuthOptions
 				altAuthTitle={'Or login with'}
 				onPressGoogleLogin={onPressGoogleSignin}
 			></AltAuthOptions>
 
 			<View style={{flexDirection: 'row'}}>
-				<Text style={styles.subText}>Business account? </Text>
-				<TouchableOpacity onPress={BizLoginOnPress}>
+				<Text style={styles.subText}>User account? </Text>
+				<TouchableOpacity onPress={LoginOnPress}>
 					<Text style={styles.clickableText}>Login</Text>
 				</TouchableOpacity>
 			</View>
 
 			<View style={{flexDirection: 'row'}}>
-				<Text style={styles.subText}>Don't have an account? </Text>
+				<Text style={styles.subText}>New store? </Text>
 				<TouchableOpacity onPress={registerOnPress}>
-					<Text style={styles.clickableText}>Register</Text>
+					<Text style={styles.clickableText}>Register your UEN</Text>
 				</TouchableOpacity>
 			</View>
 		</ScrollView>
@@ -114,4 +132,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default LoginScreenContent;
+export default BusinessLoginScreenContent;

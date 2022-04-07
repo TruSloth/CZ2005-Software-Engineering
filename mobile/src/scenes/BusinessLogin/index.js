@@ -6,13 +6,14 @@ import {useDispatch} from 'react-redux';
 import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
 
 import BusinessHomeScreenContent from '../../components/organisms/BusinessHomeScreenContent';
-import LoginScreenContent from '../../components/organisms/LoginScreenContent';
+import BusinessLoginScreenContent from '../../components/organisms/BusinessLoginScreenContent';
 import {login} from '../../services/auth/login';
 import {googleLogin} from '../../services/auth/google/googleLogin';
 import {googleSignIn} from '../../services/auth/google/googleSignIn';
 import {useMutation} from 'react-query';
+import {useSelector} from 'react-redux';
 
-const LoginScreen = ({navigation}) => {
+const BusinessLoginScreen = ({navigation}) => {
 	const isDarkMode = useColorScheme() === 'dark';
 
 	const registerOnPress = () => {
@@ -30,34 +31,35 @@ const LoginScreen = ({navigation}) => {
 	const googleLoginMutation = useMutation(googleLogin);
 
 	const isLoading = loginMutation.isLoading;
+	const account = useSelector((state) => state.account);
 
 	const onPressLogin = async (email, password) => {
 		try {
+			//console.log(account.accountType);
+			account.accountType = 'ServiceProvider';
+
 			const response = await loginMutation.mutateAsync({
 				email: email,
 				password: password,
-				accountType: 'User',
+				accountType: 'ServiceProvider',
 			});
-
 			if (response.status === 200) {
 				dispatch(
 					setCurrentUser({
 						userName: response.data.userName,
-						accountType: 'User',
+						accountType: 'ServiceProvider',
 					})
 				);
 				dispatch(toggleLogIn(true));
 			}
 		} catch (e) {
-			console.log('user error block');
 			console.log(e);
 		}
 	};
 
 	const onPressGoogleSignin = async () => {
 		try {
-			let userInfo = await googleSignIn();
-			userInfo.user.accountType = 'User';
+			const userInfo = await googleSignIn();
 
 			const response = await googleLoginMutation.mutateAsync(userInfo);
 
@@ -65,7 +67,7 @@ const LoginScreen = ({navigation}) => {
 				dispatch(
 					setCurrentUser({
 						userName: response.data.userName,
-						accountType: 'User',
+						accountType: 'ServiceProvider',
 					})
 				);
 				dispatch(toggleLogIn(true));
@@ -80,15 +82,15 @@ const LoginScreen = ({navigation}) => {
 			<StatusBar
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}
 			/>
-			<LoginScreenContent
+			<BusinessLoginScreenContent
 				submitForm={onPressLogin}
 				registerOnPress={registerOnPress}
 				loading={isLoading}
 				onPressGoogleSignin={onPressGoogleSignin}
 				navigation={navigation}
-			></LoginScreenContent>
+			></BusinessLoginScreenContent>
 		</SafeAreaView>
 	);
 };
 
-export default LoginScreen;
+export default BusinessLoginScreen;

@@ -17,7 +17,7 @@ import {useDispatch} from 'react-redux';
 import {useMutation} from 'react-query';
 
 import {verify} from '../../services/auth/verify';
-import { setCurrentUser, toggleLogIn } from '../../store/account/actions';
+import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
 
 const TempVerifyScreen = ({route}) => {
 	const {tempUserName} = route.params;
@@ -38,7 +38,12 @@ const TempVerifyScreen = ({route}) => {
 			});
 
 			if (response.status === 200) {
-				dispatch(setCurrentUser(tempUserName));
+				dispatch(
+					setCurrentUser({
+						username: tempUserName,
+						accountType: 'User',
+					})
+				);
 				dispatch(toggleLogIn(true));
 			} else {
 				console.log('Verification code invalid');

@@ -25,14 +25,15 @@ import {
 } from '../../molecules/BottomSheet';
 import {useSelector} from 'react-redux';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-// import PushNotification from 'react-native-push-notification';
+import PushNotification from 'react-native-push-notification';
 
 const HomeScreenContent = (props) => {
 	const {navigation, joinServiceProviderQueue} = props;
 
-	// useEffect(() => {
-	// 	createChannels();
-	// });
+	useEffect(() => {
+		createChannels();
+		handleNotification();
+	});
 
 	const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
 		{
@@ -82,14 +83,37 @@ const HomeScreenContent = (props) => {
 
 	const account = useSelector((state) => state.account);
 
-	// const createChannels = () => {
-	// 	PushNotification.createChannel({
-	// 		channelId: 'test-channel',
-	// 		channelName: 'Test Channel',
-	// 	});
+	const createChannels = () => {
+		PushNotification.createChannel({
+			channelId: 'test-channel',
+			channelName: 'Test Channel',
+		});
+	};
+
+	// const handleNotification = () => {
+
 	// };
 
-	// const handleNotification = () => {};
+	const handleNotification = () => {
+		// PushNotification.localNotification({
+		// 	channelId: 'test-channel',
+		// 	title: "It's your turn!",
+		// 	message: 'Please make your way back',
+		// 	color: 'red',
+		// });
+		PushNotification.cancelAllLocalNotifications();
+		PushNotification.localNotificationSchedule({
+			channelId: 'test-channel',
+			title: "It's your turn!",
+			message: 'Please make your way back',
+			color: 'red',
+			date: new Date(Date.now() + 5 * 1000),
+			allowWhileIdle: true,
+			onlyAlertOnce: 'true',
+			// repeatType: 'time',
+			// repeatTime: 120 * 1000,
+		});
+	};
 	const openStoreInfo = () => {
 		sheetRef.current.snapTo(0);
 	};

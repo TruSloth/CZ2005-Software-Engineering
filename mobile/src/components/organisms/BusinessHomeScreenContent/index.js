@@ -66,7 +66,7 @@ const BusinessHomeScreenContent = (props) => {
 				round={false}
 				placeholder={'Search'}
 				placeholderTextColor={'#7879F1'}
-				containerStyle={[styles.searchBar, {top: bannerHeight + 10}]}
+				containerStyle={[styles.searchBar, {top: bannerHeight + 20}]}
 				inputContainerStyle={styles.searchBarInput}
 			></SearchBar>
 

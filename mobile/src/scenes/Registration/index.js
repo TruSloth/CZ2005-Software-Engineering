@@ -15,17 +15,17 @@ import {useDispatch} from 'react-redux';
 import {useMutation} from 'react-query';
 
 import {register} from '../../services/auth/register';
-import { googleRegister } from '../../services/auth/google/googleRegister';
-import { AltAuthOptions } from '../../components/molecules/Auth';
-import { googleSignIn } from '../../services/auth/google/googleSignIn';
-import { setCurrentUser, toggleLogIn } from '../../store/account/actions';
+import {googleRegister} from '../../services/auth/google/googleRegister';
+import {AltAuthOptions} from '../../components/molecules/Auth';
+import {googleSignIn} from '../../services/auth/google/googleSignIn';
+import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
 
 const RegistrationScreen = ({navigation}) => {
 	const dispatch = useDispatch();
 
 	const registerMutation = useMutation(register);
 
-	const googleRegisterMutation = useMutation(googleRegister)
+	const googleRegisterMutation = useMutation(googleRegister);
 
 	const isLoading = registerMutation.isLoading;
 
@@ -33,6 +33,8 @@ const RegistrationScreen = ({navigation}) => {
 		userName: '',
 		email: '',
 		password: '',
+		confirmPassword: '',
+		accountType: 'User',
 	});
 
 	const onPressRegister = async () => {
@@ -40,10 +42,10 @@ const RegistrationScreen = ({navigation}) => {
 			const response = await registerMutation.mutateAsync(
 				registrationDetails
 			);
-
+			console.log(response);
 			if (response.status === 200) {
 				const tempUserName = response.data.userName;
-
+				console.log('200');
 				navigation.navigate('Verification', {
 					tempUserName: tempUserName,
 				});
@@ -52,6 +54,8 @@ const RegistrationScreen = ({navigation}) => {
 					userName: '',
 					email: '',
 					password: '',
+					confirmPassword: '',
+					accountType: 'User',
 				});
 			}
 		} catch (e) {
@@ -61,18 +65,25 @@ const RegistrationScreen = ({navigation}) => {
 
 	const onPressGoogleSignin = async () => {
 		try {
-			const userInfo = await googleSignIn();
+			let userInfo = await googleSignIn();
+			console.log(userInfo);
+			userInfo.user.accountType = 'User';
 
-			const response = await googleRegisterMutation.mutateAsync(userInfo)
-			
+			const response = await googleRegisterMutation.mutateAsync(userInfo);
+
 			if (response.status === 200) {
-				dispatch(setCurrentUser(response.data.userName))
-				dispatch(toggleLogIn(true))
+				dispatch(
+					setCurrentUser({
+						username: response.data.userName,
+						accountType: 'User',
+					})
+				);
+				dispatch(toggleLogIn(true));
 			}
 		} catch (e) {
-			console.log(e)
+			console.log(e);
 		}
-	}
+	};
 
 	const isDarkMode = useColorScheme() === 'dark';
 
@@ -126,6 +137,19 @@ const RegistrationScreen = ({navigation}) => {
 				}
 				value={registrationDetails['password']}
 			/>
+			<Text style={styles.textheading}>Confirm password:</Text>
+			<TextInput
+				secureTextEntry={true}
+				style={styles.input}
+				placeholder='e.g !jdiU%h*j'
+				onChangeText={(text) =>
+					setRegistrationDetails({
+						...registrationDetails,
+						confirmPassword: text,
+					})
+				}
+				value={registrationDetails['confirmPassword']}
+			/>
 
 			{isLoading ? (
 				<View style={styles.button}>
@@ -148,9 +172,11 @@ const RegistrationScreen = ({navigation}) => {
 				</TouchableOpacity>
 			)}
 			<View style={{flex: 1, flexgrow: 1}}>
-			<AltAuthOptions altAuthTitle={'Or register with'} onPressGoogleLogin={onPressGoogleSignin}></AltAuthOptions>
+				<AltAuthOptions
+					altAuthTitle={'Or register with'}
+					onPressGoogleLogin={onPressGoogleSignin}
+				></AltAuthOptions>
 			</View>
-			
 		</SafeAreaView>
 	);
 };
@@ -160,15 +186,15 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff',
 		flexgrow: 1,
-		alignSelf: 'center'
+		alignSelf: 'center',
 	},
 	image: {
-		height: 250,
-		width: 250,
+		height: 150,
+		width: 150,
 		justifyContent: 'space-around',
 		margin: 30,
 		marginTop: 10,
-		alignSelf: 'center'
+		alignSelf: 'center',
 	},
 	input: {
 		height: 40,
@@ -186,13 +212,13 @@ const styles = StyleSheet.create({
 		margin: 10,
 		alignItems: 'center',
 		borderRadius: 50,
-		alignSelf: 'center'
+		alignSelf: 'center',
 	},
 	textheading: {
 		fontSize: 20,
 		width: '85%',
 		textAlign: 'left',
-		marginLeft: 12
+		marginLeft: 12,
 	},
 });
 

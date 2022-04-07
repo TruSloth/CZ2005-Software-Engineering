@@ -1,4 +1,3 @@
-
 import accountReducer from './account/reducers';
 import socketReducer from './socket/reducers';
 import {combineReducers, createStore} from 'redux';

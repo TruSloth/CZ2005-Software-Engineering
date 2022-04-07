@@ -6,6 +6,7 @@ import LoginScreen from '../scenes/Login';
 import RegistrationScreen from '../scenes/Registration';
 import OnboardingScreen from '../scenes/Onboarding/';
 import TempVerifyScreen from '../scenes/TempVerify';
+import BusinessLoginScreen from '../scenes/BusinessLogin';
 import {useSelector} from 'react-redux';
 
 /**
@@ -33,6 +34,11 @@ const AuthNavigator = () => {
 			<Stack.Screen
 				name='Registration'
 				component={RegistrationScreen}
+			></Stack.Screen>
+
+			<Stack.Screen
+				name='BusinessLogin'
+				component={BusinessLoginScreen}
 			></Stack.Screen>
 
 			<Stack.Screen name='Login' component={LoginScreen}></Stack.Screen>

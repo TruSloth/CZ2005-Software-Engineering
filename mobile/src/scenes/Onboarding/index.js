@@ -117,6 +117,38 @@ const OnboardingScreen = ({navigation}) => {
 					</Text>
 				</TouchableOpacity>
 			</View>
+			{/* 
+			<View style={{flexDirection: 'row'}}>
+				<TouchableOpacity
+					style={[styles.btn]}
+					onPress={() => navigation.navigate('Registration')}
+				>
+					<Text
+						style={{
+							fontWeight: 'bold',
+							fontSize: 15,
+							color: '#493d8a',
+						}}
+					>
+						Register
+					</Text>
+				</TouchableOpacity>
+				<View style={{width: 15}} />
+				<TouchableOpacity
+					style={[styles.btn]}
+					onPress={() => navigation.navigate('Login')}
+				>
+					<Text
+						style={{
+							fontWeight: 'bold',
+							fontSize: 15,
+							color: '#493d8a',
+						}}
+					>
+						Login
+					</Text>
+				</TouchableOpacity>
+			</View> */}
 		</View>
 	);
 };
@@ -135,6 +167,7 @@ const styles = StyleSheet.create({
 		height: 35,
 		width: 120,
 		borderRadius: 7,
+		marginTop: 10,
 		backgroundColor: '#fff',
 		borderColor: '#493d8a',
 	},

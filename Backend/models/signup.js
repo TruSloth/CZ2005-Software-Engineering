@@ -4,7 +4,7 @@ function isPasswordRequired() {
   if (this.googleRegistered === true) {
     return false;
   }
-  
+
   return true;
 }
 
@@ -24,9 +24,15 @@ const signUpTemplate = new mongoose.Schema({
     required: true,
   },
 
+  accountType: {
+    type: String,
+    enum: ["User", "ServiceProvider"],
+    required: true,
+  },
+
   password: {
     type: String,
-    required: isPasswordRequired, 
+    required: isPasswordRequired,
   },
 
   date: {

@@ -4,7 +4,7 @@ const sendMail = require("../tools/nodemailer");
 const router = express.Router();
 const signUpTemplate = require("../models/signup");
 const dotenv = require("dotenv");
-const {OAuth2Client} = require('google-auth-library');
+const { OAuth2Client } = require("google-auth-library");
 
 dotenv.config();
 
@@ -13,19 +13,19 @@ const client = new OAuth2Client(process.env.CLIENT_ID);
 async function verify(token) {
   const ticket = await client.verifyIdToken({
     idToken: token,
-    audience: process.env.CLIENT_ID
+    audience: process.env.CLIENT_ID,
   });
 
   const payload = ticket.getPayload();
 
-  if (payload['aud'] !== process.env.CLIENT_ID) {
-    throw 'Token unintended for app'
+  if (payload["aud"] !== process.env.CLIENT_ID) {
+    throw "Token unintended for app";
   }
-  return payload
+  return payload;
 }
 
 async function validateLoginInput(data) {
-  console.log(JSON.stringify(data))
+  console.log(JSON.stringify(data));
   let errors = {};
   // Check the password and confirmed password are equal
   if (data.password != data.confirmationPassword) {
@@ -48,15 +48,13 @@ async function validateLoginInput(data) {
   ) {
     errors.userName = "Username already exists";
   }
-  console.log('no errors')
+  console.log("no errors");
   return { errors, isValid: isEmpty(errors) };
-
 }
-
 
 // Registration Page
 router.post("/users/register", async (req, res) => {
-  console.log('registering')
+  console.log("registering");
   // Ensure the input meets our requirements
   const { errors, isValid } = await validateLoginInput(req.body);
   if (!isValid) {
@@ -68,6 +66,7 @@ router.post("/users/register", async (req, res) => {
     userName: req.body.userName,
     email: req.body.email,
     googleRegistered: false,
+    accountType: req.body.accountType,
     password: req.body.password,
     verified: false,
   });
@@ -92,12 +91,12 @@ router.post("/users/register", async (req, res) => {
 router.post("/users/register/google", async (req, res) => {
   // Verify the identity of the request
   try {
-    const payload = await verify(req.body.idToken)
+    const payload = await verify(req.body.idToken);
 
     const user = {
-      email: payload['email'],
-      userName: payload['given_name']
-    }
+      email: payload["email"],
+      userName: payload["given_name"],
+    };
 
     // Ensure the input meets our requirements
     const { errors, isValid } = await validateLoginInput(user);
@@ -111,19 +110,20 @@ router.post("/users/register/google", async (req, res) => {
       userName: user.userName,
       email: user.email,
       googleRegistered: true,
+      accountType: req.body.accountType,
       verified: true,
     });
 
     await newUser
-    .save()
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });   
+      .save()
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 });
 

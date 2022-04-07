@@ -25,7 +25,7 @@ const CustomerDetailsScreenContent = (props) => {
 			<View>
 				<Text style={styles.heading}>Queue details</Text>
 				<View style={styles.sameRow}>
-					<Text style={styles.TotalPax}>4</Text>
+					<Text style={styles.TotalPax}>3</Text>
 					<Image
 						style={styles.largeLogo}
 						source={require('../../../assets/group.png')}

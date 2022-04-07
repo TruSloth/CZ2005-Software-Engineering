@@ -1,28 +1,27 @@
-import {
-	SET_CURRENT_USER,
-	TOGGLE_LOGGED_IN,
-} from './constants';
+import {SET_CURRENT_USER, TOGGLE_LOGGED_IN} from './constants';
 
 const initialState = {
 	isLoggedIn: false,
 	userName: null,
 	profilePic: null,
+	accountType: null,
 	points: 0,
 };
 
 const accountReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_CURRENT_USER:
-            console.log('updating account')
+			console.log('updating account');
 			return {
 				...state,
-				userName: action.payload,
-			}
+				userName: action.payload.userName,
+				accountType: action.payload.accountType,
+			};
 		case TOGGLE_LOGGED_IN:
 			return {
 				...state,
 				isLoggedIn: action.payload,
-			}
+			};
 		default:
 			return state;
 	}
