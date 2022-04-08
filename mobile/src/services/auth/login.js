@@ -15,7 +15,7 @@ import {LOCALHOST} from '../config';
 
 export const login = async (loginDetails) => {
 	console.log('triggering login');
-
+	//console.log(loginDetails);
 	return await axios.post(`http://${LOCALHOST}:80/users/login/`, {
 		email: loginDetails.email,
 		password: loginDetails.password,

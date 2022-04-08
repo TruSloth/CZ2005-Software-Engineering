@@ -59,7 +59,7 @@ const TopBanner = (props) => {
 					</TouchableOpacity>
 
 					<View style={[styles.rowContainer, {paddingRight: 0}]}>
-						<TouchableOpacity onPress={BizHomeOnPress}>
+						{/* <TouchableOpacity onPress={BizHomeOnPress}>
 							<Icon
 								name={'briefcase'}
 								type={'feather'}
@@ -67,7 +67,7 @@ const TopBanner = (props) => {
 								style={styles.iconHorizontalPadding}
 								iconStyle={styles.iconStyle}
 							></Icon>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 
 						<TouchableOpacity onPress={BizProfileOnPress}>
 							<Icon
