@@ -83,6 +83,32 @@ router.get("/view-queue", async (req, res) => {
   }
 });
 
+router.get("/view-queueTimes", async (req, res) => {
+  const storeQueue = await queueTemplate
+    .find({ store: req.query.store }, { queueNumber: 1, user: 1, _id: 0 })
+    .sort({ queueNumber: 1 });
+
+  const intensity = await serviceProviderData
+    .find({store: req.query.store}, {venueForecast: {hour: req.query.hour}})
+
+  const multiplier = 1
+  if(intensity.venueForecast.intensity_txt == 'low' || intensity.venueForecast.intensity_txt == 'Below Average'){
+    multiplier = 1
+  }else if(intensity.venueForecast.intensity_txt == 'Average'){
+    multiplier = 1.2
+  }else if(intensity.venueForecast.intensity_txt == 'Above Averge'){
+    multiplier = 1.5
+  }else if(intensity.venueForecast.intensity_txt == "High"){
+    multiplier = 2
+  }
+
+  if (storeQueue.length === 0) {
+    res.send(storeQueue.length);
+  } else {
+    res.send(storeQueue.length * 10 * multiplier);
+  }
+});
+
 // mongoose.createConnection(process.env.DATABASE_ACCESS, () => {
 //   console.log("Database queue is connected");
 // });

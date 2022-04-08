@@ -90,6 +90,7 @@ router.post("/serviceProvider/add-stall", async (req, res) => {
     venueType: req.body.venueType,
     venueRatings: req.body.rating,
     numReviews: req.body.reviews,
+    venueForecast: req.body.venueForecast
   });
 
   await stall

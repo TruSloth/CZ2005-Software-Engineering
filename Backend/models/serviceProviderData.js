@@ -58,6 +58,14 @@ const serviceProviderData = new mongoose.Schema({
   imageAddress: {
     type: String,
   },
+  
+  venueForecast: {
+    type: [{
+      'hour': {type: Number}, 
+      'intensity_txt': {type: String}, 
+      'intensity_nr': {type: String}}
+    ],
+  }
 });
 
 module.exports = mongoose.model("stall-information", serviceProviderData);
