@@ -284,6 +284,7 @@ const HomeScreenContent = (props) => {
 											onPressCardDesc={() =>
 												onPressCardDescQueue(item.item)
 											}
+											disableCardDesc={account.currentQueue ?? false}
 										></TappableCard>
 									);
 								}}

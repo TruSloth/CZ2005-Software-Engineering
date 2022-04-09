@@ -28,14 +28,14 @@ import {TouchableOpacity, Text, StyleSheet, View, ActivityIndicator} from 'react
  */
 
 const RoundButton = (props) => {
-	const {style, title, onPress, loading} = props;
+	const {style, title, onPress, loading, disabled} = props;
 
 	return loading ? (
 		<View style={[styles.loginButton, style]}>
 			<ActivityIndicator color={'#7879F1'}></ActivityIndicator>
 		</View>
 	) : (
-		<TouchableOpacity style={[styles.loginButton, style]} onPress={onPress}>
+		<TouchableOpacity style={[styles.loginButton, style]} onPress={onPress} disabled={disabled}>
 			<Text style={[{alignContent: 'center', color: '#7879F1'}]}>
 				{title}
 			</Text>

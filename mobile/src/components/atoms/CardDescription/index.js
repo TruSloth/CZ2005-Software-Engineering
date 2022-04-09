@@ -3,13 +3,13 @@ import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import RoundButton from '../RoundButton';
 
 /**
- * 
+ *
  * Renders the content for a Card.
- * 
+ *
  * @category Components
  * @exports CardDescription
  * @subcategory Atoms
- * 
+ *
  * @example <caption>Default example</caption>
  * return(
  *   <CardDescription
@@ -26,14 +26,14 @@ import RoundButton from '../RoundButton';
  *	subtextLine1Style={{
  *		color: '#7879F1',
  *	}}
- *	subtextLine2={'SubtextLine2'}	
+ *	subtextLine2={'SubtextLine2'}
  *	subtextLine2Style={{
  *		color: '#7879F1',
  *	}}
  *	onPressCardDesc={() => console.log('CardDesc Pressed')}>
  *   </CardDescription>
  * )
- * 
+ *
  * @property {String} title Header text passed to the card description
  * @property {object(style)} titleStyle Header text style passed to `title`
  * @property {String} subtitle Subheader text passed to the card description that appears directly below `title`
@@ -56,6 +56,8 @@ const CardDescription = (props) => {
 		subtextLine2,
 		subtextLine2Style,
 		onPressCardDesc,
+		hideCardButton,
+		disableCardDesc,
 	} = props;
 	return (
 		<View style={styles.cardDescriptionBox}>
@@ -70,11 +72,16 @@ const CardDescription = (props) => {
 					<Text style={subtextLine1Style}>{subtextLine1}</Text>
 					<Text style={subtextLine2Style}>{subtextLine2}</Text>
 				</View>
-				<RoundButton
-					title={'Queue'}
-					onPress={() => onPressCardDesc()}
-					style={styles.queueButton}
-				></RoundButton>
+				{hideCardButton ? (
+					<View style={{width: 0}}></View>
+				) : (
+					<RoundButton
+						title={'Queue'}
+						onPress={() => onPressCardDesc()}
+						style={styles.queueButton}
+						disabled={disableCardDesc}
+					></RoundButton>
+				)}
 			</View>
 		</View>
 	);
@@ -87,7 +94,7 @@ const styles = StyleSheet.create({
 		backgroundColor: 'transparent',
 		width: Dimensions.get('window').width * 0.48,
 		height: Dimensions.get('window').height * 0.18,
-		justifyContent: 'space-evenly'
+		justifyContent: 'space-evenly',
 	},
 
 	subtextBox: {

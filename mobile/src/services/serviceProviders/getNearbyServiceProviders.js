@@ -3,7 +3,7 @@ import GetLocation from 'react-native-get-location';
 
 import {LOCALHOST} from '../config';
 
-export const getNearbyServiceProviders = async () => {
+export const getNearbyServiceProviders = async (hour) => {
         try {
                 const currentLocation = await GetLocation.getCurrentPosition(
                         {
@@ -16,6 +16,7 @@ export const getNearbyServiceProviders = async () => {
                                 params: {
                                         currentLat: currentLocation.latitude,
                                         currentLng: currentLocation.longitude,
+                                        hour: hour
                                 }     
                         }
                 )

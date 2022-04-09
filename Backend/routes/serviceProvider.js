@@ -133,8 +133,30 @@ router.get("/serviceProvider/find-nearest", async (req, res) => {
   try {
     updatedNearbyStalls = await Promise.all(nearbyStalls.map(async (stall) => {
       const queue = await queueTemplate.find({venueID: stall.venueID})
+
+      let multiplier = 1;
+      let venueForecast;
+
+      if (stall.venueForecast) {
+        venueForecast = stall.venueForecast.find(forecast => forecast.hour === Number(req.query.hour))
+      } else {
+        venueForecast = {intensity_txt: 'Missing'}
+      }
+
+      if (venueForecast.intensity_txt === 'Average') {
+        multiplier = 1.2
+      }
+
+      if (venueForecast.intensity_txt === 'Above Average') {
+        multiplier = 1.5
+      } 
+
+      if (venueForecast.intensity_txt === 'High') {
+        multiplier = 2
+      }
+
       const queueLength = queue.length
-      const waitTime = queueLength === 0 ? 0 : queueLength * 10
+      const waitTime = queueLength === 0 ? 0 : queueLength * 10 * multiplier
 
       return {...stall, queueLength: queueLength, waitTime: waitTime}
     }))

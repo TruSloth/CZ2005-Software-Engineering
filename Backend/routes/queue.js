@@ -86,11 +86,11 @@ router.get("/view-queue", async (req, res) => {
 
 router.get("/view-queueTimes", async (req, res) => {
   const storeQueue = await queueTemplate
-    .find({ store: req.query.store }, { queueNumber: 1, user: 1, _id: 0 })
+    .find({ venueID: req.query.venueID }, { queueNumber: 1, user: 1, _id: 0 })
     .sort({ queueNumber: 1 });
 
   const intensity = await stallTemplate
-    .findOne({store: req.query.store}, {venueForecast: {hour: req.query.hour}})
+    .findOne({venueID: req.query.venueID}, {venueForecast: {hour: req.query.hour}})
 
   let multiplier = 1
 

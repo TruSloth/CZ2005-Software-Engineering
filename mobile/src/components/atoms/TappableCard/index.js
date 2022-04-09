@@ -43,6 +43,7 @@ const TappableCard = (props) => {
 		cardSubtextLine2,
 		onPress,
 		onPressCardDesc,
+		disableCardDesc
 	} = props;
 
 	return (
@@ -65,6 +66,7 @@ const TappableCard = (props) => {
 					subtextLine2={cardSubtextLine2}
 					subtextLine2Style={styles.cardSubtextLine2}
 					onPressCardDesc={onPressCardDesc}
+					hideCardButton={disableCardDesc}
 				></CardDescription>
 			</Card>
 		</TouchableOpacity>

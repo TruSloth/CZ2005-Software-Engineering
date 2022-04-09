@@ -35,7 +35,7 @@ const LoginScreen = ({navigation}) => {
 			const response = await loginMutation.mutateAsync({email: email, password: password, accountType: 'User'});
 
 			if (response.status === 200) {
-				dispatch(setCurrentUser({username: response.data.userName, accountType: 'User'}))
+				dispatch(setCurrentUser({userName: response.data.userName, accountType: 'User'}))
 				dispatch(toggleLogIn(true));
 			}
 		} catch (e) {
@@ -52,7 +52,7 @@ const LoginScreen = ({navigation}) => {
 			const response = await googleLoginMutation.mutateAsync(userInfo)
 			
 			if (response.status === 200) {
-				dispatch(setCurrentUser({username: response.data.userName, accountType: 'User'}))
+				dispatch(setCurrentUser({userName: response.data.userName, accountType: 'User'}))
 				dispatch(toggleLogIn(true))
 			}
 		} catch (e) {

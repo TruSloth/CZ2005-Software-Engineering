@@ -2,16 +2,16 @@ import React from 'react';
 
 import {SafeAreaView, StatusBar} from 'react-native';
 import {useMutation, useQueries, useQuery} from 'react-query';
-import {joinQueue} from '../../services/queue/joinQueue';
+import { useDispatch } from 'react-redux';
 
+import {joinQueue} from '../../services/queue/joinQueue';
 import HomeScreenContent from '../../components/organisms/HomeScreenContent';
-import {getQueue} from '../../services/queue/getQueue';
 import {getServiceProviders} from '../../services/serviceProviders/getServiceProviders';
-import GetLocation from 'react-native-get-location';
-import { isPointWithinRadius } from 'geolib';
 import { getNearbyServiceProviders } from '../../services/serviceProviders/getNearbyServiceProviders';
+import { updateCurrentQueue } from '../../store/account/actions';
 
 const HomeScreen = ({navigation}) => {
+	const dispatch = useDispatch();
 	const joinQueueMutation = useMutation(joinQueue);
 
 	const joinServiceProviderQueue = async (user, store, pax) => {
@@ -25,6 +25,7 @@ const HomeScreen = ({navigation}) => {
 			if (response.status === 200) {
 				// update store to indicate that user is in queue
 				//console.log('Joined a queue!');
+				dispatch(updateCurrentQueue(store))
 			}
 		} catch (e) {
 			console.log(e);
@@ -48,7 +49,7 @@ const HomeScreen = ({navigation}) => {
 			{
 				queryKey: ['retrieveNearbyServiceProviders'], 
 				queryFn: async () => {
-					const response = await getNearbyServiceProviders();
+					const response = await getNearbyServiceProviders(new Date().getHours());
 					return response.data
 				}
 			}
