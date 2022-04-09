@@ -2,7 +2,7 @@ import React from 'react';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import ChatScreen from '../scenes/Chat';
+import ChatScreen from '../../scenes/Chat';
 import {StyleSheet} from 'react-native';
 
 const Stack = createNativeStackNavigator();

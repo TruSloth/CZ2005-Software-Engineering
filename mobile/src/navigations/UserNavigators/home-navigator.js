@@ -3,9 +3,10 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StyleSheet} from 'react-native';
 
-import StoreDetailedInfoScreen from '../scenes/StoreDetailedInfo';
-import HomeScreen from '../scenes/Home';
-import AppSettingsScreen from '../scenes/AppSettings';
+import StoreDetailedInfoScreen from '../../scenes/StoreDetailedInfo';
+import HomeScreen from '../../scenes/Home';
+import AppSettingsScreen from '../../scenes/AppSettings';
+import { useSelector } from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 

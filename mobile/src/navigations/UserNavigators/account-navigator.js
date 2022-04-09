@@ -2,8 +2,8 @@ import React from 'react';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import AccountScreen from '../scenes/Account';
-import HistoryScreen from '../scenes/History';
+import AccountScreen from '../../scenes/Account';
+import HistoryScreen from '../../scenes/History';
 import {StyleSheet} from 'react-native';
 
 

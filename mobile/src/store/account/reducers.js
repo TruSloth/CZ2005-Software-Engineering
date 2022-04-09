@@ -18,7 +18,7 @@ const accountReducer = (state = initialState, action) => {
 		case SET_CURRENT_USER:
 			return {
 				...state,
-				userName: action.payload.username,
+				userName: action.payload.userName,
 				accountType: action.payload.accountType
 			}
 		case TOGGLE_LOGGED_IN:

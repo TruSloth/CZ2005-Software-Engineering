@@ -52,6 +52,8 @@ const OnboardingScreen = ({navigation}) => {
 		},
 	];
 
+	const [authOption, setAuthOption] = useState(null);
+
 	return (
 		<View style={styles.container}>
 			<View style={{flex: 3}}>
@@ -75,42 +77,92 @@ const OnboardingScreen = ({navigation}) => {
 					ref={slidesRef}
 				/>
 			</View>
-
 			<View style={{flex: 0.3}}>
 				<Paginator data={data} scrollX={scrollX} />
 			</View>
+			{authOption ? (
+				<View style={{flexDirection: 'row'}}>
+					<TouchableOpacity
+						style={[styles.btn]}
+						onPress={() => {
+							if (authOption === 'Registration') {
+								navigation.navigate('Registration');
+							}
 
-			<View style={{flexDirection: 'row'}}>
-				<TouchableOpacity
-					style={[styles.btn]}
-					onPress={() => navigation.navigate('Registration')}
-				>
-					<Text
-						style={{
-							fontWeight: 'bold',
-							fontSize: 15,
-							color: '#493d8a',
+							if (authOption === 'Login') {
+								navigation.navigate('Login');
+							}
 						}}
 					>
-						Register
-					</Text>
-				</TouchableOpacity>
-				<View style={{width: 15}} />
-				<TouchableOpacity
-					style={[styles.btn]}
-					onPress={() => navigation.navigate('Login')}
-				>
-					<Text
-						style={{
-							fontWeight: 'bold',
-							fontSize: 15,
-							color: '#493d8a',
+						<Text
+							style={{
+								fontWeight: 'bold',
+								fontSize: 15,
+								color: '#493d8a',
+							}}
+						>
+							User
+						</Text>
+					</TouchableOpacity>
+					<View style={{width: 15}} />
+					<TouchableOpacity
+						style={[styles.btn]}
+						onPress={() => {
+							if (authOption === 'Registration') {
+								navigation.navigate(
+									'ServiceProviderRegistration'
+								);
+							}
+
+							if (authOption === 'Login') {
+								navigation.navigate('ServiceProviderLogin');
+							}
 						}}
 					>
-						Login
-					</Text>
-				</TouchableOpacity>
-			</View>
+						<Text
+							style={{
+								fontWeight: 'bold',
+								fontSize: 15,
+								color: '#493d8a',
+							}}
+						>
+							Business
+						</Text>
+					</TouchableOpacity>
+				</View>
+			) : (
+				<View style={{flexDirection: 'row'}}>
+					<TouchableOpacity
+						style={[styles.btn]}
+						onPress={() => setAuthOption('Registration')}
+					>
+						<Text
+							style={{
+								fontWeight: 'bold',
+								fontSize: 15,
+								color: '#493d8a',
+							}}
+						>
+							Register
+						</Text>
+					</TouchableOpacity>
+					<View style={{width: 15}} />
+					<TouchableOpacity
+						style={[styles.btn]}
+						onPress={() => setAuthOption('Login')}
+					>
+						<Text
+							style={{
+								fontWeight: 'bold',
+								fontSize: 15,
+								color: '#493d8a',
+							}}
+						>
+							Login
+						</Text>
+					</TouchableOpacity>
+				</View>
+			)}
 		</View>
 	);
 };

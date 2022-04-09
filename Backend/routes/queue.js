@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 const queueTemplate = require("../models/queueUser");
 const signUpTemplate = require("../models/signup");
+const stallTemplate = require("../models/serviceProviderData");
 
 dotenv.config();
 
@@ -88,19 +89,34 @@ router.get("/view-queueTimes", async (req, res) => {
     .find({ store: req.query.store }, { queueNumber: 1, user: 1, _id: 0 })
     .sort({ queueNumber: 1 });
 
-  const intensity = await serviceProviderData
-    .find({store: req.query.store}, {venueForecast: {hour: req.query.hour}})
+  const intensity = await stallTemplate
+    .findOne({store: req.query.store}, {venueForecast: {hour: req.query.hour}})
 
-  const multiplier = 1
-  if(intensity.venueForecast.intensity_txt == 'low' || intensity.venueForecast.intensity_txt == 'Below Average'){
-    multiplier = 1
-  }else if(intensity.venueForecast.intensity_txt == 'Average'){
+  let multiplier = 1
+
+  const venueForecast = intensity.venueForecast ?? {intensity_txt: 'Missing'} 
+
+  if (venueForecast.intensity_txt === 'Average') {
     multiplier = 1.2
-  }else if(intensity.venueForecast.intensity_txt == 'Above Averge'){
+  }
+
+  if (venueForecast.intensity_txt === 'Above Average') {
     multiplier = 1.5
-  }else if(intensity.venueForecast.intensity_txt == "High"){
+  } 
+
+  if (venueForecast.intensity_txt === 'High') {
     multiplier = 2
   }
+
+  // if(intensity.venueForecast.intensity_txt == 'low' || intensity.venueForecast.intensity_txt == 'Below Average'){
+  //   multiplier = 1
+  // }else if(intensity.venueForecast.intensity_txt == 'Average'){
+  //   multiplier = 1.2
+  // }else if(intensity.venueForecast.intensity_txt == 'Above Averge'){
+  //   multiplier = 1.5
+  // }else if(intensity.venueForecast.intensity_txt == "High"){
+  //   multiplier = 2
+  // }
 
   if (storeQueue.length === 0) {
     res.send(storeQueue.length);
@@ -108,33 +124,6 @@ router.get("/view-queueTimes", async (req, res) => {
     res.send(storeQueue.length * 10 * multiplier);
   }
 });
-
-// mongoose.createConnection(process.env.DATABASE_ACCESS, () => {
-//   console.log("Database queue is connected");
-// });
-
-// const db = mongoose.connection;
-// var queue = mongodbQueue(db, "job-queue");
-
-// queue.createIndexes((err, indexName) => {});
-
-// queue.clean((err) => {});
-
-// router.post("/join-queue", (req, res) => {
-//   const data = {
-//     name: req.body.name,
-//     pax: req.body.pax,
-//   };
-
-//   queue.add([data], (err, id) => {
-//     if (err) {
-//       console.log(err);
-//       return;
-//     }
-
-//     res.json(id);
-//   });
-// });
 
 // router.post("/leave-queue", (req, res) => {
 //   var name = null;

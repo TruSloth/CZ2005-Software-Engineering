@@ -20,7 +20,7 @@ import {AltAuthOptions} from '../../components/molecules/Auth';
 import {googleSignIn} from '../../services/auth/google/googleSignIn';
 import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
 
-const RegistrationScreen = ({navigation}) => {
+const ServiceProviderRegistrationScreen = ({navigation}) => {
 	const dispatch = useDispatch();
 
 	const registerMutation = useMutation(register);
@@ -34,7 +34,7 @@ const RegistrationScreen = ({navigation}) => {
 		email: '',
 		password: '',
 		confirmPassword: '',
-		accountType: 'User',
+		accountType: 'ServiceProvider',
 	});
 
 	const onPressRegister = async () => {
@@ -55,7 +55,7 @@ const RegistrationScreen = ({navigation}) => {
 					email: '',
 					password: '',
 					confirmPassword: '',
-					accountType: 'User',
+					accountType: 'ServiceProvider',
 				});
 			}
 		} catch (e) {
@@ -66,15 +66,15 @@ const RegistrationScreen = ({navigation}) => {
 	const onPressGoogleSignin = async () => {
 		try {
 			let userInfo = await googleSignIn();
-			console.log(userInfo);
-			userInfo.user.accountType = 'User';
+
+			userInfo.user.accountType = 'ServiceProvider';
 
 			const response = await googleRegisterMutation.mutateAsync(userInfo);
 			if (response.status === 200) {
 				dispatch(
 					setCurrentUser({
 						username: response.data.userName,
-						accountType: 'User',
+						accountType: 'ServiceProvider',
 					})
 				);
 				dispatch(toggleLogIn(true));
@@ -222,4 +222,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default RegistrationScreen;
+export default ServiceProviderRegistrationScreen;
