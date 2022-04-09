@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import { useSelector } from 'react-redux';
 
 /**
  * Renders {@link module:AppBottomSheet|AppBottomSheet} content for short-form Store Info.
@@ -27,6 +28,8 @@ import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 const StoreInfoContent = (props) => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
+
+	//const account = useSelector((state) => state.account);
 
 	const {
 		moreInfoOnPress,

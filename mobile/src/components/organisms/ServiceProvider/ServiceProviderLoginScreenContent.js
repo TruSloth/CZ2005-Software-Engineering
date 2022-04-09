@@ -27,7 +27,7 @@ const ServiceProviderLoginScreenContent = (props) => {
 	// };
 
 	const LoginOnPress = () => {
-		navigation.navigate('BusinessLogin');
+		navigation.navigate('Login');
 	};
 
 	const reactNativeLogo = '../../../assets/react-native-logo.png';
