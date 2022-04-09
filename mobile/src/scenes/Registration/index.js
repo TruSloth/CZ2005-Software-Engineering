@@ -9,6 +9,7 @@ import {
 	SafeAreaView,
 	useColorScheme,
 	View,
+	ScrollView,
 	ActivityIndicator,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
@@ -19,6 +20,7 @@ import {googleRegister} from '../../services/auth/google/googleRegister';
 import {AltAuthOptions} from '../../components/molecules/Auth';
 import {googleSignIn} from '../../services/auth/google/googleSignIn';
 import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
+
 
 const RegistrationScreen = ({navigation}) => {
 	const dispatch = useDispatch();
@@ -48,6 +50,7 @@ const RegistrationScreen = ({navigation}) => {
 
 				navigation.navigate('Verification', {
 					tempUserName: tempUserName,
+					accountType: 'User'
 				});
 			} else {
 				setRegistrationDetails({
@@ -73,7 +76,7 @@ const RegistrationScreen = ({navigation}) => {
 			if (response.status === 200) {
 				dispatch(
 					setCurrentUser({
-						username: response.data.userName,
+						userName: response.data.userName,
 						accountType: 'User',
 					})
 				);
@@ -91,6 +94,7 @@ const RegistrationScreen = ({navigation}) => {
 			<StatusBar
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}
 			/>
+			<ScrollView>
 			<Image
 				source={{uri: 'https://reactjs.org/logo-og.png'}}
 				style={styles.image}
@@ -177,6 +181,9 @@ const RegistrationScreen = ({navigation}) => {
 					onPressGoogleLogin={onPressGoogleSignin}
 				></AltAuthOptions>
 			</View>
+
+			</ScrollView>
+			
 		</SafeAreaView>
 	);
 };

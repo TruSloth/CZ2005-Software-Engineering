@@ -48,6 +48,10 @@ router.post("/users/login/google", async (req, res) => {
   // Verify the identity of the request
   try {
     const payload = await verify(req.body.idToken)
+
+    console.log('google login')
+    console.log(payload)
+
     const googleUser = {
       email: payload['email'],
       userName: payload['given_name']

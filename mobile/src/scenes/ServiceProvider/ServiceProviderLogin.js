@@ -19,6 +19,10 @@ const ServiceProviderLoginScreen = ({navigation}) => {
 		navigation.navigate('Registration');
 	};
 
+	const backOnPress = () => {
+		navigation.navigate('Onboarding');
+	};
+
 	const backgroundStyle = {
 		backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
 	};
@@ -86,6 +90,7 @@ const ServiceProviderLoginScreen = ({navigation}) => {
 			<ServiceProviderLoginScreenContent
 				submitForm={onPressLogin}
 				registerOnPress={registerOnPress}
+				backOnPress={backOnPress}
 				loading={isLoading}
 				onPressGoogleSignin={onPressGoogleSignin}
 				navigation={navigation}

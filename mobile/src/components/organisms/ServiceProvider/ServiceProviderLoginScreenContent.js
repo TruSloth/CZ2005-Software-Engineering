@@ -17,6 +17,7 @@ const ServiceProviderLoginScreenContent = (props) => {
 	const {
 		submitForm,
 		registerOnPress,
+        backOnPress,
 		loading,
 		onPressGoogleSignin,
 		navigation,
@@ -25,10 +26,6 @@ const ServiceProviderLoginScreenContent = (props) => {
 	// const BizLoginOnPress = () => {
 	// 	navigation.navigate('BusinessLogin');
 	// };
-
-	const LoginOnPress = () => {
-		navigation.navigate('Login');
-	};
 
 	const reactNativeLogo = '../../../assets/react-native-logo.png';
 
@@ -88,9 +85,9 @@ const ServiceProviderLoginScreenContent = (props) => {
 			></AltAuthOptions>
 
 			<View style={{flexDirection: 'row'}}>
-				<Text style={styles.subText}>User account? </Text>
-				<TouchableOpacity onPress={LoginOnPress}>
-					<Text style={styles.clickableText}>Login</Text>
+				<Text style={styles.subText}>Not a Business? </Text>
+				<TouchableOpacity onPress={backOnPress}>
+					<Text style={styles.clickableText}>Back</Text>
 				</TouchableOpacity>
 			</View>
 

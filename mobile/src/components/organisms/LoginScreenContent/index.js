@@ -21,6 +21,9 @@ import { LoginForm, AltAuthOptions } from '../../molecules/Auth';
  */
 
 const LoginScreenContent = (props) => {
+
+	const {backOnPress} = props
+
 	const {submitForm, registerOnPress, loading, onPressGoogleSignin} = props;
 
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
@@ -57,11 +60,19 @@ const LoginScreenContent = (props) => {
 						{padding: 5, alignSelf: 'center'},
 					]}
 				>
-					Login to your account
+					{`Login to your account`}
 				</Text>
 			</View>
 			<LoginForm submitForm={submitForm} loading={loading}></LoginForm>
 			<AltAuthOptions altAuthTitle={'Or login with'} onPressGoogleLogin={onPressGoogleSignin}></AltAuthOptions>
+
+			<View style={{flexDirection: 'row'}}>
+				<Text style={styles.subText}>Not a User? </Text>
+				<TouchableOpacity onPress={backOnPress}>
+					<Text style={styles.clickableText}>Back</Text>
+				</TouchableOpacity>
+			</View>
+
 			<View style={{flexDirection: 'row'}}>
 				<Text style={styles.subText}>Don't have an account? </Text>
 				<TouchableOpacity onPress={registerOnPress}>
