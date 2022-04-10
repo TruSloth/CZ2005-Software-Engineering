@@ -105,9 +105,8 @@ const HomeScreenContent = (props) => {
 		sheetRef.current.snapTo(0);
 	};
 
-	const onPressChat = (venueName, venueID) => {
-		console.log(venueID)
-		navigation.navigate('LiveChat', {venueName: venueName, venueID: venueID});
+	const onPressChat = () => {
+		navigation.navigate('LiveChat', {venueName: currentlyOpenStore.venueName, venueID: currentlyOpenStore.venueID});
 	};
 
 	const moreInfoOnPress = () => {

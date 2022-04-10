@@ -23,9 +23,7 @@ const ChatNavigator = () => {
 			<Stack.Screen
 				name='LiveChat'
 				component={ChatScreen}
-				options={(route, navigation) => {
-					console.log(route)
-
+				options={({route, navigation}) => {
 					return {...styles.chatScreenOptions,
 						title: route.params === undefined ? 'General' : route.params.venueName
 						}

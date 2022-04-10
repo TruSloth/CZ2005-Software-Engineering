@@ -30,7 +30,6 @@ const StoreInfoContent = (props) => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
 	const {
-		venueID,
 		moreInfoOnPress,
 		queueOnPress,
 		chatOnPress,
@@ -43,10 +42,6 @@ const StoreInfoContent = (props) => {
 		text,
 		queueDisabled
 	} = props;
-
-	useEffect(() => {
-		console.log(heading)
-	})
 
 	return (
 		<View style={styles.container}>
@@ -76,10 +71,7 @@ const StoreInfoContent = (props) => {
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={styles.button}
-						onPress={() => {
-							console.log(heading)
-							chatOnPress(heading, venueID)
-						}}
+						onPress={chatOnPress}
 					>
 						<Text styles={styles.buttonText}>Chat</Text>
 					</TouchableOpacity>
