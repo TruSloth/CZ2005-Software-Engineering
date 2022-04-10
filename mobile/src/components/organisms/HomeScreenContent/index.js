@@ -48,7 +48,8 @@ const HomeScreenContent = (props) => {
 		leaveServiceProviderQueue,
 		serviceProviderData,
 		nearbyVenuesData,
-		currentQueueWaitTime
+		currentQueueWaitTime,
+		recommendedServiceProviders
 	} = props;
 
 	const queryClient = useQueryClient();
@@ -61,26 +62,7 @@ const HomeScreenContent = (props) => {
 		setRefreshing(false);
 	}, []);
 
-	const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
-		{
-			venueName: 'Location 1',
-			venueRatings: '5 Stars',
-			queueLength: '10 in Queue',
-			waitTime: '~ 5 mins',
-		},
-		{
-			venueName: 'Location 2',
-			venueRatings: '4 Stars',
-			queueLength: '5 in Queue',
-			waitTime: '~ 5 mins',
-		},
-		{
-			venueName: 'Location 3',
-			venueRatings: '3 Stars',
-			queueLength: '3 in Queue',
-			waitTime: '~ 5 mins',
-		},
-	]);
+	const [recommendedVenues, setRecommendedVenues] = useState([]);
 
 	const sheetRef = useRef(null);
 
@@ -103,8 +85,6 @@ const HomeScreenContent = (props) => {
 		}
 	})
 
-	
-
 	const openStoreInfo = (venue) => {
 		setCurrentlyOpenStore(venue);
 		sheetRef.current.snapTo(0);
@@ -125,8 +105,9 @@ const HomeScreenContent = (props) => {
 		sheetRef.current.snapTo(0);
 	};
 
-	const onPressChat = () => {
-		navigation.navigate('LiveChat');
+	const onPressChat = (venueName, venueID) => {
+		console.log(venueID)
+		navigation.navigate('LiveChat', {venueName: venueName, venueID: venueID});
 	};
 
 	const moreInfoOnPress = () => {
@@ -205,6 +186,16 @@ const HomeScreenContent = (props) => {
 		if (serviceProviderData !== null) {
 			setFilteredDataSource(serviceProviderData);
 			setMasterDataSource(serviceProviderData);
+
+			if (recommendedServiceProviders !== null) {
+				let recommendedVenueData = []
+
+				recommendedServiceProviders.map((stall) => {
+					recommendedVenueData.push(serviceProviderData.find(venue => venue.venueID === stall.venueID))
+				})
+
+				setRecommendedVenues(recommendedVenueData)
+			}
 		}
 	}, [serviceProviderData]);
 
@@ -275,7 +266,7 @@ const HomeScreenContent = (props) => {
 					child={
 						<FlatList
 							horizontal
-							data={search === '' ? previouslyVisitedData : filteredDataSource.slice(0, 11)}
+							data={search === '' ? recommendedVenues : filteredDataSource.slice(0, 11)}
 							renderItem={({item}) => {
 								return (
 									<TappableCard
@@ -298,7 +289,7 @@ const HomeScreenContent = (props) => {
 							}}
 						></FlatList>
 					}
-					title={'Previously Visited'}
+					title={search === '' ? 'Recommended Stores' : 'Search Results'}
 					titleStyle={styles.sectionHeader}
 				></HorizontalSection>
 				<HorizontalSection
@@ -367,6 +358,7 @@ const HomeScreenContent = (props) => {
 				onPressMinus={queueDecrement}
 				onPressCancel={closeQueue}
 				onPressConfirm={onQueueConfirm}
+				venueID={currentlyOpenStore.venueID}
 				storeImage={currentlyOpenStore.imageAddress}
 				heading={currentlyOpenStore.venueName}
 				waitTime={`~ ${currentlyOpenStore.waitTime} mins`}

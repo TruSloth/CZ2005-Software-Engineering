@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
 
 import {
 	Text,
@@ -9,201 +9,171 @@ import {
 	Modal,
 	Alert,
 	Pressable,
+	RefreshControl,
+	ScrollView,
 } from 'react-native';
 
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useQueryClient} from 'react-query';
 import {Icon} from 'react-native-elements';
+
+import HorizontalSection from '../../atoms/HorizontalSection';
+import { useSelector } from 'react-redux';
+
 const CustomerDetailsScreenContent = (props) => {
+	const {navigation, queueData, pushFromQueue} = props;
+
 	const [modalVisible, setModalVisible] = useState(false);
 	const RemoveCustomerOnPress = () => {
 		setModalVisible(true);
 	};
-	const {navigation, joinServiceProviderQueue} = props;
+
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
+
+    const account = useSelector((state) => state.account)
+
+	const queryClient = useQueryClient();
+
+	const [refreshing, setRefreshing] = useState(false);
+
+	const onRefresh = useCallback(() => {
+		setRefreshing(true);
+		queryClient.invalidateQueries('getStoreQueue');
+		setRefreshing(false);
+	}, []);
+
 	return (
-		<View style={styles.container}>
-			<View>
-				<Text style={styles.heading}>Queue details</Text>
-				<View style={styles.sameRow}>
-					<Text style={styles.TotalPax}>3</Text>
-					<Image
-						style={styles.largeLogo}
-						source={require('../../../assets/group.png')}
-					/>
-				</View>
-			</View>
-			<View style={styles.horLine} />
-
-			<View style={styles.customer}>
+		<ScrollView
+			refreshControl={
+				<RefreshControl
+					refreshing={refreshing}
+					onRefresh={onRefresh}
+				></RefreshControl>
+			}
+		>
+			<View style={styles.container}>
 				<View>
-					<Text style={styles.subheading}>Sally Lim</Text>
-				</View>
-				<View style={styles.innerContainer}>
-					<Text style={styles.paxNo}>6</Text>
-					<Image
-						style={styles.logo}
-						source={require('../../../assets/group.png')}
-					/>
-					<TouchableOpacity style={styles.firstContact}>
-						<Icon
-							size={40}
-							name='bell'
-							type='evilicon'
-							color='#7879F1'
-						/>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.secondContact}>
-						<Icon
-							size={27}
-							name='phone'
-							type='feather'
-							color='#7879F1'
-						/>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={styles.thirdContact}
-						onPress={RemoveCustomerOnPress}
-					>
-						<Icon
-							size={27}
-							name='user-minus'
-							type='feather'
-							color='#7879F1'
-						/>
-					</TouchableOpacity>
-				</View>
-			</View>
-
-			<View style={styles.horLine} />
-
-			<View style={styles.customer}>
-				<View>
-					<Text style={styles.subheading}>Ben Tan</Text>
-				</View>
-				<View style={styles.innerContainer}>
-					<Text style={styles.paxNo}>3</Text>
-					<Image
-						style={styles.logo}
-						source={require('../../../assets/group.png')}
-					/>
-					<TouchableOpacity style={styles.firstContact}>
-						<Icon
-							size={40}
-							name='bell'
-							type='evilicon'
-							color='#7879F1'
-						/>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.secondContact}>
-						<Icon
-							size={27}
-							name='phone'
-							type='feather'
-							color='#7879F1'
-						/>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={styles.thirdContact}
-						onPress={RemoveCustomerOnPress}
-					>
-						<Icon
-							size={27}
-							name='user-minus'
-							type='feather'
-							color='#7879F1'
-						/>
-					</TouchableOpacity>
-				</View>
-			</View>
-
-			<View style={styles.horLine} />
-
-			<View style={styles.customer}>
-				<View>
-					<Text style={styles.subheading}>Lee Kum Kee</Text>
-				</View>
-				<View style={styles.innerContainer}>
-					<Text style={styles.paxNo}>2</Text>
-					<Image
-						style={styles.logo}
-						source={require('../../../assets/group.png')}
-					/>
-					<TouchableOpacity style={styles.firstContact}>
-						<Icon
-							size={40}
-							name='bell'
-							type='evilicon'
-							color='#7879F1'
-						/>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.secondContact}>
-						<Icon
-							size={27}
-							name='phone'
-							type='feather'
-							color='#7879F1'
-						/>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={styles.thirdContact}
-						onPress={RemoveCustomerOnPress}
-					>
-						<Icon
-							size={27}
-							name='user-minus'
-							type='feather'
-							color='#7879F1'
-						/>
-					</TouchableOpacity>
-				</View>
-			</View>
-			<View style={styles.horLine} />
-
-			<Modal
-				animationType='slide'
-				transparent={true}
-				visible={modalVisible}
-				onRequestClose={() => {
-					Alert.alert('Modal has been closed.');
-					setModalVisible(!modalVisible);
-				}}
-			>
-				<View
-					style={[
-						{backgroundColor: 'rgba(0,0,0,0.5)'},
-						{flex: 1},
-						{justifyContent: 'center'},
-					]}
-				>
-					<View style={styles.modal}>
-						<Text style={styles.modalTitle}>
-							Are you sure you want to remove Sally Lim from the
-							queue?
-						</Text>
-
+					<Text style={styles.heading}>Queue details</Text>
+					<View style={styles.sameRow}>
+						<Text
+							style={styles.TotalPax}
+						>{`${queueData.length}`}</Text>
 						<Image
-							style={styles.modalLogo}
+							style={styles.largeLogo}
 							source={require('../../../assets/group.png')}
 						/>
-						<View style={{flexDirection: 'row'}}>
-							<Pressable
-								style={styles.modalButton}
-								onPress={() => setModalVisible(!modalVisible)}
-							>
-								<Text style={styles.modalButtonText}>Yes</Text>
-							</Pressable>
-
-							<Pressable
-								style={styles.modalButton}
-								onPress={() => setModalVisible(!modalVisible)}
-							>
-								<Text style={styles.modalButtonText}>No</Text>
-							</Pressable>
-						</View>
 					</View>
 				</View>
-			</Modal>
-		</View>
+				{queueData.map((customer) => {
+					return (
+						<HorizontalSection
+							child={
+								<View style={styles.customer}>
+									<View>
+										<Text style={styles.subheading}>
+											{customer.user}
+										</Text>
+									</View>
+									<View style={styles.innerContainer}>
+										<Text style={styles.paxNo}>
+											{customer.pax}
+										</Text>
+										<Image
+											style={styles.logo}
+											source={require('../../../assets/group.png')}
+										/>
+										<TouchableOpacity
+											style={styles.firstContact}
+                                            onPress={() => pushFromQueue(account.serviceProviderID, customer.user)}
+										>
+											<Icon
+												size={40}
+												name='bell'
+												type='evilicon'
+												color='#7879F1'
+											/>
+										</TouchableOpacity>
+										<TouchableOpacity
+											style={styles.secondContact}
+										>
+											<Icon
+												size={27}
+												name='phone'
+												type='feather'
+												color='#7879F1'
+											/>
+										</TouchableOpacity>
+										<TouchableOpacity
+											style={styles.thirdContact}
+											onPress={RemoveCustomerOnPress}
+										>
+											<Icon
+												size={27}
+												name='user-minus'
+												type='feather'
+												color='#7879F1'
+											/>
+										</TouchableOpacity>
+									</View>
+								</View>
+							}
+						></HorizontalSection>
+					);
+				})}
+				<Modal
+					animationType='slide'
+					transparent={true}
+					visible={modalVisible}
+					onRequestClose={() => {
+						Alert.alert('Modal has been closed.');
+						setModalVisible(!modalVisible);
+					}}
+				>
+					<View
+						style={[
+							{backgroundColor: 'rgba(0,0,0,0.5)'},
+							{flex: 1},
+							{justifyContent: 'center'},
+						]}
+					>
+						<View style={styles.modal}>
+							<Text style={styles.modalTitle}>
+								Are you sure you want to remove Sally Lim from
+								the queue?
+							</Text>
+
+							<Image
+								style={styles.modalLogo}
+								source={require('../../../assets/group.png')}
+							/>
+							<View style={{flexDirection: 'row'}}>
+								<Pressable
+									style={styles.modalButton}
+									onPress={() =>
+										setModalVisible(!modalVisible)
+									}
+								>
+									<Text style={styles.modalButtonText}>
+										Yes
+									</Text>
+								</Pressable>
+
+								<Pressable
+									style={styles.modalButton}
+									onPress={() =>
+										setModalVisible(!modalVisible)
+									}
+								>
+									<Text style={styles.modalButtonText}>
+										No
+									</Text>
+								</Pressable>
+							</View>
+						</View>
+					</View>
+				</Modal>
+			</View>
+		</ScrollView>
 	);
 };
 

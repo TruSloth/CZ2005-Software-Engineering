@@ -1,5 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 
+import {useSelector} from 'react-redux';
+
 import {
 	ScrollView,
 	Image,
@@ -11,23 +13,41 @@ import {
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const InsertCustomerContent = (props) => {
+	const {insertUserToQueue} = props;
+
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
+	const account = useSelector((state) => state.account);
+
+	const [userName, setUserName] = useState('');
+
+	const addUserToQueue = () => {
+		insertUserToQueue(userName, account.serviceProviderID, 1); // Pax hardcoded to 1 temporarily
+	};
+
 	return (
-		<View style={styles.container}>
+        <ScrollView>
+            <View style={styles.container}>
 			<Text style={styles.heading}>Insert Customer</Text>
 			<Image style={styles.logo} source={{uri: reactNativeLogo}} />
 			<View>
 				<Text style={styles.or}>OR</Text>
 				<Text style={styles.paragraph}>Account ID:</Text>
 			</View>
-			<TextInput style={styles.input} placeholder='Enter here' />
+			<TextInput
+				style={styles.input}
+				placeholder='Enter here'
+				onChangeText={(text) => setUserName(text)}
+				value={userName}
+			/>
 			<View>
-				<TouchableOpacity style={styles.button}>
+				<TouchableOpacity style={styles.button} onPress={addUserToQueue}>
 					<Text style={styles.textButton}>Confirm</Text>
 				</TouchableOpacity>
 			</View>
 		</View>
+        </ScrollView>
+		
 	);
 };
 

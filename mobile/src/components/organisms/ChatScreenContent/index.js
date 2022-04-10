@@ -134,7 +134,9 @@ const ChatBubble = (props) => {
  * @subcategory Organisms
  */
 
-const ChatScreenContent = () => {
+const ChatScreenContent = (props) => {
+	const {room} = props;
+
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
 	const account = useSelector((state) => state.account);
@@ -160,7 +162,7 @@ const ChatScreenContent = () => {
 		setMessages((previousMessages) => {
 			return (GiftedChat.append(previousMessages, messages))
 		})
-		socket.emit('send-chat-message', messages, 'Location 1')
+		socket.emit('send-chat-message', messages, room)
 	} , [])
 	
 

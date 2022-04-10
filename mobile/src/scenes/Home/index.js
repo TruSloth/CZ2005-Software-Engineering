@@ -11,6 +11,7 @@ import { getNearbyServiceProviders } from '../../services/serviceProviders/getNe
 import { updateCurrentQueue } from '../../store/account/actions';
 import { getQueueWaitTime } from '../../services/queue/getQueueWaitTime';
 import { leaveQueue } from '../../services/queue/leaveQueue';
+import { getRecommendedServiceProviders } from '../../services/serviceProviders/getRecommendedServiceProviders';
 
 const HomeScreen = ({navigation}) => {
 	const dispatch = useDispatch();
@@ -34,11 +35,6 @@ const HomeScreen = ({navigation}) => {
 				dispatch(updateCurrentQueue(storeName, storeID))
 			}
 
-			if (!socket.connected) {
-				socket.connect()
-
-				socket.emit('add-username', account.userName)
-			}
 		} catch (e) {
 			console.log(e);
 		}
@@ -54,10 +50,6 @@ const HomeScreen = ({navigation}) => {
 			if (response.status === 200) {
 				dispatch(updateCurrentQueue(null, null))
 				queryClient.invalidateQueries('retrieveNearbyServiceProviders')
-			}
-
-			if (socket.connected) {
-				socket.disconnect()
 			}
 		} catch (e) {
 			console.log(e);
@@ -88,11 +80,18 @@ const HomeScreen = ({navigation}) => {
 			{
 				queryKey: ['retrieveWaitTime'],
 				queryFn: async () => {
-					response = await getQueueWaitTime(account.currentQueueID, new Date().getHours())
+					const response = await getQueueWaitTime(account.currentQueueID, new Date().getHours())
 					return response.data
 				},
 				refetchInterval: 60000,
 				enabled: account.currentQueueID !== null
+			},
+			{
+				queryKey: ['retrieveRecommendedServiceProviders'],
+				queryFn: async () => {
+					const response = await getRecommendedServiceProviders(account.userName)
+					return response.data
+				}
 			}
 		]
 	)
@@ -105,9 +104,9 @@ const HomeScreen = ({navigation}) => {
 				joinServiceProviderQueue={joinServiceProviderQueue}
 				leaveServiceProviderQueue={leaveServiceProviderQueue}
 				serviceProviderData={result[0].isLoading ? null : result[0].data}
-				//nearbyVenuesData={data}
 				nearbyVenuesData={result[1].isLoading ? null : result[1].data}
 				currentQueueWaitTime={(result[2].isLoading || result[2].isIdle) ? null : result[2].data.waitTime}
+				recommendedServiceProviders={result[3].isLoading ? null : result[3].data}
 			></HomeScreenContent>
 		</SafeAreaView>
 	);

@@ -5,31 +5,27 @@ import ChatScreenContent from "../../components/organisms/ChatScreenContent";
 import { useSelector } from "react-redux";
 
 const ChatScreen = (props) => {
+    const {route} = props
+
+    const room = route.params === undefined ? 'General' : route.params.venueID;
+
     const socket = useSelector((state) => state.socket).socket
     const account = useSelector((state) => state.account)
 
-    console.log(socket.connected)
-
     useFocusEffect(
         useCallback(() => {
-            if (!socket.connected) {
-                socket.connect()
+                socket.emit('join-room', room)
 
-                socket.emit('add-username', account.userName)
-            }
+                const leaveRoom = (room) => {
+                    socket.emit('leave-room', room)
+                }
 
-            socket.emit('join-room', 'Location 1')
-
-            const leaveRoom = (room) => {
-                socket.emit('leave-room', room)
-            }
-
-            return () => leaveRoom('Location 1');
+                return () => leaveRoom(room);
         })
     )
 
     return (
-        <ChatScreenContent></ChatScreenContent>
+        <ChatScreenContent room={room}></ChatScreenContent>
     )
 }
 

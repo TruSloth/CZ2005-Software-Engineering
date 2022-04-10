@@ -46,11 +46,14 @@ const ServiceProviderLoginScreen = ({navigation}) => {
 				password: password,
 				accountType: 'ServiceProvider',
 			});
+
+			console.log(response)
 			if (response.status === 200) {
 				dispatch(
 					setCurrentUser({
 						userName: response.data.userName,
 						accountType: 'ServiceProvider',
+						serviceProviderID: response.data.serviceProviderID
 					})
 				);
 				dispatch(toggleLogIn(true));
@@ -73,6 +76,7 @@ const ServiceProviderLoginScreen = ({navigation}) => {
 					setCurrentUser({
 						userName: response.data.userName,
 						accountType: 'ServiceProvider',
+						serviceProviderID: response.data.serviceProviderID
 					})
 				);
 				dispatch(toggleLogIn(true));

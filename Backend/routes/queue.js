@@ -76,33 +76,36 @@ dotenv.config();
     const nextTurn = await queueTemplate.findOneAndDelete(
       {
         venueID: req.body.venueID,
+        user: req.body.userName
       },
       { sort: { queueNumber: 1 } }
     );
 
-    const sockets = await req.io.fetchSockets();
-
-    const socket = sockets.find((socket) => socket.data.userName === nextTurn.user)
-
-    socket.emit('queue-reached')
-  
     if (nextTurn === null) {
       res.json({ Error: "No users in queue" });
     } else {
+      const sockets = await req.io.fetchSockets();
+
+      const socket = sockets.find((socket) => socket.data.userName === req.body.userName)
+
+      if (socket) {
+        socket.emit('queue-reached')
+      } else {
+        console.log('Socket not found. User not connected')
+      }
+
       res.json(nextTurn);
     }
   });
   
   // Display queue of a certain store
   router.get("/view-queue", async (req, res) => {
-    const sockets = await req.io.fetchSockets();
-    console.log(sockets)
     const storeQueue = await queueTemplate
-      .find({ venueID: req.query.store }, { queueNumber: 1, user: 1, _id: 0 })
+      .find({ venueID: req.query.venueID }, { queueNumber: 1, user: 1, pax: 1, _id: 0 })
       .sort({ queueNumber: 1 });
   
     if (storeQueue.length === 0) {
-      res.send({ isEmpty: true });
+      res.send([]);
     } else {
       res.send(storeQueue);
     }

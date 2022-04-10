@@ -11,6 +11,7 @@ const initialState = {
 	profilePic: null,
 	currentQueueName: null,
 	currentQueueID: null,
+	serviceProviderID: null,
 	points: 0,
 };
 
@@ -20,7 +21,8 @@ const accountReducer = (state = initialState, action) => {
 			return {
 				...state,
 				userName: action.payload.userName,
-				accountType: action.payload.accountType
+				accountType: action.payload.accountType,
+				serviceProviderID: action.payload.serviceProviderID
 			}
 		case TOGGLE_LOGGED_IN:
 			return {

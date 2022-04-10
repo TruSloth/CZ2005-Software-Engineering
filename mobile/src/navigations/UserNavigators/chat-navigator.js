@@ -23,7 +23,13 @@ const ChatNavigator = () => {
 			<Stack.Screen
 				name='LiveChat'
 				component={ChatScreen}
-				options={styles.chatScreenOptions}
+				options={(route, navigation) => {
+					console.log(route)
+
+					return {...styles.chatScreenOptions,
+						title: route.params === undefined ? 'General' : route.params.venueName
+						}
+				}}
 			></Stack.Screen>
 		</Stack.Navigator>
 	);
@@ -31,7 +37,6 @@ const ChatNavigator = () => {
 
 const styles = StyleSheet.create({
 	chatScreenOptions: {
-        title: 'Location 1',
 		headerTitleAlign: 'center',
 		headerTintColor: '#EF5DA8',
 		headerTitleStyle: {color: '#7879F1'},

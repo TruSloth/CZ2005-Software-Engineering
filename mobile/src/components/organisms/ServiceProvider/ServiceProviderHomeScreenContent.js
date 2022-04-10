@@ -1,6 +1,7 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
 
-import {Text, View, StyleSheet, TextInput, Image} from 'react-native';
+import {Text, View, StyleSheet, TextInput, Image, ScrollView, RefreshControl} from 'react-native';
+import { useQueryClient } from 'react-query';
 import TopBanner from '../../molecules/TopBanner';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SearchBar} from 'react-native-elements';
@@ -13,7 +14,7 @@ const ServiceProviderHomeScreenContent = (props) => {
 		const [number, onChangeNumber] = React.useState(null);
 	};
 
-	const {navigation, joinServiceProviderQueue} = props;
+	const {navigation, queueData} = props;
 
 	const settingsOnPress = () => {
 		navigation.navigate('AppSettings');
@@ -34,16 +35,35 @@ const ServiceProviderHomeScreenContent = (props) => {
 	};
 
 	const CustomerDetailsOnPress = () => {
-		navigation.navigate('CustomerDetails');
+		navigation.navigate('CustomerDetails', {queueData: queueData});
 	};
 
     const account = useSelector((state) => state.account);
 
 	const [search, setSearch] = useState('');
 	const [bannerHeight, setBannerHeight] = useState(0);
+
+    const queryClient = useQueryClient();
+
+	const [refreshing, setRefreshing] = useState(false);
+
+	const onRefresh = useCallback(() => {
+		setRefreshing(true);
+		queryClient.invalidateQueries('getStoreQueue');
+		setRefreshing(false);
+	}, []);
+
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 	return (
-		<View style={styles.container1}>
+        <ScrollView
+        refreshControl={
+            <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+            ></RefreshControl>
+        }
+        >
+            <View style={styles.container1}>
 			<TopBanner
 				title={`Hi, ${account.userName}!`}
 				subtitle={''}
@@ -61,7 +81,7 @@ const ServiceProviderHomeScreenContent = (props) => {
 				}}
 			></TopBanner>
 
-			<SearchBar
+			{/* <SearchBar
 				onChangeText={(text) => setSearch(text)}
 				value={search}
 				platform={Platform.OS === 'ios' ? 'ios' : 'android'}
@@ -71,7 +91,7 @@ const ServiceProviderHomeScreenContent = (props) => {
 				placeholderTextColor={'#7879F1'}
 				containerStyle={[styles.searchBar, {top: bannerHeight + 20}]}
 				inputContainerStyle={styles.searchBarInput}
-			></SearchBar>
+			></SearchBar> */}
 
 			<View
 				style={{
@@ -85,7 +105,7 @@ const ServiceProviderHomeScreenContent = (props) => {
 						<Text style={styles.subheading}>Active Queue</Text>
 					</View>
 					<View style={styles.innerContainer}>
-						<Text style={styles.queueNo}>6</Text>
+						<Text style={styles.queueNo}>{`${queueData.length}`}</Text>
 						<Image
 							style={styles.logo}
 							source={require('../../../assets/group.png')}
@@ -165,6 +185,8 @@ const ServiceProviderHomeScreenContent = (props) => {
 				</View>
 			</View>
 		</View>
+        </ScrollView>
+		
 	);
 };
 

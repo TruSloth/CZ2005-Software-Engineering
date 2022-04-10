@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -29,9 +29,8 @@ import { useSelector } from 'react-redux';
 const StoreInfoContent = (props) => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
-	const {queueDisabled} = props
-
 	const {
+		venueID,
 		moreInfoOnPress,
 		queueOnPress,
 		chatOnPress,
@@ -42,7 +41,12 @@ const StoreInfoContent = (props) => {
 		rating,
 		numReviews,
 		text,
+		queueDisabled
 	} = props;
+
+	useEffect(() => {
+		console.log(heading)
+	})
 
 	return (
 		<View style={styles.container}>
@@ -72,7 +76,10 @@ const StoreInfoContent = (props) => {
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={styles.button}
-						onPress={chatOnPress}
+						onPress={() => {
+							console.log(heading)
+							chatOnPress(heading, venueID)
+						}}
 					>
 						<Text styles={styles.buttonText}>Chat</Text>
 					</TouchableOpacity>
