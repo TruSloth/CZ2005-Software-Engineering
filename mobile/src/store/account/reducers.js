@@ -9,7 +9,8 @@ const initialState = {
 	userName: null,
 	accountType: null,
 	profilePic: null,
-	currentQueue: null,
+	currentQueueName: null,
+	currentQueueID: null,
 	points: 0,
 };
 
@@ -29,7 +30,8 @@ const accountReducer = (state = initialState, action) => {
 		case UPDATE_CURRENT_QUEUE:
 			return {
 				...state,
-				currentQueue: action.payload,
+				currentQueueName: action.payload.venueName,
+				currentQueueID: action.payload.venueID,
 			};
 		default:
 			return state;

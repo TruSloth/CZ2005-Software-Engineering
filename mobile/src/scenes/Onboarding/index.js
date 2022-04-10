@@ -90,7 +90,7 @@ const OnboardingScreen = ({navigation}) => {
 							}
 
 							if (authOption === 'Login') {
-								navigation.navigate('Login');
+								navigation.navigate('Login', {accountType: 'User'});
 							}
 						}}
 					>
@@ -115,7 +115,7 @@ const OnboardingScreen = ({navigation}) => {
 							}
 
 							if (authOption === 'Login') {
-								navigation.navigate('ServiceProviderLogin');
+								navigation.navigate('ServiceProviderLogin', {accountType: 'Business'});
 							}
 						}}
 					>

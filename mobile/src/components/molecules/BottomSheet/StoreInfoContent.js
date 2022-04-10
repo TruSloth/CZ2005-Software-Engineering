@@ -29,7 +29,7 @@ import { useSelector } from 'react-redux';
 const StoreInfoContent = (props) => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
-	//const account = useSelector((state) => state.account);
+	const {queueDisabled} = props
 
 	const {
 		moreInfoOnPress,
@@ -64,7 +64,8 @@ const StoreInfoContent = (props) => {
 				</Text>
 				<View style={{flexDirection: 'column'}}>
 					<TouchableOpacity
-						style={[styles.button, {backgroundColor: '#8fbc8f'}]}
+						style={[styles.button, {backgroundColor: queueDisabled ? 'gray': '#8fbc8f'}]}
+						disabled={queueDisabled}
 						onPress={queueOnPress}
 					>
 						<Text styles={styles.buttonText}>Queue</Text>

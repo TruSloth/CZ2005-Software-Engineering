@@ -152,7 +152,7 @@ const ChatScreenContent = () => {
 		socket.on('received-message', (receivedMessage) => receiveMessage(receivedMessage))
 
 		return () => {
-			socket.off('receiving-message')
+			socket.off('received-message')
 		}
 	}, [socket])
 

@@ -20,7 +20,7 @@ import {verify} from '../../services/auth/verify';
 import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
 
 const TempVerifyScreen = ({route}) => {
-	const {tempUserName} = route.params;
+	const {tempUserName, accountType} = route.params;
 
 	const dispatch = useDispatch();
 
@@ -40,8 +40,8 @@ const TempVerifyScreen = ({route}) => {
 			if (response.status === 200) {
 				dispatch(
 					setCurrentUser({
-						username: tempUserName,
-						accountType: 'User',
+						userName: tempUserName,
+						accountType: accountType,
 					})
 				);
 				dispatch(toggleLogIn(true));

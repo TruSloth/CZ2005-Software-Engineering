@@ -10,6 +10,7 @@ import {
 	useColorScheme,
 	View,
 	ActivityIndicator,
+    ScrollView,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useMutation} from 'react-query';
@@ -48,6 +49,7 @@ const ServiceProviderRegistrationScreen = ({navigation}) => {
 
 				navigation.navigate('Verification', {
 					tempUserName: tempUserName,
+                    accountType: 'ServiceProvider'
 				});
 			} else {
 				setRegistrationDetails({
@@ -73,7 +75,7 @@ const ServiceProviderRegistrationScreen = ({navigation}) => {
 			if (response.status === 200) {
 				dispatch(
 					setCurrentUser({
-						username: response.data.userName,
+						userName: response.data.userName,
 						accountType: 'ServiceProvider',
 					})
 				);
@@ -91,7 +93,8 @@ const ServiceProviderRegistrationScreen = ({navigation}) => {
 			<StatusBar
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}
 			/>
-			<Image
+            <ScrollView>
+            <Image
 				source={{uri: 'https://reactjs.org/logo-og.png'}}
 				style={styles.image}
 			></Image>
@@ -177,6 +180,7 @@ const ServiceProviderRegistrationScreen = ({navigation}) => {
 					onPressGoogleLogin={onPressGoogleSignin}
 				></AltAuthOptions>
 			</View>
+            </ScrollView>
 		</SafeAreaView>
 	);
 };

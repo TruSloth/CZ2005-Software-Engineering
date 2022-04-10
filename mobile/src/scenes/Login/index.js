@@ -12,11 +12,17 @@ import {googleLogin} from '../../services/auth/google/googleLogin';
 import {googleSignIn} from '../../services/auth/google/googleSignIn';
 import {useMutation} from 'react-query';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = (props) => {
+	const {navigation} = props;
+
 	const isDarkMode = useColorScheme() === 'dark';
 
 	const registerOnPress = () => {
 		navigation.navigate('Registration');
+	};
+
+	const backOnPress = () => {
+		navigation.navigate('Onboarding');
 	};
 
 	const backgroundStyle = {
@@ -49,7 +55,6 @@ const LoginScreen = ({navigation}) => {
 				dispatch(toggleLogIn(true));
 			}
 		} catch (e) {
-			console.log('user error block');
 			console.log(e);
 		}
 	};
@@ -57,7 +62,10 @@ const LoginScreen = ({navigation}) => {
 	const onPressGoogleSignin = async () => {
 		try {
 			let userInfo = await googleSignIn();
+			console.log(userInfo);
 			userInfo.user.accountType = 'User';
+
+			const response = await googleLoginMutation.mutateAsync(userInfo);
 
 			if (response.status === 200) {
 				dispatch(
@@ -83,7 +91,7 @@ const LoginScreen = ({navigation}) => {
 				registerOnPress={registerOnPress}
 				loading={isLoading}
 				onPressGoogleSignin={onPressGoogleSignin}
-				navigation={navigation}
+				backOnPress={backOnPress}
 			></LoginScreenContent>
 		</SafeAreaView>
 	);

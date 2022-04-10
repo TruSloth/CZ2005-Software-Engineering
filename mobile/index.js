@@ -14,4 +14,9 @@ PushNotification.configure({
 	requestPermissions: Platform.OS === 'ios',
 });
 
+PushNotification.createChannel({
+	channelId: 'notifications',
+	channelName: 'Notifications Channel',
+});
+
 AppRegistry.registerComponent(appName, () => App);
