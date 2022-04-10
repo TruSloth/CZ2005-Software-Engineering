@@ -58,7 +58,7 @@ const HomeScreenContent = (props) => {
 
 	const onRefresh = useCallback(() => {
 		setRefreshing(true);
-		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
+		queryClient.invalidateQueries('retrieveNearbyServiceProviders', 'retrieveServiceProviders');
 		setRefreshing(false);
 	}, []);
 
