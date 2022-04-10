@@ -59,7 +59,7 @@ const RegistrationScreen = ({navigation}) => {
 				});
 			}
 		} catch (e) {
-			console.log(e);
+			console.log(typeof e);
 		}
 	};
 
@@ -137,6 +137,20 @@ const RegistrationScreen = ({navigation}) => {
 				}
 				value={registrationDetails['password']}
 			/>
+			<Text style={styles.textheading}>Confirm password:</Text>
+			<TextInput
+				secureTextEntry={true}
+				style={styles.input}
+				placeholder='e.g !jdiU%h*j'
+				onChangeText={(text) =>
+					setRegistrationDetails({
+						...registrationDetails,
+						confirmPassword: text,
+					})
+				}
+				value={registrationDetails['confirmPassword']}
+			/>
+
 			<Text style={styles.textheading}>Confirm password:</Text>
 			<TextInput
 				secureTextEntry={true}

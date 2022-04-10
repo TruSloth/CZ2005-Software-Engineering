@@ -10,7 +10,9 @@ const serviceProviderData = new mongoose.Schema({
   venueID: {
     type: String,
     required: true,
+    unique: true,
   },
+
   location: {
     type: {
       type: String,
@@ -22,6 +24,7 @@ const serviceProviderData = new mongoose.Schema({
       required: true,
     },
   },
+
   venueLat: {
     type: Decimal128,
     required: true,
@@ -41,16 +44,29 @@ const serviceProviderData = new mongoose.Schema({
     type: String,
     required: true,
   },
+
   venueRatings: {
     type: Decimal128,
     default: 0,
   },
+
   numReviews: {
     type: Number,
     default: 0,
   },
+
   imageAddress: {
     type: String,
+  },
+
+  venueForecast: {
+    type: [
+      {
+        hour: { type: Number },
+        intensity_txt: { type: String },
+        intensity_nr: { type: String },
+      },
+    ],
   },
 });
 

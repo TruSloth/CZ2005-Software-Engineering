@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "docs": "jsdoc -c ./jsdoc.json"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.16.1",
@@ -16,6 +17,8 @@
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
     "axios": "^0.26.0",
+    "better-docs": "^2.7.2",
+    "geolib": "^3.3.3",
     "os": "^0.1.2",
     "react": "17.0.2",
     "react-native": "0.67.3",
@@ -23,6 +26,7 @@
     "react-native-camera": "^4.2.1",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^2.3.0",
+    "react-native-get-location": "^2.2.1",
     "react-native-gifted-chat": "^0.16.3",
     "react-native-permissions": "^3.3.1",
     "react-native-push-notification": "^8.1.1",
@@ -39,15 +43,31 @@
     "socket.io-client": "^4.4.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.5",
+    "@babel/core": "^7.17.8",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.17.3",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
     "@babel/runtime": "^7.17.2",
     "@react-native-community/eslint-config": "^3.0.1",
     "babel-jest": "^27.5.1",
+    "babel-loader": "^8.2.4",
+    "babel-plugin-react-native-web": "^0.17.7",
     "eslint": "^8.9.0",
+    "file-loader": "^6.2.0",
+    "grunt": "^1.4.1",
+    "grunt-jsdoc": "^2.4.1",
     "jest": "^27.5.1",
+    "jsdoc": "^3.6.10",
     "metro-react-native-babel-preset": "^0.68.0",
     "prettier": "^2.5.1",
-    "react-test-renderer": "17.0.2"
+    "react-art": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-native-web": "^0.17.7",
+    "react-styleguidist": "^11.2.0",
+    "react-test-renderer": "17.0.2",
+    "webpack": "^5.70.0"
   },
   "jest": {
     "preset": "react-native"

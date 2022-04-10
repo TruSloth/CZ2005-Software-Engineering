@@ -25,7 +25,6 @@ async function verify(token) {
 }
 
 async function validateLoginInput(data) {
-  console.log(JSON.stringify(data));
   let errors = {};
   // Check the password and confirmed password are equal
   if (data.password != data.confirmationPassword) {

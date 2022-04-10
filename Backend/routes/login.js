@@ -28,7 +28,8 @@ router.post("/users/login", async (req, res) => {
     accountType: req.body.accountType,
   });
 
-  // Search for the user email in db
+  // Search for the user email in db.
+  // Either the account type does not match or email does nto exists
   if (!user) {
     res.status(401).json({ email: "invalid" });
     return;
@@ -66,18 +67,17 @@ router.post("/users/login/google", async (req, res) => {
     });
 
     // Search for the user email in db
+    // Either the account type does not match or email does nto exists
     if (!user) {
       res.status(401).json({ email: "invalid" });
       return;
     }
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        verified: user.verified,
-        userName: user.userName,
-      });
+    res.status(200).json({
+      success: true,
+      verified: user.verified,
+      userName: user.userName,
+    });
   } catch (e) {
     console.log(e);
   }

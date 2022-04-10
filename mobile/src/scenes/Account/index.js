@@ -1,7 +1,4 @@
-
 import React from "react";
-
-import { Button } from "react-native-elements";
 import {SafeAreaView, StatusBar} from 'react-native';
 
 import AccountScreenContent from "../../components/organisms/AccountScreenContent";

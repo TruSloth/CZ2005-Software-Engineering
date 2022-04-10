@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
 
 import {
 	FlatList,
@@ -7,28 +7,53 @@ import {
 	Platform,
 	ScrollView,
 	Text,
-	Button,
-	Alert,
+	RefreshControl,
 } from 'react-native';
 import {SearchBar} from 'react-native-elements';
+import {useSelector} from 'react-redux';
+import {useQuery, useQueryClient} from 'react-query';
+import GetLocation from 'react-native-get-location';
+import {isPointWithinRadius} from 'geolib';
+
+import {getNearbyServiceProviders} from '../../../services/serviceProviders/getNearbyServiceProviders';
 import TappableCard from '../../atoms/TappableCard';
 import HorizontalSection from '../../atoms/HorizontalSection';
 import TopBanner from '../../molecules/TopBanner';
 import CategoryFilter from '../../atoms/CategoryFilter';
-// import AppBottomSheet from '../../molecules/BottomSheet/AppBottomSheet';
-// import StoreInfoContent from '../../molecules/BottomSheet/StoreInfoContent';
-// import QueueSheetContent from '../../molecules/BottomSheet/QueueSheetContent';
 import {
 	AppBottomSheet,
 	StoreInfoContent,
 	QueueSheetContent,
 } from '../../molecules/BottomSheet';
-import {useSelector} from 'react-redux';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import PushNotification from 'react-native-push-notification';
+import {getQueue} from '../../../services/queue/getQueue';
+
+/**
+ * Renders the content for the Application Home Screen.
+ *
+ * @category Components
+ * @exports HomeScreenContent
+ * @subcategory Organisms
+ *
+ * @property {Function} joinServiceProviderQueue Callback to be passed to {@link module:QueueSheetContent|QueueSheetContent}
+ */
 
 const HomeScreenContent = (props) => {
-	const {navigation, joinServiceProviderQueue} = props;
+	const {
+		navigation,
+		joinServiceProviderQueue,
+		serviceProviderData,
+		nearbyVenuesData,
+	} = props;
+
+	const queryClient = useQueryClient();
+
+	const [refreshing, setRefreshing] = useState(false);
+
+	const onRefresh = useCallback(() => {
+		setRefreshing(true);
+		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
+		setRefreshing(false);
+	}, []);
 
 	useEffect(() => {
 		createChannels();
@@ -56,65 +81,12 @@ const HomeScreenContent = (props) => {
 		},
 	]);
 
-	const [nearbyRestaurantsData, setNearbyRestaurantsData] = useState([
-		{
-			title: 'Location 1',
-			subtitle: '5 stars',
-			subtextLine1: '10 in Queue',
-		},
-		{
-			title: 'Location 2',
-			subtitle: '5 stars',
-			subtextLine1: '10 in Queue',
-		},
-		{
-			title: 'Location 3',
-			subtitle: '5 stars',
-			subtextLine1: '10 in Queue',
-		},
-		{
-			title: 'Location 4',
-			subtitle: '5 stars',
-			subtextLine1: '10 in Queue',
-		},
-	]);
-
 	const sheetRef = useRef(null);
 
 	const account = useSelector((state) => state.account);
 
-	const createChannels = () => {
-		PushNotification.createChannel({
-			channelId: 'test-channel',
-			channelName: 'Test Channel',
-		});
-	};
-
-	// const handleNotification = () => {
-
-	// };
-
-	const handleNotification = () => {
-		// PushNotification.localNotification({
-		// 	channelId: 'test-channel',
-		// 	title: "It's your turn!",
-		// 	message: 'Please make your way back',
-		// 	color: 'red',
-		// });
-		PushNotification.cancelAllLocalNotifications();
-		PushNotification.localNotificationSchedule({
-			channelId: 'test-channel',
-			title: "It's your turn!",
-			message: 'Please make your way back',
-			color: 'red',
-			date: new Date(Date.now() + 5 * 1000),
-			allowWhileIdle: true,
-			onlyAlertOnce: 'true',
-			// repeatType: 'time',
-			// repeatTime: 120 * 1000,
-		});
-	};
-	const openStoreInfo = () => {
+	const openStoreInfo = (venue) => {
+		setCurrentlyOpenStore(venue);
 		sheetRef.current.snapTo(0);
 	};
 
@@ -127,7 +99,8 @@ const HomeScreenContent = (props) => {
 		setQueuePax(0);
 	};
 
-	const onPressCardDescQueue = () => {
+	const onPressCardDescQueue = (venue) => {
+		setCurrentlyOpenStore(venue);
 		setIsQueueSheetOpen(true);
 		sheetRef.current.snapTo(0);
 	};
@@ -137,7 +110,9 @@ const HomeScreenContent = (props) => {
 	};
 
 	const moreInfoOnPress = () => {
-		navigation.navigate('StoreDetailedInfo');
+		navigation.navigate('StoreDetailedInfo', {
+			storeInformation: currentlyOpenStore,
+		});
 	};
 
 	const queueIncrement = () => {
@@ -149,23 +124,52 @@ const HomeScreenContent = (props) => {
 		}
 	};
 
-	const onQueueConfirm = () => {
-		joinServiceProviderQueue(account.userName, 'Temporary Store Name');
+	const onQueueConfirm = async () => {
+		closeQueue();
+		sheetRef.current.snapTo(2);
+		await joinServiceProviderQueue(
+			account.userName,
+			currentlyOpenStore.venueID,
+			queuePax
+		);
+		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
 	};
 
 	const settingsOnPress = () => {
 		navigation.navigate('AppSettings');
 	};
 
-	const BizHomeOnPress = () => {
-		navigation.navigate('BusinessHome');
-	};
-
-	const BizProfileOnPress = () => {
-		navigation.navigate('BusinessProfile');
+	const searchFilterFunction = (text) => {
+		// Check if searched text is not blank
+		if (text) {
+			// Inserted text is not blank
+			// Filter the masterDataSource
+			// Update FilteredDataSource
+			const newData = masterDataSource.filter(function (item) {
+				const itemData = item.venueName.toLowerCase();
+				const textData = text.toLowerCase();
+				return itemData.indexOf(textData) > -1; // Check for character index in the data, will return -1 if non existent
+			});
+			setFilteredDataSource(newData);
+			console.log(filteredDataSource.length);
+			if (filteredDataSource.length < 5)
+				[console.log(filteredDataSource)];
+			setSearch(text);
+		} else {
+			// Inserted text is blank
+			// Update FilteredDataSource with masterDataSource
+			setFilteredDataSource(masterDataSource);
+			setSearch(text);
+		}
 	};
 
 	const [search, setSearch] = useState('');
+
+	const [currentlyOpenStore, setCurrentlyOpenStore] = useState({});
+
+	const [filteredDataSource, setFilteredDataSource] = useState([]);
+
+	const [masterDataSource, setMasterDataSource] = useState([]);
 
 	const [bannerHeight, setBannerHeight] = useState(0);
 
@@ -173,11 +177,26 @@ const HomeScreenContent = (props) => {
 
 	const [isQueueSheetOpen, setIsQueueSheetOpen] = useState(false);
 
+	useEffect(() => {
+		if (serviceProviderData !== null) {
+			setFilteredDataSource(serviceProviderData);
+			setMasterDataSource(serviceProviderData);
+		}
+	}, [serviceProviderData]);
+
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
 	return (
 		<View style={{flex: 1}}>
-			<ScrollView style={styles.homeScreenContent}>
+			<ScrollView
+				style={styles.homeScreenContent}
+				refreshControl={
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={onRefresh}
+					></RefreshControl>
+				}
+			>
 				<TopBanner
 					title={`Hi, ${account.userName}`}
 					subtitle={'Where are you going to queue next?'}
@@ -197,7 +216,7 @@ const HomeScreenContent = (props) => {
 				></TopBanner>
 
 				<SearchBar
-					onChangeText={(text) => setSearch(text)}
+					onChangeText={(text) => searchFilterFunction(text)}
 					value={search}
 					platform={Platform.OS === 'ios' ? 'ios' : 'android'}
 					onClear={(text) => setSearch('')}
@@ -257,20 +276,34 @@ const HomeScreenContent = (props) => {
 				></HorizontalSection>
 				<HorizontalSection
 					child={
-						<FlatList
-							horizontal
-							data={nearbyRestaurantsData}
-							renderItem={({item}) => {
-								return (
-									<TappableCard
-										cardTitle={item.title}
-										cardSubtitle={item.subtitle}
-										cardSubtextLine1={item.subtextLine1}
-										cardSubtextLine2={item.subtextLine2}
-									></TappableCard>
-								);
-							}}
-						></FlatList>
+						nearbyVenuesData ? (
+							<FlatList
+								horizontal
+								data={nearbyVenuesData}
+								renderItem={(item) => {
+									return (
+										<TappableCard
+											cardImage={item.item.imageAddress}
+											cardTitle={item.item.venueName}
+											cardSubtitle={`${item.item.venueRatings.$numberDecimal} ⭐`}
+											cardSubtextLine1={`${item.item.queueLength} in Queue`}
+											cardSubtextLine2={`~ ${item.item.waitTime} mins`}
+											onPress={() =>
+												openStoreInfo(item.item)
+											}
+											onPressCardDesc={() =>
+												onPressCardDescQueue(item.item)
+											}
+											disableCardDesc={
+												account.currentQueue ?? false
+											}
+										></TappableCard>
+									);
+								}}
+							></FlatList>
+						) : (
+							<Text>Hello</Text>
+						)
 					}
 					title={'Nearby Restaurants'}
 					titleStyle={styles.sectionHeader}
@@ -290,6 +323,17 @@ const HomeScreenContent = (props) => {
 				onPressMinus={queueDecrement}
 				onPressCancel={closeQueue}
 				onPressConfirm={onQueueConfirm}
+				storeImage={currentlyOpenStore.imageAddress}
+				heading={currentlyOpenStore.venueName}
+				waitTime={`~ ${currentlyOpenStore.waitTime} mins`}
+				subHeading={`${currentlyOpenStore.queueLength} in queue`}
+				rating={
+					currentlyOpenStore.venueRatings
+						? currentlyOpenStore.venueRatings.$numberDecimal
+						: 0
+				}
+				numReviews={currentlyOpenStore.numReviews}
+				text={currentlyOpenStore.venueAddress}
 			></AppBottomSheet>
 		</View>
 	);

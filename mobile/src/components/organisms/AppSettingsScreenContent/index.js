@@ -9,6 +9,14 @@ import {
 import {setCurrentUser, toggleLogIn} from '../../../store/account/actions';
 import HorizontalBlock from '../../molecules/HorizontalBlock';
 
+/**
+ * Renders the content for the App Settings Screen.
+ *
+ * @category Components
+ * @exports AppSettingsScreenContent
+ * @subcategory Organisms
+ */
+
 const AppSettingsScreenContent = () => {
 	const dispatch = useDispatch();
 
@@ -60,10 +68,9 @@ const AppSettingsScreenContent = () => {
 						await googleSignOut();
 					}
 
-					//dispatch(setCurrentUser(null));
 					dispatch(toggleLogIn(false));
 					dispatch(
-						setCurrentUser({userName: null, accountType: null})
+						setCurrentUser({username: null, accountType: null})
 					);
 				} catch (e) {
 					console.log(e);

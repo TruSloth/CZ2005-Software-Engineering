@@ -6,6 +6,7 @@ const cors = require("cors");
 const register = require("./routes/register");
 const login = require("./routes/login");
 const queue = require("./routes/queue");
+const serviceProvider = require("./routes/serviceProvider");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use("/", register);
 app.use("/", login);
 app.use("/", queue);
+app.use("/", serviceProvider);
 
 const httpServer = createServer(app);
 //app.listen(4000, () => console.log("Server is up"));

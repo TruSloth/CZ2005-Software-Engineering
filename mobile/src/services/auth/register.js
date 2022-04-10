@@ -12,10 +12,19 @@ import {LOCALHOST} from '../config';
  * @returns {response}
  */
 
-export const register = async (registrationDetails) => {
-	console.log('triggering register');
+/**
+ * @memberof auth
+ * @function register
+ * @async
+ * @param {object(username, email, password, confirmationPassword)} registrationDetails
+ * The registration details to be send in the request body.
+ *
+ * Registration details must contain the `userName`, `email`, `password` and `confirmationPassword`.
+ * @returns {response}
+ */
 
-	return axios.post(`http://${LOCALHOST}:80/users/register/`, {
+export const register = async (registrationDetails) => {
+	return axios.post(`http://${LOCALHOST}/users/register/`, {
 		userName: registrationDetails.userName,
 		email: registrationDetails.email,
 		accountType: registrationDetails.accountType,

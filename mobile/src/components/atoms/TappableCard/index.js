@@ -5,12 +5,46 @@ import {Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
 import {Card} from 'react-native-elements';
 import CardDescription from '../CardDescription';
 
-// Renders a Tile-Card that can be tapped. Relies on CardDescription for its content
+/**
+ * Renders a Tile-Card that can be tapped. Uses {@link module:CardDescription|CardDescription} for its content.
+ *
+ * @category Components
+ * @exports TappableCard
+ * @subcategory Atoms
+ *
+ * @example <caption>Default example</caption>
+ * return(
+ *   <RoundButton							
+ * 		style={{
+			backgroundColor: '#7879F1'
+ 		}}
+		title={'Submit'}
+		onPress={() => {console.log('Button Pressed')}}
+		loading={false}
+ *   </RoundButton>
+ * )
+ *
+ * @property {String} cardTitle Header text to be passed to `CardDescription`
+ * @property {String} cardSubtitle Subheader text to be passed to `CardDescription`
+ * @property {String} cardSubtextLine1 Additional text to be passed to `CardDescription` that appears on the right
+ * @property {String} cardSubtextLine2 Additional text to be passed to `CardDescription` that appears below `cardSubtextLine1`
+ * @property {Function} onPress Callback used when `TappableCard` is pressed
+ * @property {Function} onPressCardDesc Callback passed to `CardDescription`
+ */
 
 const TappableCard = (props) => {
-	const reactNativeLogo = '../../../assets/react-native-logo.png';
+	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
-	const {cardTitle, cardSubtitle, cardSubtextLine1, cardSubtextLine2, onPress, onPressCardDesc} = props;
+	const {
+		cardImage,
+		cardTitle,
+		cardSubtitle,
+		cardSubtextLine1,
+		cardSubtextLine2,
+		onPress,
+		onPressCardDesc,
+		disableCardDesc
+	} = props;
 
 	return (
 		<TouchableOpacity onPress={onPress}>
@@ -20,7 +54,7 @@ const TappableCard = (props) => {
 			>
 				<Card.Image
 					style={{padding: 0, borderColor: '#7879F1', borderWidth: 2}}
-					source={require(reactNativeLogo)}
+					source={{uri: cardImage || reactNativeLogo}}
 				/>
 				<CardDescription
 					title={cardTitle}
@@ -32,6 +66,7 @@ const TappableCard = (props) => {
 					subtextLine2={cardSubtextLine2}
 					subtextLine2Style={styles.cardSubtextLine2}
 					onPressCardDesc={onPressCardDesc}
+					hideCardButton={disableCardDesc}
 				></CardDescription>
 			</Card>
 		</TouchableOpacity>
@@ -49,6 +84,9 @@ const styles = StyleSheet.create({
 	cardTitle: {
 		fontWeight: '700',
 		color: '#7879F1',
+		numberOfLines: 1,
+		maxWidth: 100,
+		ellipsizeMode: 'tail'
 	},
 
 	cardSubtitle: {
@@ -61,7 +99,7 @@ const styles = StyleSheet.create({
 
 	cardSubtextLine2: {
 		color: '#7879F1',
-	}
+	},
 });
 
 export default TappableCard;

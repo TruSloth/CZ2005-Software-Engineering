@@ -1,0 +1,225 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/organisms/AppSettingsScreenContent/index.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">My React components</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Organisms</h3><ul><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/organisms/AppSettingsScreenContent/index.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import {ScrollView, StyleSheet} from 'react-native';
+import { useDispatch } from 'react-redux';
+
+import { googleIsSignedIn, googleSignOut } from '../../../services/auth/google/googleSignIn';
+import { setCurrentUser, toggleLogIn } from '../../../store/account/actions';
+import HorizontalBlock from '../../molecules/HorizontalBlock';
+
+/**
+ * Renders the content for the App Settings Screen.
+ *
+ * @category Components
+ * @exports AppSettingsScreenContent
+ * @subcategory Organisms
+ */
+
+const AppSettingsScreenContent = () => {
+    const dispatch = useDispatch();
+
+	const notificationSettings = [
+		{
+			title: 'Notification Setting 1',
+			onPress: () => {
+				console.log('Notification Setting 1 Pressed');
+			},
+		},
+		{
+			title: 'Notification Setting 2',
+			onPress: () => {
+				console.log('Notification Setting 2 Pressed');
+			},
+		},
+	];
+	const paymentSettings = [
+		{
+			title: 'Payment Setting 1',
+			onPress: () => {
+				console.log('Payment Setting 1 Pressed');
+			},
+		},
+	];
+	const languageSettings = [{
+        title: 'Language Setting 1',
+        onPress: () => {
+            console.log('Language Setting 1 Pressed');
+        },
+    },];
+	const supportSettings = [{
+        title: 'Support/Feedback Setting 1',
+        onPress: () => {
+            console.log('Support/Feedback Setting 1 Pressed');
+        },
+    },];
+	const miscSettings = [{
+        title: 'Logout',
+        onPress: async () => {
+			try {
+				const isGoogleSignedIn = await googleIsSignedIn();
+				if (isGoogleSignedIn) {
+					await googleSignOut();
+				}
+
+				dispatch(setCurrentUser(null))
+            	dispatch(toggleLogIn(false))
+			} catch (e) {
+				console.log(e)
+			}
+        },
+    },];
+
+	return (
+		&lt;ScrollView>
+			&lt;HorizontalBlock
+				blockTitle={'Notifications'}
+				blockElements={notificationSettings}
+			>&lt;/HorizontalBlock>
+			&lt;HorizontalBlock
+				blockTitle={'Payment'}
+				blockElements={paymentSettings}
+			>&lt;/HorizontalBlock>
+			&lt;HorizontalBlock
+				blockTitle={'Language'}
+				blockElements={languageSettings}
+			>&lt;/HorizontalBlock>
+			&lt;HorizontalBlock
+				blockTitle={'Support/Feedback'}
+				blockElements={supportSettings}
+			>&lt;/HorizontalBlock>
+			&lt;HorizontalBlock
+				blockTitle={'App Name App Version 1.0'}
+				blockElements={miscSettings}
+				blockElementTitlesStyle={styles.logoutBtn}
+			>&lt;/HorizontalBlock>
+		&lt;/ScrollView>
+	);
+};
+
+const styles = StyleSheet.create({
+	logoutBtn: {
+		color: '#EF5DA8',
+	},
+});
+
+export default AppSettingsScreenContent;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

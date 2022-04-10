@@ -1,9 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
 
-import {LOCALHOST} from '../../services/config'
-import { io } from "socket.io-client";
-
 import ChatScreenContent from "../../components/organisms/ChatScreenContent";
 import { useSelector } from "react-redux";
 

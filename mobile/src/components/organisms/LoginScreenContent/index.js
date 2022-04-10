@@ -8,10 +8,24 @@ import {
 	StyleSheet,
 	TouchableOpacity,
 } from 'react-native';
-//import LoginForm from '../../molecules/Auth/LoginForm';
-//import AltAuthOptions from '../../molecules/Auth/AltAuthOptions';
 
 import {LoginForm, AltAuthOptions} from '../../molecules/Auth';
+
+/**
+ * Renders the content for the Login Screen.
+ *
+ * @category Components
+ * @exports LoginScreenContent
+ * @subcategory Organisms
+ *
+ * @property {Function} submitForm Callback to be passed to {@link module:LoginForm|LoginForm}
+ * @property {Function} registerOnPress Callback to be used to navigate to `RegistrationScreen`
+ * @property {Boolean} loading Whether {@link module:LoginForm|LoginForm} should display a loading indicator.
+ *
+ * Passed down to {@link module:RoundButton|RoundButton}
+ *
+ * @property {Function} onPressGoogleSignin Callback to be passed to {@link module:AltAuthOptions|AltAuthOptions} to sign in via Google.
+ */
 
 const LoginScreenContent = (props) => {
 	const {
@@ -26,7 +40,7 @@ const LoginScreenContent = (props) => {
 		navigation.navigate('BusinessLogin');
 	};
 
-	const reactNativeLogo = '../../../assets/react-native-logo.png';
+	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
 	return (
 		<ScrollView
@@ -34,7 +48,7 @@ const LoginScreenContent = (props) => {
 			contentContainerStyle={{flexGrow: 1}}
 		>
 			<Image
-				source={require(reactNativeLogo)}
+				source={{uri: reactNativeLogo}}
 				style={[
 					styles.largeLogo,
 					{

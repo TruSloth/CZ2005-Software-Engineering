@@ -4,6 +4,20 @@ import {ScrollView} from 'react-native';
 
 import HistoryEntry from '../../molecules/HistoryEntry';
 
+/**
+ * Renders the content for the History Screen.
+ *
+ * @category Components
+ * @exports HistoryScreenContent
+ * @subcategory Organisms
+ * 
+ * @property {object(date, time, imageSource, location, ratings, points)[]} data
+ * The data for the user's previously visited locations.
+ * 
+ * Each entry must contain data on `date`, `time`, `imageSource`, `location`, `ratings` and `points`. 
+ * See {@link module:HistoryEntry|HistoryEntry} 	
+ */
+
 const HistoryScreenContent = (props) => {
 	const {data} = props;
 

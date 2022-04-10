@@ -10,7 +10,6 @@ import {
 	Message
 } from 'react-native-gifted-chat';
 import {useSelector} from 'react-redux';
-
 import { LogBox } from 'react-native';
 
 LogBox.ignoreAllLogs();
@@ -126,6 +125,14 @@ const ChatBubble = (props) => {
 		></Bubble>
 	);
 };
+
+/**
+ * Renders the content for the Chat Screen.
+ *
+ * @category Components
+ * @exports ChatScreenContent
+ * @subcategory Organisms
+ */
 
 const ChatScreenContent = () => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';

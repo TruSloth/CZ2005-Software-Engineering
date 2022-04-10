@@ -1,32 +1,66 @@
 import React from 'react';
 import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import { useSelector } from 'react-redux';
 
-// Renders the BottomSheet content for short-form Store Info
+/**
+ * Renders {@link module:AppBottomSheet|AppBottomSheet} content for short-form Store Info.
+ *
+ * @category Components
+ * @exports StoreInfoContent
+ * @subcategory Molecules
+ *
+ * @example <caption>Default example</caption>
+ * 
+ * return(
+ *   <AppBottomSheet
+ 		renderContent={StoreInfoContent}							
+		onCloseEnd={() => {console.log('Closed')}}
+		moreInfoOnPress={() => {console.log('Displaying More info')}}
+		queueOnPress={() => {console.log('Opening Queue')}}
+		chatOnPress={() => {console.log('Opening Chat')}}
+ *   </AppBottomSheet>
+ * )
+ *
+ * @property {Function} moreInfoOnPress Callback used when moreInfo option is pressed
+ * @property {Function} queueOnPress Callback used when queue option is pressed
+ * @property {Function} chatOnPress Callback used when chat option is pressed
+ */
 
 const StoreInfoContent = (props) => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
-	const {moreInfoOnPress, queueOnPress, chatOnPress} = props;
+	//const account = useSelector((state) => state.account);
+
+	const {
+		moreInfoOnPress,
+		queueOnPress,
+		chatOnPress,
+		storeImage,
+		heading,
+		waitTime,
+		subHeading,
+		rating,
+		numReviews,
+		text,
+	} = props;
 
 	return (
 		<View style={styles.container}>
 			<Image
 				style={styles.images}
-				source={{uri: reactNativeLogo}}
+				source={{uri: storeImage || reactNativeLogo}}
 			></Image>
-			<View style={{flexDirection: 'row'}}>
-				<Text style={styles.heading}>Location 1 ♡</Text>
-				<Text style={[styles.waitTime]}>~15 mins</Text>
+			<View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+				<Text style={styles.heading}>{heading}</Text>
+				<Text style={[styles.waitTime]}>{waitTime}</Text>
 			</View>
 			<View style={{flexDirection: 'row'}}>
-				<Text style={styles.subheading}>8 in queue</Text>
-				<Text style={styles.rating}>⭐ 4.4 (505)</Text>
+				<Text style={styles.subheading}>{subHeading}</Text>
+				<Text style={styles.rating}>{rating} ⭐ ({numReviews})</Text>
 			</View>
 			<View style={{flexDirection: 'row'}}>
 				<Text style={styles.texts}>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-					do eiusmod tempor incididunt ut labore et dolore magna
-					aliqua.
+					{text}
 				</Text>
 				<View style={{flexDirection: 'column'}}>
 					<TouchableOpacity
@@ -49,7 +83,6 @@ const StoreInfoContent = (props) => {
 					</TouchableOpacity>
 				</View>
 			</View>
-			
 		</View>
 	);
 };
@@ -81,10 +114,11 @@ const styles = StyleSheet.create({
 	waitTime: {
 		fontSize: 20,
 		textAlign: 'right',
-		alignSelf: 'flex-end',
+		//alignSelf: 'flex-end',
 		marginTop: 20,
 		marginBottom: 5,
-		marginLeft: '44%',
+		paddingRight: 8,
+		//marginLeft: '44%',
 		fontWeight: 'bold',
 		color: 'black',
 	},

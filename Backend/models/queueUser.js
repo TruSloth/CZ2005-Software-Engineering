@@ -20,7 +20,6 @@ const queueTemplate = new mongoose.Schema({
     required: true,
   },
 
-  //newly added
   pax: {
     type: Number,
     required: true,

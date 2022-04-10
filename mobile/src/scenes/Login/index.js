@@ -59,8 +59,6 @@ const LoginScreen = ({navigation}) => {
 			let userInfo = await googleSignIn();
 			userInfo.user.accountType = 'User';
 
-			const response = await googleLoginMutation.mutateAsync(userInfo);
-
 			if (response.status === 200) {
 				dispatch(
 					setCurrentUser({

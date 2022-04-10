@@ -1,6 +1,30 @@
 import React from 'react';
 import {View, Animated, useWindowDimensions, StyleSheet} from 'react-native';
 
+/**
+ * @todo Fill up description
+ *
+ * @category Components
+ * @exports Paginator
+ * @subcategory Atoms
+ *
+ * @example <caption>Default example</caption>
+ * return(
+ *   <OnboardingItem							
+ * 		item={{
+			imageSource: 'IMAGE_URL',
+			title: 'itemTitle',
+			description: 'itemDescription'
+		}}
+ *   </OnboardingItem>
+ * )
+ *
+ * @property {object(imageSource, title, description)} item 
+ * The item data to be used.
+ *  
+ * Must contain an image URI, title text and text description
+ */
+
 const Paginator = ({data, scrollX}) => {
 	const {width} = useWindowDimensions();
 	return (
