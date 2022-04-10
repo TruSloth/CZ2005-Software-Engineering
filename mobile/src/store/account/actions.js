@@ -19,10 +19,10 @@ export const toggleLogIn = (loggedIn) => {
 	};
 };
 
-export const updateCurrentQueue = (serviceProviderID) => {
+export const updateCurrentQueue = (serviceProviderName, serviceProviderID) => {
 	return {
 		type: UPDATE_CURRENT_QUEUE,
-		payload: serviceProviderID
+		payload: {venueName: serviceProviderName, venueID: serviceProviderID}
 	}
 }
 

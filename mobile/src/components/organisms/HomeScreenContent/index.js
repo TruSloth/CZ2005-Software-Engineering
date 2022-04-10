@@ -8,12 +8,11 @@ import {
 	ScrollView,
 	Text,
 	RefreshControl,
+	Dimensions,
 } from 'react-native';
 import {SearchBar} from 'react-native-elements';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useQuery, useQueryClient} from 'react-query';
-import GetLocation from 'react-native-get-location';
-import {isPointWithinRadius} from 'geolib';
 
 import {getNearbyServiceProviders} from '../../../services/serviceProviders/getNearbyServiceProviders';
 import TappableCard from '../../atoms/TappableCard';
@@ -25,7 +24,10 @@ import {
 	StoreInfoContent,
 	QueueSheetContent,
 } from '../../molecules/BottomSheet';
-import {getQueue} from '../../../services/queue/getQueue';
+import {getQueueWaitTime} from '../../../services/queue/getQueueWaitTime';
+import QueueBar from '../../molecules/QueueBar';
+import {updateCurrentQueue} from '../../../store/account/actions';
+import PushNotification from 'react-native-push-notification';
 
 /**
  * Renders the content for the Application Home Screen.
@@ -37,12 +39,16 @@ import {getQueue} from '../../../services/queue/getQueue';
  * @property {Function} joinServiceProviderQueue Callback to be passed to {@link module:QueueSheetContent|QueueSheetContent}
  */
 
+const {width, height} = Dimensions.get('window');
+
 const HomeScreenContent = (props) => {
 	const {
 		navigation,
 		joinServiceProviderQueue,
+		leaveServiceProviderQueue,
 		serviceProviderData,
 		nearbyVenuesData,
+		currentQueueWaitTime
 	} = props;
 
 	const queryClient = useQueryClient();
@@ -79,6 +85,25 @@ const HomeScreenContent = (props) => {
 	const sheetRef = useRef(null);
 
 	const account = useSelector((state) => state.account);
+	const socket = useSelector((state) => state.socket).socket;
+
+	useEffect(() => {
+		socket.on('queue-reached', () => {
+			console.log('queue reached!')
+			PushNotification.localNotification({
+				channelId: 'notifications',
+				message: 'Time to head back!'
+			})
+			setQueueStatus('reached')
+			setTimeout(() => setQueueStatus('arrived'), 5000)
+		})
+
+		return () => {
+			socket.off('queue-reached')
+		}
+	})
+
+	
 
 	const openStoreInfo = (venue) => {
 		setCurrentlyOpenStore(venue);
@@ -120,11 +145,13 @@ const HomeScreenContent = (props) => {
 	};
 
 	const onQueueConfirm = async () => {
+		setQueueStatus('queuing');
 		closeQueue();
 		sheetRef.current.snapTo(2);
 		await joinServiceProviderQueue(
 			account.userName,
 			currentlyOpenStore.venueID,
+			currentlyOpenStore.venueName,
 			queuePax
 		);
 		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
@@ -160,6 +187,8 @@ const HomeScreenContent = (props) => {
 
 	const [search, setSearch] = useState('');
 
+	const [queueStatus, setQueueStatus] = useState(null);
+
 	const [currentlyOpenStore, setCurrentlyOpenStore] = useState({});
 
 	const [filteredDataSource, setFilteredDataSource] = useState([]);
@@ -182,7 +211,7 @@ const HomeScreenContent = (props) => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
 	return (
-		<View style={{flex: 1}}>
+		<>
 			<ScrollView
 				style={styles.homeScreenContent}
 				refreshControl={
@@ -284,7 +313,9 @@ const HomeScreenContent = (props) => {
 											onPressCardDesc={() =>
 												onPressCardDescQueue(item.item)
 											}
-											disableCardDesc={account.currentQueue ?? false}
+											disableCardDesc={
+												account.currentQueueID ?? false
+											}
 										></TappableCard>
 									);
 								}}
@@ -296,12 +327,29 @@ const HomeScreenContent = (props) => {
 					title={'Nearby Restaurants'}
 					titleStyle={styles.sectionHeader}
 				></HorizontalSection>
+				<View style={styles.spacer}></View>
 			</ScrollView>
+			{account.currentQueueID ? (
+				<QueueBar
+					leaveQueue={leaveServiceProviderQueue}
+					currentQueueWaitTime={currentQueueWaitTime}
+					queueStatus={queueStatus}
+					style={{
+						zIndex: 1,
+						position: 'absolute',
+						width: width - 20,
+						top: height * 0.82,
+					}}
+				></QueueBar>
+			) : (
+				<></>
+			)}
 			<AppBottomSheet
 				ref={sheetRef}
 				renderContent={
 					isQueueSheetOpen ? QueueSheetContent : StoreInfoContent
 				}
+				queueDisabled={account.currentQueueID !== null}
 				moreInfoOnPress={moreInfoOnPress}
 				queueOnPress={openQueue}
 				chatOnPress={onPressChat}
@@ -323,13 +371,11 @@ const HomeScreenContent = (props) => {
 				numReviews={currentlyOpenStore.numReviews}
 				text={currentlyOpenStore.venueAddress}
 			></AppBottomSheet>
-		</View>
+		</>
 	);
 };
 
 const styles = StyleSheet.create({
-	homeScreenContent: {},
-
 	categoryRow: {
 		flexDirection: 'row',
 		justifyContent: 'space-evenly',
@@ -358,6 +404,10 @@ const styles = StyleSheet.create({
 	homeBanner: {
 		marginVertical: 20,
 	},
+
+	spacer: {
+		height: 40
+	}
 });
 
 export default HomeScreenContent;

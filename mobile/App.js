@@ -39,6 +39,8 @@ const AppWrapper = () => {
 const App = () => {
 	const {store, persistor} = storeConfig();
 
+	//ersistor.purge()
+
 	GoogleSignin.configure({
 		webClientId: GOOGLE_WEBCLIENT_ID, // client ID of type WEB for your server (needed to verify user ID and offline access)
 		offlineAccess: false, // if you want to access Google API on behalf of the user FROM YOUR SERVER

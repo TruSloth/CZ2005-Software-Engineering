@@ -1,8 +1,9 @@
 import {LOCALHOST} from '../../services/config'
 import { io } from "socket.io-client";
+import { useSelector } from 'react-redux';
 
 const socket = io(`ws://${LOCALHOST}/`, {
-    autoConnect: false
+    autoConnect: false,
 })
 
 const initialState = {

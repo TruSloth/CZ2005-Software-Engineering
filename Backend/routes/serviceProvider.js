@@ -112,6 +112,7 @@ router.get("/serviceProvider/get-stall", async (req, res) => {
 // Retrieve all nearby stores in our database.
 // Nearby stores are those within 10 minute walking distance (calculated using 5 km/hr walking speed)
 router.get("/serviceProvider/find-nearest", async (req, res) => {
+  console.log('here')
   const stalls = await stallTemplate.find();
   const checkingRadius = 833; // in meters
 

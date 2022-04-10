@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 const ChatScreen = (props) => {
     const socket = useSelector((state) => state.socket).socket
+    const account = useSelector((state) => state.account)
 
     console.log(socket.connected)
 
@@ -13,6 +14,8 @@ const ChatScreen = (props) => {
         useCallback(() => {
             if (!socket.connected) {
                 socket.connect()
+
+                socket.emit('add-username', account.userName)
             }
 
             socket.emit('join-room', 'Location 1')

@@ -37,7 +37,7 @@ const StoreDetailedInfoScreen = ({route}) => {
 			});
 
 			if (response.status === 200) {
-        // update store to indicate that user is in queue
+				// update store to indicate that user is in queue
 				//console.log('Joined a queue!');
 			}
 		} catch (e) {
@@ -99,13 +99,16 @@ const StoreDetailedInfoScreen = ({route}) => {
 
 			<Text style={styles.waitTimes}>
 				Waiting time:
-				<Text style={styles.imptInfo}>{` ${storeInformation.waitTime} mins`}</Text>
+				<Text
+					style={styles.imptInfo}
+				>{` ${storeInformation.waitTime} mins`}</Text>
 			</Text>
 
 			<Text style={styles.desc}>
-				There {storeInformation.queueLength === 1 ? 'is ' : 'are '} 
+				There {storeInformation.queueLength === 1 ? 'is ' : 'are '}
 				<Text style={styles.imptInfo}>
-					{storeInformation.queueLength} {storeInformation.queueLength === 1  ? 'person' : 'people'}
+					{storeInformation.queueLength}{' '}
+					{storeInformation.queueLength === 1 ? 'person' : 'people'}
 					<Text style={[styles.waitTimes, {fontSize: 20}]}>
 						{' '}
 						in line{' '}
@@ -125,9 +128,20 @@ const StoreDetailedInfoScreen = ({route}) => {
 				</Text>
 			</View>
 
-			<TouchableOpacity style={styles.button} onPress={openQueue}>
+			<TouchableOpacity
+				style={[
+					styles.button,
+					{backgroundColor: account.currentQueueID ? 'gray' : ''},
+				]}
+				onPress={openQueue}
+				disabled={account.currentQueueID}
+			>
 				<Text
-					style={{color: '#EF5DA8', fontSize: 15, fontWeight: 'bold'}}
+					style={{
+						color: account.currentQueueID ? 'red' : '#EF5DA8',
+						fontSize: 15,
+						fontWeight: 'bold',
+					}}
 				>
 					Queue
 				</Text>
