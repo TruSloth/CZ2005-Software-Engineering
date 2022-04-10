@@ -17,6 +17,9 @@ mongoose.connect(process.env.DATABASE_ACCESS, () => console.log("Database connec
 
 const httpServer = createServer(app);
 
+app.use(express.json());
+app.use(cors());
+
 const io = new Server(httpServer, {
   cors: {
     origin: "*"
@@ -46,8 +49,6 @@ io.on("connection", (socket) => {
   })
 })
 
-app.use(express.json());
-app.use(cors());
 app.use("/", register);
 app.use("/", login);
 app.use("/", serviceProvider);

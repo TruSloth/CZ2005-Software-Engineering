@@ -2,7 +2,7 @@ import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
 
 import LoginScreenContent from '../../components/organisms/LoginScreenContent';
@@ -30,6 +30,9 @@ const LoginScreen = (props) => {
 
 	const dispatch = useDispatch();
 
+	const socket = useSelector((state) => state.socket).socket;
+	const account = useSelector((state) => state.account);
+
 	const loginMutation = useMutation(login);
 
 	const googleLoginMutation = useMutation(googleLogin);
@@ -49,8 +52,14 @@ const LoginScreen = (props) => {
 					setCurrentUser({
 						userName: response.data.userName,
 						accountType: 'User',
+						serviceProviderID: null,
 					})
 				);
+				if (!socket.connected) {
+					socket.connect()
+	
+					socket.emit('add-username', account.userName)
+				}
 				dispatch(toggleLogIn(true));
 			}
 		} catch (e) {
@@ -71,8 +80,16 @@ const LoginScreen = (props) => {
 					setCurrentUser({
 						userName: response.data.userName,
 						accountType: 'User',
+						serviceProviderID: null
 					})
 				);
+
+				console.log('try to connect')
+				if (!socket.connected) {
+					socket.connect()
+					console.log('connected')
+					socket.emit('add-username', account.userName)
+				}
 				dispatch(toggleLogIn(true));
 			}
 		} catch (e) {

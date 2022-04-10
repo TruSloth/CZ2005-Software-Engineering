@@ -151,7 +151,9 @@ const ChatScreenContent = (props) => {
 	}, [])
 
 	useEffect(() => {
-		socket.on('received-message', (receivedMessage) => receiveMessage(receivedMessage))
+		socket.on('received-message', (receivedMessage) => {
+			console.log('received msg')
+						receiveMessage(receivedMessage)})
 
 		return () => {
 			socket.off('received-message')
@@ -162,6 +164,7 @@ const ChatScreenContent = (props) => {
 		setMessages((previousMessages) => {
 			return (GiftedChat.append(previousMessages, messages))
 		})
+		console.log('sending message')
 		socket.emit('send-chat-message', messages, room)
 	} , [])
 	
