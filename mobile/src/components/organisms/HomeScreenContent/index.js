@@ -10,7 +10,7 @@ import {
 	RefreshControl,
 	Dimensions,
 } from 'react-native';
-import {SearchBar} from 'react-native-elements';
+import {ListItem, SearchBar} from 'react-native-elements';
 import {useDispatch, useSelector} from 'react-redux';
 import {useQuery, useQueryClient} from 'react-query';
 
@@ -68,22 +68,22 @@ const HomeScreenContent = (props) => {
 
 	const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
 		{
-			title: 'Location 1',
-			subtitle: '5 Stars',
-			subtextLine1: '10 in Queue',
-			subtextLine2: '~ 5 mins',
+			venueName: 'Location 1',
+			venueRatings: '5 Stars',
+			queueLength: '10 in Queue',
+			waitTime: '~ 5 mins',
 		},
 		{
-			title: 'Location 2',
-			subtitle: '4 Stars',
-			subtextLine1: '5 in Queue',
-			subtextLine2: '~ 5 mins',
+			venueName: 'Location 2',
+			venueRatings: '4 Stars',
+			queueLength: '5 in Queue',
+			waitTime: '~ 5 mins',
 		},
 		{
-			title: 'Location 3',
-			subtitle: '3 Stars',
-			subtextLine1: '3 in Queue',
-			subtextLine2: '~ 5 mins',
+			venueName: 'Location 3',
+			venueRatings: '3 Stars',
+			queueLength: '3 in Queue',
+			waitTime: '~ 5 mins',
 		},
 	]);
 
@@ -283,16 +283,24 @@ const HomeScreenContent = (props) => {
 					child={
 						<FlatList
 							horizontal
-							data={previouslyVisitedData}
+							data={search === '' ? previouslyVisitedData : filteredDataSource.slice(0, 11)}
 							renderItem={({item}) => {
 								return (
 									<TappableCard
-										cardTitle={item.title}
-										cardSubtitle={item.subtitle}
-										cardSubtextLine1={item.subtextLine1}
-										cardSubtextLine2={item.subtextLine2}
-										onPress={openStoreInfo}
-										onPressCardDesc={onPressCardDescQueue}
+										cardImage={item.imageAddress}
+										cardTitle={item.venueName}
+										cardSubtitle={search === '' ? '10 stars' : `${item.venueRatings.$numberDecimal} ⭐`}
+										cardSubtextLine1={`${item.queueLength} in Queue`}
+										cardSubtextLine2={`~ ${item.waitTime} mins`}
+										onPress={() =>
+											openStoreInfo(item)
+										}
+										onPressCardDesc={() =>
+											onPressCardDescQueue(item)
+										}
+										disableCardDesc={
+											account.currentQueueID ?? false
+										}
 									></TappableCard>
 								);
 							}}

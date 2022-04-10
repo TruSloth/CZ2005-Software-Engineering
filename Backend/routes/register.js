@@ -5,6 +5,7 @@ const router = express.Router();
 const signUpTemplate = require("../models/signup");
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
+const stallTemplate = require("../models/serviceProviderData");
 
 dotenv.config();
 
@@ -137,13 +138,31 @@ router.post("/users/register/:id", async (req, res) => {
     res.status(401).json({ userName: "Invalid" });
   }
 
-  if (req.body.authid === process.env.AUTHENTICATION_TOKEN) {
+  if (user.accountType === "User") {
+    if (req.body.authid === process.env.AUTHENTICATION_TOKEN) {
+      user.verified = true;
+      user.save();
+      res.status(200).json({ verified: "Account verified" });
+      return;
+    } else {
+      res.status(401).json({ token: "Invalid Token" });
+      return;
+    }
+  }
+
+  if (user.accountType === "ServiceProvider") {
+    const serviceProvider = await stallTemplate.findOne({
+      venueID: req.body.authid,
+    });
+
+    if (!serviceProvider) {
+      res.status(401).json({ serviceProviderID: "Invalid" });
+    }
+
     user.verified = true;
+    user.serviceProviderID = req.body.authid;
     user.save();
     res.status(200).json({ verified: "Account verified" });
-    return;
-  } else {
-    res.status(401).json({ token: "Invalid Token" });
     return;
   }
 });

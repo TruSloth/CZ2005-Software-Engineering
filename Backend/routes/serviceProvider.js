@@ -106,13 +106,52 @@ router.post("/serviceProvider/add-stall", async (req, res) => {
 // Retrieve all the stores in our database
 router.get("/serviceProvider/get-stall", async (req, res) => {
   const stalls = await stallTemplate.find();
-  res.send(stalls);
+
+  let updatedStalls;
+  try {
+    updatedStalls = await Promise.all(stalls.map(async (stall) => {
+      const queue = await queueTemplate.find({venueID: stall.venueID})
+
+      let multiplier = 1;
+      let venueForecast;
+
+      if (stall.venueForecast) {
+        venueForecast = stall.venueForecast.find(forecast => forecast.hour === Number(req.query.hour))
+      } else {
+        venueForecast = {intensity_txt: 'Missing'}
+      }
+
+      if (venueForecast.intensity_txt === 'Average') {
+        multiplier = 1.2
+      }
+
+      if (venueForecast.intensity_txt === 'Above Average') {
+        multiplier = 1.5
+      } 
+
+      if (venueForecast.intensity_txt === 'High') {
+        multiplier = 2
+      }
+
+      const queueLength = queue.length
+      const waitTime = queueLength === 0 ? 0 : queueLength * 10 * multiplier
+
+      return {...stall, queueLength: queueLength, waitTime: waitTime}
+    }))
+  } catch (e) {
+    console.log(e)
+  }
+
+  let response = updatedStalls.map((item) => {
+    return {...item._doc, queueLength: item.queueLength, waitTime: item.waitTime}
+  })
+
+  res.send(response)
 });
 
 // Retrieve all nearby stores in our database.
 // Nearby stores are those within 10 minute walking distance (calculated using 5 km/hr walking speed)
 router.get("/serviceProvider/find-nearest", async (req, res) => {
-  console.log('here')
   const stalls = await stallTemplate.find();
   const checkingRadius = 833; // in meters
 
