@@ -74,7 +74,7 @@ const HomeScreen = ({navigation}) => {
 			{
 				queryKey: ['retrieveServiceProviders'], 
 				queryFn: async () => {
-					const response = await getServiceProviders();
+					const response = await getServiceProviders(new Date().getHours());
 					return response.data
 				}
 			},

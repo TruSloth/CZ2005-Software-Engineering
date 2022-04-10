@@ -34,7 +34,7 @@ const LoginScreenContent = (props) => {
 			contentContainerStyle={{flexGrow: 1}}
 		>
 			<Image
-				source={{uri: reactNativeLogo}}
+				source={require('../../../assets/QQueue_Small.png')}
 				style={[
 					styles.largeLogo,
 					{

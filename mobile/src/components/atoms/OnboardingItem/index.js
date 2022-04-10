@@ -26,12 +26,13 @@ import {StyleSheet, Text, View, Image, useWindowDimensions} from 'react-native';
  * Must contain an image URI, title text and text description
  */
 
-const OnboardingItem = ({item}) => {
+const OnboardingItem = (props) => {
+	const {item} = props
 	const {width} = useWindowDimensions();
 	return (
 		<View style={[styles.container, {width}]}>
 			<Image
-				source={{uri: item.imageSource}}
+				source={item.imageSource}
 				style={[styles.image, {width, resizeMode: 'contain'}]}
 			/>
 
