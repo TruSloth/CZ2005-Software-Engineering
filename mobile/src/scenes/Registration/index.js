@@ -26,6 +26,7 @@ const RegistrationScreen = ({navigation}) => {
 	const dispatch = useDispatch();
 
 	const socket = useSelector((state) => state.socket).socket;
+	const account = useSelector((state) => state.account);
 
 	const registerMutation = useMutation(register);
 
