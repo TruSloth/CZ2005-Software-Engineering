@@ -65,7 +65,7 @@ const RegistrationScreen = ({navigation}) => {
 				});
 			}
 		} catch (e) {
-			console.log(typeof e);
+			console.log(e);
 		}
 	};
 

@@ -73,8 +73,6 @@ dotenv.config();
   
   // Service provider to get the next person
   router.post("/push-queue", async (req, res) => {
-    console.log("io is here")
-    console.log(req.io)
     const nextTurn = await queueTemplate.findOneAndDelete(
       {
         venueID: req.body.venueID,
@@ -87,8 +85,6 @@ dotenv.config();
       res.json({ Error: "No users in queue" });
     } else {
       const sockets = await req.io.fetchSockets();
-
-      console.log(sockets)
 
       const socket = sockets.find((socket) => socket.data.userName === req.body.userName)
 

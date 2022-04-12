@@ -6,6 +6,22 @@ Server-side code can be found in `Backend/` with documentation found in `Backend
 
 Client-side code can be found in `mobile/` with documentation found in `mobile/docs/`. Client-side documentation was done using _jsdoc_ and can be viewed by opening the `index.html` file in the browser.
 
+# Quick Git Guide
+
+## Getting the latest version
+
+The latest stable version can be found at branch `dev`. In your local project root, ensure you are on your own local development branch, then run `git fetch` to fetch all updates from remote branches.
+
+Once done, run `git merge origin/dev` to merge the changes from `dev` branch into your local development branch.
+
+## Commiting Changes
+
+When you have made changes to the project and would like to push them, use `git push origin <LOCAL_BRANCH_NAME>:staging`, where `LOCAL_BRANCH_NAME` refers to the name of your local branch.
+
+Then navigate to the github repository and select the **Pull requests** tab, followed by **New pull request**.
+
+Ensure that the branches listed are `base:dev` <- `compare:staging`. Then click on **Create pull request** to submit the pull request.
+
 # For Development
 
 Remember to ensure that all dependencies are installed by running `npm install` in **both** `PATH/TO/PROJECT/ROOT/mobile/` and `PATH/TO/PROJECT/ROOT/Backend/` _(You have to do them seperately)_
@@ -16,10 +32,11 @@ Additionally, several config files need to be manually added for security.
 
 ```
 export const LOCALHOST = 'YOUR_IPV4_ADDRESS:4000' or 'AWS_IP_ADDRESS:80'
+export const FLASKHOST = 'FLASK_SERVER_IP_ADDRESS:80'
 export const GOOGLE_WEBCLIENT_ID = 'GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION'
 ```
 
-> The value `YOUR_IPV4_ADDRESS` can be found by running `ipconfig` in your terminal. Alternatively, if you are looking to test the AWS server, replace this with `AWS_IP_ADDRESS`, which can be obtained from @nicholaswko.
+> The value `YOUR_IPV4_ADDRESS` can be found by running `ipconfig` in your terminal. Alternatively, if you are looking to test the AWS server, replace this with `AWS_IP_ADDRESS`, which can be obtained from @nicholaswko. Similarly, the value `FLASK_SERVER_IP_ADDRESS` refers to the Flask server running on AWS and can be obtained from @nicholaswko.
 
 > The value `GOOGLE_WEB_CLIENT_ID_FOR_APPLICATION` can be found in the firebase or google cloud console for the project.
 

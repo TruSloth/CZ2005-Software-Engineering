@@ -53,6 +53,8 @@ const HomeScreenContent = (props) => {
 		recommendedServiceProviders
 	} = props;
 
+	// Currently, there seem to be a lot of unnecessary rerenders. Need to figure out why.
+	// Code here is a tool to help.
 	function useTraceUpdate(props) {
 		const prev = useRef(props);
 		useEffect(() => {
@@ -79,10 +81,6 @@ const HomeScreenContent = (props) => {
 		setRefreshing(true);
 		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
 		queryClient.invalidateQueries('retrieveServiceProviders');
-		//queryClient.invalidateQueries(['retrieveNearbyServiceProviders', 'retrieveServiceProviders']);
-		if (serviceProviderData !== null) {
-			console.log(serviceProviderData.find(venue => venue.venueName === 'Hot Tomato'))
-		}
 		setRefreshing(false);
 	}, []);
 
@@ -95,8 +93,7 @@ const HomeScreenContent = (props) => {
 
 	const dispatch = useDispatch();
 
-	console.log('home screen rerender')
-
+	// Possible redundancy here. Check if it works if we add account.queueStatus as a dependency
 	useEffect(() => {
 		console.log('registering queue reached')
 		socket.on('queue-reached', () => {
@@ -113,7 +110,7 @@ const HomeScreenContent = (props) => {
 			console.log('deregistering queue reached')
 			socket.off('queue-reached')
 		}
-	})
+	}) 
 
 	const openStoreInfo = (venue) => {
 		setCurrentlyOpenStore(venue);
@@ -165,13 +162,7 @@ const HomeScreenContent = (props) => {
 		);
 		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
 		queryClient.invalidateQueries('retrieveServiceProviders');
-		if (serviceProviderData !== null) {
-			console.log(serviceProviderData.find(venue => venue.venueName === 'Hot Tomato'))
-		}
 		searchFilterFunction(search)
-		if (serviceProviderData !== null) {
-			console.log(serviceProviderData.find(venue => venue.venueName === 'Hot Tomato'))
-		}
 	};
 
 	const settingsOnPress = () => {
@@ -190,9 +181,7 @@ const HomeScreenContent = (props) => {
 				return itemData.indexOf(textData) > -1; // Check for character index in the data, will return -1 if non existent
 			});
 			setFilteredDataSource(newData);
-			console.log(filteredDataSource.length);
-			if (filteredDataSource.length < 5)
-				[console.log(filteredDataSource)];
+
 			setSearch(text);
 		} else {
 			// Inserted text is blank
@@ -208,8 +197,6 @@ const HomeScreenContent = (props) => {
 
 	const [filteredDataSource, setFilteredDataSource] = useState(serviceProviderData ?? []);
 
-	//const [masterDataSource, setMasterDataSource] = useState(serviceProviderData ?? []);
-
 	const [bannerHeight, setBannerHeight] = useState(0);
 
 	const [queuePax, setQueuePax] = useState(0);
@@ -217,9 +204,7 @@ const HomeScreenContent = (props) => {
 	const [isQueueSheetOpen, setIsQueueSheetOpen] = useState(false);
 
 	useEffect(() => {
-		console.log('service provider was changed')
 		if (serviceProviderData !== null) {
-			console.log('updating service provider data')
 			searchFilterFunction(search)
 
 			if (recommendedServiceProviders !== null) {

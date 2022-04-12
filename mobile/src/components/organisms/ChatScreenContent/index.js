@@ -153,8 +153,8 @@ const ChatScreenContent = (props) => {
 
 	useEffect(() => {
 		socket.on('received-message', (receivedMessage) => {
-			console.log('received msg')
-						receiveMessage(receivedMessage)})
+
+		receiveMessage(receivedMessage)})
 
 		return () => {
 			setMessages([])

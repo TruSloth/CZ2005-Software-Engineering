@@ -86,11 +86,8 @@ const LoginScreen = (props) => {
 					})
 				);
 
-				console.log('try to connect')
 				if (!socket.connected) {
 					socket.connect()
-					console.log('connected')
-					console.log(`emitting username: ${response.data.userName}`)
 					socket.emit('add-username', response.data.userName)
 				}
 				dispatch(toggleLogIn(true));
