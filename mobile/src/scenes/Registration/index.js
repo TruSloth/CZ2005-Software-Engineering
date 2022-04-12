@@ -88,7 +88,7 @@ const RegistrationScreen = ({navigation}) => {
 				if (!socket.connected) {
 					socket.connect()
 	
-					socket.emit('add-username', account.userName)
+					socket.emit('add-username', response.data.userName)
 				}
 				dispatch(toggleLogIn(true));
 			}

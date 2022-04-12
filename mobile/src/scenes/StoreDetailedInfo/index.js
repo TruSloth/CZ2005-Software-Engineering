@@ -14,6 +14,8 @@ import {
 	QueueSheetContent,
 } from '../../components/molecules/BottomSheet';
 
+import { NOT_IN_QUEUE } from '../../store/account/constants';
+
 import {useMutation} from 'react-query';
 import {joinQueue} from '../../services/queue/joinQueue';
 import {useSelector} from 'react-redux';
@@ -134,7 +136,7 @@ const StoreDetailedInfoScreen = ({route}) => {
 					{backgroundColor: account.currentQueueID ? 'gray' : ''},
 				]}
 				onPress={openQueue}
-				disabled={account.currentQueueID}
+				disabled={account.queueStatus !== NOT_IN_QUEUE}
 			>
 				<Text
 					style={{

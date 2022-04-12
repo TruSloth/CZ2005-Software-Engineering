@@ -28,6 +28,7 @@ import {getQueueWaitTime} from '../../../services/queue/getQueueWaitTime';
 import QueueBar from '../../molecules/QueueBar';
 import {updateCurrentQueue} from '../../../store/account/actions';
 import PushNotification from 'react-native-push-notification';
+import { IN_STORE, NOT_IN_QUEUE, QUEUE_REACHED } from '../../../store/account/constants';
 
 /**
  * Renders the content for the Application Home Screen.
@@ -52,13 +53,36 @@ const HomeScreenContent = (props) => {
 		recommendedServiceProviders
 	} = props;
 
+	function useTraceUpdate(props) {
+		const prev = useRef(props);
+		useEffect(() => {
+		  const changedProps = Object.entries(props).reduce((ps, [k, v]) => {
+			if (prev.current[k] !== v) {
+			  ps[k] = [prev.current[k], v];
+			}
+			return ps;
+		  }, {});
+		  if (Object.keys(changedProps).length > 0) {
+			console.log('Changed props:', changedProps);
+		  }
+		  prev.current = props;
+		});
+	  }
+
+	  useTraceUpdate(props)
+
 	const queryClient = useQueryClient();
 
 	const [refreshing, setRefreshing] = useState(false);
 
 	const onRefresh = useCallback(() => {
 		setRefreshing(true);
-		queryClient.invalidateQueries('retrieveNearbyServiceProviders', 'retrieveServiceProviders');
+		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
+		queryClient.invalidateQueries('retrieveServiceProviders');
+		//queryClient.invalidateQueries(['retrieveNearbyServiceProviders', 'retrieveServiceProviders']);
+		if (serviceProviderData !== null) {
+			console.log(serviceProviderData.find(venue => venue.venueName === 'Hot Tomato'))
+		}
 		setRefreshing(false);
 	}, []);
 
@@ -69,18 +93,24 @@ const HomeScreenContent = (props) => {
 	const account = useSelector((state) => state.account);
 	const socket = useSelector((state) => state.socket).socket;
 
+	const dispatch = useDispatch();
+
+	console.log('home screen rerender')
+
 	useEffect(() => {
+		console.log('registering queue reached')
 		socket.on('queue-reached', () => {
 			console.log('queue reached!')
 			PushNotification.localNotification({
 				channelId: 'notifications',
 				message: 'Time to head back!'
 			})
-			setQueueStatus('reached')
-			setTimeout(() => setQueueStatus('arrived'), 5000)
+			dispatch(updateCurrentQueue(account.currentQueueName, account.currentQueueID, QUEUE_REACHED))
+			setTimeout(() => dispatch(updateCurrentQueue(account.currentQueueName, account.currentQueueID, IN_STORE)), 5000)
 		})
 
 		return () => {
+			console.log('deregistering queue reached')
 			socket.off('queue-reached')
 		}
 	})
@@ -125,7 +155,6 @@ const HomeScreenContent = (props) => {
 	};
 
 	const onQueueConfirm = async () => {
-		setQueueStatus('queuing');
 		closeQueue();
 		sheetRef.current.snapTo(2);
 		await joinServiceProviderQueue(
@@ -135,6 +164,14 @@ const HomeScreenContent = (props) => {
 			queuePax
 		);
 		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
+		queryClient.invalidateQueries('retrieveServiceProviders');
+		if (serviceProviderData !== null) {
+			console.log(serviceProviderData.find(venue => venue.venueName === 'Hot Tomato'))
+		}
+		searchFilterFunction(search)
+		if (serviceProviderData !== null) {
+			console.log(serviceProviderData.find(venue => venue.venueName === 'Hot Tomato'))
+		}
 	};
 
 	const settingsOnPress = () => {
@@ -147,7 +184,7 @@ const HomeScreenContent = (props) => {
 			// Inserted text is not blank
 			// Filter the masterDataSource
 			// Update FilteredDataSource
-			const newData = masterDataSource.filter(function (item) {
+			const newData = serviceProviderData.filter(function (item) {
 				const itemData = item.venueName.toLowerCase();
 				const textData = text.toLowerCase();
 				return itemData.indexOf(textData) > -1; // Check for character index in the data, will return -1 if non existent
@@ -160,20 +197,18 @@ const HomeScreenContent = (props) => {
 		} else {
 			// Inserted text is blank
 			// Update FilteredDataSource with masterDataSource
-			setFilteredDataSource(masterDataSource);
+			setFilteredDataSource(serviceProviderData);
 			setSearch(text);
 		}
 	};
 
 	const [search, setSearch] = useState('');
 
-	const [queueStatus, setQueueStatus] = useState(null);
-
 	const [currentlyOpenStore, setCurrentlyOpenStore] = useState({});
 
-	const [filteredDataSource, setFilteredDataSource] = useState([]);
+	const [filteredDataSource, setFilteredDataSource] = useState(serviceProviderData ?? []);
 
-	const [masterDataSource, setMasterDataSource] = useState([]);
+	//const [masterDataSource, setMasterDataSource] = useState(serviceProviderData ?? []);
 
 	const [bannerHeight, setBannerHeight] = useState(0);
 
@@ -182,9 +217,10 @@ const HomeScreenContent = (props) => {
 	const [isQueueSheetOpen, setIsQueueSheetOpen] = useState(false);
 
 	useEffect(() => {
+		console.log('service provider was changed')
 		if (serviceProviderData !== null) {
-			setFilteredDataSource(serviceProviderData);
-			setMasterDataSource(serviceProviderData);
+			console.log('updating service provider data')
+			searchFilterFunction(search)
 
 			if (recommendedServiceProviders !== null) {
 				let recommendedVenueData = []
@@ -263,30 +299,31 @@ const HomeScreenContent = (props) => {
 				></HorizontalSection>
 				<HorizontalSection
 					child={
+						serviceProviderData ? 
 						<FlatList
 							horizontal
 							data={search === '' ? recommendedVenues : filteredDataSource.slice(0, 11)}
-							renderItem={({item}) => {
+							renderItem={(item) => {
 								return (
 									<TappableCard
-										cardImage={item.imageAddress}
-										cardTitle={item.venueName}
-										cardSubtitle={search === '' ? '10 stars' : `${item.venueRatings.$numberDecimal} ⭐`}
-										cardSubtextLine1={`${item.queueLength} in Queue`}
-										cardSubtextLine2={`~ ${item.waitTime} mins`}
+										cardImage={item.item.imageAddress}
+										cardTitle={item.item.venueName}
+										cardSubtitle={`${item.item.venueRatings.$numberDecimal} ⭐`}
+										cardSubtextLine1={`${item.item.queueLength} in Queue`}
+										cardSubtextLine2={`~ ${item.item.waitTime} mins`}
 										onPress={() =>
-											openStoreInfo(item)
+											openStoreInfo(item.item)
 										}
 										onPressCardDesc={() =>
-											onPressCardDescQueue(item)
+											onPressCardDescQueue(item.item)
 										}
 										disableCardDesc={
-											account.currentQueueID ?? false
+											account.queueStatus !== NOT_IN_QUEUE
 										}
 									></TappableCard>
 								);
 							}}
-						></FlatList>
+						></FlatList> : <Text>Loading</Text>
 					}
 					title={search === '' ? 'Recommended Stores' : 'Search Results'}
 					titleStyle={styles.sectionHeader}
@@ -312,7 +349,7 @@ const HomeScreenContent = (props) => {
 												onPressCardDescQueue(item.item)
 											}
 											disableCardDesc={
-												account.currentQueueID ?? false
+												account.queueStatus !== NOT_IN_QUEUE
 											}
 										></TappableCard>
 									);
@@ -331,7 +368,6 @@ const HomeScreenContent = (props) => {
 				<QueueBar
 					leaveQueue={leaveServiceProviderQueue}
 					currentQueueWaitTime={currentQueueWaitTime}
-					queueStatus={queueStatus}
 					style={{
 						zIndex: 1,
 						position: 'absolute',
@@ -347,7 +383,7 @@ const HomeScreenContent = (props) => {
 				renderContent={
 					isQueueSheetOpen ? QueueSheetContent : StoreInfoContent
 				}
-				queueDisabled={account.currentQueueID !== null}
+				queueDisabled={account.queueStatus !== NOT_IN_QUEUE}
 				moreInfoOnPress={moreInfoOnPress}
 				queueOnPress={openQueue}
 				chatOnPress={onPressChat}

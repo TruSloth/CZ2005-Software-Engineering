@@ -9,7 +9,7 @@ import LoginScreenContent from '../../components/organisms/LoginScreenContent';
 import {login} from '../../services/auth/login';
 import {googleLogin} from '../../services/auth/google/googleLogin';
 import {googleSignIn} from '../../services/auth/google/googleSignIn';
-import {useMutation} from 'react-query';
+import {useMutation, useQueryClient} from 'react-query';
 
 const LoginScreen = (props) => {
 	const {navigation} = props;
@@ -33,11 +33,13 @@ const LoginScreen = (props) => {
 	const socket = useSelector((state) => state.socket).socket;
 	const account = useSelector((state) => state.account);
 
+
 	const loginMutation = useMutation(login);
 
 	const googleLoginMutation = useMutation(googleLogin);
 
 	const isLoading = loginMutation.isLoading;
+	
 
 	const onPressLogin = async (email, password) => {
 		try {
@@ -58,7 +60,7 @@ const LoginScreen = (props) => {
 				if (!socket.connected) {
 					socket.connect()
 	
-					socket.emit('add-username', account.userName)
+					socket.emit('add-username', response.data.userName)
 				}
 				dispatch(toggleLogIn(true));
 			}
@@ -88,7 +90,8 @@ const LoginScreen = (props) => {
 				if (!socket.connected) {
 					socket.connect()
 					console.log('connected')
-					socket.emit('add-username', account.userName)
+					console.log(`emitting username: ${response.data.userName}`)
+					socket.emit('add-username', response.data.userName)
 				}
 				dispatch(toggleLogIn(true));
 			}

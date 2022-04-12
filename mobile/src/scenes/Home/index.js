@@ -12,6 +12,7 @@ import { updateCurrentQueue } from '../../store/account/actions';
 import { getQueueWaitTime } from '../../services/queue/getQueueWaitTime';
 import { leaveQueue } from '../../services/queue/leaveQueue';
 import { getRecommendedServiceProviders } from '../../services/serviceProviders/getRecommendedServiceProviders';
+import { NOT_IN_QUEUE, QUEUING } from '../../store/account/constants';
 
 const HomeScreen = ({navigation}) => {
 	const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const HomeScreen = ({navigation}) => {
 			});
 
 			if (response.status === 200) {
-				dispatch(updateCurrentQueue(storeName, storeID))
+				dispatch(updateCurrentQueue(storeName, storeID, QUEUING))
 			}
 
 		} catch (e) {
@@ -40,6 +41,7 @@ const HomeScreen = ({navigation}) => {
 		}
 	};
 
+	// When the user leaves the queue on their own accord
 	const leaveServiceProviderQueue = async () => {
 		try {
 			const response = await leaveQueueMutation.mutateAsync({
@@ -48,24 +50,21 @@ const HomeScreen = ({navigation}) => {
 			});
 
 			if (response.status === 200) {
-				dispatch(updateCurrentQueue(null, null))
-				queryClient.invalidateQueries('retrieveNearbyServiceProviders')
+				dispatch(updateCurrentQueue(null, null, NOT_IN_QUEUE))
+				queryClient.invalidateQueries('retrieveNearbyServiceProviders');
+				queryClient.invalidateQueries('retrieveServiceProviders');
 			}
 		} catch (e) {
 			console.log(e);
 		}
 	};
 
-	// const {data} = useQuery('retrieveNearbyServiceProviders', async () => {
-	// 	const response = await getNearbyServiceProviders();
-	// 	return response.data
-	// })
-
 	const result = useQueries(
 		[
 			{
 				queryKey: ['retrieveServiceProviders'], 
 				queryFn: async () => {
+					console.log('fetching all service provider data')
 					const response = await getServiceProviders(new Date().getHours());
 					return response.data
 				}
@@ -84,7 +83,7 @@ const HomeScreen = ({navigation}) => {
 					return response.data
 				},
 				refetchInterval: 60000,
-				enabled: account.currentQueueID !== null
+				enabled: account.queueStatus !== NOT_IN_QUEUE
 			},
 			{
 				queryKey: ['retrieveRecommendedServiceProviders'],
@@ -96,6 +95,8 @@ const HomeScreen = ({navigation}) => {
 		]
 	)
 	
+		// Display loading icons 
+
 	return (
 		<SafeAreaView style={{flex: 1}}>
 			<StatusBar />

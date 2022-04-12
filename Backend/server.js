@@ -29,18 +29,22 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
   console.log('socket connected')
   socket.on('join-room', (room) => {
+    console.log(`adding ${socket.data.userName} to ${room}`)
     socket.join(room);
   })
 
   socket.on('add-username', (userName) => {
+    console.log(`attaching username ${userName} to socket`)
     socket.data.userName = userName
   })
 
   socket.on('send-chat-message', (msg, room) => {
+    console.log(`received msg from ${socket.data.userName} in ${room}`)
     socket.to(room).emit('received-message', msg)
   })
 
   socket.on('leave-room', (room) => {
+    console.log(`removing ${socket.data.userName} from ${room}`)
     socket.leave(room)
   })
 
@@ -54,6 +58,7 @@ app.use("/", login);
 app.use("/", serviceProvider);
 app.use("/", (req, res, next) => {
   req.io = io;
+  console.log(req.io)
   next();
 }, queue);
 app.use("/", history);

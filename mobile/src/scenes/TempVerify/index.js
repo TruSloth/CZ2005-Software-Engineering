@@ -46,7 +46,7 @@ const TempVerifyScreen = ({route}) => {
 					if (!socket.connected) {
 						socket.connect()
 		
-						socket.emit('add-username', account.userName)
+						socket.emit('add-username', tempUserName)
 					}
 				}
 
