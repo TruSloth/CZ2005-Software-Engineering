@@ -1,5 +1,6 @@
-import React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import {StyleSheet, View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import { useIsFetching } from 'react-query';
 
 /**
  * Renders {@link module:AppBottomSheet|AppBottomSheet} content for queueing functionality.
@@ -30,7 +31,7 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
  */
 
 const QueueSheetContent = (props) => {
-	const {count, onPressPlus, onPressMinus, onPressConfirm, onPressCancel} =
+	const {count, onPressPlus, onPressMinus, onPressConfirm, onPressCancel, isQueueLoading} =
 		props;
 
 	return (
@@ -51,9 +52,11 @@ const QueueSheetContent = (props) => {
 			<View>
 				<TouchableOpacity
 					style={[styles.btn2]}
-					onPress={onPressConfirm}
+					onPress={() => {
+						onPressConfirm()
+					}}
 				>
-					<Text style={styles.btnTextConfirm}>Confirm</Text>
+						<Text style={styles.btnTextConfirm}>Confirm</Text>
 				</TouchableOpacity>
 				<View style={{width: 15}} />
 				<TouchableOpacity style={[styles.btn2]} onPress={onPressCancel}>
