@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState, useCallback} from 'react';
 
 import {
+	ActivityIndicator,
 	FlatList,
 	View,
 	StyleSheet,
@@ -11,7 +12,7 @@ import {
 	Dimensions,
 } from 'react-native';
 import {ListItem, SearchBar} from 'react-native-elements';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector, useStore} from 'react-redux';
 import {useQuery, useQueryClient} from 'react-query';
 
 import {getNearbyServiceProviders} from '../../../services/serviceProviders/getNearbyServiceProviders';
@@ -71,7 +72,7 @@ const HomeScreenContent = (props) => {
 		});
 	  }
 
-	  useTraceUpdate(props)
+	  //useTraceUpdate(props)
 
 	const queryClient = useQueryClient();
 
@@ -95,9 +96,9 @@ const HomeScreenContent = (props) => {
 
 	// Possible redundancy here. Check if it works if we add account.queueStatus as a dependency
 	useEffect(() => {
-		console.log('registering queue reached')
+		//console.log('registering queue reached')
 		socket.on('queue-reached', () => {
-			console.log('queue reached!')
+			//console.log('queue reached!')
 			PushNotification.localNotification({
 				channelId: 'notifications',
 				message: 'Time to head back!'
@@ -107,10 +108,10 @@ const HomeScreenContent = (props) => {
 		})
 
 		return () => {
-			console.log('deregistering queue reached')
+			//console.log('deregistering queue reached')
 			socket.off('queue-reached')
 		}
-	}) 
+	})
 
 	const openStoreInfo = (venue) => {
 		setCurrentlyOpenStore(venue);
@@ -138,8 +139,9 @@ const HomeScreenContent = (props) => {
 
 	const moreInfoOnPress = () => {
 		navigation.navigate('StoreDetailedInfo', {
-			storeInformation: currentlyOpenStore,
+			venueID: currentlyOpenStore.venueID
 		});
+		sheetRef.current.snapTo(2);
 	};
 
 	const queueIncrement = () => {
@@ -308,7 +310,7 @@ const HomeScreenContent = (props) => {
 									></TappableCard>
 								);
 							}}
-						></FlatList> : <Text>Loading</Text>
+						></FlatList> : <ActivityIndicator color={'#7879F1'}></ActivityIndicator>
 					}
 					title={search === '' ? 'Recommended Stores' : 'Search Results'}
 					titleStyle={styles.sectionHeader}
@@ -341,7 +343,7 @@ const HomeScreenContent = (props) => {
 								}}
 							></FlatList>
 						) : (
-							<Text>Hello</Text>
+							<ActivityIndicator color={'#7879F1'}></ActivityIndicator>
 						)
 					}
 					title={'Nearby Restaurants'}
@@ -349,7 +351,7 @@ const HomeScreenContent = (props) => {
 				></HorizontalSection>
 				<View style={styles.spacer}></View>
 			</ScrollView>
-			{account.currentQueueID ? (
+			{account.queueStatus !== NOT_IN_QUEUE ? (
 				<QueueBar
 					leaveQueue={leaveServiceProviderQueue}
 					currentQueueWaitTime={currentQueueWaitTime}

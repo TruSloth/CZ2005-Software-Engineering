@@ -58,7 +58,6 @@ app.use("/", login);
 app.use("/", serviceProvider);
 app.use("/", (req, res, next) => {
   req.io = io;
-  console.log(req.io)
   next();
 }, queue);
 app.use("/", history);

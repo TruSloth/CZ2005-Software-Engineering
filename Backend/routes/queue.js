@@ -115,15 +115,16 @@ dotenv.config();
     const storeQueue = await queueTemplate
       .find({ venueID: req.query.venueID }, { queueNumber: 1, user: 1, _id: 0 })
       .sort({ queueNumber: 1 });
-  
-      console.log(storeQueue)
-  
-    const intensity = await stallTemplate
-      .findOne({venueID: req.query.venueID}, {venueForecast: {hour: req.query.hour}})
-  
+
+    const stall = await stallTemplate.findOne({venueID: req.query.venueID})
     let multiplier = 1
-  
-    const venueForecast = intensity.venueForecast ?? {intensity_txt: 'Missing'} 
+    let venueForecast
+
+    if (stall.venueForecast) {
+      venueForecast = stall.venueForecast.find(forecast => forecast.hour === Number(req.query.hour))
+    } else {
+      venueForecast = {intensity_txt: 'Missing'}
+    }
   
     if (venueForecast.intensity_txt === 'Average') {
       multiplier = 1.2
