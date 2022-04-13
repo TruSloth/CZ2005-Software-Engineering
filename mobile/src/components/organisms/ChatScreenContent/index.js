@@ -11,6 +11,7 @@ import {
 } from 'react-native-gifted-chat';
 import {useSelector} from 'react-redux';
 import { LogBox } from 'react-native';
+import getStoredState from 'redux-persist/es/getStoredState';
 
 LogBox.ignoreAllLogs();
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
@@ -151,19 +152,22 @@ const ChatScreenContent = (props) => {
 	}, [])
 
 	useEffect(() => {
-		socket.on('received-message', (receivedMessage) => receiveMessage(receivedMessage))
+		socket.on('received-message', (receivedMessage) => {
+
+		receiveMessage(receivedMessage)})
 
 		return () => {
+			setMessages([])
 			socket.off('received-message')
 		}
-	}, [socket])
+	}, [socket, room])
 
 	const sendMessage = useCallback((messages = []) => {
 		setMessages((previousMessages) => {
 			return (GiftedChat.append(previousMessages, messages))
 		})
 		socket.emit('send-chat-message', messages, room)
-	} , [])
+	} , [room])
 	
 
 	return (

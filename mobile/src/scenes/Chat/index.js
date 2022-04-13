@@ -9,10 +9,7 @@ const ChatScreen = (props) => {
 
     const room = route.params === undefined ? 'General' : route.params.venueID;
 
-    console.log(`room is ${room}`)
-
     const socket = useSelector((state) => state.socket).socket
-    const account = useSelector((state) => state.account)
 
     useFocusEffect(
         useCallback(() => {

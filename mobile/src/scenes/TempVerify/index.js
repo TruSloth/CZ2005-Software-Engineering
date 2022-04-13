@@ -12,7 +12,7 @@ import {
 	ActivityIndicator,
 } from 'react-native';
 
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {useMutation} from 'react-query';
 
@@ -23,6 +23,9 @@ const TempVerifyScreen = ({route}) => {
 	const {tempUserName, accountType} = route.params;
 
 	const dispatch = useDispatch();
+
+	const socket = useSelector((state) => state.socket).socket;
+	const account = useSelector((state) => state.account);
 
 	const verifyMutation = useMutation(verify);
 
@@ -40,12 +43,17 @@ const TempVerifyScreen = ({route}) => {
 			if (response.status === 200) {
 				if (accountType === 'User') {
 					dispatch(setCurrentUser({userName: tempUserName, accountType: accountType, serviceProviderID: null }));
+					if (!socket.connected) {
+						socket.connect()
+		
+						socket.emit('add-username', tempUserName)
+					}
 				}
 
 				if (accountType === 'ServiceProvider') {
 					dispatch(setCurrentUser({userName: tempUserName, accountType: accountType, serviceProviderID: authid}));
 				}
-				
+
 				dispatch(toggleLogIn(true));
 			} else {
 				console.log('Verification code invalid');

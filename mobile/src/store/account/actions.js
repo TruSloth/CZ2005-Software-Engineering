@@ -1,7 +1,11 @@
 import {
 	SET_CURRENT_USER,
 	TOGGLE_LOGGED_IN,
-	UPDATE_CURRENT_QUEUE
+	UPDATE_CURRENT_QUEUE,
+	NOT_IN_QUEUE,
+	QUEUING,
+	QUEUE_REACHED,
+	IN_STORE
 } from './constants';
 
 
@@ -19,10 +23,18 @@ export const toggleLogIn = (loggedIn) => {
 	};
 };
 
-export const updateCurrentQueue = (serviceProviderName, serviceProviderID) => {
+export const updateCurrentQueue = (serviceProviderName, serviceProviderID, queueStatus) => {
+	if (!queueStatus in [NOT_IN_QUEUE, QUEUING, QUEUE_REACHED, IN_STORE]) {
+		console.log('Error updating queue. Unknown Queue status.')
+
+		return {
+			type: ERROR
+		}
+	}
+
 	return {
 		type: UPDATE_CURRENT_QUEUE,
-		payload: {venueName: serviceProviderName, venueID: serviceProviderID}
+		payload: {venueName: serviceProviderName, venueID: serviceProviderID, queueStatus: queueStatus}
 	}
 }
 

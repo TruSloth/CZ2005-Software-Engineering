@@ -14,13 +14,17 @@ import {
 	QueueSheetContent,
 } from '../../components/molecules/BottomSheet';
 
+import { NOT_IN_QUEUE, QUEUING } from '../../store/account/constants';
+import { updateCurrentQueue } from '../../store/account/actions';
+
 import {useMutation} from 'react-query';
 import {joinQueue} from '../../services/queue/joinQueue';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const {width} = Dimensions.get('window');
 const height = (width * 100) / 90;
 
+// TODO: Need to invalidate caches and close queue sheet here, to update the UI and refetch data
 const StoreDetailedInfoScreen = ({route}) => {
 	const {storeInformation} = route.params;
 
@@ -28,17 +32,18 @@ const StoreDetailedInfoScreen = ({route}) => {
 
 	const joinQueueMutation = useMutation(joinQueue);
 
-	const joinServiceProviderQueue = async (user, store, pax) => {
+	const dispatch = useDispatch();
+
+	const joinServiceProviderQueue = async (user, storeID, storeName, pax) => {
 		try {
 			const response = await joinQueueMutation.mutateAsync({
 				user: user,
-				store: store,
+				store: storeID,
 				pax: pax,
 			});
 
 			if (response.status === 200) {
-				// update store to indicate that user is in queue
-				//console.log('Joined a queue!');
+				dispatch(updateCurrentQueue(storeName, storeID, QUEUING))
 			}
 		} catch (e) {
 			console.log(e);
@@ -71,6 +76,7 @@ const StoreDetailedInfoScreen = ({route}) => {
 		joinServiceProviderQueue(
 			account.userName,
 			storeInformation.venueID,
+			storeInformation.venueName,
 			queuePax
 		);
 	};
@@ -134,7 +140,7 @@ const StoreDetailedInfoScreen = ({route}) => {
 					{backgroundColor: account.currentQueueID ? 'gray' : ''},
 				]}
 				onPress={openQueue}
-				disabled={account.currentQueueID}
+				disabled={account.queueStatus !== NOT_IN_QUEUE}
 			>
 				<Text
 					style={{

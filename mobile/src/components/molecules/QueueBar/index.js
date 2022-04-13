@@ -2,18 +2,26 @@ import React from 'react';
 
 import {StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { updateCurrentQueue } from '../../../store/account/actions';
+import { QUEUING, QUEUE_REACHED, IN_STORE, NOT_IN_QUEUE } from '../../../store/account/constants';
 
 const QueueBar = (props) => {
-	const {style, leaveQueue, currentQueueWaitTime, queueStatus} = props;
+	const {style, leaveQueue, currentQueueWaitTime} = props;
+
+    const dispatch = useDispatch()
 
 	const account = useSelector((state) => state.account);
+
+    const checkOut = () => {
+        dispatch(updateCurrentQueue(null, null, NOT_IN_QUEUE))
+    }
 
 	return (
 			(() => {
 				{
-					switch (queueStatus) {
-						case 'queuing':
+					switch (account.queueStatus) {
+						case QUEUING:
 							return (
                                 <View style={[styles.queueBarContainer, style]}>
 								<View style={styles.queueBarContent}>
@@ -43,7 +51,7 @@ const QueueBar = (props) => {
 								</View>
                                 </View>
 							);
-						case 'reached':
+						case QUEUE_REACHED:
 							return (
                                 <View style={[styles.queueBarContainer, style]}>
 								<View
@@ -61,11 +69,11 @@ const QueueBar = (props) => {
 								</View>
                                 </View>
 							);
-						case 'arrived':
+						case IN_STORE:
 							return (
                                 
                                     <View style={[styles.queueBarContainer, style]}>
-                                        <TouchableOpacity>
+                                        <TouchableOpacity onPress={checkOut}>
 								<View
 									style={[
 										styles.queueBarContent,
@@ -82,8 +90,10 @@ const QueueBar = (props) => {
                                 </TouchableOpacity>
                                 </View>
 							);
+                        case NOT_IN_QUEUE:
+                            return <></>
 						default:
-							return <></>;
+							return <Text>Error. Unknown Queue status</Text>;
 					}
 				}
 			})()

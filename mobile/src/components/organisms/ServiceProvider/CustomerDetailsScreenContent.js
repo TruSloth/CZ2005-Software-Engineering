@@ -36,6 +36,8 @@ const CustomerDetailsScreenContent = (props) => {
 
 	const [refreshing, setRefreshing] = useState(false);
 
+    // TODO: Customer count not updating properly.
+
 	const onRefresh = useCallback(() => {
 		setRefreshing(true);
 		queryClient.invalidateQueries('getStoreQueue');

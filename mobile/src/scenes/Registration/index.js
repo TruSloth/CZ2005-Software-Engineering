@@ -26,6 +26,7 @@ const RegistrationScreen = ({navigation}) => {
 	const dispatch = useDispatch();
 
 	const socket = useSelector((state) => state.socket).socket;
+	const account = useSelector((state) => state.account);
 
 	const registerMutation = useMutation(register);
 
@@ -64,7 +65,7 @@ const RegistrationScreen = ({navigation}) => {
 				});
 			}
 		} catch (e) {
-			console.log(typeof e);
+			console.log(e);
 		}
 	};
 
@@ -87,7 +88,7 @@ const RegistrationScreen = ({navigation}) => {
 				if (!socket.connected) {
 					socket.connect()
 	
-					socket.emit('add-username', account.userName)
+					socket.emit('add-username', response.data.userName)
 				}
 				dispatch(toggleLogIn(true));
 			}

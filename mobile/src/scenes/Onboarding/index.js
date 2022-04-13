@@ -29,25 +29,25 @@ const OnboardingScreen = ({navigation}) => {
 	const data = [
 		{
 			id: '1',
-			title: 'Yae Miko',
+			title: 'QQueue',
 			description:
-				'Some ambitions have the power to heal wounds, to bring victory, to inspire hope. But some ambitions, outlive their masters, long after their soul ascends.',
+				'Use the app to check for crowdiness and to queue online.',
 			imageSource: require('../../assets/QQueue_Onboarding_1.png'),
 		},
 
 		{
 			id: '2',
-			title: 'Raiden Shogun',
+			title: 'Save time',
 			description:
-				'All the world holds dear is but a backdrop of constant motion. I stand before it alone and unchanging.',
+				'Make use of the your time better somewhere instead of queuing physically.',
 			imageSource: require('../../assets/QQueue_Onboarding_2.png'),
 		},
 
 		{
 			id: '3',
-			title: 'Sangonomiya Kokomi',
+			title: 'Redeem rewards',
 			description:
-				'The moon shines bright over the depths of the seas as the tides come and go. It seems that as I go from strength to strength, so does my state of mind flow.',
+				'Earn points for each queue and redeem rewards.',
 			imageSource: require('../../assets/QQueue_Onboarding_3.png'),
 		},
 	];
