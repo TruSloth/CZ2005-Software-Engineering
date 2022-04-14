@@ -107,7 +107,8 @@ router.post("/serviceProvider/add-stall", async (req, res) => {
 router.get("/serviceProvider/get-stall", async (req, res) => {
   const stalls = await stallTemplate.find();
 
-  let updatedStalls;
+  if (req.query.hour) {
+    let updatedStalls;
   try {
     updatedStalls = await Promise.all(stalls.map(async (stall) => {
       const queue = await queueTemplate.find({venueID: stall.venueID})
@@ -147,6 +148,11 @@ router.get("/serviceProvider/get-stall", async (req, res) => {
   })
 
   res.send(response)
+  } else {
+    res.send(stalls)
+  }
+
+  
 });
 
 // Retrieve all nearby stores in our database.

@@ -19,6 +19,9 @@ mongoose.connect(process.env.DATABASE_ACCESS, () =>
 
 const httpServer = createServer(app);
 
+app.use(express.json());
+app.use(cors());
+
 const io = new Server(httpServer, {
   cors: {
     origin: "*",
@@ -28,18 +31,22 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
   console.log("socket connected");
   socket.on("join-room", (room) => {
+    console.log(`adding ${socket.data.userName} to ${room}`);
     socket.join(room);
   });
 
   socket.on("add-username", (userName) => {
+    console.log(`attaching username ${userName} to socket`);
     socket.data.userName = userName;
   });
 
   socket.on("send-chat-message", (msg, room) => {
+    console.log(`received msg from ${socket.data.userName} in ${room}`);
     socket.to(room).emit("received-message", msg);
   });
 
   socket.on("leave-room", (room) => {
+    console.log(`removing ${socket.data.userName} from ${room}`);
     socket.leave(room);
   });
 
@@ -48,8 +55,6 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use(express.json());
-app.use(cors());
 app.use("/", register);
 app.use("/", login);
 app.use("/", serviceProvider);

@@ -29,7 +29,7 @@ router.post("/users/login", async (req, res) => {
   });
 
   // Search for the user email in db.
-  // Either the account type does not match or email does nto exists
+  // Either the account type does not match or email does not exists
   if (!user) {
     res.status(401).json({ email: "invalid" });
     return;
@@ -40,12 +40,14 @@ router.post("/users/login", async (req, res) => {
     return;
   }
 
-  res.status(200).json({
-    success: true,
-    verified: user.verified,
-    userName: user.userName,
-    isServiceProviderAccount: user.isServiceProviderAccount,
-  });
+  res
+    .status(200)
+    .json({
+      success: true,
+      verified: user.verified,
+      userName: user.userName,
+      serviceProviderID: user.serviceProviderID,
+    });
 });
 
 // Google Login Page
@@ -75,11 +77,14 @@ router.post("/users/login/google", async (req, res) => {
       return;
     }
 
-    res.status(200).json({
-      success: true,
-      verified: user.verified,
-      userName: user.userName,
-    });
+    res
+      .status(200)
+      .json({
+        success: true,
+        verified: user.verified,
+        userName: user.userName,
+        serviceProviderID: user.serviceProviderID,
+      });
   } catch (e) {
     console.log(e);
   }

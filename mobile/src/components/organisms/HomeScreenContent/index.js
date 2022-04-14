@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState, useCallback} from 'react';
 
 import {
+	ActivityIndicator,
 	FlatList,
 	View,
 	StyleSheet,
@@ -11,7 +12,7 @@ import {
 	Dimensions,
 } from 'react-native';
 import {ListItem, SearchBar} from 'react-native-elements';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector, useStore} from 'react-redux';
 import {useQuery, useQueryClient} from 'react-query';
 
 import {getNearbyServiceProviders} from '../../../services/serviceProviders/getNearbyServiceProviders';
@@ -28,6 +29,11 @@ import {getQueueWaitTime} from '../../../services/queue/getQueueWaitTime';
 import QueueBar from '../../molecules/QueueBar';
 import {updateCurrentQueue} from '../../../store/account/actions';
 import PushNotification from 'react-native-push-notification';
+import {
+	IN_STORE,
+	NOT_IN_QUEUE,
+	QUEUE_REACHED,
+} from '../../../store/account/constants';
 
 /**
  * Renders the content for the Application Home Screen.
@@ -49,7 +55,28 @@ const HomeScreenContent = (props) => {
 		serviceProviderData,
 		nearbyVenuesData,
 		currentQueueWaitTime,
+		recommendedServiceProviders,
 	} = props;
+
+	// TODO: Currently, there seem to be a lot of unnecessary rerenders. Need to figure out why.
+	// Code here is a tool to help.
+	function useTraceUpdate(props) {
+		const prev = useRef(props);
+		useEffect(() => {
+			const changedProps = Object.entries(props).reduce((ps, [k, v]) => {
+				if (prev.current[k] !== v) {
+					ps[k] = [prev.current[k], v];
+				}
+				return ps;
+			}, {});
+			if (Object.keys(changedProps).length > 0) {
+				console.log('Changed props:', changedProps);
+			}
+			prev.current = props;
+		});
+	}
+
+	//useTraceUpdate(props)
 
 	const queryClient = useQueryClient();
 
@@ -58,52 +85,50 @@ const HomeScreenContent = (props) => {
 	const onRefresh = useCallback(() => {
 		setRefreshing(true);
 		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
+		queryClient.invalidateQueries('retrieveServiceProviders');
 		setRefreshing(false);
 	}, []);
 
-	useEffect(() => {
-		createChannels();
-		handleNotification();
-	});
-
-	const [previouslyVisitedData, setPreviouslyVisitedData] = useState([
-		{
-			venueName: 'Location 1',
-			venueRatings: '5 Stars',
-			queueLength: '10 in Queue',
-			waitTime: '~ 5 mins',
-		},
-		{
-			venueName: 'Location 2',
-			venueRatings: '4 Stars',
-			queueLength: '5 in Queue',
-			waitTime: '~ 5 mins',
-		},
-		{
-			venueName: 'Location 3',
-			venueRatings: '3 Stars',
-			queueLength: '3 in Queue',
-			waitTime: '~ 5 mins',
-		},
-	]);
+	const [recommendedVenues, setRecommendedVenues] = useState([]);
 
 	const sheetRef = useRef(null);
 
 	const account = useSelector((state) => state.account);
 	const socket = useSelector((state) => state.socket).socket;
 
+	const dispatch = useDispatch();
+
+	// Possible redundancy here. Check if it works if we add account.queueStatus as a dependency
 	useEffect(() => {
+		//console.log('registering queue reached')
 		socket.on('queue-reached', () => {
-			console.log('queue reached!');
+			//console.log('queue reached!')
 			PushNotification.localNotification({
 				channelId: 'notifications',
 				message: 'Time to head back!',
 			});
-			setQueueStatus('reached');
-			setTimeout(() => setQueueStatus('arrived'), 5000);
+			dispatch(
+				updateCurrentQueue(
+					account.currentQueueName,
+					account.currentQueueID,
+					QUEUE_REACHED
+				)
+			);
+			setTimeout(
+				() =>
+					dispatch(
+						updateCurrentQueue(
+							account.currentQueueName,
+							account.currentQueueID,
+							IN_STORE
+						)
+					),
+				5000
+			);
 		});
 
 		return () => {
+			//console.log('deregistering queue reached')
 			socket.off('queue-reached');
 		};
 	});
@@ -129,13 +154,17 @@ const HomeScreenContent = (props) => {
 	};
 
 	const onPressChat = () => {
-		navigation.navigate('LiveChat');
+		navigation.navigate('LiveChat', {
+			venueName: currentlyOpenStore.venueName,
+			venueID: currentlyOpenStore.venueID,
+		});
 	};
 
 	const moreInfoOnPress = () => {
 		navigation.navigate('StoreDetailedInfo', {
-			storeInformation: currentlyOpenStore,
+			venueID: currentlyOpenStore.venueID,
 		});
+		sheetRef.current.snapTo(2);
 	};
 
 	const queueIncrement = () => {
@@ -148,7 +177,6 @@ const HomeScreenContent = (props) => {
 	};
 
 	const onQueueConfirm = async () => {
-		setQueueStatus('queuing');
 		closeQueue();
 		sheetRef.current.snapTo(2);
 		await joinServiceProviderQueue(
@@ -158,6 +186,8 @@ const HomeScreenContent = (props) => {
 			queuePax
 		);
 		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
+		queryClient.invalidateQueries('retrieveServiceProviders');
+		searchFilterFunction(search);
 	};
 
 	const settingsOnPress = () => {
@@ -170,33 +200,29 @@ const HomeScreenContent = (props) => {
 			// Inserted text is not blank
 			// Filter the masterDataSource
 			// Update FilteredDataSource
-			const newData = masterDataSource.filter(function (item) {
+			const newData = serviceProviderData.filter(function (item) {
 				const itemData = item.venueName.toLowerCase();
 				const textData = text.toLowerCase();
 				return itemData.indexOf(textData) > -1; // Check for character index in the data, will return -1 if non existent
 			});
 			setFilteredDataSource(newData);
-			console.log(filteredDataSource.length);
-			if (filteredDataSource.length < 5)
-				[console.log(filteredDataSource)];
+
 			setSearch(text);
 		} else {
 			// Inserted text is blank
 			// Update FilteredDataSource with masterDataSource
-			setFilteredDataSource(masterDataSource);
+			setFilteredDataSource(serviceProviderData);
 			setSearch(text);
 		}
 	};
 
 	const [search, setSearch] = useState('');
 
-	const [queueStatus, setQueueStatus] = useState(null);
-
 	const [currentlyOpenStore, setCurrentlyOpenStore] = useState({});
 
-	const [filteredDataSource, setFilteredDataSource] = useState([]);
-
-	const [masterDataSource, setMasterDataSource] = useState([]);
+	const [filteredDataSource, setFilteredDataSource] = useState(
+		serviceProviderData ?? []
+	);
 
 	const [bannerHeight, setBannerHeight] = useState(0);
 
@@ -206,8 +232,21 @@ const HomeScreenContent = (props) => {
 
 	useEffect(() => {
 		if (serviceProviderData !== null) {
-			setFilteredDataSource(serviceProviderData);
-			setMasterDataSource(serviceProviderData);
+			searchFilterFunction(search);
+
+			if (recommendedServiceProviders !== null) {
+				let recommendedVenueData = [];
+
+				recommendedServiceProviders.map((stall) => {
+					recommendedVenueData.push(
+						serviceProviderData.find(
+							(venue) => venue.venueID === stall.venueID
+						)
+					);
+				});
+
+				setRecommendedVenues(recommendedVenueData);
+			}
 		}
 	}, [serviceProviderData]);
 
@@ -281,35 +320,49 @@ const HomeScreenContent = (props) => {
 				></HorizontalSection>
 				<HorizontalSection
 					child={
-						<FlatList
-							horizontal
-							data={search === '' ? previouslyVisitedData : filteredDataSource.slice(0, 11)}
-							renderItem={({item}) => {
-								return (
-									<TappableCard
-										cardImage={item.imageAddress}
-										cardTitle={item.venueName}
-										cardSubtitle={search === '' ? '10 stars' : `${item.venueRatings.$numberDecimal} ⭐`}
-										cardSubtextLine1={`${item.queueLength} in Queue`}
-										cardSubtextLine2={`~ ${item.waitTime} mins`}
-										onPress={() =>
-											openStoreInfo(item)
-										}
-										onPressCardDesc={() =>
-											onPressCardDescQueue(item)
-										}
-										disableCardDesc={
-											account.currentQueueID ?? false
-										}
-									></TappableCard>
-								);
-							}}
-						></FlatList>
+						serviceProviderData ? (
+							<FlatList
+								horizontal
+								data={
+									search === ''
+										? recommendedVenues
+										: filteredDataSource.slice(0, 11)
+								}
+								renderItem={(item) => {
+									return (
+										<TappableCard
+											cardImage={item.item.imageAddress}
+											cardTitle={item.item.venueName}
+											cardSubtitle={`${item.item.venueRatings.$numberDecimal} ⭐`}
+											cardSubtextLine1={`${item.item.queueLength} in Queue`}
+											cardSubtextLine2={`~ ${item.item.waitTime} mins`}
+											onPress={() =>
+												openStoreInfo(item.item)
+											}
+											onPressCardDesc={() =>
+												onPressCardDescQueue(item.item)
+											}
+											disableCardDesc={
+												account.queueStatus !==
+												NOT_IN_QUEUE
+											}
+										></TappableCard>
+									);
+								}}
+							></FlatList>
+						) : (
+							<ActivityIndicator
+								color={'#7879F1'}
+							></ActivityIndicator>
+						)
 					}
-					title={'Previously Visited'}
+					title={
+						search === '' ? 'Recommended Stores' : 'Search Results'
+					}
 					titleStyle={styles.sectionHeader}
 				></HorizontalSection>
 				<HorizontalSection
+					// TODO: If location data is not available (timeout or otherwise), properly display error msg
 					child={
 						nearbyVenuesData ? (
 							<FlatList
@@ -330,14 +383,17 @@ const HomeScreenContent = (props) => {
 												onPressCardDescQueue(item.item)
 											}
 											disableCardDesc={
-												account.currentQueueID ?? false
+												account.queueStatus !==
+												NOT_IN_QUEUE
 											}
 										></TappableCard>
 									);
 								}}
 							></FlatList>
 						) : (
-							<Text>Hello</Text>
+							<ActivityIndicator
+								color={'#7879F1'}
+							></ActivityIndicator>
 						)
 					}
 					title={'Nearby Restaurants'}
@@ -345,11 +401,10 @@ const HomeScreenContent = (props) => {
 				></HorizontalSection>
 				<View style={styles.spacer}></View>
 			</ScrollView>
-			{account.currentQueueID ? (
+			{account.queueStatus !== NOT_IN_QUEUE ? (
 				<QueueBar
 					leaveQueue={leaveServiceProviderQueue}
 					currentQueueWaitTime={currentQueueWaitTime}
-					queueStatus={queueStatus}
 					style={{
 						zIndex: 1,
 						position: 'absolute',
@@ -365,7 +420,7 @@ const HomeScreenContent = (props) => {
 				renderContent={
 					isQueueSheetOpen ? QueueSheetContent : StoreInfoContent
 				}
-				queueDisabled={account.currentQueueID !== null}
+				queueDisabled={account.queueStatus !== NOT_IN_QUEUE}
 				moreInfoOnPress={moreInfoOnPress}
 				queueOnPress={openQueue}
 				chatOnPress={onPressChat}
@@ -375,6 +430,7 @@ const HomeScreenContent = (props) => {
 				onPressMinus={queueDecrement}
 				onPressCancel={closeQueue}
 				onPressConfirm={onQueueConfirm}
+				venueID={currentlyOpenStore.venueID}
 				storeImage={currentlyOpenStore.imageAddress}
 				heading={currentlyOpenStore.venueName}
 				waitTime={`~ ${currentlyOpenStore.waitTime} mins`}

@@ -11,6 +11,8 @@ import {getNearbyServiceProviders} from '../../services/serviceProviders/getNear
 import {updateCurrentQueue} from '../../store/account/actions';
 import {getQueueWaitTime} from '../../services/queue/getQueueWaitTime';
 import {leaveQueue} from '../../services/queue/leaveQueue';
+import {getRecommendedServiceProviders} from '../../services/serviceProviders/getRecommendedServiceProviders';
+import {NOT_IN_QUEUE, QUEUING} from '../../store/account/constants';
 
 const HomeScreen = ({navigation}) => {
 	const dispatch = useDispatch();
@@ -31,19 +33,14 @@ const HomeScreen = ({navigation}) => {
 			});
 
 			if (response.status === 200) {
-				dispatch(updateCurrentQueue(storeName, storeID));
-			}
-
-			if (!socket.connected) {
-				socket.connect();
-
-				socket.emit('add-username', account.userName);
+				dispatch(updateCurrentQueue(storeName, storeID, QUEUING));
 			}
 		} catch (e) {
 			console.log(e);
 		}
 	};
 
+	// When the user leaves the queue on their own accord
 	const leaveServiceProviderQueue = async () => {
 		try {
 			const response = await leaveQueueMutation.mutateAsync({
@@ -52,22 +49,14 @@ const HomeScreen = ({navigation}) => {
 			});
 
 			if (response.status === 200) {
-				dispatch(updateCurrentQueue(null, null));
+				dispatch(updateCurrentQueue(null, null, NOT_IN_QUEUE));
 				queryClient.invalidateQueries('retrieveNearbyServiceProviders');
-			}
-
-			if (socket.connected) {
-				socket.disconnect();
+				queryClient.invalidateQueries('retrieveServiceProviders');
 			}
 		} catch (e) {
 			console.log(e);
 		}
 	};
-
-	// const {data} = useQuery('retrieveNearbyServiceProviders', async () => {
-	// 	const response = await getNearbyServiceProviders();
-	// 	return response.data
-	// })
 
 	const result = useQueries([
 		{
@@ -79,7 +68,6 @@ const HomeScreen = ({navigation}) => {
 				return response.data;
 			},
 		},
-
 		{
 			queryKey: ['retrieveNearbyServiceProviders'],
 			queryFn: async () => {
@@ -92,16 +80,27 @@ const HomeScreen = ({navigation}) => {
 		{
 			queryKey: ['retrieveWaitTime'],
 			queryFn: async () => {
-				response = await getQueueWaitTime(
+				const response = await getQueueWaitTime(
 					account.currentQueueID,
 					new Date().getHours()
 				);
 				return response.data;
 			},
 			refetchInterval: 60000,
-			enabled: account.currentQueueID !== null,
+			enabled: account.queueStatus !== NOT_IN_QUEUE,
+		},
+		{
+			queryKey: ['retrieveRecommendedServiceProviders'],
+			queryFn: async () => {
+				const response = await getRecommendedServiceProviders(
+					account.userName
+				);
+				return response.data;
+			},
 		},
 	]);
+
+	// Display loading icons
 
 	return (
 		<SafeAreaView style={{flex: 1}}>
@@ -113,12 +112,14 @@ const HomeScreen = ({navigation}) => {
 				serviceProviderData={
 					result[0].isLoading ? null : result[0].data
 				}
-				//nearbyVenuesData={data}
 				nearbyVenuesData={result[1].isLoading ? null : result[1].data}
 				currentQueueWaitTime={
 					result[2].isLoading || result[2].isIdle
 						? null
 						: result[2].data.waitTime
+				}
+				recommendedServiceProviders={
+					result[3].isLoading ? null : result[3].data
 				}
 			></HomeScreenContent>
 		</SafeAreaView>

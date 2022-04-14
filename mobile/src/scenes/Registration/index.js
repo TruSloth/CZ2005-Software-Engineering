@@ -12,7 +12,7 @@ import {
 	ScrollView,
 	ActivityIndicator,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useMutation} from 'react-query';
 
 import {register} from '../../services/auth/register';
@@ -24,6 +24,9 @@ import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
 
 const RegistrationScreen = ({navigation}) => {
 	const dispatch = useDispatch();
+
+	const socket = useSelector((state) => state.socket).socket;
+	const account = useSelector((state) => state.account);
 
 	const registerMutation = useMutation(register);
 
@@ -62,7 +65,7 @@ const RegistrationScreen = ({navigation}) => {
 				});
 			}
 		} catch (e) {
-			console.log(typeof e);
+			console.log(e);
 		}
 	};
 
@@ -79,8 +82,15 @@ const RegistrationScreen = ({navigation}) => {
 					setCurrentUser({
 						userName: response.data.userName,
 						accountType: 'User',
+						serviceProviderID: null,
 					})
 				);
+
+				if (!socket.connected) {
+					socket.connect()
+	
+					socket.emit('add-username', response.data.userName)
+				}
 				dispatch(toggleLogIn(true));
 			}
 		} catch (e) {

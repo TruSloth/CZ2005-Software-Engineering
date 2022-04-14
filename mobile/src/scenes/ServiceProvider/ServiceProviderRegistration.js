@@ -73,13 +73,10 @@ const ServiceProviderRegistrationScreen = ({navigation}) => {
 
 			const response = await googleRegisterMutation.mutateAsync(userInfo);
 			if (response.status === 200) {
-				dispatch(
-					setCurrentUser({
-						userName: response.data.userName,
-						accountType: 'ServiceProvider',
-					})
-				);
-				dispatch(toggleLogIn(true));
+                navigation.navigate('Verification', {
+                    tempUserName: response.data.userName,
+                    accountType: 'ServiceProvider'
+                })
 			}
 		} catch (e) {
 			console.log(e);

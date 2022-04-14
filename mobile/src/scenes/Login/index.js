@@ -2,7 +2,7 @@ import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
 
 import BusinessHomeScreenContent from '../../components/organisms/BusinessHomeScreenContent';
@@ -10,7 +10,7 @@ import LoginScreenContent from '../../components/organisms/LoginScreenContent';
 import {login} from '../../services/auth/login';
 import {googleLogin} from '../../services/auth/google/googleLogin';
 import {googleSignIn} from '../../services/auth/google/googleSignIn';
-import {useMutation} from 'react-query';
+import {useMutation, useQueryClient} from 'react-query';
 
 const LoginScreen = (props) => {
 	const {navigation} = props;
@@ -31,11 +31,16 @@ const LoginScreen = (props) => {
 
 	const dispatch = useDispatch();
 
+	const socket = useSelector((state) => state.socket).socket;
+	const account = useSelector((state) => state.account);
+
+
 	const loginMutation = useMutation(login);
 
 	const googleLoginMutation = useMutation(googleLogin);
 
 	const isLoading = loginMutation.isLoading;
+	
 
 	const onPressLogin = async (email, password) => {
 		try {
@@ -50,8 +55,14 @@ const LoginScreen = (props) => {
 					setCurrentUser({
 						userName: response.data.userName,
 						accountType: 'User',
+						serviceProviderID: null,
 					})
 				);
+				if (!socket.connected) {
+					socket.connect()
+	
+					socket.emit('add-username', response.data.userName)
+				}
 				dispatch(toggleLogIn(true));
 			}
 		} catch (e) {
@@ -72,8 +83,14 @@ const LoginScreen = (props) => {
 					setCurrentUser({
 						userName: response.data.userName,
 						accountType: 'User',
+						serviceProviderID: null
 					})
 				);
+
+				if (!socket.connected) {
+					socket.connect()
+					socket.emit('add-username', response.data.userName)
+				}
 				dispatch(toggleLogIn(true));
 			}
 		} catch (e) {

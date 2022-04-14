@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {
 	googleIsSignedIn,
@@ -19,6 +19,8 @@ import HorizontalBlock from '../../molecules/HorizontalBlock';
 
 const AppSettingsScreenContent = () => {
 	const dispatch = useDispatch();
+
+	const socket = useSelector((state) => state.socket).socket;
 
 	const notificationSettings = [
 		{
@@ -68,9 +70,17 @@ const AppSettingsScreenContent = () => {
 						await googleSignOut();
 					}
 
+					if (socket.connected) {
+						socket.disconnect();
+					}
+
 					dispatch(toggleLogIn(false));
 					dispatch(
-						setCurrentUser({username: null, accountType: null})
+						setCurrentUser({
+							username: null,
+							accountType: null,
+							serviceProviderID: null,
+						})
 					);
 				} catch (e) {
 					console.log(e);
