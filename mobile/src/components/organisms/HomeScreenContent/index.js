@@ -54,7 +54,7 @@ const HomeScreenContent = (props) => {
 		recommendedServiceProviders
 	} = props;
 
-	// Currently, there seem to be a lot of unnecessary rerenders. Need to figure out why.
+	// TODO: Currently, there seem to be a lot of unnecessary rerenders. Need to figure out why.
 	// Code here is a tool to help.
 	function useTraceUpdate(props) {
 		const prev = useRef(props);
@@ -316,6 +316,7 @@ const HomeScreenContent = (props) => {
 					titleStyle={styles.sectionHeader}
 				></HorizontalSection>
 				<HorizontalSection
+				// TODO: If location data is not available (timeout or otherwise), properly display error msg
 					child={
 						nearbyVenuesData ? (
 							<FlatList
