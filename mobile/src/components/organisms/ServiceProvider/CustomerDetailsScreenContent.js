@@ -21,26 +21,55 @@ import HorizontalSection from '../../atoms/HorizontalSection';
 import { useSelector } from 'react-redux';
 
 const CustomerDetailsScreenContent = (props) => {
-	const {navigation, queueData, pushFromQueue} = props;
+	const {navigation, pushFromQueue} = props;
 
 	const [modalVisible, setModalVisible] = useState(false);
 	const RemoveCustomerOnPress = () => {
 		setModalVisible(true);
 	};
 
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
-
     const account = useSelector((state) => state.account)
 
 	const queryClient = useQueryClient();
 
 	const [refreshing, setRefreshing] = useState(false);
+	const [queueData, setQueueData] = useState([]);
+
+	const updateDetails = useCallback(() => {
+		const storeQueueData = queryClient.getQueryData(
+			'getStoreQueue'
+		);
+
+		if (storeQueueData) {
+			setQueueData(storeQueueData);
+		}
+	}, [queryClient.getQueryData('getStoreQueue')]);
+
+	const advanceQueue = async (serviceProviderID, userName) => {
+		await pushFromQueue(serviceProviderID, userName);
+		updateDetails();
+	}
+
+	useEffect(() => {
+		const storeQueueData = queryClient.getQueryData(
+			'getStoreQueue'
+		);
+
+		if (storeQueueData) {
+			setQueueData(storeQueueData);
+		}
+
+		return () => {
+			setQueueData([]);
+		};
+	}, [queryClient.getQueryData('getStoreQueue')]);
 
     // TODO: Customer count not updating properly.
 
-	const onRefresh = useCallback(() => {
+	const onRefresh = useCallback(async () => {
 		setRefreshing(true);
-		queryClient.invalidateQueries('getStoreQueue');
+		await queryClient.invalidateQueries('getStoreQueue');
+		updateDetails();
 		setRefreshing(false);
 	}, []);
 
@@ -86,7 +115,7 @@ const CustomerDetailsScreenContent = (props) => {
 										/>
 										<TouchableOpacity
 											style={styles.firstContact}
-                                            onPress={() => pushFromQueue(account.serviceProviderID, customer.user)}
+                                            onPress={() => advanceQueue(account.serviceProviderID, customer.user)}
 										>
 											<Icon
 												size={40}

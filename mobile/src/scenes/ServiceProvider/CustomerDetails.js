@@ -20,7 +20,7 @@ const CustomerDetailsScreen = ({navigation, route}) => {
             })
 
             if (response.status === 200) {
-                queryClient.invalidateQueries('getStoreQueue')
+                await queryClient.invalidateQueries('getStoreQueue')
             }
         } catch(e) {
             console.log(e)
