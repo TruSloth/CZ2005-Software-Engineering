@@ -56,39 +56,41 @@ const TopBanner = (props) => {
 
 	return (
 		<View style={style} onLayout={onLayout}>
-			{actionBar ? <View style={styles.actionBar}>
-				<TouchableOpacity onPress={settingsOnPress}>
-					<Icon
-						name={'settings'}
-						tvParallaxProperties={undefined}
-						style={styles.iconHorizontalPadding}
-						iconStyle={styles.iconStyle}
-					></Icon>
-				</TouchableOpacity>
+			{actionBar ? (
+				<View style={styles.actionBar}>
+					<TouchableOpacity onPress={settingsOnPress}>
+						<Icon
+							name={'settings'}
+							tvParallaxProperties={undefined}
+							style={styles.iconHorizontalPadding}
+							iconStyle={styles.iconStyle}
+						></Icon>
+					</TouchableOpacity>
 
-				<View style={[styles.rowContainer, {paddingRight: 0}]}>
-					<TouchableOpacity>
-						<Icon
-							name='favorite-outline'
-							tvParallaxProperties={undefined}
-							style={styles.iconHorizontalPadding}
-							iconStyle={styles.iconStyle}
-						></Icon>
-					</TouchableOpacity>
-					<TouchableOpacity>
-						<Icon
-							name='text-snippet'
-							tvParallaxProperties={undefined}
-							style={styles.iconHorizontalPadding}
-							iconStyle={styles.iconStyle}
-						></Icon>
-					</TouchableOpacity>
+					<View style={[styles.rowContainer, {paddingRight: 0}]}>
+						<TouchableOpacity>
+							<Icon
+								name='favorite-outline'
+								tvParallaxProperties={undefined}
+								style={styles.iconHorizontalPadding}
+								iconStyle={styles.iconStyle}
+							></Icon>
+						</TouchableOpacity>
+						<TouchableOpacity>
+							<Icon
+								name='text-snippet'
+								tvParallaxProperties={undefined}
+								style={styles.iconHorizontalPadding}
+								iconStyle={styles.iconStyle}
+							></Icon>
+						</TouchableOpacity>
+					</View>
 				</View>
-			</View> : <></>}
-			
-			<View
-				style={[styles.rowContainer, bannerContentContainerStyle]}
-			>
+			) : (
+				<></>
+			)}
+
+			<View style={[styles.rowContainer, bannerContentContainerStyle]}>
 				{leftAvatar ? (
 					<Avatar
 						size={64}
@@ -100,8 +102,12 @@ const TopBanner = (props) => {
 					<></>
 				)}
 				<View>
-					<Text style={[styles.titleTextBox, titleStyle]}>{title}</Text>
-					<Text style={[styles.subtitleTextBox, subtitleStyle]}>{subtitle}</Text>
+					<Text style={[styles.titleTextBox, titleStyle]}>
+						{title}
+					</Text>
+					<Text style={[styles.subtitleTextBox, subtitleStyle]}>
+						{subtitle}
+					</Text>
 				</View>
 
 				{leftAvatar ? (
@@ -125,13 +131,14 @@ const styles = StyleSheet.create({
 	},
 
 	iconStyle: {
-		color: '#7879F1',
+		color: '#000000',
 	},
 
 	titleTextBox: {
 		marginVertical: 10,
-		color: '#7879F1',
+		color: '#000000',
 		fontSize: 32,
+		fontWeight: 'bold',
 	},
 
 	titleTextBoxTight: {
@@ -150,7 +157,6 @@ const styles = StyleSheet.create({
 		color: '#7879F1',
 	},
 
-
 	actionBar: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
@@ -161,7 +167,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		paddingHorizontal: 20,
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
 	},
 
 	avatarImage: {

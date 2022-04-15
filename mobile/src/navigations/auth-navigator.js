@@ -6,7 +6,11 @@ import LoginScreen from '../scenes/Login';
 import RegistrationScreen from '../scenes/Registration';
 import OnboardingScreen from '../scenes/Onboarding/';
 import TempVerifyScreen from '../scenes/TempVerify';
-import {ServiceProviderLoginScreen, ServiceProviderRegistrationScreen} from '../scenes/ServiceProvider';
+import {
+	ServiceProviderLoginScreen,
+	ServiceProviderRegistrationScreen,
+	ServiceProviderHomeScreen,
+} from '../scenes/ServiceProvider';
 import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
@@ -47,6 +51,10 @@ const AuthNavigator = () => {
 			<Stack.Screen
 				name='ServiceProviderLogin'
 				component={ServiceProviderLoginScreen}
+			></Stack.Screen>
+			<Stack.Screen
+				name='BusinessHome'
+				component={ServiceProviderHomeScreen}
 			></Stack.Screen>
 		</Stack.Navigator>
 	);

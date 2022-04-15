@@ -1,6 +1,12 @@
 import React from 'react';
 
-import {TouchableOpacity, Text, StyleSheet, View, ActivityIndicator} from 'react-native';
+import {
+	TouchableOpacity,
+	Text,
+	StyleSheet,
+	View,
+	ActivityIndicator,
+} from 'react-native';
 
 /**
  * Renders a Round Cornered Button with an optional loading indicator.
@@ -32,11 +38,23 @@ const RoundButton = (props) => {
 
 	return loading ? (
 		<View style={[styles.loginButton, style]}>
-			<ActivityIndicator color={'#7879F1'}></ActivityIndicator>
+			<ActivityIndicator color={'#000000'}></ActivityIndicator>
 		</View>
 	) : (
-		<TouchableOpacity style={[styles.loginButton, style]} onPress={onPress} disabled={disabled}>
-			<Text style={[{alignContent: 'center', color: '#7879F1'}]}>
+		<TouchableOpacity
+			style={[styles.loginButton, style]}
+			onPress={onPress}
+			disabled={disabled}
+		>
+			<Text
+				style={[
+					{
+						alignContent: 'center',
+						color: '#000000',
+						fontWeight: 'bold',
+					},
+				]}
+			>
 				{title}
 			</Text>
 		</TouchableOpacity>
@@ -46,12 +64,13 @@ const RoundButton = (props) => {
 const styles = StyleSheet.create({
 	loginButton: {
 		borderRadius: 10,
-		borderWidth: 1,
+		//borderWidth: 1,
 		paddingVertical: 5,
 		paddingHorizontal: 10,
-		borderColor: '#7879F1',
+		//borderColor: '#7879F1',
 		alignItems: 'center',
 		marginVertical: 10,
+		backgroundColor: '#FCDDEC',
 	},
 });
 

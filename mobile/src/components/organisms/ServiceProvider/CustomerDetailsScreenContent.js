@@ -18,7 +18,7 @@ import {useQueryClient} from 'react-query';
 import {Icon} from 'react-native-elements';
 
 import HorizontalSection from '../../atoms/HorizontalSection';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const CustomerDetailsScreenContent = (props) => {
 	const {navigation, queueData, pushFromQueue} = props;
@@ -30,13 +30,13 @@ const CustomerDetailsScreenContent = (props) => {
 
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
-    const account = useSelector((state) => state.account)
+	const account = useSelector((state) => state.account);
 
 	const queryClient = useQueryClient();
 
 	const [refreshing, setRefreshing] = useState(false);
 
-    // TODO: Customer count not updating properly.
+	// TODO: Customer count not updating properly.
 
 	const onRefresh = useCallback(() => {
 		setRefreshing(true);
@@ -86,13 +86,18 @@ const CustomerDetailsScreenContent = (props) => {
 										/>
 										<TouchableOpacity
 											style={styles.firstContact}
-                                            onPress={() => pushFromQueue(account.serviceProviderID, customer.user)}
+											onPress={() =>
+												pushFromQueue(
+													account.serviceProviderID,
+													customer.user
+												)
+											}
 										>
 											<Icon
 												size={40}
 												name='bell'
 												type='evilicon'
-												color='#7879F1'
+												color='#000000'
 											/>
 										</TouchableOpacity>
 										<TouchableOpacity
@@ -102,7 +107,7 @@ const CustomerDetailsScreenContent = (props) => {
 												size={27}
 												name='phone'
 												type='feather'
-												color='#7879F1'
+												color='#000000'
 											/>
 										</TouchableOpacity>
 										<TouchableOpacity
@@ -113,7 +118,7 @@ const CustomerDetailsScreenContent = (props) => {
 												size={27}
 												name='user-minus'
 												type='feather'
-												color='#7879F1'
+												color='#000000'
 											/>
 										</TouchableOpacity>
 									</View>
@@ -196,7 +201,7 @@ const styles = StyleSheet.create({
 	modalButtonText: {
 		fontWeight: 'bold',
 		fontSize: 15,
-		color: '#7879F1',
+		color: '#000000',
 		justifyContent: 'center',
 	},
 	modalButton: {
@@ -224,13 +229,13 @@ const styles = StyleSheet.create({
 	modalTitle: {
 		fontWeight: 'bold',
 		fontSize: 20,
-		color: '#7879F1',
+		color: '#000000',
 	},
 	TotalPax: {
 		fontSize: 50,
 		fontWeight: 'bold',
 		margin: 15,
-		color: '#7879F1',
+		color: '#E89575',
 	},
 	largeLogo: {
 		height: 100,
@@ -248,7 +253,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderWidth: 0.5,
 		borderRadius: 10,
-		borderColor: '#7879F1',
+		borderColor: '#000000',
 	},
 	buttonList: {
 		marginTop: '10%',
@@ -271,7 +276,7 @@ const styles = StyleSheet.create({
 	textButton: {
 		fontWeight: 'bold',
 		fontSize: 20,
-		color: '#7879F1',
+		color: '#000000',
 	},
 	heading: {
 		margin: 10,
@@ -280,7 +285,7 @@ const styles = StyleSheet.create({
 		textAlign: 'left',
 		justifyContent: 'flex-end',
 		position: 'relative',
-		color: '#7879F1',
+		color: '#000000',
 		marginBottom: 10,
 		textAlignVertical: 'top',
 	},
@@ -310,7 +315,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		fontWeight: 'bold',
 		textAlign: 'left',
-		color: '#7879F1',
+		color: '#000000',
 		left: 0,
 	},
 	paxNo: {
@@ -318,7 +323,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		fontWeight: 'bold',
 		textAlign: 'left',
-		color: '#7879F1',
+		color: '#000000',
 		marginBottom: 10,
 	},
 
@@ -329,7 +334,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-end',
 	},
 	horLine: {
-		borderBottomColor: '#7879F1',
+		borderBottomColor: '#AAAAAA',
 		borderBottomWidth: 1,
 		marginTop: 10,
 		marginBottom: 10,
