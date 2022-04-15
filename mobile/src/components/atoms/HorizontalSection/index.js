@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 	horizontalSection: {
 		borderTopWidth: 1,
 		borderBottomWidth: 1,
-		borderColor: '#7879F1',
+		borderColor: '#000000',
 		padding: 10,
 	},
 });

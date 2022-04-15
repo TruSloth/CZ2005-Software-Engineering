@@ -53,7 +53,7 @@ const TappableCard = (props) => {
 				wrapperStyle={styles.tappableCardDescription}
 			>
 				<Card.Image
-					style={{padding: 0, borderColor: '#7879F1', borderWidth: 2}}
+					style={styles.cardImage}
 					source={{uri: cardImage || reactNativeLogo}}
 				/>
 				<CardDescription
@@ -79,26 +79,34 @@ const styles = StyleSheet.create({
 		marginHorizontal: 5,
 		backgroundColor: 'transparent',
 		borderWidth: 0,
+		elevation: 0
+	},
+
+	cardImage: {
+		padding: 0, 
+		borderColor: '#000000', 
+		borderWidth: 2,
+		borderRadius: 10
 	},
 
 	cardTitle: {
 		fontWeight: '700',
-		color: '#7879F1',
+		color: '#000000',
 		numberOfLines: 1,
 		maxWidth: 100,
 		ellipsizeMode: 'tail'
 	},
 
 	cardSubtitle: {
-		color: '#7879F1',
+		color: '#E89575',
 	},
 
 	cardSubtextLine1: {
-		color: '#7879F1',
+		color: '#C4C4C4',
 	},
 
 	cardSubtextLine2: {
-		color: '#7879F1',
+		color: '#C4C4C4',
 	},
 });
 

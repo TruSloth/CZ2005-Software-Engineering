@@ -67,7 +67,7 @@ const ServiceProviderHomeScreenContent = (props) => {
 			<TopBanner
 				title={`Hi, ${account.userName}!`}
 				subtitle={''}
-				avatarImage={reactNativeLogo}
+				avatarImage={account.avatarImageURL !== null  ? {uri: account.avatarImageURL} : account.avatarImage}
 				settingsOnPress={settingsOnPress}
 				BizHomeonPress={BizHomeOnPress}
 				BizProfileOnPress={BizProfileOnPress}

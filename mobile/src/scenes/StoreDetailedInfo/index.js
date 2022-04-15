@@ -121,9 +121,7 @@ const StoreDetailedInfoScreen = ({route}) => {
 		joinServiceProviderQueue(
 			account.userName,
 			storeDetails.venueID,
-			//storeInfoState.venueID,
 			storeDetails.venueName,
-			//storeInfoState.venueName,
 			queuePax
 		);
 	};
@@ -132,9 +130,6 @@ const StoreDetailedInfoScreen = ({route}) => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={[styles.heading, {color: '#7879F1'}, {fontSize: 25}]}>
-				{storeDetails.venueName}
-			</Text>
 			<ScrollView
 				pagingEnabled
 				horizontal={true}
@@ -184,14 +179,14 @@ const StoreDetailedInfoScreen = ({route}) => {
 			<TouchableOpacity
 				style={[
 					styles.button,
-					{backgroundColor: account.currentQueueID ? 'gray' : ''},
+					{backgroundColor: account.currentQueueID ? 'gray' : '#FCDDEC'},
 				]}
 				onPress={openQueue}
 				disabled={account.queueStatus !== NOT_IN_QUEUE}
 			>
 					<Text
 						style={{
-							color: account.currentQueueID ? 'red' : '#EF5DA8',
+							color: account.currentQueueID ? 'red' : '#000000',
 							fontSize: 15,
 							fontWeight: 'bold',
 						}}
@@ -229,6 +224,9 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		bottom: 340,
 		alignSelf: 'center',
+	},
+	headingContainer: {
+		backgroundColor: '#FCDDEC'
 	},
 
 	waitTimes: {
@@ -272,12 +270,9 @@ const styles = StyleSheet.create({
 		fontFamily: '',
 	},
 	button: {
-		borderRadius: 10,
-		borderWidth: 1,
 		padding: 10,
 		paddingHorizontal: 50,
 		margin: 20,
-		borderColor: '#7879F1',
 		alignItems: 'center',
 		borderRadius: 50,
 	},

@@ -46,6 +46,7 @@ const TopBanner = (props) => {
 		avatarImage,
 		onLayout,
 		settingsOnPress,
+		chatOnPress,
 		style,
 		bannerContentContainerStyle,
 		titleStyle,
@@ -69,7 +70,7 @@ const TopBanner = (props) => {
 				<View style={[styles.rowContainer, {paddingRight: 0}]}>
 					<TouchableOpacity>
 						<Icon
-							name='favorite-outline'
+							name='notifications-none'
 							tvParallaxProperties={undefined}
 							style={styles.iconHorizontalPadding}
 							iconStyle={styles.iconStyle}
@@ -77,7 +78,15 @@ const TopBanner = (props) => {
 					</TouchableOpacity>
 					<TouchableOpacity>
 						<Icon
-							name='text-snippet'
+							name='favorite-outline'
+							tvParallaxProperties={undefined}
+							style={styles.iconHorizontalPadding}
+							iconStyle={styles.iconStyle}
+						></Icon>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={chatOnPress}>
+						<Icon
+							name='chat-bubble-outline'
 							tvParallaxProperties={undefined}
 							style={styles.iconHorizontalPadding}
 							iconStyle={styles.iconStyle}
@@ -93,7 +102,7 @@ const TopBanner = (props) => {
 					<Avatar
 						size={64}
 						rounded
-						source={{uri: avatarImage}}
+						source={avatarImage}
 						imageProps={styles.avatarImage}
 					></Avatar>
 				) : (
@@ -110,7 +119,7 @@ const TopBanner = (props) => {
 					<Avatar
 						size={64}
 						rounded
-						source={{uri: avatarImage}}
+						source={avatarImage}
 						imageProps={styles.avatarImage}
 					></Avatar>
 				)}
@@ -125,7 +134,7 @@ const styles = StyleSheet.create({
 	},
 
 	iconStyle: {
-		color: '#7879F1',
+		color: '#000000',
 	},
 
 	titleTextBox: {

@@ -133,13 +133,18 @@ const HomeScreenContent = (props) => {
 		sheetRef.current.snapTo(0);
 	};
 
+	const onPressGeneralChat = () => {
+		navigation.navigate('LiveChat')
+	}
+
 	const onPressChat = () => {
 		navigation.navigate('LiveChat', {venueName: currentlyOpenStore.venueName, venueID: currentlyOpenStore.venueID});
 	};
 
 	const moreInfoOnPress = () => {
 		navigation.navigate('StoreDetailedInfo', {
-			venueID: currentlyOpenStore.venueID
+			venueID: currentlyOpenStore.venueID,
+			venueName: currentlyOpenStore.venueName
 		});
 		sheetRef.current.snapTo(2);
 	};
@@ -182,7 +187,10 @@ const HomeScreenContent = (props) => {
 				const textData = text.toLowerCase();
 				return itemData.indexOf(textData) > -1; // Check for character index in the data, will return -1 if non existent
 			});
-			setFilteredDataSource(newData);
+
+			console.log(`search Filter function has found: ${newData.length}`)
+
+			setFilteredDataSource(newData)
 
 			setSearch(text);
 		} else {
@@ -192,6 +200,42 @@ const HomeScreenContent = (props) => {
 			setSearch(text);
 		}
 	};
+
+	const categoryFilterFunction = (category) => {
+		// Reset filter to ALL
+		if (category === 'ALL') {
+			searchFilterFunction(search);
+			setFiltered(false);
+			return;
+		}
+
+		let filteredData;
+
+		// Check if filter is already in use
+		// If so, reset the filtered results
+		if (filtered) {
+			if (search) {
+				filteredData = serviceProviderData.filter(function (item) {
+					const itemData = item.venueName.toLowerCase();
+					const textData = search.toLowerCase();
+					return itemData.indexOf(textData) > -1; // Check for character index in the data, will return -1 if non existent
+				});
+			} else {
+				filteredData = serviceProviderData;
+			}
+		} else {
+			filteredData = filteredDataSource;
+		}
+
+		const newData = filteredData.filter((item) => {
+			return item.venueType.includes(category);
+		})
+
+		setFilteredDataSource(newData);
+
+		setFiltered(true);
+		return;
+	}
 
 	const [search, setSearch] = useState('');
 
@@ -204,6 +248,8 @@ const HomeScreenContent = (props) => {
 	const [queuePax, setQueuePax] = useState(0);
 
 	const [isQueueSheetOpen, setIsQueueSheetOpen] = useState(false);
+
+	const [filtered, setFiltered] = useState(false);
 
 	useEffect(() => {
 		if (serviceProviderData !== null) {
@@ -236,9 +282,12 @@ const HomeScreenContent = (props) => {
 			>
 				<TopBanner
 					title={`Hi, ${account.userName}`}
+					titleStyle={styles.bannerTitle}
 					subtitle={'Where are you going to queue next?'}
-					avatarImage={reactNativeLogo}
+					subtitleStyle={styles.bannerSubtitle}
+					avatarImage={account.avatarImageURL !== null  ? {uri: account.avatarImageURL} : account.avatarImage}
 					settingsOnPress={settingsOnPress}
+					chatOnPress={onPressGeneralChat}
 					actionBar={true}
 					style={styles.homeBanner}
 					onLayout={(e) => {
@@ -255,31 +304,36 @@ const HomeScreenContent = (props) => {
 					onClear={(text) => setSearch('')}
 					round={false}
 					placeholder={'Search'}
-					placeholderTextColor={'#7879F1'}
+					placeholderTextColor={'#AAAAAA'}
 					containerStyle={[
 						styles.searchBar,
-						{top: bannerHeight + 25},
+						{top: bannerHeight - 25},
 					]}
 					inputContainerStyle={styles.searchBarInput}
 				></SearchBar>
 				<HorizontalSection
+					style={styles.categoryRowContainer}
 					child={
 						<View style={styles.categoryRow}>
 							<CategoryFilter
-								imageSource={reactNativeLogo}
-								title={'Food'}
+								imageSource={require('../../../assets/react-native-logo.png')}
+								title={'All'}
+								onPress={() => {categoryFilterFunction('ALL')}}
 							></CategoryFilter>
 							<CategoryFilter
 								imageSource={reactNativeLogo}
-								title={'Food'}
+								title={'Restaurant'}
+								onPress={() => {categoryFilterFunction('RESTAURANT')}}
 							></CategoryFilter>
 							<CategoryFilter
 								imageSource={reactNativeLogo}
-								title={'Food'}
+								title={'Cafe'}
+								onPress={() => {categoryFilterFunction('CAFE')}}
 							></CategoryFilter>
 							<CategoryFilter
 								imageSource={reactNativeLogo}
-								title={'Food'}
+								title={'Bar'}
+								onPress={() => {categoryFilterFunction('BAR')}}
 							></CategoryFilter>
 						</View>
 					}
@@ -289,14 +343,14 @@ const HomeScreenContent = (props) => {
 						serviceProviderData ? 
 						<FlatList
 							horizontal
-							data={search === '' ? recommendedVenues : filteredDataSource.slice(0, 11)}
+							data={(search === '') && (!filtered) ? recommendedVenues : filteredDataSource.slice(0, 11)}
 							renderItem={(item) => {
 								return (
 									<TappableCard
 										cardImage={item.item.imageAddress}
 										cardTitle={item.item.venueName}
-										cardSubtitle={`${item.item.venueRatings.$numberDecimal} ⭐`}
-										cardSubtextLine1={`${item.item.queueLength} in Queue`}
+										cardSubtitle={`⭐ ${item.item.venueRatings.$numberDecimal} (${item.item.numReviews})`}
+										cardSubtextLine1={`${item.item.queueLength} 🧑‍🤝‍🧑 in Queue`}
 										cardSubtextLine2={`~ ${item.item.waitTime} mins`}
 										onPress={() =>
 											openStoreInfo(item.item)
@@ -312,8 +366,9 @@ const HomeScreenContent = (props) => {
 							}}
 						></FlatList> : <ActivityIndicator color={'#7879F1'}></ActivityIndicator>
 					}
-					title={search === '' ? 'Recommended Stores' : 'Search Results'}
+					title={(search === '') && (!filtered) ? 'Recommended Stores' : 'Search Results'}
 					titleStyle={styles.sectionHeader}
+					style={styles.section}
 				></HorizontalSection>
 				<HorizontalSection
 				// TODO: If location data is not available (timeout or otherwise), properly display error msg
@@ -327,8 +382,8 @@ const HomeScreenContent = (props) => {
 										<TappableCard
 											cardImage={item.item.imageAddress}
 											cardTitle={item.item.venueName}
-											cardSubtitle={`${item.item.venueRatings.$numberDecimal} ⭐`}
-											cardSubtextLine1={`${item.item.queueLength} in Queue`}
+											cardSubtitle={`⭐ ${item.item.venueRatings.$numberDecimal} (${item.item.numReviews})`}
+											cardSubtextLine1={`${item.item.queueLength} 🧑‍🤝‍🧑 in Queue`}
 											cardSubtextLine2={`~ ${item.item.waitTime} mins`}
 											onPress={() =>
 												openStoreInfo(item.item)
@@ -349,6 +404,7 @@ const HomeScreenContent = (props) => {
 					}
 					title={'Nearby Restaurants'}
 					titleStyle={styles.sectionHeader}
+					style={styles.section}
 				></HorizontalSection>
 				<View style={styles.spacer}></View>
 			</ScrollView>
@@ -385,7 +441,7 @@ const HomeScreenContent = (props) => {
 				storeImage={currentlyOpenStore.imageAddress}
 				heading={currentlyOpenStore.venueName}
 				waitTime={`~ ${currentlyOpenStore.waitTime} mins`}
-				subHeading={`${currentlyOpenStore.queueLength} in queue`}
+				subHeading={`${currentlyOpenStore.queueLength} 🧑‍🤝‍🧑 in queue`}
 				rating={
 					currentlyOpenStore.venueRatings
 						? currentlyOpenStore.venueRatings.$numberDecimal
@@ -399,10 +455,24 @@ const HomeScreenContent = (props) => {
 };
 
 const styles = StyleSheet.create({
+	categoryRowContainer: {
+		backgroundColor: '#FFF8FA',
+		borderColor: '#AAAAAA'
+	},
+
 	categoryRow: {
 		flexDirection: 'row',
 		justifyContent: 'space-evenly',
 		paddingVertical: 20,
+	},
+
+	bannerTitle: {
+		color: '#000000',
+		fontWeight: 'bold'
+	},
+
+	bannerSubtitle: {
+		color: '#000000'
 	},
 
 	searchBar: {
@@ -416,16 +486,19 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 
+	section: {
+		borderColor: '#AAAAAA'
+	},
+
 	sectionHeader: {
 		fontWeight: '700',
 		fontSize: 16,
-		color: '#7879F1',
+		color: '#000000',
 	},
 
-	searchBarInput: {},
-
 	homeBanner: {
-		marginVertical: 20,
+		paddingVertical: 20,
+		backgroundColor: '#FCDDEC'
 	},
 
 	spacer: {

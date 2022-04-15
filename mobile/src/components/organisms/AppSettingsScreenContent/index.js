@@ -80,6 +80,7 @@ const AppSettingsScreenContent = () => {
 							username: null,
 							accountType: null,
 							serviceProviderID: null,
+							avatarImageURL: null
 						})
 					);
 				} catch (e) {

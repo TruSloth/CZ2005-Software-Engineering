@@ -75,7 +75,8 @@ const ServiceProviderRegistrationScreen = ({navigation}) => {
 			if (response.status === 200) {
                 navigation.navigate('Verification', {
                     tempUserName: response.data.userName,
-                    accountType: 'ServiceProvider'
+                    accountType: 'ServiceProvider',
+					avatarImageURL: userInfo.user.photo
                 })
 			}
 		} catch (e) {

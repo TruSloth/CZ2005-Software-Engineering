@@ -22,18 +22,19 @@ const Stack = createNativeStackNavigator();
 
 const HomeNavigator = () => {
 	return (
-		<Stack.Navigator initialRouteName='HomePage'>
+		<Stack.Navigator initialRouteName='HomePage' screenOptions={styles.homeNavigatorScreenOptions}>
 			<Stack.Screen
 				name='HomePage'
 				component={HomeScreen}
-				options={{
-					headerShown: false,
-				}}
+				options={styles.homeScreenOptions}
 			></Stack.Screen>
 			<Stack.Screen
 				name='StoreDetailedInfo'
 				component={StoreDetailedInfoScreen}
-				options={{title: ''}}
+				options={({route, navigation}) => {
+					return {
+						title: route.params === undefined ? 'Undefined' : route.params.venueName
+						}}}
 			></Stack.Screen>
 			<Stack.Screen
 				name='AppSettings'
@@ -45,12 +46,24 @@ const HomeNavigator = () => {
 };
 
 const styles = StyleSheet.create({
+	homeNavigatorScreenOptions: {
+		headerStyle: {
+			backgroundColor: '#FCDDEC'
+		},
+		headerTitleAlign: 'center',
+		headerTintColor: '#000000',
+		headerTitleStyle: {color: '#000000'},
+		headerShadowVisible: false,
+	},
+
+	homeScreenOptions: {
+		headerShown: false
+	},
 	appSettingsScreenOptions: {
 		title: 'App Settings',
-		headerTitleAlign: 'center',
-		headerTintColor: '#EF5DA8',
-		headerTitleStyle: {color: '#7879F1'},
-		headerShadowVisible: false,
+		headerStyle: {
+			backgroundColor: '#FFFFFF'
+		},
 	},
 })
 

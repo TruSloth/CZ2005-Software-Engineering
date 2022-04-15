@@ -82,6 +82,7 @@ const RegistrationScreen = ({navigation}) => {
 						userName: response.data.userName,
 						accountType: 'User',
 						serviceProviderID: null,
+						avatarImageURL: userInfo.user.photo
 					})
 				);
 

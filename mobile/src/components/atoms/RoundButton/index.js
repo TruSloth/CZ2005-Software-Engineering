@@ -28,7 +28,7 @@ import {TouchableOpacity, Text, StyleSheet, View, ActivityIndicator} from 'react
  */
 
 const RoundButton = (props) => {
-	const {style, title, onPress, loading, disabled} = props;
+	const {style, btnTextStyle, title, onPress, loading, disabled} = props;
 
 	return loading ? (
 		<View style={[styles.loginButton, style]}>
@@ -36,7 +36,7 @@ const RoundButton = (props) => {
 		</View>
 	) : (
 		<TouchableOpacity style={[styles.loginButton, style]} onPress={onPress} disabled={disabled}>
-			<Text style={[{alignContent: 'center', color: '#7879F1'}]}>
+			<Text style={[styles.btnText, btnTextStyle]}>
 				{title}
 			</Text>
 		</TouchableOpacity>
@@ -53,6 +53,11 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		marginVertical: 10,
 	},
+
+	btnText: {
+		alignContent: 'center', 
+		color: '#7879F1'
+	}
 });
 
 export default RoundButton;
