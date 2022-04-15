@@ -17,7 +17,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useMutation} from 'react-query';
 
 import {verify} from '../../services/auth/verify';
-import { setCurrentUser, toggleLogIn } from '../../store/account/actions';
+import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
 
 const TempVerifyScreen = ({route}) => {
 	const {tempUserName, accountType} = route.params;
@@ -42,16 +42,28 @@ const TempVerifyScreen = ({route}) => {
 
 			if (response.status === 200) {
 				if (accountType === 'User') {
-					dispatch(setCurrentUser({userName: tempUserName, accountType: accountType, serviceProviderID: null }));
+					dispatch(
+						setCurrentUser({
+							userName: tempUserName,
+							accountType: accountType,
+							serviceProviderID: null,
+						})
+					);
 					if (!socket.connected) {
-						socket.connect()
-		
-						socket.emit('add-username', tempUserName)
+						socket.connect();
+
+						socket.emit('add-username', tempUserName);
 					}
 				}
 
 				if (accountType === 'ServiceProvider') {
-					dispatch(setCurrentUser({userName: tempUserName, accountType: accountType, serviceProviderID: authid}));
+					dispatch(
+						setCurrentUser({
+							userName: tempUserName,
+							accountType: accountType,
+							serviceProviderID: authid,
+						})
+					);
 				}
 
 				dispatch(toggleLogIn(true));

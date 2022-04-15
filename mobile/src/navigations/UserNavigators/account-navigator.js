@@ -5,21 +5,24 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AccountScreen from '../../scenes/Account';
 import HistoryScreen from '../../scenes/History';
 import {StyleSheet} from 'react-native';
-
+import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 
 /**
  * Stack navigator for the **account** set of screens.
- * 
+ *
  * Controls navigation for `AccountScreen` and `HistoryScreen`.
- * 
+ *
  * @category Navigations
  * @exports AccountNavigator
- * 
+ *
  */
 
 const AccountNavigator = () => {
+	const account = useSelector((state) => state.account);
+	console.log('i am in ' + account.accountType);
+
 	return (
 		<Stack.Navigator initialRouteName='UserAccount'>
 			<Stack.Screen
@@ -32,6 +35,11 @@ const AccountNavigator = () => {
 			<Stack.Screen
 				name='History'
 				component={HistoryScreen}
+				options={styles.historyScreenOptions}
+			></Stack.Screen>
+			<Stack.Screen
+				name='BusinessProfile'
+				component={BusinessProfileScreen}
 				options={styles.historyScreenOptions}
 			></Stack.Screen>
 		</Stack.Navigator>
