@@ -67,7 +67,7 @@ const StoreInfoContent = (props) => {
 				</Text>
 				<View style={{flexDirection: 'column'}}>
 					<TouchableOpacity
-						style={[styles.button, {backgroundColor: queueDisabled ? 'gray': '#8fbc8f'}]}
+						style={[styles.button, {backgroundColor: queueDisabled ? '#C4C4C4': '#8fbc8f'}]}
 						disabled={queueDisabled}
 						onPress={queueOnPress}
 					>

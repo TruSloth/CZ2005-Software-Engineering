@@ -28,27 +28,12 @@ const HomeNavigator = () => {
 				component={HomeScreen}
 				options={styles.homeScreenOptions}
 			></Stack.Screen>
-			{/* <Stack.Screen
-				name='InsertCustomer'
-				component={InsertCustomerScreen}
-				options={{title: ''}}
-			></Stack.Screen> */}
-			{/* <Stack.Screen
-				name='CustomerDetails'
-				component={CustomerDetailsScreen}
-				options={{title: ''}}
-			></Stack.Screen> */}
-			{/* <Stack.Screen
-				name='BusinessProfile'
-				component={BusinessProfileScreen}
-				options={{title: ''}}
-			></Stack.Screen> */}
 			<Stack.Screen
 				name='StoreDetailedInfo'
 				component={StoreDetailedInfoScreen}
 				options={({route, navigation}) => {
 					return {
-						title: route.params === undefined ? 'Undefined' : route.params.venueName
+						title: route.params === undefined ? 'Undefined' : route.params.venueName,
 						}}}
 			></Stack.Screen>
 			<Stack.Screen
@@ -56,12 +41,6 @@ const HomeNavigator = () => {
 				component={AppSettingsScreen}
 				options={styles.appSettingsScreenOptions}
 			></Stack.Screen>
-			{/* NEWLY ADDED  */}
-			{/* <Stack.Screen
-				name='BusinessHome'
-				component={BusinessHomeScreen}
-				options={{title: ''}}
-			></Stack.Screen> */}
 		</Stack.Navigator>
 	);
 };
@@ -69,7 +48,8 @@ const HomeNavigator = () => {
 const styles = StyleSheet.create({
 	homeNavigatorScreenOptions: {
 		headerStyle: {
-			backgroundColor: '#FCDDEC'
+			backgroundColor: '#FCDDEC',
+			width: 10
 		},
 		headerTitleAlign: 'center',
 		headerTintColor: '#000000',

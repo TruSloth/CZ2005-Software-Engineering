@@ -1,11 +1,19 @@
 import React, {useEffect, useRef, useState, useCallback} from 'react';
 
-import {Text, View, StyleSheet, TextInput, Image, ScrollView, RefreshControl} from 'react-native';
-import { useQueryClient } from 'react-query';
+import {
+	Text,
+	View,
+	StyleSheet,
+	TextInput,
+	Image,
+	ScrollView,
+	RefreshControl,
+} from 'react-native';
+import {useQueryClient} from 'react-query';
 import TopBanner from '../../molecules/TopBanner';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SearchBar} from 'react-native-elements';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const ServiceProviderHomeScreenContent = (props) => {
 	//export default function App(props) {
@@ -25,25 +33,25 @@ const ServiceProviderHomeScreenContent = (props) => {
 
 	const BizProfileOnPress = () => {
 		navigation.navigate('BusinessProfile');
-		console.log('bizproilfe');
+		//console.log('bizproilfe');
 	};
 
 	const InsertCustomerOnPress = () => {
 		// navigation.navigate('HomePage', {screen: 'StoreDetailedInfo'});
 		navigation.navigate('InsertCustomer');
-		console.log('insert pressed');
+		//console.log('insert pressed');
 	};
 
 	const CustomerDetailsOnPress = () => {
 		navigation.navigate('CustomerDetails', {queueData: queueData});
 	};
 
-    const account = useSelector((state) => state.account);
+	const account = useSelector((state) => state.account);
 
 	const [search, setSearch] = useState('');
 	const [bannerHeight, setBannerHeight] = useState(0);
 
-    const queryClient = useQueryClient();
+	const queryClient = useQueryClient();
 
 	const [refreshing, setRefreshing] = useState(false);
 
@@ -54,6 +62,8 @@ const ServiceProviderHomeScreenContent = (props) => {
 	}, []);
 
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
+	const cheflogo =
+		'https://www.kindpng.com/picc/m/273-2739192_chef-cuisinier-png-cooking-chef-clipart-cocinero-png.png';
 	return (
         <ScrollView
         refreshControl={
@@ -81,7 +91,7 @@ const ServiceProviderHomeScreenContent = (props) => {
 				}}
 			></TopBanner>
 
-			{/* <SearchBar
+				{/* <SearchBar
 				onChangeText={(text) => setSearch(text)}
 				value={search}
 				platform={Platform.OS === 'ios' ? 'ios' : 'android'}
@@ -93,50 +103,81 @@ const ServiceProviderHomeScreenContent = (props) => {
 				inputContainerStyle={styles.searchBarInput}
 			></SearchBar> */}
 
-			<View
-				style={{
-					borderBottomColor: '#7879F1',
-					borderBottomWidth: 1,
-				}}
-			/>
-			<View style={styles.container2}>
-				<View style={{marginBottom: 20}}>
-					<View>
-						<Text style={styles.subheading}>Active Queue</Text>
-					</View>
-					<View style={styles.innerContainer}>
-						<Text style={styles.queueNo}>{`${queueData.length}`}</Text>
-						<Image
-							style={styles.logo}
-							source={require('../../../assets/group.png')}
-						/>
+				<View
+					style={{
+						borderBottomColor: '#AAAAAA',
+						borderBottomWidth: 1,
+					}}
+				/>
+				<View style={styles.container2}>
+					<View style={{marginBottom: 20}}>
+						<View>
+							<Text style={styles.subheading}>Active Queue</Text>
+						</View>
+						<View style={styles.innerContainer}>
+							<Text
+								style={styles.queueNo}
+							>{`${queueData.length}`}</Text>
+							<Image
+								style={styles.logo}
+								source={require('../../../assets/group.png')}
+							/>
 
-						<View style={styles.buttonList2}>
-							<View>
-								<TouchableOpacity
-									style={styles.button2}
-									onPress={InsertCustomerOnPress}
-								>
-									<Text style={styles.textButton}>
-										Insert
-									</Text>
-								</TouchableOpacity>
+							<View style={styles.buttonList2}>
+								<View>
+									<TouchableOpacity
+										style={styles.button2}
+										onPress={InsertCustomerOnPress}
+									>
+										<Text style={styles.textButton}>
+											Insert
+										</Text>
+									</TouchableOpacity>
+								</View>
+								<View>
+									<TouchableOpacity
+										style={styles.button2}
+										onPress={CustomerDetailsOnPress}
+									>
+										<Text style={styles.textButton}>
+											Remove
+										</Text>
+									</TouchableOpacity>
+								</View>
+								<View>
+									<TouchableOpacity
+										style={styles.button2}
+										onPress={CustomerDetailsOnPress}
+									>
+										<Text style={styles.textButton}>
+											Details
+										</Text>
+									</TouchableOpacity>
+								</View>
 							</View>
-							<View>
-								<TouchableOpacity
-									style={styles.button2}
-									onPress={CustomerDetailsOnPress}
-								>
-									<Text style={styles.textButton}>
-										Remove
-									</Text>
-								</TouchableOpacity>
-							</View>
-							<View>
-								<TouchableOpacity
-									style={styles.button2}
-									onPress={CustomerDetailsOnPress}
-								>
+						</View>
+					</View>
+
+					<View>
+						<View>
+							<Text style={styles.subheading}>
+								QQ Customer Count
+							</Text>
+						</View>
+						<View style={styles.innerContainer}>
+							<Text style={styles.queueNo}>150</Text>
+							<Image
+								style={styles.logo}
+								source={require('../../../assets/group.png')}
+							/>
+
+							<View
+								style={[
+									styles.buttonList2,
+									{marginLeft: '46%'},
+								]}
+							>
+								<TouchableOpacity style={styles.button2}>
 									<Text style={styles.textButton}>
 										Details
 									</Text>
@@ -146,58 +187,51 @@ const ServiceProviderHomeScreenContent = (props) => {
 					</View>
 				</View>
 
-				<View>
+				<View
+					style={{
+						borderBottomColor: '#AAAAAA',
+						borderBottomWidth: 1,
+					}}
+				/>
+
+				<View style={styles.buttonList}>
 					<View>
-						<Text style={styles.subheading}>QQ Customer Count</Text>
+						<TouchableOpacity style={styles.button}>
+							<Text style={styles.textButton2}>
+								Publish offers
+							</Text>
+						</TouchableOpacity>
 					</View>
-					<View style={styles.innerContainer}>
-						<Text style={styles.queueNo}>150</Text>
-						<Image
-							style={styles.logo}
-							source={require('../../../assets/group.png')}
-						/>
-
-						<View style={[styles.buttonList2, {marginLeft: '46%'}]}>
-							<TouchableOpacity style={styles.button2}>
-								<Text style={styles.textButton}>Details</Text>
-							</TouchableOpacity>
-						</View>
+					<View style={{marginBottom: 100}}>
+						<TouchableOpacity style={styles.button}>
+							<Text style={styles.textButton2}>Close Queue</Text>
+						</TouchableOpacity>
 					</View>
 				</View>
 			</View>
-
-			<View
-				style={{
-					borderBottomColor: '#7879F1',
-					borderBottomWidth: 1,
-				}}
-			/>
-			<View style={styles.buttonList}>
-				<View>
-					<TouchableOpacity style={styles.button}>
-						<Text style={styles.textButton2}>Publish offers</Text>
-					</TouchableOpacity>
-				</View>
-				<View>
-					<TouchableOpacity style={styles.button}>
-						<Text style={styles.textButton2}>Close Queue</Text>
-					</TouchableOpacity>
-				</View>
-			</View>
-		</View>
-        </ScrollView>
-		
+		</ScrollView>
 	);
 };
 
 const styles = StyleSheet.create({
 	container1: {
 		flex: 1,
+
 		justifyContent: 'center',
 		//	paddingTop: Constants.statusBarHeight,
 		backgroundColor: 'white',
 		padding: 8,
+
 		//alignItems: 'left',
+	},
+	sqaure: {
+		alignSelf: 'center',
+		height: 265,
+		flex: 1,
+		width: 400,
+		backgroundColor: '#FFF8FA',
+		resizeMode: 'cover',
+		marginBottom: 10,
 	},
 	input: {
 		height: 40,
@@ -205,10 +239,10 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderWidth: 0.5,
 		borderRadius: 10,
-		borderColor: '#7879F1',
+		borderColor: '#000000',
 	},
 	buttonList: {
-		marginTop: '10%',
+		marginTop: '30%',
 		margin: 5,
 		justifyContent: 'center',
 	},
@@ -220,7 +254,7 @@ const styles = StyleSheet.create({
 		borderColor: 'transparent',
 		alignItems: 'center',
 		marginTop: 10,
-		backgroundColor: 'pink',
+		backgroundColor: '#FCDDEC',
 		width: '100%',
 		height: 40,
 		display: 'flex',
@@ -228,7 +262,7 @@ const styles = StyleSheet.create({
 	textButton2: {
 		fontWeight: 'bold',
 		fontSize: 20,
-		color: '#7879F1',
+		color: '#000000',
 	},
 	bigTextButton: {},
 	heading: {
@@ -238,7 +272,7 @@ const styles = StyleSheet.create({
 		textAlign: 'left',
 		justifyContent: 'flex-end',
 		position: 'relative',
-		color: '#7879F1',
+		color: '#000000',
 		marginBottom: 10,
 		textAlignVertical: 'top',
 	},
@@ -260,7 +294,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		marginTop: 2,
 		marginBottom: 2,
-		backgroundColor: 'pink',
+		backgroundColor: '#FCDDEC',
 		width: 80,
 		height: 28,
 		display: 'flex',
@@ -270,7 +304,7 @@ const styles = StyleSheet.create({
 	textButton: {
 		fontWeight: 'bold',
 		fontSize: 13,
-		color: '#7879F1',
+		color: '#000000',
 	},
 	innerContainer: {
 		justifyContent: 'flex-start',
@@ -283,14 +317,14 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontWeight: 'bold',
 		textAlign: 'left',
-		color: '#7879F1',
+		color: '#000000',
 	},
 	queueNo: {
 		marginRight: 10,
 		fontSize: 25,
 		fontWeight: 'bold',
 		textAlign: 'left',
-		color: '#7879F1',
+		color: '#E89575',
 		marginBottom: 10,
 	},
 

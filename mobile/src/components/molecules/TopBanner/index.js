@@ -127,6 +127,7 @@ const TopBanner = (props) => {
 								iconStyle={styles.iconStyle}
 							></Icon>
 						</TouchableOpacity>
+
 						<TouchableOpacity>
 							<Icon
 								name='favorite-outline'
@@ -195,8 +196,9 @@ const styles = StyleSheet.create({
 
 	titleTextBox: {
 		marginVertical: 10,
-		color: '#7879F1',
+		color: '#000000',
 		fontSize: 32,
+		fontWeight: 'bold',
 	},
 
 	titleTextBoxTight: {

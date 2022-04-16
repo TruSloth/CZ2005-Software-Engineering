@@ -7,7 +7,7 @@ import { io } from 'socket.io-client';
 
 import NotificationsScreen from '../scenes/Notifications';
 import BottomTabBar from '../components/molecules/BottomTabBar';
-import { QRCodeReader } from '../components/molecules/BottomSheet';
+import QRCodeReaderScreen from '../scenes/QRCodeReader';
 
 import HomeNavigator from './UserNavigators/home-navigator';
 import ServiceProviderHomeNavigator from './ServiceProviderNavigators/home-navigator';
@@ -85,7 +85,7 @@ const AppNavigator = () => {
                                         <Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}></Tab.Screen>
                                         <Tab.Screen name="Chat" component={ChatNavigator} options={{headerShown: false}}></Tab.Screen>
                                         {/* <Tab.Screen name="Notifications" component={NotificationsScreen} ></Tab.Screen> */}
-                                        <Tab.Screen name="QRCodeReader" component={QRCodeReader} options={{headerShown: false}}></Tab.Screen>
+                                        <Tab.Screen name="QRCodeReader" component={QRCodeReaderScreen} options={{headerShown: false}}></Tab.Screen>
                                         <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
                                     </Tab.Group>);
                         case 'ServiceProvider':

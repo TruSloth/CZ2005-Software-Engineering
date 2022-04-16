@@ -87,7 +87,6 @@ const StoreDetailedInfoScreen = ({route}) => {
 				sheetRef.current.snapTo(2);
 				queryClient.invalidateQueries('retrieveNearbyServiceProviders');
 				await queryClient.invalidateQueries('retrieveServiceProviders');
-				console.log(queryClient.isFetching('retrieveServiceProviders'))
 				updateDetails();
 			}
 		} catch (e) {
@@ -179,14 +178,14 @@ const StoreDetailedInfoScreen = ({route}) => {
 			<TouchableOpacity
 				style={[
 					styles.button,
-					{backgroundColor: account.currentQueueID ? 'gray' : '#FCDDEC'},
+					{backgroundColor: account.currentQueueID ? '#C4C4C4' : '#FCDDEC'},
 				]}
 				onPress={openQueue}
 				disabled={account.queueStatus !== NOT_IN_QUEUE}
 			>
 					<Text
 						style={{
-							color: account.currentQueueID ? 'red' : '#000000',
+							color: '#000000',
 							fontSize: 15,
 							fontWeight: 'bold',
 						}}

@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "axios": "^0.26.1",
-    "geolib": "^3.3.3",
-    "react-native-get-location": "^2.2.1"
-  }
-}

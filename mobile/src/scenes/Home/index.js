@@ -58,6 +58,13 @@ const HomeScreen = ({navigation}) => {
 		}
 	};
 
+	// Flow for checking out
+	const checkOut = () => {
+		dispatch(updateCurrentQueue(null, null, NOT_IN_QUEUE))
+		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
+		queryClient.invalidateQueries('retrieveServiceProviders');
+	}
+
 	const result = useQueries([
 		{
 			queryKey: ['retrieveServiceProviders'],
@@ -109,6 +116,7 @@ const HomeScreen = ({navigation}) => {
 				navigation={navigation}
 				joinServiceProviderQueue={joinServiceProviderQueue}
 				leaveServiceProviderQueue={leaveServiceProviderQueue}
+				checkOut={checkOut}
 				serviceProviderData={
 					result[0].isLoading ? null : result[0].data
 				}

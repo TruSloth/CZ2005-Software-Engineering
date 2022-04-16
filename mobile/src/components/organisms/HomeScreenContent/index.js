@@ -52,6 +52,7 @@ const HomeScreenContent = (props) => {
 		navigation,
 		joinServiceProviderQueue,
 		leaveServiceProviderQueue,
+		checkOut,
 		serviceProviderData,
 		nearbyVenuesData,
 		currentQueueWaitTime,
@@ -347,22 +348,22 @@ const HomeScreenContent = (props) => {
 					child={
 						<View style={styles.categoryRow}>
 							<CategoryFilter
-								imageSource={require('../../../assets/react-native-logo.png')}
+								imageSource={require('../../../assets/filter-all.png')}
 								title={'All'}
 								onPress={() => {categoryFilterFunction('ALL')}}
 							></CategoryFilter>
 							<CategoryFilter
-								imageSource={reactNativeLogo}
+								imageSource={require('../../../assets/filter-restaurant.png')}
 								title={'Restaurant'}
 								onPress={() => {categoryFilterFunction('RESTAURANT')}}
 							></CategoryFilter>
 							<CategoryFilter
-								imageSource={reactNativeLogo}
+								imageSource={require('../../../assets/filter-cafe.png')}
 								title={'Cafe'}
 								onPress={() => {categoryFilterFunction('CAFE')}}
 							></CategoryFilter>
 							<CategoryFilter
-								imageSource={reactNativeLogo}
+								imageSource={require('../../../assets/filter-bar.png')}
 								title={'Bar'}
 								onPress={() => {categoryFilterFunction('BAR')}}
 							></CategoryFilter>
@@ -446,11 +447,12 @@ const HomeScreenContent = (props) => {
 				<QueueBar
 					leaveQueue={leaveServiceProviderQueue}
 					currentQueueWaitTime={currentQueueWaitTime}
+					checkOut={checkOut}
 					style={{
 						zIndex: 1,
 						position: 'absolute',
 						width: width - 20,
-						top: height * 0.82,
+						top: height * 0.81,
 					}}
 				></QueueBar>
 			) : (
@@ -489,6 +491,7 @@ const HomeScreenContent = (props) => {
 };
 
 const styles = StyleSheet.create({
+
 	categoryRowContainer: {
 		backgroundColor: '#FFF8FA',
 		borderColor: '#AAAAAA'
@@ -536,7 +539,7 @@ const styles = StyleSheet.create({
 	},
 
 	spacer: {
-		height: 40,
+		height: 50,
 	},
 });
 
