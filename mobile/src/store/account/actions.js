@@ -24,13 +24,17 @@ export const toggleLogIn = (loggedIn) => {
 	};
 };
 
-export const updateCurrentQueue = (serviceProviderName, serviceProviderID, queueStatus) => {
+export const updateCurrentQueue = (
+	serviceProviderName,
+	serviceProviderID,
+	queueStatus
+) => {
 	if (!queueStatus in [NOT_IN_QUEUE, QUEUING, QUEUE_REACHED, IN_STORE]) {
-		console.log('Error updating queue. Unknown Queue status.')
+		console.log('Error updating queue. Unknown Queue status.');
 
 		return {
-			type: ERROR
-		}
+			type: ERROR,
+		};
 	}
 
 	return {

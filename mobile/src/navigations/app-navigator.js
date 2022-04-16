@@ -1,6 +1,7 @@
 import React from 'react';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { TouchableOpacity, Text, StyleSheet, View, Animated, } from 'react-native';
+import { TouchableOpacity, Text} from 'react-native';
 import { Icon } from 'react-native-elements';
 import { io } from 'socket.io-client';
 
@@ -12,22 +13,22 @@ import HomeNavigator from './UserNavigators/home-navigator';
 import ServiceProviderHomeNavigator from './ServiceProviderNavigators/home-navigator';
 import ChatNavigator from './UserNavigators/chat-navigator';
 import AccountNavigator from './UserNavigators/account-navigator';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
 /**
  * Tab navigator for the main application.
- * 
+ *
  * Controls tab based navigation for `Home`, `Chat`, `Notifications` and `Account` tabs.
- * 
+ *
  * @category Navigations
  * @exports AppNavigator
- * 
+ *
  */
 
 const AppNavigator = () => {
-    const account = useSelector((state) => state.account);
+	const account = useSelector((state) => state.account);
 
     return (
         <Tab.Navigator screenOptions={({route}) => ({

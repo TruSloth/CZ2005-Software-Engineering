@@ -6,18 +6,18 @@ import {StyleSheet} from 'react-native';
 import StoreDetailedInfoScreen from '../../scenes/StoreDetailedInfo';
 import HomeScreen from '../../scenes/Home';
 import AppSettingsScreen from '../../scenes/AppSettings';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 
 /**
  * Stack navigators for the **home** set of screens
- * 
+ *
  * Controls navigation for `HomeScreen`, `StoreDetailedInfoScreen`, `AppSettingsScreen`.
- * 
+ *
  * @category Navigations
  * @exports HomeNavigator
- * 
+ *
  */
 
 const HomeNavigator = () => {
@@ -28,6 +28,21 @@ const HomeNavigator = () => {
 				component={HomeScreen}
 				options={styles.homeScreenOptions}
 			></Stack.Screen>
+			{/* <Stack.Screen
+				name='InsertCustomer'
+				component={InsertCustomerScreen}
+				options={{title: ''}}
+			></Stack.Screen> */}
+			{/* <Stack.Screen
+				name='CustomerDetails'
+				component={CustomerDetailsScreen}
+				options={{title: ''}}
+			></Stack.Screen> */}
+			{/* <Stack.Screen
+				name='BusinessProfile'
+				component={BusinessProfileScreen}
+				options={{title: ''}}
+			></Stack.Screen> */}
 			<Stack.Screen
 				name='StoreDetailedInfo'
 				component={StoreDetailedInfoScreen}
@@ -41,6 +56,12 @@ const HomeNavigator = () => {
 				component={AppSettingsScreen}
 				options={styles.appSettingsScreenOptions}
 			></Stack.Screen>
+			{/* NEWLY ADDED  */}
+			{/* <Stack.Screen
+				name='BusinessHome'
+				component={BusinessHomeScreen}
+				options={{title: ''}}
+			></Stack.Screen> */}
 		</Stack.Navigator>
 	);
 };

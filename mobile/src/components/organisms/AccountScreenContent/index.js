@@ -81,7 +81,7 @@ const AccountScreenContent = () => {
 				title={`${account.userName}`}
 				subtitle={'Edit Profile'}
 				leftAvatar={true}
-				avatarImage={reactNativeLogo}
+				avatarImage={account.avatarImageURL !== null  ? {uri: account.avatarImageURL} : account.avatarImage}
                 bannerContentContainerStyle={styles.bannerContainer}
                 titleStyle={styles.bannerTitle}
                 subtitleStyle={styles.bannerSubtitle}

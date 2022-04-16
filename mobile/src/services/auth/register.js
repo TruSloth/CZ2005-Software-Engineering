@@ -1,14 +1,24 @@
 import axios from 'axios';
 
 import {LOCALHOST} from '../config';
-
-/** 
+/**
  * @memberof auth
  * @function register
  * @async
- * @param {object(username, email, password, confirmationPassword)} registrationDetails 
+ * @param {object(username, email, password, confirmationPassword)} registrationDetails
  * The registration details to be send in the request body.
- * 
+ *
+ * Registration details must contain the `userName`, `email`, `password` and `confirmationPassword`.
+ * @returns {response}
+ */
+
+/**
+ * @memberof auth
+ * @function register
+ * @async
+ * @param {object(username, email, password, confirmationPassword)} registrationDetails
+ * The registration details to be send in the request body.
+ *
  * Registration details must contain the `userName`, `email`, `password` and `confirmationPassword`.
  * @returns {response}
  */

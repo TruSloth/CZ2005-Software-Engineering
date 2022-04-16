@@ -36,7 +36,7 @@ const accountReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoggedIn: action.payload,
-			}
+			};
 		case UPDATE_CURRENT_QUEUE:
 			return {
 				...state,

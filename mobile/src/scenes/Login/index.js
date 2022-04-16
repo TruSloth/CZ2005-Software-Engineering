@@ -21,8 +21,8 @@ const LoginScreen = (props) => {
 	};
 
 	const backOnPress = () => {
-		navigation.navigate('Onboarding')
-	}
+		navigation.navigate('Onboarding');
+	};
 
 	const backgroundStyle = {
 		backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,

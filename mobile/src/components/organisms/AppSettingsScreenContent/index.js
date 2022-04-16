@@ -71,7 +71,7 @@ const AppSettingsScreenContent = () => {
 					}
 
 					if (socket.connected) {
-						socket.disconnect()
+						socket.disconnect();
 					}
 
 					dispatch(toggleLogIn(false));

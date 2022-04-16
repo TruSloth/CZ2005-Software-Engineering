@@ -43,14 +43,15 @@ const RegistrationScreen = ({navigation}) => {
 	});
 
 	const onPressRegister = async () => {
+		let response = 1;
 		try {
-			const response = await registerMutation.mutateAsync(
+			response = await registerMutation.mutateAsync(
 				registrationDetails
 			);
-
+			console.log(response);
 			if (response.status === 200) {
 				const tempUserName = response.data.userName;
-
+				console.log('200');
 				navigation.navigate('Verification', {
 					tempUserName: tempUserName,
 					accountType: 'User'
@@ -65,7 +66,7 @@ const RegistrationScreen = ({navigation}) => {
 				});
 			}
 		} catch (e) {
-			console.log(e);
+			console.log(e.response.data);
 		}
 	};
 
@@ -76,6 +77,9 @@ const RegistrationScreen = ({navigation}) => {
 			userInfo.user.accountType = 'User';
 
 			const response = await googleRegisterMutation.mutateAsync(userInfo);
+
+			console.log(response)
+
 			if (response.status === 200) {
 				dispatch(
 					setCurrentUser({
@@ -151,6 +155,19 @@ const RegistrationScreen = ({navigation}) => {
 				}
 				value={registrationDetails['password']}
 			/>
+			<Text style={styles.textheading}>Confirm password:</Text>
+			<TextInput
+				secureTextEntry={true}
+				style={styles.input}
+				placeholder='e.g !jdiU%h*j'
+				onChangeText={(text) =>
+					setRegistrationDetails({
+						...registrationDetails,
+						confirmPassword: text,
+					})
+				}
+				value={registrationDetails['confirmPassword']}
+			/>
 
 			<Text style={styles.textheading}>Confirm password:</Text>
 			<TextInput
@@ -207,8 +224,8 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 	},
 	image: {
-		height: 250,
-		width: 250,
+		height: 150,
+		width: 150,
 		justifyContent: 'space-around',
 		margin: 30,
 		marginTop: 10,

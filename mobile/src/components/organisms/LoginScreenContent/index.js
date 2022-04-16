@@ -1,8 +1,15 @@
 import React from 'react';
 
-import {ScrollView, Image, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+	ScrollView,
+	Image,
+	View,
+	Text,
+	StyleSheet,
+	TouchableOpacity,
+} from 'react-native';
 
-import { LoginForm, AltAuthOptions } from '../../molecules/Auth';
+import {LoginForm, AltAuthOptions} from '../../molecules/Auth';
 
 /**
  * Renders the content for the Login Screen.
@@ -10,19 +17,18 @@ import { LoginForm, AltAuthOptions } from '../../molecules/Auth';
  * @category Components
  * @exports LoginScreenContent
  * @subcategory Organisms
- * 
+ *
  * @property {Function} submitForm Callback to be passed to {@link module:LoginForm|LoginForm}
  * @property {Function} registerOnPress Callback to be used to navigate to `RegistrationScreen`
  * @property {Boolean} loading Whether {@link module:LoginForm|LoginForm} should display a loading indicator.
- * 
+ *
  * Passed down to {@link module:RoundButton|RoundButton}
- * 
+ *
  * @property {Function} onPressGoogleSignin Callback to be passed to {@link module:AltAuthOptions|AltAuthOptions} to sign in via Google.
  */
 
 const LoginScreenContent = (props) => {
-
-	const {backOnPress} = props
+	const {backOnPress} = props;
 
 	const {submitForm, registerOnPress, loading, onPressGoogleSignin} = props;
 
@@ -64,7 +70,10 @@ const LoginScreenContent = (props) => {
 				</Text>
 			</View>
 			<LoginForm submitForm={submitForm} loading={loading}></LoginForm>
-			<AltAuthOptions altAuthTitle={'Or login with'} onPressGoogleLogin={onPressGoogleSignin}></AltAuthOptions>
+			<AltAuthOptions
+				altAuthTitle={'Or login with'}
+				onPressGoogleLogin={onPressGoogleSignin}
+			></AltAuthOptions>
 
 			<View style={{flexDirection: 'row'}}>
 				<Text style={styles.subText}>Not a User? </Text>
