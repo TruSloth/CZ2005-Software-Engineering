@@ -29,6 +29,6 @@ export const register = async (registrationDetails) => {
 		email: registrationDetails.email,
 		accountType: registrationDetails.accountType,
 		password: registrationDetails.password,
-		confirmationPassword: registrationDetails.password,
+		confirmPassword: registrationDetails.confirmPassword,
 	});
 };

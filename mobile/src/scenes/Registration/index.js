@@ -62,11 +62,11 @@ const RegistrationScreen = ({navigation, props}) => {
 		});
 	};
 	const onPressRegister = async () => {
-    let response = 1; //need to define response first for 3rd if block bc cant define const in if block
+		let response = 1;
+
 		try {
 			let indicator = 1;
 
-			//if (registrationDetails.userName.)
 			if (registrationDetails.password.length < 8) {
 				Alert.alert('Password must be at least 8 chacters');
 				indicator = 0;
@@ -77,16 +77,6 @@ const RegistrationScreen = ({navigation, props}) => {
 			) {
 				Alert.alert('Password mismatch');
 				indicator = 0;
-
-				//console.log('pw mismatch & indicator ' + indicator);
-				// setRegistrationDetails({
-				// 	userName: '',
-				// 	email: '',
-				// 	password: '',
-				// 	confirmPassword: '',
-				// 	accountType: 'User',
-				// });
-				// console.log('yes');
 			}
 
 			if (indicator == 1) {
@@ -96,41 +86,13 @@ const RegistrationScreen = ({navigation, props}) => {
 			}
 
 			if (response.status === 200 && indicator == 1) {
-				//console.log('responsestatus & indicator ' + indicator);
-				// if (registrationDetails.password.length < 8) {
-				// 	Alert.alert('Password must be more than 8 chacters');
-				// 	console.log('pw less than 8 chars');
-
-				// 	setRegistrationDetails({
-				// 		userName: '',
-				// 		email: '',
-				// 		password: '',
-				// 		confirmPassword: '',
-				// 		accountType: 'User',
-				// 	});
-				// } else if (
-				// 	registrationDetails.password !=
-				// 	registrationDetails.confirmPassword
-				// ) {
-				// 	Alert.alert('Password mismatch');
-				// 	console.log('pw mismatch');
-				// 	setRegistrationDetails({
-				// 		userName: '',
-				// 		email: '',
-				// 		password: '',
-				// 		confirmPassword: '',
-				// 		accountType: 'User',
-				// 	});
-				// } else {
-				// 	console.log('success');
-
+				console.log('responsestatus & indicator ' + indicator);
 				const tempUserName = response.data.userName;
 				console.log('200');
 				navigation.navigate('Verification', {
 					tempUserName: tempUserName,
 					accountType: 'User',
 				});
-				//}
 			} else {
 				setRegistrationDetails({
 					userName: '',
@@ -139,10 +101,70 @@ const RegistrationScreen = ({navigation, props}) => {
 					confirmPassword: '',
 					accountType: 'User',
 				});
-				//console.log(registrationDetails.userName);
 			}
 		} catch (e) {
-			console.log(e.response.data);
+			if (e.response.data.userName == 'Username is a required field') {
+				Alert.alert('Please enter name');
+				setRegistrationDetails({
+					userName: '',
+					email: registrationDetails.email,
+					password: '',
+					confirmPassword: '',
+					accountType: 'User',
+				});
+			} else if (e.response.data.userName == 'Username already exists') {
+				Alert.alert('Username already exists');
+				setRegistrationDetails({
+					userName: '',
+					email: registrationDetails.email,
+					password: '',
+					confirmPassword: '',
+					accountType: 'User',
+				});
+			}
+
+			if (e.response.data.email == 'Email is a required field') {
+				Alert.alert('Please enter email');
+				setRegistrationDetails({
+					userName: registrationDetails.userName,
+					email: '',
+					password: '',
+					confirmPassword: '',
+					accountType: 'User',
+				});
+			} else if (e.response.data.email == 'Email already exists') {
+				Alert.alert('Email already exists');
+				setRegistrationDetails({
+					userName: registrationDetails.userName,
+					email: '',
+					password: '',
+					confirmPassword: '',
+					accountType: 'User',
+				});
+			}
+			if (e.response.data.password == 'Password is a required field') {
+				Alert.alert('Please enter password');
+				setRegistrationDetails({
+					userName: registrationDetails.userName,
+					email: registrationDetails.email,
+					password: '',
+					confirmPassword: '',
+					accountType: 'User',
+				});
+			}
+			if (
+				e.response.data.confirmPassword ==
+				'Confirm Password is a required field'
+			) {
+				Alert.alert('Please enter password confirmation');
+				setRegistrationDetails({
+					userName: registrationDetails.userName,
+					email: registrationDetails.email,
+					password: '',
+					confirmPassword: '',
+					accountType: 'User',
+				});
+			}
 		}
 	};
 

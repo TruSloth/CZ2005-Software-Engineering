@@ -6,6 +6,7 @@ const signUpTemplate = require("../models/signup");
 const dotenv = require("dotenv");
 const { OAuth2Client } = require("google-auth-library");
 const stallTemplate = require("../models/serviceProviderData");
+const { response } = require("express");
 
 dotenv.config();
 
@@ -27,31 +28,49 @@ async function verify(token) {
 
 async function validateLoginInput(data) {
   let errors = {};
+
   // Check the password and confirmed password are equal
-  if (data.password != data.confirmationPassword) {
+  if (data.password != data.confirmPassword) {
     errors.password = "Password Mismatch";
   }
-  // Check if password is at least 8 characters
 
-  // if (data.password.length < 8) {
-  //   errors.password = "Password must be at least 8 characters";
-  // }
+  // Check if email is empty
+
+  if (data.email == "") {
+    errors.email = "Email is a required field";
+  }
   // Check if the email already exists
-  if (
+  else if (
     await signUpTemplate.findOne({
       email: data.email,
     })
   ) {
     errors.email = "Email already exists";
   }
+
+  // Check if Username is empty
+
+  if (data.userName == "") {
+    errors.userName = "Username is a required field";
+  }
   // Check if the username already exists
-  if (
+  else if (
     await signUpTemplate.findOne({
       userName: data.userName,
       googleRegistered: false,
     })
   ) {
     errors.userName = "Username already exists";
+  }
+
+  // Check if password is empty
+  if (data.password == "") {
+    errors.password = "Password is a required field";
+  }
+
+  // Check if confirmPassword is empty
+  if (data.confirmPassword == "") {
+    errors.confirmPassword = "Confirm Password is a required field";
   }
   console.log("no errors");
   return { errors, isValid: isEmpty(errors) };
@@ -62,8 +81,10 @@ router.post("/users/register", async (req, res) => {
   console.log("registering");
   // Ensure the input meets our requirements
   const { errors, isValid } = await validateLoginInput(req.body);
+
   if (!isValid) {
     res.status(401).json(errors);
+
     return;
   }
   // Creating a new user
