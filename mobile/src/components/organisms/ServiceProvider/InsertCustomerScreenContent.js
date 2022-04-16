@@ -10,12 +10,14 @@ import {
 	StyleSheet,
 	TextInput,
 } from 'react-native';
+
+import InputField from '../../../components/atoms/InputField';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const InsertCustomerContent = (props) => {
 	const {insertUserToQueue} = props;
 
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
+	//const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
 	const account = useSelector((state) => state.account);
 
@@ -26,28 +28,41 @@ const InsertCustomerContent = (props) => {
 	};
 
 	return (
-        <ScrollView>
-            <View style={styles.container}>
-			<Text style={styles.heading}>Insert Customer</Text>
-			<Image style={styles.logo} source={{uri: reactNativeLogo}} />
-			<View>
-				<Text style={styles.or}>OR</Text>
-				<Text style={styles.paragraph}>Account ID:</Text>
+		<ScrollView>
+			<View style={styles.container}>
+				<Text style={styles.heading}>Insert Customer</Text>
+				<Image
+					style={styles.logo}
+					source={require('../../../assets/frame.png')}
+				/>
+				<View>
+					<Text style={styles.or}>OR</Text>
+					{/* <Text style={styles.paragraph}>Account ID:</Text> */}
+				</View>
+				{/* <TextInput
+					style={styles.input}
+					placeholder='Enter here'
+					onChangeText={(text) => setUserName(text)}
+					value={userName}
+				/> */}
+				<InputField
+					title='Enter Account ID:'
+					placeholder='eg. 926412'
+					secureTextEntry={false}
+					updateFieldFunc={(text) => setUserName(text)}
+					value={userName}
+				/>
+
+				<View style={{marginBottom: 20}}>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={addUserToQueue}
+					>
+						<Text style={styles.textButton}>Confirm</Text>
+					</TouchableOpacity>
+				</View>
 			</View>
-			<TextInput
-				style={styles.input}
-				placeholder='Enter here'
-				onChangeText={(text) => setUserName(text)}
-				value={userName}
-			/>
-			<View>
-				<TouchableOpacity style={styles.button} onPress={addUserToQueue}>
-					<Text style={styles.textButton}>Confirm</Text>
-				</TouchableOpacity>
-			</View>
-		</View>
-        </ScrollView>
-		
+		</ScrollView>
 	);
 };
 
@@ -65,7 +80,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		//justifyContent: 'flex-start',
 		position: 'relative',
-		color: '#7879F1',
+		color: '#000000',
 		marginBottom: 45,
 		textAlignVertical: 'top',
 		textAlign: 'left',
@@ -77,7 +92,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		//justifyContent: 'flex-start',
 		position: 'relative',
-		color: '#7879F1',
+		color: '#000000',
 		marginBottom: 10,
 		//alignItems: 'center',
 		//textAlign: 'left',
@@ -87,7 +102,7 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		textAlign: 'center',
 		fontWeight: 'bold',
-		color: '#7879F1',
+		color: '#AAAAAA',
 		margin: 20,
 	},
 	input: {
@@ -99,7 +114,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		borderRadius: 10,
-		borderWidth: 1,
+
 		paddingVertical: 5,
 		paddingHorizontal: 20,
 		borderColor: 'transparent',
@@ -113,8 +128,8 @@ const styles = StyleSheet.create({
 	},
 	textButton: {
 		fontWeight: 'bold',
-		fontSize: 15,
-		color: '#7879F1',
+		fontSize: 18,
+		color: '#000000',
 	},
 	logo: {
 		height: 250,

@@ -53,7 +53,7 @@ const AltAuthOptions = (props) => {
 const styles = StyleSheet.create({
 	subText: {
 		fontSize: 15,
-		color: '#7879F1',
+		color: '#000000',
 	},
 	tinyLogo: {
 		width: 48,

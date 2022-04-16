@@ -31,6 +31,11 @@ async function validateLoginInput(data) {
   if (data.password != data.confirmationPassword) {
     errors.password = "Password Mismatch";
   }
+  // Check if password is at least 8 characters
+
+  // if (data.password.length < 8) {
+  //   errors.password = "Password must be at least 8 characters";
+  // }
   // Check if the email already exists
   if (
     await signUpTemplate.findOne({

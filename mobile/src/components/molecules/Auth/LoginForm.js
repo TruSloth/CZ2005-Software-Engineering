@@ -27,7 +27,6 @@ import InputField from '../../atoms/InputField';
 
 const LoginForm = (props) => {
 	const {submitForm, loading, navigation} = props;
-
 	const [email, onChangeEmail] = useState(null);
 	const [password, onChangePassword] = useState(null);
 
@@ -51,7 +50,6 @@ const LoginForm = (props) => {
 				title='Login'
 				onPress={() => {
 					submitForm(email, password);
-
 					// {account.isLoggedIn ? (
 					// 	<Navigator></AppNavigator>
 					// ) : (
@@ -70,7 +68,7 @@ const LoginForm = (props) => {
 
 const styles = StyleSheet.create({
 	clickableText: {
-		color: '#F178B6',
+		color: '#E89575',
 		textDecorationLine: 'underline',
 	},
 });

@@ -11,7 +11,7 @@ import {View, Text, TextInput, StyleSheet} from 'react-native';
  *
  * @example <caption>Default example</caption>
  * return(
- *   <InputField							
+ *   <InputField
  * 		title={'Email'}
  * 		placeholder={'JohnTan@email.com'}
  * 		updateFieldFunc={(text) => {console.log(`Input changed to ${text}`)}}
@@ -26,19 +26,20 @@ import {View, Text, TextInput, StyleSheet} from 'react-native';
  */
 
 const InputField = (props) => {
-	const {title, placeholder, updateFieldFunc, secureTextEntry} = props
+	const {title, placeholder, updateFieldFunc, secureTextEntry, value} = props;
 
 	return (
 		<View style={{marginVertical: 10}}>
-			<Text style={{fontSize: 20, fontWeight: 'bold', color: '#7879F1'}}>
+			<Text style={{fontSize: 20, fontWeight: 'bold', color: 'black'}}>
 				{title}
 			</Text>
 			<TextInput
 				placeholder={placeholder}
-				placeholderTextColor='#A5A6F6'
+				placeholderTextColor='#AAAAAA'
 				style={styles.inputField}
 				secureTextEntry={secureTextEntry}
 				onChangeText={(text) => updateFieldFunc(text)}
+				value={value}
 			/>
 		</View>
 	);
