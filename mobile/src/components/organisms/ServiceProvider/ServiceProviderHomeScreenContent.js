@@ -61,7 +61,6 @@ const ServiceProviderHomeScreenContent = (props) => {
 		setRefreshing(false);
 	}, []);
 
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 	const cheflogo =
 		'https://www.kindpng.com/picc/m/273-2739192_chef-cuisinier-png-cooking-chef-clipart-cocinero-png.png';
 	return (

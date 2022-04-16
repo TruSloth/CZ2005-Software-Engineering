@@ -7,7 +7,7 @@ const AccountScreen = ({navigation}) => {
     return (
 		<SafeAreaView style={{flex: 1}}>
 			<StatusBar />
-			<AccountScreenContent></AccountScreenContent>
+			<AccountScreenContent navigation={navigation}></AccountScreenContent>
 		</SafeAreaView>
 	);
 }

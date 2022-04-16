@@ -28,8 +28,6 @@ import { useQueryClient } from 'react-query';
  */
 
 const StoreInfoContent = (props) => {
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
-
 	const {
 		moreInfoOnPress,
 		queueOnPress,
@@ -49,7 +47,7 @@ const StoreInfoContent = (props) => {
 		<View style={styles.container}>
 			<Image
 				style={styles.images}
-				source={{uri: storeImage || reactNativeLogo}}
+				source={storeImage ? {uri: storeImage} : require('../../../assets/QQueue_Small.png')}
 			></Image>
 			<View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
 				<Text style={styles.heading}>{heading}</Text>

@@ -19,7 +19,7 @@ const CustomerDetailsScreenContent = (props) => {
 		setModalVisible(true);
 	};
 	const {navigation, joinServiceProviderQueue} = props;
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
+
 	return (
 		<View style={styles.container}>
 			<View>

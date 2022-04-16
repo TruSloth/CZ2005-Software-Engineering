@@ -168,8 +168,6 @@ const ChatBubble = (props) => {
 const ChatScreenContent = (props) => {
 	const {room} = props;
 
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
-
 	const account = useSelector((state) => state.account);
 	const socket = useSelector((state) => state.socket).socket;
 

@@ -6,7 +6,8 @@ import {StyleSheet} from 'react-native';
 import StoreDetailedInfoScreen from '../../scenes/StoreDetailedInfo';
 import HomeScreen from '../../scenes/Home';
 import AppSettingsScreen from '../../scenes/AppSettings';
-import {useSelector} from 'react-redux';
+import RewardsScreen from '../../scenes/Rewards';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,11 @@ const HomeNavigator = () => {
 				component={AppSettingsScreen}
 				options={styles.appSettingsScreenOptions}
 			></Stack.Screen>
+			<Stack.Screen
+				name='Rewards'
+				component={RewardsScreen}
+				options={styles.rewardsScreenOptions}
+			></Stack.Screen>
 		</Stack.Navigator>
 	);
 };
@@ -63,6 +69,12 @@ const styles = StyleSheet.create({
 	},
 	appSettingsScreenOptions: {
 		title: 'App Settings',
+		headerStyle: {
+			backgroundColor: '#FFFFFF'
+		},
+	},
+	rewardsScreenOptions: {
+		title: 'QQueue Rewards',
 		headerStyle: {
 			backgroundColor: '#FFFFFF'
 		},
