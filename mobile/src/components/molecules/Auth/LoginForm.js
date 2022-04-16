@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {View, Text, StyleSheet} from 'react-native';
-import { useState } from 'react';
+import {useState} from 'react';
 
 import RoundButton from '../../atoms/RoundButton';
 import InputField from '../../atoms/InputField';
@@ -26,7 +26,7 @@ import InputField from '../../atoms/InputField';
  */
 
 const LoginForm = (props) => {
-	const {submitForm, loading} = props
+	const {submitForm, loading} = props;
 
 	const [email, onChangeEmail] = useState(null);
 	const [password, onChangePassword] = useState(null);
@@ -47,14 +47,20 @@ const LoginForm = (props) => {
 			<Text style={[styles.clickableText, {alignSelf: 'flex-end'}]}>
 				Forgot Password?
 			</Text>
-			<RoundButton title='Login' onPress={() => {submitForm(email, password)}} loading={loading}></RoundButton>
+			<RoundButton
+				title='Login'
+				onPress={() => {
+					submitForm(email, password);
+				}}
+				loading={loading}
+			></RoundButton>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	clickableText: {
-		color: '#F178B6',
+		color: '#E89575',
 		textDecorationLine: 'underline',
 	},
 });

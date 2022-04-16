@@ -16,7 +16,7 @@ import {LOCALHOST} from '../config';
 export const verify = async (verificationDetails) => {
     const tempUserName = verificationDetails.tempUserName;
 
-	return axios.post(`http://${LOCALHOST}:80/users/register/${tempUserName}`, {
+	return axios.post(`http://${LOCALHOST}/users/register/${tempUserName}`, {
         authid: verificationDetails.verificationCode,
 	});
 };

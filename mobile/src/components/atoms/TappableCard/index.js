@@ -36,12 +36,14 @@ const TappableCard = (props) => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
 	const {
+		cardImage,
 		cardTitle,
 		cardSubtitle,
 		cardSubtextLine1,
 		cardSubtextLine2,
 		onPress,
 		onPressCardDesc,
+		disableCardDesc
 	} = props;
 
 	return (
@@ -52,7 +54,7 @@ const TappableCard = (props) => {
 			>
 				<Card.Image
 					style={{padding: 0, borderColor: '#7879F1', borderWidth: 2}}
-					source={{uri: reactNativeLogo}}
+					source={{uri: cardImage || reactNativeLogo}}
 				/>
 				<CardDescription
 					title={cardTitle}
@@ -64,6 +66,7 @@ const TappableCard = (props) => {
 					subtextLine2={cardSubtextLine2}
 					subtextLine2Style={styles.cardSubtextLine2}
 					onPressCardDesc={onPressCardDesc}
+					hideCardButton={disableCardDesc}
 				></CardDescription>
 			</Card>
 		</TouchableOpacity>
@@ -81,6 +84,9 @@ const styles = StyleSheet.create({
 	cardTitle: {
 		fontWeight: '700',
 		color: '#7879F1',
+		numberOfLines: 1,
+		maxWidth: 100,
+		ellipsizeMode: 'tail'
 	},
 
 	cardSubtitle: {

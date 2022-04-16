@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import { useSelector } from 'react-redux';
 
 /**
  * Renders {@link module:AppBottomSheet|AppBottomSheet} content for short-form Store Info.
@@ -28,31 +29,42 @@ import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
 const StoreInfoContent = (props) => {
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
-	const {moreInfoOnPress, queueOnPress, chatOnPress} = props;
+	const {
+		moreInfoOnPress,
+		queueOnPress,
+		chatOnPress,
+		storeImage,
+		heading,
+		waitTime,
+		subHeading,
+		rating,
+		numReviews,
+		text,
+		queueDisabled
+	} = props;
 
 	return (
 		<View style={styles.container}>
 			<Image
 				style={styles.images}
-				source={{uri: reactNativeLogo}}
+				source={{uri: storeImage || reactNativeLogo}}
 			></Image>
-			<View style={{flexDirection: 'row'}}>
-				<Text style={styles.heading}>Location 1 ♡</Text>
-				<Text style={[styles.waitTime]}>~15 mins</Text>
+			<View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+				<Text style={styles.heading}>{heading}</Text>
+				<Text style={[styles.waitTime]}>{waitTime}</Text>
 			</View>
 			<View style={{flexDirection: 'row'}}>
-				<Text style={styles.subheading}>8 in queue</Text>
-				<Text style={styles.rating}>⭐ 4.4 (505)</Text>
+				<Text style={styles.subheading}>{subHeading}</Text>
+				<Text style={styles.rating}>{rating} ⭐ ({numReviews})</Text>
 			</View>
 			<View style={{flexDirection: 'row'}}>
 				<Text style={styles.texts}>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-					do eiusmod tempor incididunt ut labore et dolore magna
-					aliqua.
+					{text}
 				</Text>
 				<View style={{flexDirection: 'column'}}>
 					<TouchableOpacity
-						style={[styles.button, {backgroundColor: '#8fbc8f'}]}
+						style={[styles.button, {backgroundColor: queueDisabled ? 'gray': '#8fbc8f'}]}
+						disabled={queueDisabled}
 						onPress={queueOnPress}
 					>
 						<Text styles={styles.buttonText}>Queue</Text>
@@ -71,7 +83,6 @@ const StoreInfoContent = (props) => {
 					</TouchableOpacity>
 				</View>
 			</View>
-			
 		</View>
 	);
 };
@@ -103,10 +114,11 @@ const styles = StyleSheet.create({
 	waitTime: {
 		fontSize: 20,
 		textAlign: 'right',
-		alignSelf: 'flex-end',
+		//alignSelf: 'flex-end',
 		marginTop: 20,
 		marginBottom: 5,
-		marginLeft: '44%',
+		paddingRight: 8,
+		//marginLeft: '44%',
 		fontWeight: 'bold',
 		color: 'black',
 	},

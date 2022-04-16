@@ -1,1 +1,0 @@
-export const TOGGLE_LOGGED_IN = 'TOGGLE_LOGGED_IN'

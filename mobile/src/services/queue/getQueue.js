@@ -2,12 +2,13 @@ import axios from 'axios';
 
 import {LOCALHOST} from '../config';
 
-// Incomplete
+export const getQueue = async (serviceProviderID) => {
 
-export const getQueue = async (serviceProviderDetails) => {
-
-	return await axios.get(`http://${LOCALHOST}:4000/view-queue`, {
-        store: serviceProviderDetails.store,
+	return await axios.get(`http://${LOCALHOST}/view-queue`, {
+		params: {
+            venueID: serviceProviderID,
+    }   
 	});
 };
 
+ 

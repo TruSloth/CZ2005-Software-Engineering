@@ -11,6 +11,7 @@ import {
 } from 'react-native-gifted-chat';
 import {useSelector} from 'react-redux';
 import { LogBox } from 'react-native';
+import getStoredState from 'redux-persist/es/getStoredState';
 
 LogBox.ignoreAllLogs();
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
@@ -134,7 +135,9 @@ const ChatBubble = (props) => {
  * @subcategory Organisms
  */
 
-const ChatScreenContent = () => {
+const ChatScreenContent = (props) => {
+	const {room} = props;
+
 	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
 	const account = useSelector((state) => state.account);
@@ -149,19 +152,22 @@ const ChatScreenContent = () => {
 	}, [])
 
 	useEffect(() => {
-		socket.on('received-message', (receivedMessage) => receiveMessage(receivedMessage))
+		socket.on('received-message', (receivedMessage) => {
+
+		receiveMessage(receivedMessage)})
 
 		return () => {
-			socket.off('receiving-message')
+			setMessages([])
+			socket.off('received-message')
 		}
-	}, [socket])
+	}, [socket, room])
 
 	const sendMessage = useCallback((messages = []) => {
 		setMessages((previousMessages) => {
 			return (GiftedChat.append(previousMessages, messages))
 		})
-		socket.emit('send-chat-message', messages, 'Location 1')
-	} , [])
+		socket.emit('send-chat-message', messages, room)
+	} , [room])
 	
 
 	return (

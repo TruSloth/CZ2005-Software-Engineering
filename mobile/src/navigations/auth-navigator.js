@@ -6,25 +6,26 @@ import LoginScreen from '../scenes/Login';
 import RegistrationScreen from '../scenes/Registration';
 import OnboardingScreen from '../scenes/Onboarding/';
 import TempVerifyScreen from '../scenes/TempVerify';
+import {
+	ServiceProviderLoginScreen,
+	ServiceProviderRegistrationScreen,
+	ServiceProviderHomeScreen,
+} from '../scenes/ServiceProvider';
 import {useSelector} from 'react-redux';
-
-
 
 const Stack = createNativeStackNavigator();
 
 /**
  * Stack navigators for the **authentication** set of screens
- * 
+ *
  * Controls navigation for `OnboardingScreen`, `RegistrationScreen`, `LoginScreen` and `TempVerifyScreen`.
- * 
+ *
  * @category Navigations
  * @exports AuthNavigator
- * 
+ *
  */
 
 const AuthNavigator = () => {
-	const auth = useSelector((state) => state.auth);
-
 	return (
 		<Stack.Navigator
 			screenOptions={{headerShown: false}}
@@ -42,8 +43,19 @@ const AuthNavigator = () => {
 				name='Registration'
 				component={RegistrationScreen}
 			></Stack.Screen>
-
 			<Stack.Screen name='Login' component={LoginScreen}></Stack.Screen>
+			<Stack.Screen
+				name='ServiceProviderRegistration'
+				component={ServiceProviderRegistrationScreen}
+			></Stack.Screen>
+			<Stack.Screen
+				name='ServiceProviderLogin'
+				component={ServiceProviderLoginScreen}
+			></Stack.Screen>
+			<Stack.Screen
+				name='BusinessHome'
+				component={ServiceProviderHomeScreen}
+			></Stack.Screen>
 		</Stack.Navigator>
 	);
 };

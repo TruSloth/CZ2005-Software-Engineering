@@ -1,9 +1,12 @@
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { googleIsSignedIn, googleSignOut } from '../../../services/auth/google/googleSignIn';
-import { setCurrentUser, toggleLogIn } from '../../../store/account/actions';
+import {
+	googleIsSignedIn,
+	googleSignOut,
+} from '../../../services/auth/google/googleSignIn';
+import {setCurrentUser, toggleLogIn} from '../../../store/account/actions';
 import HorizontalBlock from '../../molecules/HorizontalBlock';
 
 /**
@@ -15,7 +18,9 @@ import HorizontalBlock from '../../molecules/HorizontalBlock';
  */
 
 const AppSettingsScreenContent = () => {
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
+
+	const socket = useSelector((state) => state.socket).socket;
 
 	const notificationSettings = [
 		{
@@ -39,34 +44,50 @@ const AppSettingsScreenContent = () => {
 			},
 		},
 	];
-	const languageSettings = [{
-        title: 'Language Setting 1',
-        onPress: () => {
-            console.log('Language Setting 1 Pressed');
-        },
-    },];
-	const supportSettings = [{
-        title: 'Support/Feedback Setting 1',
-        onPress: () => {
-            console.log('Support/Feedback Setting 1 Pressed');
-        },
-    },];
-	const miscSettings = [{
-        title: 'Logout',
-        onPress: async () => {
-			try {
-				const isGoogleSignedIn = await googleIsSignedIn();
-				if (isGoogleSignedIn) {
-					await googleSignOut();
-				}
+	const languageSettings = [
+		{
+			title: 'Language Setting 1',
+			onPress: () => {
+				console.log('Language Setting 1 Pressed');
+			},
+		},
+	];
+	const supportSettings = [
+		{
+			title: 'Support/Feedback Setting 1',
+			onPress: () => {
+				console.log('Support/Feedback Setting 1 Pressed');
+			},
+		},
+	];
+	const miscSettings = [
+		{
+			title: 'Logout',
+			onPress: async () => {
+				try {
+					const isGoogleSignedIn = await googleIsSignedIn();
+					if (isGoogleSignedIn) {
+						await googleSignOut();
+					}
 
-				dispatch(setCurrentUser(null))
-            	dispatch(toggleLogIn(false))
-			} catch (e) {
-				console.log(e)
-			}
-        },
-    },];
+					if (socket.connected) {
+						socket.disconnect()
+					}
+
+					dispatch(toggleLogIn(false));
+					dispatch(
+						setCurrentUser({
+							username: null,
+							accountType: null,
+							serviceProviderID: null,
+						})
+					);
+				} catch (e) {
+					console.log(e);
+				}
+			},
+		},
+	];
 
 	return (
 		<ScrollView>

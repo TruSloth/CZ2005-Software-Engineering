@@ -8,6 +8,14 @@ function isPasswordRequired() {
   return true;
 }
 
+function isServiceProviderAccount() {
+  if (this.accountType === 'ServiceProvider') {
+    return true;
+  }
+
+  return false;
+}
+
 const signUpTemplate = new mongoose.Schema({
   userName: {
     type: String,
@@ -22,6 +30,16 @@ const signUpTemplate = new mongoose.Schema({
   googleRegistered: {
     type: Boolean,
     required: true,
+  },
+
+  accountType: {
+    type: String,
+    enum: ['User', 'ServiceProvider'],
+    required: true,
+  },
+
+  serviceProviderID: {
+    type: String,
   },
 
   password: {

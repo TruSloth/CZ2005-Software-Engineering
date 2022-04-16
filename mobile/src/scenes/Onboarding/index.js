@@ -29,28 +29,30 @@ const OnboardingScreen = ({navigation}) => {
 	const data = [
 		{
 			id: '1',
-			title: 'Yae Miko',
+			title: 'QQueue',
 			description:
-				'Some ambitions have the power to heal wounds, to bring victory, to inspire hope. But some ambitions, outlive their masters, long after their soul ascends.',
-			imageSource: reactNativeLogo,
+				'Use the app to check for crowdiness and to queue online.',
+			imageSource: require('../../assets/QQueue_Onboarding_1.png'),
 		},
 
 		{
 			id: '2',
-			title: 'Raiden Shogun',
+			title: 'Save time',
 			description:
-				'All the world holds dear is but a backdrop of constant motion. I stand before it alone and unchanging.',
-			imageSource: reactNativeLogo,
+				'Make use of the your time better somewhere instead of queuing physically.',
+			imageSource: require('../../assets/QQueue_Onboarding_2.png'),
 		},
 
 		{
 			id: '3',
-			title: 'Sangonomiya Kokomi',
+			title: 'Redeem rewards',
 			description:
-				'The moon shines bright over the depths of the seas as the tides come and go. It seems that as I go from strength to strength, so does my state of mind flow.',
-			imageSource: reactNativeLogo,
+				'Earn points for each queue and redeem rewards.',
+			imageSource: require('../../assets/QQueue_Onboarding_3.png'),
 		},
 	];
+
+	const [authOption, setAuthOption] = useState(null);
 
 	return (
 		<View style={styles.container}>
@@ -75,42 +77,92 @@ const OnboardingScreen = ({navigation}) => {
 					ref={slidesRef}
 				/>
 			</View>
-
 			<View style={{flex: 0.3}}>
 				<Paginator data={data} scrollX={scrollX} />
 			</View>
+			{authOption ? (
+				<View style={{flexDirection: 'row'}}>
+					<TouchableOpacity
+						style={[styles.btn]}
+						onPress={() => {
+							if (authOption === 'Registration') {
+								navigation.navigate('Registration');
+							}
 
-			<View style={{flexDirection: 'row'}}>
-				<TouchableOpacity
-					style={[styles.btn]}
-					onPress={() => navigation.navigate('Registration')}
-				>
-					<Text
-						style={{
-							fontWeight: 'bold',
-							fontSize: 15,
-							color: '#493d8a',
+							if (authOption === 'Login') {
+								navigation.navigate('Login', {accountType: 'User'});
+							}
 						}}
 					>
-						Register
-					</Text>
-				</TouchableOpacity>
-				<View style={{width: 15}} />
-				<TouchableOpacity
-					style={[styles.btn]}
-					onPress={() => navigation.navigate('Login')}
-				>
-					<Text
-						style={{
-							fontWeight: 'bold',
-							fontSize: 15,
-							color: '#493d8a',
+						<Text
+							style={{
+								fontWeight: 'bold',
+								fontSize: 15,
+								color: '#493d8a',
+							}}
+						>
+							User
+						</Text>
+					</TouchableOpacity>
+					<View style={{width: 15}} />
+					<TouchableOpacity
+						style={[styles.btn]}
+						onPress={() => {
+							if (authOption === 'Registration') {
+								navigation.navigate(
+									'ServiceProviderRegistration'
+								);
+							}
+
+							if (authOption === 'Login') {
+								navigation.navigate('ServiceProviderLogin', {accountType: 'Business'});
+							}
 						}}
 					>
-						Login
-					</Text>
-				</TouchableOpacity>
-			</View>
+						<Text
+							style={{
+								fontWeight: 'bold',
+								fontSize: 15,
+								color: '#493d8a',
+							}}
+						>
+							Business
+						</Text>
+					</TouchableOpacity>
+				</View>
+			) : (
+				<View style={{flexDirection: 'row'}}>
+					<TouchableOpacity
+						style={[styles.btn]}
+						onPress={() => setAuthOption('Registration')}
+					>
+						<Text
+							style={{
+								fontWeight: 'bold',
+								fontSize: 15,
+								color: '#493d8a',
+							}}
+						>
+							Register
+						</Text>
+					</TouchableOpacity>
+					<View style={{width: 15}} />
+					<TouchableOpacity
+						style={[styles.btn]}
+						onPress={() => setAuthOption('Login')}
+					>
+						<Text
+							style={{
+								fontWeight: 'bold',
+								fontSize: 15,
+								color: '#493d8a',
+							}}
+						>
+							Login
+						</Text>
+					</TouchableOpacity>
+				</View>
+			)}
 		</View>
 	);
 };

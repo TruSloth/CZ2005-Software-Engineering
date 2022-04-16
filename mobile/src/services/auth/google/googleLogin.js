@@ -14,7 +14,8 @@ import {LOCALHOST} from '../../config';
  */
 
 export const googleLogin = async (userInfo) => {
-	return axios.post(`http://${LOCALHOST}:80/users/login/google`, {
+	return axios.post(`http://${LOCALHOST}/users/login/google`, {
 		idToken: userInfo.idToken,
+		accountType: userInfo.user.accountType
 	});
 };

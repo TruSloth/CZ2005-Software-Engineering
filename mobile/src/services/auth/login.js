@@ -13,9 +13,10 @@ import {LOCALHOST} from '../config';
  * @returns {response}
  */
 export const login = async (loginDetails) => {
-	return await axios.post(`http://${LOCALHOST}:80/users/login/`, {
+	return await axios.post(`http://${LOCALHOST}/users/login/`, {
 		email: loginDetails.email,
 		password: loginDetails.password,
+		accountType: loginDetails.accountType,
 	});
 };
 

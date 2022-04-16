@@ -6,9 +6,11 @@ import { io } from 'socket.io-client';
 
 import NotificationsScreen from '../scenes/Notifications';
 
-import HomeNavigator from './home-navigator';
-import ChatNavigator from './chat-navigator';
-import AccountNavigator from './account-navigator';
+import HomeNavigator from './UserNavigators/home-navigator';
+import ServiceProviderHomeNavigator from './ServiceProviderNavigators/home-navigator';
+import ChatNavigator from './UserNavigators/chat-navigator';
+import AccountNavigator from './UserNavigators/account-navigator';
+import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,6 +25,10 @@ const Tab = createBottomTabNavigator();
  */
 
 const AppNavigator = () => {
+    const account = useSelector((state) => state.account);
+
+    console.log(account)
+
     return (
         <Tab.Navigator screenOptions={({route}) => ({
             tabBarIcon: ({focused, color, size}) => {
@@ -56,12 +62,36 @@ const AppNavigator = () => {
             tabBarItemStyle: {borderTopColor: '#7879F1'},
             lazy: false
         })}>
-            <Tab.Group>
-                <Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}></Tab.Screen>
-                <Tab.Screen name="Chat" component={ChatNavigator} options={{headerShown: false}}></Tab.Screen>
-                <Tab.Screen name="Notifications" component={NotificationsScreen} ></Tab.Screen>
-                <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
-            </Tab.Group>          
+            {(() => {
+                    switch(account.accountType) {
+                        case 'User':
+                            return (<Tab.Group>
+                                        <Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}></Tab.Screen>
+                                        <Tab.Screen name="Chat" component={ChatNavigator} options={{headerShown: false}}></Tab.Screen>
+                                        <Tab.Screen name="Notifications" component={NotificationsScreen} ></Tab.Screen>
+                                        <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
+                                    </Tab.Group>);
+                        case 'ServiceProvider':
+                            console.log('Service Provider Screens loading')
+                            return (<Tab.Group>
+                                        <Tab.Screen name="Home" component={ServiceProviderHomeNavigator} options={{headerShown: false}}></Tab.Screen>
+                                        <Tab.Screen name="Chat" component={ChatNavigator} options={{headerShown: false}}></Tab.Screen>
+                                        <Tab.Screen name="Notifications" component={NotificationsScreen} ></Tab.Screen>
+                                        <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
+                                    </Tab.Group>);
+                        // Temporary fix. Default case shouldn't occur.
+                        default:
+                            console.log('Error. Account Type not found')
+                            return (<Tab.Group>
+                                <Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}></Tab.Screen>
+                                <Tab.Screen name="Chat" component={ChatNavigator} options={{headerShown: false}}></Tab.Screen>
+                                <Tab.Screen name="Notifications" component={NotificationsScreen} ></Tab.Screen>
+                                <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
+                            </Tab.Group>);
+                    }
+                })()
+            }
+                      
         </Tab.Navigator>
     )
 }
