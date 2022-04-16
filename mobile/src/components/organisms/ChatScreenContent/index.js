@@ -7,7 +7,8 @@ import {
 	InputToolbar,
 	Composer,
 	Send,
-	Message
+	Message,
+	Time
 } from 'react-native-gifted-chat';
 import {useSelector} from 'react-redux';
 import { LogBox } from 'react-native';
@@ -25,7 +26,7 @@ const ChatInputToolbar = (props) => {
 				paddingVertical: 2,
 				paddingHorizontal: 5,
 				borderTopWidth: 1,
-				borderTopColor: '#7879F1',
+				borderTopColor: '#000000',
 			}}
 			primaryStyle={{alignItems: 'center'}}
 		></InputToolbar>
@@ -47,9 +48,9 @@ const ChatSendButton = (props) => {
 		>
 			{props.text ? <Icon
 				name='send'
-				color={'#7879F1'}
+				color={'#000000'}
 				style={{width: 32, height: 32}}
-			></Icon> : <Icon name='mic' color={'#7879F1'} style={{width: 32, height: 32}}></Icon>}
+			></Icon> : <Icon name='mic' color={'#000000'} style={{width: 32, height: 32}}></Icon>}
 			
 		</Send>
 	);
@@ -62,7 +63,7 @@ const ChatInputComposer = (props) => {
 			textInputStyle={{
 				borderWidth: 1,
 				borderRadius: 20,
-				borderColor: '#7879F1',
+				borderColor: '#000000',
 				marginLeft: 0,
 			}}
 		></Composer>
@@ -85,19 +86,44 @@ const ChatMessageText = (props) => {
 			{...props}
 			containerStyle={{
 				left: {
-					backgroundColor: '#A5A6F6',
+					backgroundColor: '#FFF8FA',
 					borderTopLeftRadius: 8,
 					borderTopRightRadius: 8,
 				},
 				right: {
-					backgroundColor: '#7879F1',
+					backgroundColor: '#FCDDEC',
 					borderTopLeftRadius: 8,
 					borderTopRightRadius: 8,
 				},
 			}}
+			textStyle={{
+				left: {
+					color: '#000000'
+				},
+				right: {
+					color: '#000000'
+				}
+			}}
 		></MessageText>
 	);
 };
+
+const time = (props) => {
+	return (
+		<Time
+		{...props}
+		timeTextStyle={{
+			left: {
+				color: '#AAAAAA'
+			},
+			right: {
+				color: '#AAAAAA'
+			}
+		}}
+		>
+		</Time>
+	)
+}
 
 const ChatBubble = (props) => {
 	return (
@@ -105,23 +131,27 @@ const ChatBubble = (props) => {
 			{...props}
 			wrapperStyle={{
 				left: {
-					backgroundColor: '#A5A6F6',
+					backgroundColor: '#FFF8FA',
 				},
 				right: {
-					backgroundColor: '#7879F1',
+					backgroundColor: '#FCDDEC',
 				},
 			}}
 			bottomContainerStyle={{
 				left: {
-					backgroundColor: '#A5A6F6',
+					color: 'red',
+					backgroundColor: '#FFF8FA',
 					borderBottomLeftRadius: 8,
 					borderBottomRightRadius: 8,
 				},
 				right: {
-					backgroundColor: '#7879F1',
+					backgroundColor: '#FCDDEC',
 					borderBottomLeftRadius: 8,
 					borderBottomRightRadius: 8,
 				},
+			}}
+			usernameStyle={{
+				color: '#AAAAAA'
 			}}
 		></Bubble>
 	);
@@ -176,15 +206,17 @@ const ChatScreenContent = (props) => {
 			onSend={(messages) => sendMessage(messages)}
 			showUserAvatar={true}
 			alwaysShowSend
+			renderUsernameOnMessage
 			renderInputToolbar={ChatInputToolbar}
 			renderComposer={ChatInputComposer}
 			renderSend={ChatSendButton}
 			renderMessageText={ChatMessageText}
 			renderBubble={ChatBubble}
+			renderTime={time}
 			user={{
 				_id: account.userName,
 				name: account.userName,
-				avatar: reactNativeLogo
+				avatar: account.avatarImageURL === null ? account.avatarImage : account.avatarImageURL
 			}}
 		></GiftedChat>
 	);

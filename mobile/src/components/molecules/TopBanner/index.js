@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
+import PushNotification from 'react-native-push-notification';
 
 /**
  * Renders a banner to be positioned at the top of the screen. Can optionally contain a action bar.
@@ -46,6 +47,7 @@ const TopBanner = (props) => {
 		avatarImage,
 		onLayout,
 		settingsOnPress,
+		chatOnPress,
 		style,
 		bannerContentContainerStyle,
 		titleStyle,
@@ -54,54 +56,118 @@ const TopBanner = (props) => {
 		actionBar,
 	} = props;
 
+	// useEffect(() => {
+	// 	handleNotification();
+	// });
+	// const handleNotification = () => {
+	// 	// PushNotification.localNotification({
+	// 	// 	channelId: 'test-channel',
+	// 	// 	title: "It's your turn!",
+	// 	// 	message: 'Please make your way back',
+	// 	// 	color: 'red',
+	// 	// });
+	// 	PushNotification.cancelAllLocalNotifications();
+	// 	PushNotification.localNotificationSchedule({
+	// 		channelId: 'test-channel',
+	// 		title: "It's your turn!",
+	// 		message: 'Please make your way back',
+	// 		color: 'red',
+	// 		date: new Date(Date.now() + 5 * 1000),
+	// 		allowWhileIdle: true,
+	// 		onlyAlertOnce: 'true',
+	// 		// repeatType: 'time',
+	// 		// repeatTime: 120 * 1000,
+	// 	});
+	// };
 	return (
 		<View style={style} onLayout={onLayout}>
-			{actionBar ? <View style={styles.actionBar}>
-				<TouchableOpacity onPress={settingsOnPress}>
-					<Icon
-						name={'settings'}
-						tvParallaxProperties={undefined}
-						style={styles.iconHorizontalPadding}
-						iconStyle={styles.iconStyle}
-					></Icon>
-				</TouchableOpacity>
+			{actionBar ? (
+				<View style={styles.actionBar}>
+					<TouchableOpacity onPress={settingsOnPress}>
+						<Icon
+							name={'settings'}
+							tvParallaxProperties={undefined}
+							style={styles.iconHorizontalPadding}
+							iconStyle={styles.iconStyle}
+						></Icon>
+					</TouchableOpacity>
 
-				<View style={[styles.rowContainer, {paddingRight: 0}]}>
-					<TouchableOpacity>
-						<Icon
-							name='favorite-outline'
-							tvParallaxProperties={undefined}
-							style={styles.iconHorizontalPadding}
-							iconStyle={styles.iconStyle}
-						></Icon>
-					</TouchableOpacity>
-					<TouchableOpacity>
-						<Icon
-							name='text-snippet'
-							tvParallaxProperties={undefined}
-							style={styles.iconHorizontalPadding}
-							iconStyle={styles.iconStyle}
-						></Icon>
-					</TouchableOpacity>
+					<View style={[styles.rowContainer, {paddingRight: 0}]}>
+						<TouchableOpacity>
+							<Icon
+							name='notifications-none'
+								tvParallaxProperties={undefined}
+								style={styles.iconHorizontalPadding}
+								iconStyle={styles.iconStyle}
+							></Icon>
+						</TouchableOpacity>
+						<TouchableOpacity>
+							<Icon
+								name='favorite-outline'
+								tvParallaxProperties={undefined}
+								style={styles.iconHorizontalPadding}
+								iconStyle={styles.iconStyle}
+							></Icon>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={chatOnPress}>
+							<Icon
+								name='chat-bubble-outline'
+								tvParallaxProperties={undefined}
+									style={styles.iconHorizontalPadding}
+									iconStyle={styles.iconStyle}
+								></Icon>
+						</TouchableOpacity>
+
+						{/* <TouchableOpacity onPress={BizProfileOnPress}>
+							<Icon
+								name={'user'}
+								type={'feather'}
+								tvParallaxProperties={undefined}
+								style={styles.iconHorizontalPadding}
+								iconStyle={styles.iconStyle}
+							></Icon>
+						</TouchableOpacity>
+
+						<TouchableOpacity>
+							<Icon
+								name='favorite-outline'
+								tvParallaxProperties={undefined}
+								style={styles.iconHorizontalPadding}
+								iconStyle={styles.iconStyle}
+							></Icon>
+						</TouchableOpacity>
+						<TouchableOpacity>
+							<Icon
+								name='text-snippet'
+								tvParallaxProperties={undefined}
+								style={styles.iconHorizontalPadding}
+								iconStyle={styles.iconStyle}
+							></Icon>
+						</TouchableOpacity> */}
+					</View>
 				</View>
-			</View> : <></>}
-			
-			<View
-				style={[styles.rowContainer, bannerContentContainerStyle]}
-			>
-				{leftAvatar ? (
+			) : (
+				<></>
+			)}
+
+			<View style={[styles.rowContainer, bannerContentContainerStyle]}>
+				{leftAvatar ? (																								
 					<Avatar
 						size={64}
 						rounded
-						source={{uri: avatarImage}}
+						source={avatarImage}
 						imageProps={styles.avatarImage}
 					></Avatar>
 				) : (
 					<></>
 				)}
 				<View>
-					<Text style={[styles.titleTextBox, titleStyle]}>{title}</Text>
-					<Text style={[styles.subtitleTextBox, subtitleStyle]}>{subtitle}</Text>
+					<Text style={[styles.titleTextBox, titleStyle]}>
+						{title}
+					</Text>
+					<Text style={[styles.subtitleTextBox, subtitleStyle]}>
+						{subtitle}
+					</Text>
 				</View>
 
 				{leftAvatar ? (
@@ -110,7 +176,7 @@ const TopBanner = (props) => {
 					<Avatar
 						size={64}
 						rounded
-						source={{uri: avatarImage}}
+						source={avatarImage}
 						imageProps={styles.avatarImage}
 					></Avatar>
 				)}
@@ -125,13 +191,14 @@ const styles = StyleSheet.create({
 	},
 
 	iconStyle: {
-		color: '#7879F1',
+		color: '#000000',
 	},
 
 	titleTextBox: {
 		marginVertical: 10,
-		color: '#7879F1',
+		color: '#000000',
 		fontSize: 32,
+		fontWeight: 'bold',
 	},
 
 	titleTextBoxTight: {
@@ -150,7 +217,6 @@ const styles = StyleSheet.create({
 		color: '#7879F1',
 	},
 
-
 	actionBar: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
@@ -161,7 +227,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		paddingHorizontal: 20,
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
 	},
 
 	avatarImage: {

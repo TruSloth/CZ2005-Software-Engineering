@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
 		height: 35,
 		width: 120,
 		borderRadius: 7,
+		marginTop: 10,
 		backgroundColor: '#fff',
 	},
 });

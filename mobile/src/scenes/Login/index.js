@@ -21,8 +21,8 @@ const LoginScreen = (props) => {
 	};
 
 	const backOnPress = () => {
-		navigation.navigate('Onboarding')
-	}
+		navigation.navigate('Onboarding');
+	};
 
 	const backgroundStyle = {
 		backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -55,6 +55,7 @@ const LoginScreen = (props) => {
 						userName: response.data.userName,
 						accountType: 'User',
 						serviceProviderID: null,
+						avatarImageURL: null
 					})
 				);
 				if (!socket.connected) {
@@ -82,7 +83,8 @@ const LoginScreen = (props) => {
 					setCurrentUser({
 						userName: response.data.userName,
 						accountType: 'User',
-						serviceProviderID: null
+						serviceProviderID: null,
+						avatarImageURL: userInfo.user.photo
 					})
 				);
 

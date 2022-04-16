@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 	chatScreenOptions: {
 		headerTitleAlign: 'center',
 		headerTintColor: '#EF5DA8',
-		headerTitleStyle: {color: '#7879F1'},
+		headerTitleStyle: {color: '#000000'},
 		headerShadowVisible: false,
 	},
 });

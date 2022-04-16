@@ -71,7 +71,7 @@ const AppSettingsScreenContent = () => {
 					}
 
 					if (socket.connected) {
-						socket.disconnect()
+						socket.disconnect();
 					}
 
 					dispatch(toggleLogIn(false));
@@ -80,6 +80,7 @@ const AppSettingsScreenContent = () => {
 							username: null,
 							accountType: null,
 							serviceProviderID: null,
+							avatarImageURL: null
 						})
 					);
 				} catch (e) {

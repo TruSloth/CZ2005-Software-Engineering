@@ -11,16 +11,18 @@ import {
 	View,
 	ActivityIndicator,
 } from 'react-native';
+import {Card} from 'react-native-paper';
+import InputField from '../../components/atoms/InputField';
 
 import {useDispatch, useSelector} from 'react-redux';
 
 import {useMutation} from 'react-query';
 
 import {verify} from '../../services/auth/verify';
-import { setCurrentUser, toggleLogIn } from '../../store/account/actions';
+import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
 
 const TempVerifyScreen = ({route}) => {
-	const {tempUserName, accountType} = route.params;
+	const {tempUserName, accountType, avatarImageURL} = route.params;
 
 	const dispatch = useDispatch();
 
@@ -42,16 +44,30 @@ const TempVerifyScreen = ({route}) => {
 
 			if (response.status === 200) {
 				if (accountType === 'User') {
-					dispatch(setCurrentUser({userName: tempUserName, accountType: accountType, serviceProviderID: null }));
+					dispatch(
+						setCurrentUser({
+							userName: tempUserName,
+							accountType: accountType,
+							serviceProviderID: null,
+							avatarImageURL: null,
+						})
+					);
 					if (!socket.connected) {
-						socket.connect()
-		
-						socket.emit('add-username', tempUserName)
+						socket.connect();
+
+						socket.emit('add-username', tempUserName);
 					}
 				}
 
 				if (accountType === 'ServiceProvider') {
-					dispatch(setCurrentUser({userName: tempUserName, accountType: accountType, serviceProviderID: authid}));
+					dispatch(
+						setCurrentUser({
+							userName: tempUserName,
+							accountType: accountType,
+							serviceProviderID: authid,
+							avatarImageURL: avatarImageURL ? avatarImageURL : null
+						})
+					);
 				}
 
 				dispatch(toggleLogIn(true));
@@ -70,16 +86,24 @@ const TempVerifyScreen = ({route}) => {
 			<StatusBar
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}
 			/>
+
 			<Image
-				source={{uri: 'https://reactjs.org/logo-og.png'}}
+				source={require('../../assets/QQueue_Small.png')}
 				style={styles.image}
 			></Image>
-			<Text style={styles.textheading}>Enter Verification Code:</Text>
-			<TextInput
+
+			{/* <TextInput
 				// multiline
 				keyboardType='default'
 				style={styles.input}
 				onChangeText={(text) => setAuthid(text)}
+				value={authid}
+			/> */}
+			<InputField
+				title='Enter Verification Code'
+				placeholder='eg. 926412'
+				secureTextEntry={false}
+				updateFieldFunc={(text) => setAuthid(text)}
 				value={authid}
 			/>
 			{isLoading ? (
@@ -109,7 +133,7 @@ const TempVerifyScreen = ({route}) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: '#FFF8FA',
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
@@ -119,6 +143,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-around',
 		margin: 30,
 		marginTop: 10,
+		borderWidth: 2,
+		borderColor: '#000000',
 	},
 	input: {
 		height: 40,

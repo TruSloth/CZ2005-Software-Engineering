@@ -7,6 +7,7 @@ import {
 	Text,
 	StyleSheet,
 	TouchableOpacity,
+	Touchable,
 } from 'react-native';
 //import LoginForm from '../../molecules/Auth/LoginForm';
 //import AltAuthOptions from '../../molecules/Auth/AltAuthOptions';
@@ -17,7 +18,7 @@ const ServiceProviderLoginScreenContent = (props) => {
 	const {
 		submitForm,
 		registerOnPress,
-        backOnPress,
+		backOnPress,
 		loading,
 		onPressGoogleSignin,
 		navigation,
@@ -27,22 +28,20 @@ const ServiceProviderLoginScreenContent = (props) => {
 	// 	navigation.navigate('BusinessLogin');
 	// };
 
-	const reactNativeLogo = '../../../assets/react-native-logo.png';
-
 	return (
 		<ScrollView
 			style={styles.centeredContainer}
 			contentContainerStyle={{flexGrow: 1}}
 		>
 			<Image
-				source={require(reactNativeLogo)}
+				source={require('../../../assets/QQueue_Small.png')}
 				style={[
 					styles.largeLogo,
 					{
 						alignSelf: 'center',
 						backgroundColor: '#FCDDEC',
 						borderWidth: 2,
-						borderColor: '#7879F1',
+						borderColor: '#000000',
 					},
 				]}
 			/>
@@ -57,6 +56,11 @@ const ServiceProviderLoginScreenContent = (props) => {
 				>
 					BUSINESS
 				</Text>
+				{/* <TouchableOpacity
+					onPress={() => navigation.navigate('BusinessHome')}
+				>
+					<Text>bizhome</Text>
+				</TouchableOpacity> */}
 				<Text
 					style={[
 						styles.titleText,
@@ -109,22 +113,22 @@ const styles = StyleSheet.create({
 	titleText: {
 		fontSize: 30,
 		fontWeight: 'bold',
-		color: '#7879F1',
+		color: '#000000',
 	},
 	subtitleText: {
 		fontSize: 15,
-		color: '#A5A6F6',
+		color: '#AAAAAA',
 	},
 	subText: {
 		fontSize: 15,
-		color: '#7879F1',
+		color: '#000000',
 	},
 	largeLogo: {
-		width: 100,
-		height: 100,
+		width: 150,
+		height: 150,
 	},
 	clickableText: {
-		color: '#F178B6',
+		color: '#E89575',
 		textDecorationLine: 'underline',
 	},
 });
