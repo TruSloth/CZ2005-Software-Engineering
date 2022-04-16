@@ -87,21 +87,26 @@ const AccountScreenContent = () => {
                 subtitleStyle={styles.bannerSubtitle}
 			></TopBanner>
 			<HorizontalBlock
+				blockTitleStyle={styles.accountSettingHeader}
 				blockTitle={'You have rewards ready to be used!'}
 				blockElements={accountPoints}
 				blockElementTitlesStyle={styles.accountPoints}
 			></HorizontalBlock>
 			<HorizontalBlock
+				style={styles.accountSettingHeader}
 				blockTitle={'My Account'}
 				blockElements={myAccountOptions}
+				blockTitleStyle={styles.accountSettingHeader}
 			></HorizontalBlock>
 			<HorizontalBlock
 				blockTitle={'General'}
 				blockElements={generalOptions}
+				blockTitleStyle={styles.accountSettingHeader}
 			></HorizontalBlock>
 			<HorizontalBlock
 				blockTitle={'Join the Club!'}
 				blockElements={joinTheClubOptions}
+				blockTitleStyle={styles.accountSettingHeader}
 			></HorizontalBlock>
 		</ScrollView>
 	);
@@ -121,8 +126,13 @@ const styles = StyleSheet.create({
     bannerSubtitle: {
         marginTop: 5,
         marginBottom: 20,
-        marginHorizontal: 20
+        marginHorizontal: 20,
+		color: '#000000'
     },
+
+	accountSettingHeader: {
+		fontWeight: 'bold'
+	},
 
 	accountPoints: {
 		fontWeight: 'bold',

@@ -55,7 +55,7 @@ const HorizontalBlock = (props) => {
             style={[styles.horizontalBlock, style]}
             titleStyle={[styles.horizontalBlockTitle, blockTitleStyle]}
 			title={blockTitle}
-			imgsrc = {appLogo}
+			imgsrc={appLogo}
 			child={blockElements.map((element, key) => {
 				return (
 					<TouchableOpacity onPress={() => element.onPress()} key={key}>

@@ -1,6 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image, Icon} from 'react-native';
 
+// Change doc to be for HorizontalSectionImage
+
 /**
  * Renders a container with horizontal borders above and below the child content.
  *
@@ -28,19 +30,22 @@ import {StyleSheet, Text, View, Image, Icon} from 'react-native';
  * @property {object(style)} titleStyle Header text style for `title` 
  */
 
-const HorizontalSection = (props) => {
+const HorizontalSectionImage = (props) => {
 	const {child, style, title, titleStyle, imgsrc} = props;
 
 	return (
 		<View style={[styles.horizontalSection, style]}>
-			
-			<Text style={titleStyle}>
-				<Image style = {[styles.tinyLogo]}
+			<View style={[styles.row]}>
+			{imgsrc ? (<Image 
+				style={[styles.tinyLogo]}
 				source={imgsrc}
-				  >
-
-				  </Image>
+			>
+			</Image>) : (<></>)}
+			
+			<Text style={[titleStyle]}>
+				
 				{title}</Text>
+			</View>
 			{child}
 		</View>
 	);
@@ -50,18 +55,23 @@ const styles = StyleSheet.create({
 	row: {
 		flexDirection:"row",
 		flex:1,
+		alignItems: 'center',
+		paddingHorizontal: 15
 	},
 	horizontalSection: {
 		borderTopWidth: 2,
 		borderBottomWidth: 2,
-		borderColor: '#7879F1',
+		borderColor: '#000000',
 		padding: 15,
 	},
 	tinyLogo: {
-		width: 30,
-		height: 30,
-
+		marginTop: 5,
+		width: 32,
+		height: 32,
 	},
+	title: {
+		alignItems: 'center'
+	}
 });
 
-export default HorizontalSection;
+export default HorizontalSectionImage;
