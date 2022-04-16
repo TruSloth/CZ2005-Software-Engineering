@@ -33,7 +33,9 @@ const HorizontalSection = (props) => {
 
 	return (
 		<View style={[styles.horizontalSection, style]}>
-			<Text style={titleStyle}>{title}</Text>
+
+			<Text style={titleStyle}>
+				{title}</Text>
 			{child}
 		</View>
 	);
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
 		borderTopWidth: 1,
 		borderBottomWidth: 1,
 		borderColor: '#7879F1',
-		padding: 10,
+		padding: 15,
 	},
 });
 

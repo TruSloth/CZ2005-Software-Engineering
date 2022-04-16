@@ -36,10 +36,13 @@ const OnboardingItem = (props) => {
 				style={[styles.image, {width, resizeMode: 'contain'}]}
 			/>
 
-			<View style={{flex: 0.3}}>
-				<Text style={styles.title}>{item.title}</Text>
-				<Text style={styles.description}>{item.description}</Text>
+			<View style={[styles.midhalf]}>
 			</View>
+			<View style={[styles.bottomhalf]}>
+			<Text style={styles.title}>{item.title}</Text>
+			<Text style={styles.description}>{item.description}</Text>
+			</View>
+			
 		</View>
 	);
 };
@@ -49,24 +52,35 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
+		backgroundColor: '#FCDDEC',
+	},
+	bottomhalf: {
+		flex:0.4,
+		backgroundColor: '#FCDDEC',
+	},
+	midhalf: {
+		flex:0.025,
+		backgroundColor: '#FCDDEC',
 	},
 
 	image: {
 		flex: 0.7,
 		justifyContent: 'center',
-	},
+		backgroundColor: '#FFFFFF',
+		},
 
 	title: {
 		fontWeight: '800',
 		fontSize: 28,
-		marginBottom: 10,
-		color: '#493d8a',
+		marginTop: 40,
+		marginBottom: 40,
+		color: '#000000',
 		textAlign: 'center',
 	},
 
 	description: {
 		fontWeight: '300',
-		color: '#62656b',
+		color: '#000000',
 		textAlign: 'center',
 		paddingHorizontal: 64,
 	},

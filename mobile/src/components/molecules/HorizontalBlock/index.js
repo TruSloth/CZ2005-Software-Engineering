@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import HorizontalSection from '../../atoms/HorizontalSection';
+import HorizontalSectionImage from '../../atoms/HorizontalSectionImage';
 
 /**
  * Renders a composite component that enhances a HorizontalSection with a header portion, and multiple child sections.
@@ -46,13 +47,15 @@ import HorizontalSection from '../../atoms/HorizontalSection';
 
 
 const HorizontalBlock = (props) => {
-	const {blockTitle, blockElements, blockTitleStyle, blockElementTitlesStyle, style} = props;
+	const {blockTitle, blockElements, blockTitleStyle, blockElementTitlesStyle, style, appLogo} = props;
 
 	return (
-		<HorizontalSection
+		
+		<HorizontalSectionImage
             style={[styles.horizontalBlock, style]}
             titleStyle={[styles.horizontalBlockTitle, blockTitleStyle]}
 			title={blockTitle}
+			imgsrc = {appLogo}
 			child={blockElements.map((element, key) => {
 				return (
 					<TouchableOpacity onPress={() => element.onPress()} key={key}>
@@ -64,21 +67,22 @@ const HorizontalBlock = (props) => {
 					</TouchableOpacity>
 				);
 			})}
-		></HorizontalSection>
+		></HorizontalSectionImage>
 	);
 };
 
 const styles = StyleSheet.create({
 	horizontalBlock: {
 		padding: 0,
-        backgroundColor: '#A5A6F6',
+        backgroundColor: '#FCDDEC',
 		borderTopWidth: 0,
 		borderBottomWidth: 0
 	},
 
     horizontalBlockTitle: {
         margin: 10,
-        color: '#FCDDEC'
+        color: '#000000'
+		
     },
 
     horizontalBlockElement: {
@@ -87,7 +91,7 @@ const styles = StyleSheet.create({
     },
 
     horizontalBlockElementTitle: {
-        color: '#7879F1'
+        color: '#AAAAAA'
     }
 });
 

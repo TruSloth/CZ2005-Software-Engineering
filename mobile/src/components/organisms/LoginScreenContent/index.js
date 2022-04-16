@@ -26,8 +26,6 @@ const LoginScreenContent = (props) => {
 
 	const {submitForm, registerOnPress, loading, onPressGoogleSignin} = props;
 
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
-
 	return (
 		<ScrollView
 			style={styles.centeredContainer}
@@ -39,9 +37,9 @@ const LoginScreenContent = (props) => {
 					styles.largeLogo,
 					{
 						alignSelf: 'center',
-						backgroundColor: '#FCDDEC',
 						borderWidth: 2,
-						borderColor: '#7879F1',
+						borderColor: '#FCDDEC',
+						backgroundColor: '#FCDDEC',
 					},
 				]}
 			/>
@@ -84,6 +82,10 @@ const LoginScreenContent = (props) => {
 };
 
 const styles = StyleSheet.create({
+	container:{
+		backgroundColor: '#FCDDEC',
+		flex: 1,
+	},
 	centeredContainer: {
 		alignSelf: 'center',
 		flex: 1,
@@ -102,8 +104,8 @@ const styles = StyleSheet.create({
 		color: '#7879F1',
 	},
 	largeLogo: {
-		width: 100,
-		height: 100,
+		width: 225,
+		height: 150,
 	},
 	clickableText: {
 		color: '#F178B6',
