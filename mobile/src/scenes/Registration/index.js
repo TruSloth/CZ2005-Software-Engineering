@@ -142,7 +142,7 @@ const RegistrationScreen = ({navigation, props}) => {
 				//console.log(registrationDetails.userName);
 			}
 		} catch (e) {
-			console.log(e);
+			console.log(e.response.data);
 		}
 	};
 
@@ -154,12 +154,15 @@ const RegistrationScreen = ({navigation, props}) => {
 
 			const response = await googleRegisterMutation.mutateAsync(userInfo);
 
+			console.log(response)
+
 			if (response.status === 200) {
 				dispatch(
 					setCurrentUser({
 						userName: response.data.userName,
 						accountType: 'User',
 						serviceProviderID: null,
+						avatarImageURL: userInfo.user.photo
 					})
 				);
 

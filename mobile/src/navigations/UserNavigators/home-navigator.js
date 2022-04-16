@@ -22,57 +22,50 @@ const Stack = createNativeStackNavigator();
 
 const HomeNavigator = () => {
 	return (
-		<Stack.Navigator initialRouteName='HomePage'>
+		<Stack.Navigator initialRouteName='HomePage' screenOptions={styles.homeNavigatorScreenOptions}>
 			<Stack.Screen
 				name='HomePage'
 				component={HomeScreen}
-				options={{
-					headerShown: false,
-				}}
-			></Stack.Screen>
-			<Stack.Screen
-				name='InsertCustomer'
-				component={InsertCustomerScreen}
-				options={{title: ''}}
-			></Stack.Screen>
-			<Stack.Screen
-				name='CustomerDetails'
-				component={CustomerDetailsScreen}
-				options={{title: ''}}
-			></Stack.Screen>
-			<Stack.Screen
-				name='BusinessProfile'
-				component={BusinessProfileScreen}
-				options={{title: ''}}
+				options={styles.homeScreenOptions}
 			></Stack.Screen>
 			<Stack.Screen
 				name='StoreDetailedInfo'
 				component={StoreDetailedInfoScreen}
-				options={{title: ''}}
+				options={({route, navigation}) => {
+					return {
+						title: route.params === undefined ? 'Undefined' : route.params.venueName,
+						}}}
 			></Stack.Screen>
 			<Stack.Screen
 				name='AppSettings'
 				component={AppSettingsScreen}
 				options={styles.appSettingsScreenOptions}
 			></Stack.Screen>
-			{/* NEWLY ADDED  */}
-			<Stack.Screen
-				name='BusinessHome'
-				component={BusinessHomeScreen}
-				options={{title: ''}}
-			></Stack.Screen>
 		</Stack.Navigator>
 	);
 };
 
 const styles = StyleSheet.create({
-	appSettingsScreenOptions: {
-		title: 'App Settings',
+	homeNavigatorScreenOptions: {
+		headerStyle: {
+			backgroundColor: '#FCDDEC',
+			width: 10
+		},
 		headerTitleAlign: 'center',
-		headerTintColor: '#EF5DA8',
-		headerTitleStyle: {color: '#7879F1'},
+		headerTintColor: '#000000',
+		headerTitleStyle: {color: '#000000'},
 		headerShadowVisible: false,
 	},
-});
+
+	homeScreenOptions: {
+		headerShown: false
+	},
+	appSettingsScreenOptions: {
+		title: 'App Settings',
+		headerStyle: {
+			backgroundColor: '#FFFFFF'
+		},
+	},
+})
 
 export default HomeNavigator;

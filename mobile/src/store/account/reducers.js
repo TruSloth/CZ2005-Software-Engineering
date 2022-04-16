@@ -3,7 +3,9 @@ import {
 	TOGGLE_LOGGED_IN,
 	UPDATE_CURRENT_QUEUE,
 	NOT_IN_QUEUE,
-	ERROR
+	ERROR,
+	UPDATE_AVATAR_IMAGE,
+	UPDATE_AVATAR_IMAGE_URL
 } from './constants';
 
 const initialState = {
@@ -16,6 +18,8 @@ const initialState = {
 	queueStatus: NOT_IN_QUEUE,
 	serviceProviderID: null,
 	points: 0,
+	avatarImage: require('../../assets/defaultProfilePic.png'),
+	avatarImageURL: null,
 };
 
 const accountReducer = (state = initialState, action) => {
@@ -25,7 +29,8 @@ const accountReducer = (state = initialState, action) => {
 				...state,
 				userName: action.payload.userName,
 				accountType: action.payload.accountType,
-				serviceProviderID: action.payload.serviceProviderID
+				serviceProviderID: action.payload.serviceProviderID,
+				avatarImageURL: action.payload.avatarImageURL
 			}
 		case TOGGLE_LOGGED_IN:
 			return {
@@ -38,6 +43,11 @@ const accountReducer = (state = initialState, action) => {
 				currentQueueName: action.payload.venueName,
 				currentQueueID: action.payload.venueID,
 				queueStatus: action.payload.queueStatus
+			}
+		case UPDATE_AVATAR_IMAGE:
+			return {
+				...state,
+				avatarImage: action.payload
 			}
 		case ERROR:
 			return {

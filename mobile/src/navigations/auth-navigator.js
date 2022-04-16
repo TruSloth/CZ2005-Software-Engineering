@@ -51,10 +51,6 @@ const AuthNavigator = () => {
 				name='ServiceProviderLogin'
 				component={ServiceProviderLoginScreen}
 			></Stack.Screen>
-			<Stack.Screen
-				name='BusinessHome'
-				component={ServiceProviderHomeScreen}
-			></Stack.Screen>
 		</Stack.Navigator>
 	);
 };

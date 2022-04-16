@@ -9,10 +9,10 @@ import {
 	Text,
 	StyleSheet,
 	TextInput,
+	TouchableOpacity
 } from 'react-native';
 
 import InputField from '../../../components/atoms/InputField';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const InsertCustomerContent = (props) => {
 	const {insertUserToQueue} = props;

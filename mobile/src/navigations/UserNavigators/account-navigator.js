@@ -21,7 +21,6 @@ const Stack = createNativeStackNavigator();
 
 const AccountNavigator = () => {
 	const account = useSelector((state) => state.account);
-	console.log('i am in ' + account.accountType);
 
 	return (
 		<Stack.Navigator initialRouteName='UserAccount'>
@@ -37,11 +36,11 @@ const AccountNavigator = () => {
 				component={HistoryScreen}
 				options={styles.historyScreenOptions}
 			></Stack.Screen>
-			<Stack.Screen
+			{/* <Stack.Screen
 				name='BusinessProfile'
 				component={BusinessProfileScreen}
 				options={styles.historyScreenOptions}
-			></Stack.Screen>
+			></Stack.Screen> */}
 		</Stack.Navigator>
 	);
 };

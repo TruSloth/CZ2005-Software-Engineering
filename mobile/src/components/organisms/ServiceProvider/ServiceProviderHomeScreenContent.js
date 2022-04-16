@@ -65,35 +65,31 @@ const ServiceProviderHomeScreenContent = (props) => {
 	const cheflogo =
 		'https://www.kindpng.com/picc/m/273-2739192_chef-cuisinier-png-cooking-chef-clipart-cocinero-png.png';
 	return (
-		<ScrollView
-			refreshControl={
-				<RefreshControl
-					refreshing={refreshing}
-					onRefresh={onRefresh}
-				></RefreshControl>
-			}
-		>
-			<View style={styles.container1}>
-				<TopBanner
-					title={`Hi, ${account.userName}!`}
-					subtitle={''}
-					avatarImage={
-						//<Image
-						//(source = require('../../../assets/chef.png'))
-						reactNativeLogo
-					}
-					settingsOnPress={settingsOnPress}
-					BizHomeonPress={BizHomeOnPress}
-					BizProfileOnPress={BizProfileOnPress}
-					actionBar={true}
-					style={[styles.homeBanner, {marginBottom: '5%'}]}
-					onLayout={(e) => {
-						e.persist();
-						setBannerHeight(
-							e && e.nativeEvent ? e.nativeEvent.layout.height : 0
-						);
-					}}
-				></TopBanner>
+        <ScrollView
+        refreshControl={
+            <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+            ></RefreshControl>
+        }
+        >
+            <View style={styles.container1}>
+			<TopBanner
+				title={`Hi, ${account.userName}!`}
+				subtitle={''}
+				avatarImage={account.avatarImageURL !== null  ? {uri: account.avatarImageURL} : account.avatarImage}
+				settingsOnPress={settingsOnPress}
+				BizHomeonPress={BizHomeOnPress}
+				BizProfileOnPress={BizProfileOnPress}
+				actionBar={true}
+				style={[styles.homeBanner, {marginBottom: '5%'}]}
+				onLayout={(e) => {
+					e.persist();
+					setBannerHeight(
+						e && e.nativeEvent ? e.nativeEvent.layout.height : 0
+					);
+				}}
+			></TopBanner>
 
 				{/* <SearchBar
 				onChangeText={(text) => setSearch(text)}

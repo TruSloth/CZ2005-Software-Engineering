@@ -5,7 +5,6 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useDispatch, useSelector} from 'react-redux';
 import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
 
-import BusinessHomeScreenContent from '../../components/organisms/BusinessHomeScreenContent';
 import LoginScreenContent from '../../components/organisms/LoginScreenContent';
 import {login} from '../../services/auth/login';
 import {googleLogin} from '../../services/auth/google/googleLogin';
@@ -56,6 +55,7 @@ const LoginScreen = (props) => {
 						userName: response.data.userName,
 						accountType: 'User',
 						serviceProviderID: null,
+						avatarImageURL: null
 					})
 				);
 				if (!socket.connected) {
@@ -83,7 +83,8 @@ const LoginScreen = (props) => {
 					setCurrentUser({
 						userName: response.data.userName,
 						accountType: 'User',
-						serviceProviderID: null
+						serviceProviderID: null,
+						avatarImageURL: userInfo.user.photo
 					})
 				);
 

@@ -47,8 +47,7 @@ const TopBanner = (props) => {
 		avatarImage,
 		onLayout,
 		settingsOnPress,
-		BizHomeOnPress,
-		BizProfileOnPress,
+		chatOnPress,
 		style,
 		bannerContentContainerStyle,
 		titleStyle,
@@ -94,17 +93,32 @@ const TopBanner = (props) => {
 					</TouchableOpacity>
 
 					<View style={[styles.rowContainer, {paddingRight: 0}]}>
-						{/* <TouchableOpacity onPress={BizHomeOnPress}>
+						<TouchableOpacity>
 							<Icon
-								name={'briefcase'}
-								type={'feather'}
+							name='notifications-none'
 								tvParallaxProperties={undefined}
 								style={styles.iconHorizontalPadding}
 								iconStyle={styles.iconStyle}
 							></Icon>
-						</TouchableOpacity> */}
+						</TouchableOpacity>
+						<TouchableOpacity>
+							<Icon
+								name='favorite-outline'
+								tvParallaxProperties={undefined}
+								style={styles.iconHorizontalPadding}
+								iconStyle={styles.iconStyle}
+							></Icon>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={chatOnPress}>
+							<Icon
+								name='chat-bubble-outline'
+								tvParallaxProperties={undefined}
+									style={styles.iconHorizontalPadding}
+									iconStyle={styles.iconStyle}
+								></Icon>
+						</TouchableOpacity>
 
-						<TouchableOpacity onPress={BizProfileOnPress}>
+						{/* <TouchableOpacity onPress={BizProfileOnPress}>
 							<Icon
 								name={'user'}
 								type={'feather'}
@@ -129,7 +143,7 @@ const TopBanner = (props) => {
 								style={styles.iconHorizontalPadding}
 								iconStyle={styles.iconStyle}
 							></Icon>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 					</View>
 				</View>
 			) : (
@@ -137,11 +151,11 @@ const TopBanner = (props) => {
 			)}
 
 			<View style={[styles.rowContainer, bannerContentContainerStyle]}>
-				{leftAvatar ? (
+				{leftAvatar ? (																								
 					<Avatar
 						size={64}
 						rounded
-						source={{uri: avatarImage}}
+						source={avatarImage}
 						imageProps={styles.avatarImage}
 					></Avatar>
 				) : (
@@ -162,7 +176,7 @@ const TopBanner = (props) => {
 					<Avatar
 						size={64}
 						rounded
-						source={{uri: avatarImage}}
+						source={avatarImage}
 						imageProps={styles.avatarImage}
 					></Avatar>
 				)}
