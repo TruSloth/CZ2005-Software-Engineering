@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect, useCallback} from 'react';
 import {
 	StyleSheet,
 	Text,
@@ -7,6 +7,7 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	Dimensions,
+	ActivityIndicator
 } from 'react-native';
 
 import {
@@ -14,10 +15,10 @@ import {
 	QueueSheetContent,
 } from '../../components/molecules/BottomSheet';
 
-import { NOT_IN_QUEUE, QUEUING } from '../../store/account/constants';
-import { updateCurrentQueue } from '../../store/account/actions';
+import {NOT_IN_QUEUE, QUEUING} from '../../store/account/constants';
+import {updateCurrentQueue} from '../../store/account/actions';
 
-import {useMutation} from 'react-query';
+import {useMutation, useQueryClient} from 'react-query';
 import {joinQueue} from '../../services/queue/joinQueue';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -26,13 +27,51 @@ const height = (width * 100) / 90;
 
 // TODO: Need to invalidate caches and close queue sheet here, to update the UI and refetch data
 const StoreDetailedInfoScreen = ({route}) => {
-	const {storeInformation} = route.params;
-
-	const images = [storeInformation.imageAddress];
+	const {venueID} = route.params;
 
 	const joinQueueMutation = useMutation(joinQueue);
 
+	const queryClient = useQueryClient();
+
 	const dispatch = useDispatch();
+
+	const [storeDetails, setStoreDetails] = useState({});
+	const [images, setImages] = useState([]);
+
+	const updateDetails = useCallback(() => {
+		console.log('callback fired');
+		const serviceProviderData = queryClient.getQueryData(
+			'retrieveServiceProviders'
+		);
+
+		const storeDetails = serviceProviderData.find((store) => {
+			return store.venueID === venueID;
+		});
+
+		if (storeDetails) {
+			setImages([storeDetails.imageAddress]);
+			setStoreDetails(storeDetails);
+		}
+	}, [queryClient.getQueryData('retrieveServiceProviders')]);
+
+	useEffect(() => {
+		const serviceProviderData = queryClient.getQueryData(
+			'retrieveServiceProviders'
+		);
+
+		const storeDetails = serviceProviderData.find((store) => {
+			return store.venueID === venueID;
+		});
+
+		if (storeDetails) {
+			setImages([storeDetails.imageAddress]);
+			setStoreDetails(storeDetails);
+		}
+
+		return () => {
+			setStoreDetails({});
+		};
+	}, [queryClient.getQueryData('retrieveServiceProviders')]);
 
 	const joinServiceProviderQueue = async (user, storeID, storeName, pax) => {
 		try {
@@ -43,7 +82,12 @@ const StoreDetailedInfoScreen = ({route}) => {
 			});
 
 			if (response.status === 200) {
-				dispatch(updateCurrentQueue(storeName, storeID, QUEUING))
+				dispatch(updateCurrentQueue(storeName, storeID, QUEUING));
+				closeQueue();
+				sheetRef.current.snapTo(2);
+				queryClient.invalidateQueries('retrieveNearbyServiceProviders');
+				await queryClient.invalidateQueries('retrieveServiceProviders');
+				updateDetails();
 			}
 		} catch (e) {
 			console.log(e);
@@ -75,8 +119,8 @@ const StoreDetailedInfoScreen = ({route}) => {
 	const onQueueConfirm = () => {
 		joinServiceProviderQueue(
 			account.userName,
-			storeInformation.venueID,
-			storeInformation.venueName,
+			storeDetails.venueID,
+			storeDetails.venueName,
 			queuePax
 		);
 	};
@@ -85,9 +129,6 @@ const StoreDetailedInfoScreen = ({route}) => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={[styles.heading, {color: '#7879F1'}, {fontSize: 25}]}>
-				{storeInformation.venueName}
-			</Text>
 			<ScrollView
 				pagingEnabled
 				horizontal={true}
@@ -107,14 +148,14 @@ const StoreDetailedInfoScreen = ({route}) => {
 				Waiting time:
 				<Text
 					style={styles.imptInfo}
-				>{` ${storeInformation.waitTime} mins`}</Text>
+				>{` ${storeDetails.waitTime} mins`}</Text>
 			</Text>
 
 			<Text style={styles.desc}>
-				There {storeInformation.queueLength === 1 ? 'is ' : 'are '}
+				There {storeDetails.queueLength === 1 ? 'is ' : 'are '}
 				<Text style={styles.imptInfo}>
-					{storeInformation.queueLength}{' '}
-					{storeInformation.queueLength === 1 ? 'person' : 'people'}
+					{storeDetails.queueLength}{' '}
+					{storeDetails.queueLength === 1 ? 'person' : 'people'}
 					<Text style={[styles.waitTimes, {fontSize: 20}]}>
 						{' '}
 						in line{' '}
@@ -123,40 +164,41 @@ const StoreDetailedInfoScreen = ({route}) => {
 			</Text>
 			<View style={styles.storeDescContainer}>
 				<Text style={styles.storeDesc}>
-					{storeInformation.venueAddress}
+					{storeDetails.venueAddress}
 				</Text>
+				<Text style={styles.storeDesc}>{storeDetails.venueType}</Text>
 				<Text style={styles.storeDesc}>
-					{storeInformation.venueType}
-				</Text>
-				<Text style={styles.storeDesc}>
-					{storeInformation.venueRatings.$numberDecimal}⭐ (
-					{storeInformation.numReviews})
+					{storeDetails.venueRatings === undefined
+						? ''
+						: storeDetails.venueRatings.$numberDecimal}
+					⭐ ({storeDetails.numReviews})
 				</Text>
 			</View>
 
 			<TouchableOpacity
 				style={[
 					styles.button,
-					{backgroundColor: account.currentQueueID ? 'gray' : ''},
+					{backgroundColor: account.currentQueueID ? '#C4C4C4' : '#FCDDEC'},
 				]}
 				onPress={openQueue}
 				disabled={account.queueStatus !== NOT_IN_QUEUE}
 			>
-				<Text
-					style={{
-						color: account.currentQueueID ? 'red' : '#EF5DA8',
-						fontSize: 15,
-						fontWeight: 'bold',
-					}}
-				>
-					Queue
-				</Text>
+					<Text
+						style={{
+							color: '#000000',
+							fontSize: 15,
+							fontWeight: 'bold',
+						}}
+					>
+						Queue
+					</Text>
 			</TouchableOpacity>
 			<AppBottomSheet
 				ref={sheetRef}
 				renderContent={QueueSheetContent}
 				onCloseEnd={closeQueue}
 				count={queuePax}
+				isQueueLoading={queryClient.isFetching('retrieveServiceProviders') === 1}
 				onPressPlus={queueIncrement}
 				onPressMinus={queueDecrement}
 				onPressCancel={closeQueue}
@@ -181,6 +223,9 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		bottom: 340,
 		alignSelf: 'center',
+	},
+	headingContainer: {
+		backgroundColor: '#FCDDEC'
 	},
 
 	waitTimes: {
@@ -224,12 +269,9 @@ const styles = StyleSheet.create({
 		fontFamily: '',
 	},
 	button: {
-		borderRadius: 10,
-		borderWidth: 1,
 		padding: 10,
 		paddingHorizontal: 50,
 		margin: 20,
-		borderColor: '#7879F1',
 		alignItems: 'center',
 		borderRadius: 50,
 	},

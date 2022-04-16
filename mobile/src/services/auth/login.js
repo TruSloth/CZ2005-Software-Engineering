@@ -6,9 +6,9 @@ import {LOCALHOST} from '../config';
  * @memberof auth
  * @function login
  * @async
- * @param {object(email, password)} loginDetails 
+ * @param {object(email, password)} loginDetails
  * The login details to be send in the request body.
- * 
+ *
  * Login details must contain the `email` and `password`.
  * @returns {response}
  */
@@ -19,4 +19,3 @@ export const login = async (loginDetails) => {
 		accountType: loginDetails.accountType,
 	});
 };
-

@@ -79,6 +79,7 @@ const CardDescription = (props) => {
 						title={'Queue'}
 						onPress={() => onPressCardDesc()}
 						style={styles.queueButton}
+						btnTextStyle={styles.queueButtonText}
 						disabled={disableCardDesc}
 					></RoundButton>
 				)}
@@ -106,6 +107,11 @@ const styles = StyleSheet.create({
 	queueButton: {
 		borderWidth: 0,
 		backgroundColor: '#FCDDEC',
+	},
+
+	queueButtonText: {
+		color: '#000000',
+		fontWeight: 'bold'
 	},
 
 	subtext: {

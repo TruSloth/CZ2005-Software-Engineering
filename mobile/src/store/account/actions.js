@@ -5,9 +5,10 @@ import {
 	NOT_IN_QUEUE,
 	QUEUING,
 	QUEUE_REACHED,
-	IN_STORE
-} from './constants';
-
+	IN_STORE,
+	UPDATE_AVATAR_IMAGE_URL,
+	UPDATE_AVATAR_IMAGE
+} from './constants'
 
 export const setCurrentUser = (user) => {
 	return {
@@ -23,18 +24,30 @@ export const toggleLogIn = (loggedIn) => {
 	};
 };
 
-export const updateCurrentQueue = (serviceProviderName, serviceProviderID, queueStatus) => {
+export const updateCurrentQueue = (
+	serviceProviderName,
+	serviceProviderID,
+	queueStatus
+) => {
 	if (!queueStatus in [NOT_IN_QUEUE, QUEUING, QUEUE_REACHED, IN_STORE]) {
-		console.log('Error updating queue. Unknown Queue status.')
+		console.log('Error updating queue. Unknown Queue status.');
 
 		return {
-			type: ERROR
-		}
+			type: ERROR,
+		};
 	}
 
 	return {
 		type: UPDATE_CURRENT_QUEUE,
 		payload: {venueName: serviceProviderName, venueID: serviceProviderID, queueStatus: queueStatus}
+	}
+}
+
+// For local avatar images
+export const updateAvatarImage = (avatarImage) => {
+	return {
+		type: UPDATE_AVATAR_IMAGE,
+		payload: avatarImage
 	}
 }
 

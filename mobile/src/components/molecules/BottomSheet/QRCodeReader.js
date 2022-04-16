@@ -11,22 +11,11 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
  *
  */
 
-const QRCodeReader = () => {
-	const onRead = (e) => {
-		console.log('found a qr code!');
-		console.log(e);
-	};
+const QRCodeReader = (props) => {
+	const {onRead} = props
 
 	return (
-		<View style={styles.container}>
-			<View style={styles.container1}>
-				<Text style={styles.textBold}>Time to check out? </Text>
-				<Text style={styles.textBody}>
-					{' '}
-					Please scan your QR code to check out of Location1.{' '}
-				</Text>
-			</View>
-			<View style={styles.container1}>
+		<View style={styles.container1}>
 				<QRCodeScanner
 					onRead={onRead}
 					containerStyle={{height: 300}}
@@ -39,7 +28,6 @@ const QRCodeReader = () => {
 						justifyContent: 'center',
 					}}
 				></QRCodeScanner>
-			</View>
 		</View>
 	);
 };
@@ -47,7 +35,7 @@ const QRCodeReader = () => {
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: 'white',
-		height: 450,
+		flex: 1
 	},
 	container1: {
 		flex: 1,
@@ -55,14 +43,14 @@ const styles = StyleSheet.create({
 	textBold: {
 		fontSize: 24,
 		fontWeight: '500',
-		color: '#7879F1',
+		color: '#000000',
 		padding: 32,
 		textAlign: 'center',
 	},
 
 	textBody: {
 		fontSize: 14,
-		color: '#7879F1',
+		color: '#000000',
 		textAlign: 'center',
 	},
 });

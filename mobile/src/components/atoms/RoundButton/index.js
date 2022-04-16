@@ -34,7 +34,7 @@ import {
  */
 
 const RoundButton = (props) => {
-	const {style, title, onPress, loading, disabled} = props;
+	const {style, btnTextStyle, title, onPress, loading, disabled} = props;
 
 	return loading ? (
 		<View style={[styles.loginButton, style]}>
@@ -72,6 +72,11 @@ const styles = StyleSheet.create({
 		marginVertical: 10,
 		backgroundColor: '#FCDDEC',
 	},
+
+	btnText: {
+		alignContent: 'center', 
+		color: '#7879F1'
+	}
 });
 
 export default RoundButton;

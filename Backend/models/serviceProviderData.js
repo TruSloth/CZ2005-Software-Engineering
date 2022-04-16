@@ -10,19 +10,19 @@ const serviceProviderData = new mongoose.Schema({
   venueID: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
 
   location: {
     type: {
       type: String,
-      enum: ['Point'],
-      required: true
+      enum: ["Point"],
+      required: true,
     },
     coordinates: {
       type: [Number],
-      required: true
-    }
+      required: true,
+    },
   },
 
   venueLat: {
@@ -47,25 +47,27 @@ const serviceProviderData = new mongoose.Schema({
 
   venueRatings: {
     type: Decimal128,
-    default: 0
+    default: 0,
   },
 
   numReviews: {
     type: Number,
-    default: 0
+    default: 0,
   },
 
   imageAddress: {
     type: String,
   },
-  
+
   venueForecast: {
-    type: [{
-      'hour': {type: Number}, 
-      'intensity_txt': {type: String}, 
-      'intensity_nr': {type: String}}
+    type: [
+      {
+        hour: { type: Number },
+        intensity_txt: { type: String },
+        intensity_nr: { type: String },
+      },
     ],
-  }
+  },
 });
 
 module.exports = mongoose.model("stall-information", serviceProviderData);

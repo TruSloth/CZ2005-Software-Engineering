@@ -7,15 +7,11 @@ import { updateCurrentQueue } from '../../../store/account/actions';
 import { QUEUING, QUEUE_REACHED, IN_STORE, NOT_IN_QUEUE } from '../../../store/account/constants';
 
 const QueueBar = (props) => {
-	const {style, leaveQueue, currentQueueWaitTime} = props;
+	const {style, leaveQueue, currentQueueWaitTime, checkOut} = props;
 
     const dispatch = useDispatch()
 
 	const account = useSelector((state) => state.account);
-
-    const checkOut = () => {
-        dispatch(updateCurrentQueue(null, null, NOT_IN_QUEUE))
-    }
 
 	return (
 			(() => {
@@ -46,7 +42,7 @@ const QueueBar = (props) => {
 										<Text style={styles.queueBarText}>
 											{account.currentQueueName}
 										</Text>
-										<Text>{`~${currentQueueWaitTime} mins`}</Text>
+										<Text style={styles.waitTime}>{`~${currentQueueWaitTime} mins`}</Text>
 									</View>
 								</View>
                                 </View>
@@ -104,9 +100,10 @@ const QueueBar = (props) => {
 const styles = StyleSheet.create({
 	queueBarContainer: {
 		margin: 10,
-		borderWidth: 1,
-		borderColor: '#7879F1',
-		backgroundColor: '#fff',
+		//borderWidth: 1,
+		borderRadius: 10,
+		borderColor: '#000000',
+		backgroundColor: '#FFF8FA',
 	},
 
 	queueBarContent: {
@@ -119,17 +116,23 @@ const styles = StyleSheet.create({
 	},
 
 	queueBarText: {
-		color: '#5D5FEF',
+		color: '#000000',
 		fontSize: 14,
 		fontWeight: '700',
 	},
+
+	waitTime: {
+		color: '#000000',
+		fontSize: 14,
+		fontWeight: '600',
+	},	
 
 	leaveQueueBtn: {
 		backgroundColor: '',
 	},
 
 	leaveQueueBtnText: {
-		color: '#EF5DA8',
+		color: '#E89575',
 	},
 
 	queueReachedContainer: {

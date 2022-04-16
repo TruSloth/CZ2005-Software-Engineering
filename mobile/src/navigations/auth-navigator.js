@@ -9,7 +9,6 @@ import TempVerifyScreen from '../scenes/TempVerify';
 import {
 	ServiceProviderLoginScreen,
 	ServiceProviderRegistrationScreen,
-	ServiceProviderHomeScreen,
 } from '../scenes/ServiceProvider';
 import {useSelector} from 'react-redux';
 
@@ -51,10 +50,6 @@ const AuthNavigator = () => {
 			<Stack.Screen
 				name='ServiceProviderLogin'
 				component={ServiceProviderLoginScreen}
-			></Stack.Screen>
-			<Stack.Screen
-				name='BusinessHome'
-				component={ServiceProviderHomeScreen}
 			></Stack.Screen>
 		</Stack.Navigator>
 	);

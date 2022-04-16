@@ -38,7 +38,6 @@ const ServiceProviderLoginScreen = ({navigation}) => {
 
 	const onPressLogin = async (email, password) => {
 		try {
-			//console.log(account.accountType);
 			account.accountType = 'ServiceProvider';
 
 			const response = await loginMutation.mutateAsync({
@@ -47,13 +46,13 @@ const ServiceProviderLoginScreen = ({navigation}) => {
 				accountType: 'ServiceProvider',
 			});
 
-			console.log(response)
 			if (response.status === 200) {
 				dispatch(
 					setCurrentUser({
 						userName: response.data.userName,
 						accountType: 'ServiceProvider',
-						serviceProviderID: response.data.serviceProviderID
+						serviceProviderID: response.data.serviceProviderID,
+						avatarImageURL: null
 					})
 				);
 				dispatch(toggleLogIn(true));
@@ -76,7 +75,8 @@ const ServiceProviderLoginScreen = ({navigation}) => {
 					setCurrentUser({
 						userName: response.data.userName,
 						accountType: 'ServiceProvider',
-						serviceProviderID: response.data.serviceProviderID
+						serviceProviderID: response.data.serviceProviderID,
+						avatarImageURL: userInfo.user.photo
 					})
 				);
 				dispatch(toggleLogIn(true));

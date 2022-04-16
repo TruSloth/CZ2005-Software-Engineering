@@ -26,8 +26,7 @@ import InputField from '../../atoms/InputField';
  */
 
 const LoginForm = (props) => {
-	const {submitForm, loading} = props;
-
+	const {submitForm, loading, navigation} = props;
 	const [email, onChangeEmail] = useState(null);
 	const [password, onChangePassword] = useState(null);
 
@@ -51,6 +50,15 @@ const LoginForm = (props) => {
 				title='Login'
 				onPress={() => {
 					submitForm(email, password);
+					// {account.isLoggedIn ? (
+					// 	<Navigator></AppNavigator>
+					// ) : (
+					// 	<AuthNavigator></AuthNavigator>
+					// )}
+					// navigation.navigate('BusinessNavigator', {
+					// 	screen: 'BusinessHome',
+					// });
+					//navigation.navigate('HomeScreen');
 				}}
 				loading={loading}
 			></RoundButton>
