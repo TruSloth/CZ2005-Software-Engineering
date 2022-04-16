@@ -297,8 +297,6 @@ const HomeScreenContent = (props) => {
 		}
 	}, [serviceProviderData]);
 
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
-
 	return (
 		<>
 			<ScrollView

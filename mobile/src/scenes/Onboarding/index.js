@@ -82,7 +82,30 @@ const OnboardingScreen = ({navigation}) => {
 				<Paginator data={data} scrollX={scrollX} />
 			</View>
 			{authOption ? (
+				
+				<View style = {{flex:0.4, alignItems: 'center'}}>
+
+			
+			<TouchableOpacity style={[styles.btn1]}
+		onPress = {() => {
+				setAuthOption("")
+			}}>
+				<Text style={{
+								textAlign: 'center',
+								fontWeight: 'bold',
+								fontSize: 15,
+								color: '#000000',
+							}}>Return</Text>
+			</TouchableOpacity>
+			
 				<View style={{flexDirection: 'row', backgroundColor: '#FCDDEC', flex: 0.3 }}>
+						<TouchableOpacity 
+					onPress = {() => {
+							setAuthOption("")
+						}}>
+						
+						
+					</TouchableOpacity>
 					<TouchableOpacity
 						style={[styles.btn]}
 						onPress={() => {
@@ -130,6 +153,7 @@ const OnboardingScreen = ({navigation}) => {
 							Business
 						</Text>
 					</TouchableOpacity>
+									</View>
 				</View>
 			) : (
 				<View style={{flexDirection: 'row',backgroundColor: '#FCDDEC',  flex: 0.3}}>

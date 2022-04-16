@@ -33,14 +33,16 @@ import CardDescription from '../CardDescription';
  */
 
 const TappableCard = (props) => {
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
-
 	const {
 		cardImage,
 		cardTitle,
+		cardTitleStyle,
 		cardSubtitle,
+		cardSubtitleStyle,
 		cardSubtextLine1,
+		cardSubtextLine1Style,
 		cardSubtextLine2,
+		cardSubtextLine2Style,
 		onPress,
 		onPressCardDesc,
 		disableCardDesc
@@ -54,17 +56,17 @@ const TappableCard = (props) => {
 			>
 				<Card.Image
 					style={styles.cardImage}
-					source={{uri: cardImage || reactNativeLogo}}
+					source={cardImage ? {uri: cardImage} : require('../../../assets/QQueue_Small.png')}
 				/>
 				<CardDescription
 					title={cardTitle}
-					titleStyle={styles.cardTitle}
+					titleStyle={[styles.cardTitle, cardTitleStyle]}
 					subtitle={cardSubtitle}
-					subtitleStyle={styles.cardSubtitle}
+					subtitleStyle={[styles.cardSubtitle, cardSubtitleStyle]}
 					subtextLine1={cardSubtextLine1}
-					subtextLine1Style={styles.cardSubtextLine1}
+					subtextLine1Style={[styles.cardSubtextLine1, cardSubtextLine1Style]}
 					subtextLine2={cardSubtextLine2}
-					subtextLine2Style={styles.cardSubtextLine2}
+					subtextLine2Style={[styles.cardSubtextLine2, cardSubtextLine2Style]}
 					onPressCardDesc={onPressCardDesc}
 					hideCardButton={disableCardDesc}
 				></CardDescription>

@@ -13,8 +13,8 @@ import TopBanner from '../../molecules/TopBanner';
  * @subcategory Organisms
  */
 
-const AccountScreenContent = () => {
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
+const AccountScreenContent = (props) => {
+	const {navigation} = props
 
 	const account = useSelector((state) => state.account);
 
@@ -22,7 +22,7 @@ const AccountScreenContent = () => {
 		{
 			title: '8888 Points',
 			onPress: () => {
-				console.log('Points Pressed');
+				navigation.navigate('Rewards')
 			},
 		},
 	];
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		fontSize: 48,
 		alignSelf: 'center',
+		color: '#E89575'
 	},
 });
 

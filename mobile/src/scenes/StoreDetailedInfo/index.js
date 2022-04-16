@@ -7,7 +7,7 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	Dimensions,
-	ActivityIndicator
+	ActivityIndicator,
 } from 'react-native';
 
 import {
@@ -39,7 +39,6 @@ const StoreDetailedInfoScreen = ({route}) => {
 	const [images, setImages] = useState([]);
 
 	const updateDetails = useCallback(() => {
-		console.log('callback fired');
 		const serviceProviderData = queryClient.getQueryData(
 			'retrieveServiceProviders'
 		);
@@ -64,7 +63,12 @@ const StoreDetailedInfoScreen = ({route}) => {
 		});
 
 		if (storeDetails) {
-			setImages([storeDetails.imageAddress]);
+			if (storeDetails.imageAddress) {
+				setImages([storeDetails.imageAddress]);
+			} else {
+				setImages([]);
+			}
+
 			setStoreDetails(storeDetails);
 		}
 
@@ -135,13 +139,21 @@ const StoreDetailedInfoScreen = ({route}) => {
 				style={{width, height}}
 				showsHorizontalScrollIndicator={true}
 			>
-				{images.map((image, index) => (
+				{images.length === 0 ? (
 					<Image
-						key={index}
-						source={{uri: image}}
+						key={0}
+						source={require('../../assets/QQueue_Small.png')}
 						style={styles.image}
 					/>
-				))}
+				) : (
+					images.map((image, index) => (
+						<Image
+							key={index}
+							source={{uri: image}}
+							style={styles.image}
+						/>
+					))
+				)}
 			</ScrollView>
 
 			<Text style={styles.waitTimes}>
@@ -178,27 +190,33 @@ const StoreDetailedInfoScreen = ({route}) => {
 			<TouchableOpacity
 				style={[
 					styles.button,
-					{backgroundColor: account.currentQueueID ? '#C4C4C4' : '#FCDDEC'},
+					{
+						backgroundColor: account.currentQueueID
+							? '#C4C4C4'
+							: '#FCDDEC',
+					},
 				]}
 				onPress={openQueue}
 				disabled={account.queueStatus !== NOT_IN_QUEUE}
 			>
-					<Text
-						style={{
-							color: '#000000',
-							fontSize: 15,
-							fontWeight: 'bold',
-						}}
-					>
-						Queue
-					</Text>
+				<Text
+					style={{
+						color: '#000000',
+						fontSize: 15,
+						fontWeight: 'bold',
+					}}
+				>
+					Queue
+				</Text>
 			</TouchableOpacity>
 			<AppBottomSheet
 				ref={sheetRef}
 				renderContent={QueueSheetContent}
 				onCloseEnd={closeQueue}
 				count={queuePax}
-				isQueueLoading={queryClient.isFetching('retrieveServiceProviders') === 1}
+				isQueueLoading={
+					queryClient.isFetching('retrieveServiceProviders') === 1
+				}
 				onPressPlus={queueIncrement}
 				onPressMinus={queueDecrement}
 				onPressCancel={closeQueue}
@@ -225,7 +243,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 	},
 	headingContainer: {
-		backgroundColor: '#FCDDEC'
+		backgroundColor: '#FCDDEC',
 	},
 
 	waitTimes: {
