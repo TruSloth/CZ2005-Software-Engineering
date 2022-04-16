@@ -113,7 +113,7 @@ const AppSettingsScreenContent = () => {
 				blockElements={supportSettings}
 			></HorizontalBlock>
 			<HorizontalBlock
-				blockTitle={'App Name App Version 1.000'}
+				blockTitle={'QQueue Version 1.000'}
 				appLogo = {require('../../../assets/QQueue_Small.png')}
 				blockElements={miscSettings}
 				blockElementTitlesStyle={styles.logoutBtn}
