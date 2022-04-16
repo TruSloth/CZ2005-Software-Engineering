@@ -8,6 +8,10 @@ buildscript {
         targetSdkVersion = 30
         ndkVersion = "21.4.7075529"
         googlePlayServicesAuthVersion = "20.1.0"
+
+        googlePlayServicesVersion = "+" // default: "+"
+    firebaseMessagingVersion = "21.1.0" // default: "21.1.0"
+    upportLibVersion = "23.1.1" // default: 23.1.1
     }
     repositories {
         google()

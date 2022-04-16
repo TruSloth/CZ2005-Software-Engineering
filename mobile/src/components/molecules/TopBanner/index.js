@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
+import PushNotification from 'react-native-push-notification';
 
 /**
  * Renders a banner to be positioned at the top of the screen. Can optionally contain a action bar.
@@ -46,6 +47,8 @@ const TopBanner = (props) => {
 		avatarImage,
 		onLayout,
 		settingsOnPress,
+		BizHomeOnPress,
+		BizProfileOnPress,
 		style,
 		bannerContentContainerStyle,
 		titleStyle,
@@ -54,6 +57,29 @@ const TopBanner = (props) => {
 		actionBar,
 	} = props;
 
+	// useEffect(() => {
+	// 	handleNotification();
+	// });
+	// const handleNotification = () => {
+	// 	// PushNotification.localNotification({
+	// 	// 	channelId: 'test-channel',
+	// 	// 	title: "It's your turn!",
+	// 	// 	message: 'Please make your way back',
+	// 	// 	color: 'red',
+	// 	// });
+	// 	PushNotification.cancelAllLocalNotifications();
+	// 	PushNotification.localNotificationSchedule({
+	// 		channelId: 'test-channel',
+	// 		title: "It's your turn!",
+	// 		message: 'Please make your way back',
+	// 		color: 'red',
+	// 		date: new Date(Date.now() + 5 * 1000),
+	// 		allowWhileIdle: true,
+	// 		onlyAlertOnce: 'true',
+	// 		// repeatType: 'time',
+	// 		// repeatTime: 120 * 1000,
+	// 	});
+	// };
 	return (
 		<View style={style} onLayout={onLayout}>
 			{actionBar ? (
@@ -68,6 +94,26 @@ const TopBanner = (props) => {
 					</TouchableOpacity>
 
 					<View style={[styles.rowContainer, {paddingRight: 0}]}>
+						{/* <TouchableOpacity onPress={BizHomeOnPress}>
+							<Icon
+								name={'briefcase'}
+								type={'feather'}
+								tvParallaxProperties={undefined}
+								style={styles.iconHorizontalPadding}
+								iconStyle={styles.iconStyle}
+							></Icon>
+						</TouchableOpacity> */}
+
+						<TouchableOpacity onPress={BizProfileOnPress}>
+							<Icon
+								name={'user'}
+								type={'feather'}
+								tvParallaxProperties={undefined}
+								style={styles.iconHorizontalPadding}
+								iconStyle={styles.iconStyle}
+							></Icon>
+						</TouchableOpacity>
+
 						<TouchableOpacity>
 							<Icon
 								name='favorite-outline'

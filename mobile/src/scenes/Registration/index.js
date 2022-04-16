@@ -62,8 +62,8 @@ const RegistrationScreen = ({navigation, props}) => {
 		});
 	};
 	const onPressRegister = async () => {
+    let response = 1; //need to define response first for 3rd if block bc cant define const in if block
 		try {
-			let response = 1; //need to define response first for 3rd if block bc cant define const in if block
 			let indicator = 1;
 
 			//if (registrationDetails.userName.)
@@ -123,8 +123,9 @@ const RegistrationScreen = ({navigation, props}) => {
 				// 	});
 				// } else {
 				// 	console.log('success');
-				const tempUserName = response.data.userName;
 
+				const tempUserName = response.data.userName;
+				console.log('200');
 				navigation.navigate('Verification', {
 					tempUserName: tempUserName,
 					accountType: 'User',
@@ -152,6 +153,7 @@ const RegistrationScreen = ({navigation, props}) => {
 			userInfo.user.accountType = 'User';
 
 			const response = await googleRegisterMutation.mutateAsync(userInfo);
+
 			if (response.status === 200) {
 				dispatch(
 					setCurrentUser({

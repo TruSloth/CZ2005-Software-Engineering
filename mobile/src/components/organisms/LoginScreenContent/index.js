@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {Shapes} from 'react-native-background-shapes';
 import {SafeAreaView} from 'react-native-safe-area-context';
+
 import {LoginForm, AltAuthOptions} from '../../molecules/Auth';
 
 /**

@@ -5,6 +5,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useDispatch, useSelector} from 'react-redux';
 import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
 
+import BusinessHomeScreenContent from '../../components/organisms/BusinessHomeScreenContent';
 import LoginScreenContent from '../../components/organisms/LoginScreenContent';
 import {login} from '../../services/auth/login';
 import {googleLogin} from '../../services/auth/google/googleLogin';
@@ -21,8 +22,8 @@ const LoginScreen = (props) => {
 	};
 
 	const backOnPress = () => {
-		navigation.navigate('Onboarding')
-	}
+		navigation.navigate('Onboarding');
+	};
 
 	const backgroundStyle = {
 		backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,

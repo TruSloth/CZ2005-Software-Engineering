@@ -9,7 +9,6 @@ import TempVerifyScreen from '../scenes/TempVerify';
 import {
 	ServiceProviderLoginScreen,
 	ServiceProviderRegistrationScreen,
-	ServiceProviderHomeScreen,
 } from '../scenes/ServiceProvider';
 import {useSelector} from 'react-redux';
 

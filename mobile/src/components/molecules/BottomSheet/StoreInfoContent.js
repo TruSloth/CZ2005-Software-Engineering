@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useStore } from 'react-redux';
+import { useQueryClient } from 'react-query';
 
 /**
  * Renders {@link module:AppBottomSheet|AppBottomSheet} content for short-form Store Info.
@@ -33,6 +34,7 @@ const StoreInfoContent = (props) => {
 		moreInfoOnPress,
 		queueOnPress,
 		chatOnPress,
+		venueID,
 		storeImage,
 		heading,
 		waitTime,
@@ -55,7 +57,9 @@ const StoreInfoContent = (props) => {
 			</View>
 			<View style={{flexDirection: 'row'}}>
 				<Text style={styles.subheading}>{subHeading}</Text>
-				<Text style={styles.rating}>{rating} ⭐ ({numReviews})</Text>
+				<Text style={styles.rating}>{rating
+						? rating.$numberDecimal
+						: 0} ⭐ ({numReviews})</Text>
 			</View>
 			<View style={{flexDirection: 'row'}}>
 				<Text style={styles.texts}>
