@@ -34,7 +34,6 @@ const LoginScreenContent = (props) => {
 	const {backOnPress} = props;
 
 	const {submitForm, registerOnPress, loading, onPressGoogleSignin} = props;
-
 	// const dimensions = Dimensions.get('window');
 	// const imageWidth = dimensions.width;
 
@@ -113,6 +112,10 @@ const LoginScreenContent = (props) => {
 };
 
 const styles = StyleSheet.create({
+	container:{
+		backgroundColor: '#FCDDEC',
+		flex: 1,
+	},
 	centeredContainer: {
 		alignSelf: 'center',
 		flexGrow: 1,

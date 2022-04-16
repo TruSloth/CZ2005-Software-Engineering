@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
 			width: 10
 		},
 		headerTitleAlign: 'center',
-		headerTintColor: '#000000',
+		headerTintColor: '#EF5DA8',
+
 		headerTitleStyle: {color: '#000000'},
 		headerShadowVisible: false,
 	},
