@@ -1,6 +1,13 @@
 import axios from 'axios';
 import {LOCALHOST} from '../config';
 
+/**
+ * @memberof serviceProviders
+ * @function getServiceProviders
+ * @async
+ * @param {Integer} hour The current hour
+ * @returns {response}
+ */
 export const getServiceProviders = async (hour) => {
 	try {
 		const serviceProviders = await axios.get(

@@ -10,7 +10,6 @@ import {
 	ServiceProviderLoginScreen,
 	ServiceProviderRegistrationScreen,
 } from '../scenes/ServiceProvider';
-import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 

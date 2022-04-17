@@ -1,10 +1,9 @@
-import React, {useEffect, useRef, useState, useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
 
 import {
 	Text,
 	View,
 	StyleSheet,
-	TextInput,
 	Image,
 	ScrollView,
 	RefreshControl,
@@ -12,16 +11,21 @@ import {
 import {useQueryClient} from 'react-query';
 import TopBanner from '../../molecules/TopBanner';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {SearchBar} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 
+/**
+ * Renders the content for the ServiceProviderHome Screen on the ServiceProvider UI.
+ *
+ * @category Components
+ * @exports ServiceProviderHomeScreenContent
+ * @subcategory Organisms
+ *
+ * @property {object(user, venueID, queueNumber, pax)[]} queueData
+ * The data for the users currently in the queue.
+ * 
+ * Each entry must contain data on `user`, `venueID`, `queueNumber`, and `pax`. 
+ */
 const ServiceProviderHomeScreenContent = (props) => {
-	//export default function App(props) {
-	const Input = () => {
-		const [text, onChangeText] = React.useState('Useless Text');
-		const [number, onChangeNumber] = React.useState(null);
-	};
-
 	const {navigation, queueData} = props;
 
 	const settingsOnPress = () => {
@@ -33,13 +37,10 @@ const ServiceProviderHomeScreenContent = (props) => {
 
 	const BizProfileOnPress = () => {
 		navigation.navigate('BusinessProfile');
-		//console.log('bizproilfe');
 	};
 
 	const InsertCustomerOnPress = () => {
-		// navigation.navigate('HomePage', {screen: 'StoreDetailedInfo'});
 		navigation.navigate('InsertCustomer');
-		//console.log('insert pressed');
 	};
 
 	const CustomerDetailsOnPress = () => {
@@ -48,7 +49,6 @@ const ServiceProviderHomeScreenContent = (props) => {
 
 	const account = useSelector((state) => state.account);
 
-	const [search, setSearch] = useState('');
 	const [bannerHeight, setBannerHeight] = useState(0);
 
 	const queryClient = useQueryClient();
@@ -61,8 +61,6 @@ const ServiceProviderHomeScreenContent = (props) => {
 		setRefreshing(false);
 	}, []);
 
-	const cheflogo =
-		'https://www.kindpng.com/picc/m/273-2739192_chef-cuisinier-png-cooking-chef-clipart-cocinero-png.png';
 	return (
         <ScrollView
         refreshControl={
@@ -89,18 +87,6 @@ const ServiceProviderHomeScreenContent = (props) => {
 					);
 				}}
 			></TopBanner>
-
-				{/* <SearchBar
-				onChangeText={(text) => setSearch(text)}
-				value={search}
-				platform={Platform.OS === 'ios' ? 'ios' : 'android'}
-				onClear={(text) => setSearch('')}
-				round={false}
-				placeholder={'Search'}
-				placeholderTextColor={'#7879F1'}
-				containerStyle={[styles.searchBar, {top: bannerHeight + 20}]}
-				inputContainerStyle={styles.searchBarInput}
-			></SearchBar> */}
 
 				<View
 					style={{
@@ -215,13 +201,9 @@ const ServiceProviderHomeScreenContent = (props) => {
 const styles = StyleSheet.create({
 	container1: {
 		flex: 1,
-
 		justifyContent: 'center',
-		//	paddingTop: Constants.statusBarHeight,
 		backgroundColor: 'white',
 		padding: 8,
-
-		//alignItems: 'left',
 	},
 	sqaure: {
 		alignSelf: 'center',
@@ -263,7 +245,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		color: '#000000',
 	},
-	bigTextButton: {},
 	heading: {
 		margin: 10,
 		fontSize: 25,
@@ -276,13 +257,11 @@ const styles = StyleSheet.create({
 		textAlignVertical: 'top',
 	},
 	container2: {
-		//alignItems: 'left',
 		padding: 24,
 	},
 
 	buttonList2: {
 		marginLeft: '55%',
-		//marginRight: '90%',
 	},
 
 	button2: {

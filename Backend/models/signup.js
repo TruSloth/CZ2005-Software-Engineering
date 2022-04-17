@@ -8,14 +8,6 @@ function isPasswordRequired() {
   return true;
 }
 
-function isServiceProviderAccount() {
-  if (this.accountType === 'ServiceProvider') {
-    return true;
-  }
-
-  return false;
-}
-
 const signUpTemplate = new mongoose.Schema({
   userName: {
     type: String,

@@ -1,14 +1,15 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
 /**
- * Renders a QRCodeScanner to be used within {@link module:AppBottomSheet|AppBottomSheet}.
+ * Renders a QRCodeScanner to be used within {@link module:QRCodeReaderScreen|QRCodeReaderScreen}.
  *
  * @category Components
  * @exports QRCodeReader
  * @subcategory Molecules
  *
+ * @property {Function} onRead Callback used when `QRCodeReader` successfully scans a QR Code
  */
 
 const QRCodeReader = (props) => {

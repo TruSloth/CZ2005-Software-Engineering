@@ -12,13 +12,13 @@ import {StyleSheet, Text, View} from 'react-native';
  * return(
  *   <HorizontalSection
  * 		style={{
- * 			backgroundColor: '#7879F1'
+ * 			backgroundColor: '#FFF8FA'
  *		 }}							
  * 		title={'SectionTitle'}
  * 		titleStyle={{
-			color: '#7879F1'
+			color: '#000000'
 		}}>
-		<ChildComponent></ChildComponent>
+		child={<ChildComponent></ChildComponent>}
  *   </HorizontalSection>
  * )
  *

@@ -1,11 +1,11 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 
 import HorizontalSection from '../../atoms/HorizontalSection';
 import HorizontalSectionImage from '../../atoms/HorizontalSectionImage';
 
 /**
- * Renders a composite component that enhances a HorizontalSection with a header portion, and multiple child sections.
+ * Renders a composite component that enhances a {@link module:HorizontalSectionImage|HorizontalSectionImage} with a header portion, and multiple child sections.
  *
  * @category Components
  * @exports HorizontalBlock
@@ -14,23 +14,24 @@ import HorizontalSectionImage from '../../atoms/HorizontalSectionImage';
  * @example <caption>Default example</caption>
  * return(
  *   <HorizontalBlock
- 		blockTitle={HorizontalBlockTitle}
-		blockElements={[
-			{
-				title: 'blockElement1',
-				onPress: () => {console.log('blockElement1 pressed)}
-			},
-			{
-				title: 'blockElement2',
-				onPress: () => {console.log('blockElement2 pressed)}
-			}
-		]}
-		blockTitleStyle={{
-			color: '#FCDDEC'
-		}}
-		blockElementTitlesStyle={{
-			color: '#A5A6F6'
-		}}							
+ *		blockTitle={HorizontalBlockTitle}
+ *		blockElements={[
+ *			{
+ *				title: 'blockElement1',
+ *				onPress: () => {console.log('blockElement1 pressed)}
+ *			},
+ *			{
+ *				title: 'blockElement2',
+ *				onPress: () => {console.log('blockElement2 pressed)}
+ *			}
+ *		]}
+ *		blockTitleStyle={{
+ *			color: '#FCDDEC'
+ *		}}
+ *		blockElementTitlesStyle={{
+ *			color: '#A5A6F6'
+ *		}}
+ *		appLogo={require('PATH_TO_LOCAL_ASSET')}
  *   </HorizontalBlock>
  * )
  *
@@ -43,8 +44,8 @@ import HorizontalSectionImage from '../../atoms/HorizontalSectionImage';
  * @property {object(style)} blockTitleStyle Additional style to be used for `blockTitle`
  * @property {object(style)} blockElementTitlesStyle Additional style to be used for `title` for each `blockElement`
  * @property {object(style)} style Additional style to be used for `HorizontalBlock`
+ * @property {String} appLogo ImageURI to the image to be passed to {@link module:HorizontalSectionImage|HorizontalSectionImage}. Must be a local asset and imported using require.
  */
-
 
 const HorizontalBlock = (props) => {
 	const {blockTitle, blockElements, blockTitleStyle, blockElementTitlesStyle, style, appLogo} = props;

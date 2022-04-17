@@ -24,6 +24,7 @@ import {
 		title={'Submit'}
 		onPress={() => {console.log('Button Pressed')}}
 		loading={false}
+		disabled={false}
  *   </RoundButton>
  * )
  *
@@ -31,10 +32,11 @@ import {
  * @property {String} title Text to be used inside `RoundButton`
  * @property {Function} onPress Callback used when `RoundButton` is pressed
  * @property {Boolean} loading Whether `RoundButton` should display a loading indicator instead of `title`
+ * @property {Boolean} disabled Whether `RoundButton` should be disabled
  */
 
 const RoundButton = (props) => {
-	const {style, btnTextStyle, title, onPress, loading, disabled} = props;
+	const {style, title, onPress, loading, disabled} = props;
 
 	return loading ? (
 		<View style={[styles.loginButton, style]}>
@@ -64,10 +66,8 @@ const RoundButton = (props) => {
 const styles = StyleSheet.create({
 	loginButton: {
 		borderRadius: 10,
-		//borderWidth: 1,
 		paddingVertical: 5,
 		paddingHorizontal: 10,
-		//borderColor: '#7879F1',
 		alignItems: 'center',
 		marginVertical: 10,
 		backgroundColor: '#FCDDEC',

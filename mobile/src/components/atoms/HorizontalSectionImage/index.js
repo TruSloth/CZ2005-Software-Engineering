@@ -1,33 +1,34 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, Icon} from 'react-native';
-
-// Change doc to be for HorizontalSectionImage
+import {StyleSheet, Text, View, Image} from 'react-native';
 
 /**
- * Renders a container with horizontal borders above and below the child content.
+ * Renders a container with horizontal borders above and below the child content and a image on the left of the `title`. 
  *
  * @category Components
- * @exports HorizontalSection
+ * @exports HorizontalSectionImage
  * @subcategory Atoms
+ * @see {@link module:HorizontalSection|HorizontalSection}
  *
  * @example <caption>Default example</caption>
  * return(
- *   <HorizontalSection
+ *   <HorizontalSectionImage
  * 		style={{
- * 			backgroundColor: '#7879F1'
+ * 			backgroundColor: '#FFFFFF'
  *		 }}							
  * 		title={'SectionTitle'}
  * 		titleStyle={{
-			color: '#7879F1'
+			color: '#000000'
 		}}>
-		<ChildComponent></ChildComponent>
- *   </HorizontalSection>
+		imgsrc={require('PATH_TO_LOCAL_ASSET')}
+		child={<ChildComponent></ChildComponent>}
+ *   </HorizontalSectionImage>
  * )
  *
  * @property {ReactNativeComponent} child Component to appear within the `HorizontalSection`
  * @property {object(style)} style Additional style to be passed to `HorizontalSection`
  * @property {String} title Header text for the `HorizontalSection`
  * @property {object(style)} titleStyle Header text style for `title` 
+ * @property {String} imgsrc ImageURI to the image to be used for the filter. Must be a local asset and imported using require.
  */
 
 const HorizontalSectionImage = (props) => {

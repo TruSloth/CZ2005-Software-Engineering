@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
-import PushNotification from 'react-native-push-notification';
 
 /**
  * Renders a banner to be positioned at the top of the screen. Can optionally contain a action bar.
@@ -21,6 +20,9 @@ import PushNotification from 'react-native-push-notification';
 		}}
 		settingsOnPress={() => {
 			console.log('Settings button was pressed')
+		}}
+		chatOnPress={() => {
+			console.log('Chat button was pressed')
 		}}							
 		leftAvatar={false}
 		actionBar={true}
@@ -32,6 +34,7 @@ import PushNotification from 'react-native-push-notification';
  * @property {String} avatarImage Avatar Image URL to be used
  * @property {Function} onLayout Callback to be used to set the position of the floating search bar
  * @property {Function} settingsOnPress Callback to be used when the settings button is pressed
+ * @property {Function} chatOnPress Callback to be used when the chat button is pressed
  * @property {object(style)} style Additional style to be passed to `TopBanner`
  * @property {object(style)} bannerContentContainerStyle Additional style for the content container
  * @property {object(style)} titleStyle Additional style for `title`
@@ -56,29 +59,6 @@ const TopBanner = (props) => {
 		actionBar,
 	} = props;
 
-	// useEffect(() => {
-	// 	handleNotification();
-	// });
-	// const handleNotification = () => {
-	// 	// PushNotification.localNotification({
-	// 	// 	channelId: 'test-channel',
-	// 	// 	title: "It's your turn!",
-	// 	// 	message: 'Please make your way back',
-	// 	// 	color: 'red',
-	// 	// });
-	// 	PushNotification.cancelAllLocalNotifications();
-	// 	PushNotification.localNotificationSchedule({
-	// 		channelId: 'test-channel',
-	// 		title: "It's your turn!",
-	// 		message: 'Please make your way back',
-	// 		color: 'red',
-	// 		date: new Date(Date.now() + 5 * 1000),
-	// 		allowWhileIdle: true,
-	// 		onlyAlertOnce: 'true',
-	// 		// repeatType: 'time',
-	// 		// repeatTime: 120 * 1000,
-	// 	});
-	// };
 	return (
 		<View style={style} onLayout={onLayout}>
 			{actionBar ? (
@@ -117,33 +97,6 @@ const TopBanner = (props) => {
 									iconStyle={styles.iconStyle}
 								></Icon>
 						</TouchableOpacity>
-
-						{/* <TouchableOpacity onPress={BizProfileOnPress}>
-							<Icon
-								name={'user'}
-								type={'feather'}
-								tvParallaxProperties={undefined}
-								style={styles.iconHorizontalPadding}
-								iconStyle={styles.iconStyle}
-							></Icon>
-						</TouchableOpacity>
-
-						<TouchableOpacity>
-							<Icon
-								name='favorite-outline'
-								tvParallaxProperties={undefined}
-								style={styles.iconHorizontalPadding}
-								iconStyle={styles.iconStyle}
-							></Icon>
-						</TouchableOpacity>
-						<TouchableOpacity>
-							<Icon
-								name='text-snippet'
-								tvParallaxProperties={undefined}
-								style={styles.iconHorizontalPadding}
-								iconStyle={styles.iconStyle}
-							></Icon>
-						</TouchableOpacity> */}
 					</View>
 				</View>
 			) : (

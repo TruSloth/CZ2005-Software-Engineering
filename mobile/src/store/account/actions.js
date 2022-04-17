@@ -6,9 +6,8 @@ import {
 	QUEUING,
 	QUEUE_REACHED,
 	IN_STORE,
-	UPDATE_AVATAR_IMAGE_URL,
-	UPDATE_AVATAR_IMAGE
-} from './constants'
+	UPDATE_AVATAR_IMAGE,
+} from './constants';
 
 export const setCurrentUser = (user) => {
 	return {
@@ -39,15 +38,18 @@ export const updateCurrentQueue = (
 
 	return {
 		type: UPDATE_CURRENT_QUEUE,
-		payload: {venueName: serviceProviderName, venueID: serviceProviderID, queueStatus: queueStatus}
-	}
-}
+		payload: {
+			venueName: serviceProviderName,
+			venueID: serviceProviderID,
+			queueStatus: queueStatus,
+		},
+	};
+};
 
 // For local avatar images
 export const updateAvatarImage = (avatarImage) => {
 	return {
 		type: UPDATE_AVATAR_IMAGE,
-		payload: avatarImage
-	}
-}
-
+		payload: avatarImage,
+	};
+};

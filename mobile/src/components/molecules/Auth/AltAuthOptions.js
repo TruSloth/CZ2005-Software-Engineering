@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, Image, StyleSheet} from 'react-native';
 import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
 
 /**
- * Renders a row of alternative authentication options as logos. Currently supports Google and SingPass login.
+ * Renders a row of alternative authentication options as logos. Currently only supports Google login.
  *
  * @category Components
  * @exports AltAuthOptions
@@ -13,8 +13,8 @@ import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
  * @example <caption>Default example</caption>
  * return(
  *   <AltAuthOptions
- 		onPressGoogleLogin={() => {console.log('Logging in via Google')}}							
-		title={'Or Login With'}
+ *		onPressGoogleLogin={() => {console.log('Logging in via Google')}}							
+ *		altAuthTitle={'Or Login With'}
  *   </AltAuthOptions>
  * )
  *

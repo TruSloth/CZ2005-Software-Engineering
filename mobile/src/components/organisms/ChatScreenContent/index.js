@@ -12,7 +12,6 @@ import {
 } from 'react-native-gifted-chat';
 import {useSelector} from 'react-redux';
 import { LogBox } from 'react-native';
-import getStoredState from 'redux-persist/es/getStoredState';
 
 LogBox.ignoreAllLogs();
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
@@ -69,16 +68,6 @@ const ChatInputComposer = (props) => {
 		></Composer>
 	);
 };
-
-const ChatMessage = (props) => {
-	return (<Message
-    {...props}
-    containerStyle={{
-      left: { backgroundColor: 'lime', marginTop: 5 },
-      right: { backgroundColor: 'gold', marginTop: 5 },
-    }}
-  />)
-}
 
 const ChatMessageText = (props) => {
 	return (
@@ -163,6 +152,8 @@ const ChatBubble = (props) => {
  * @category Components
  * @exports ChatScreenContent
  * @subcategory Organisms
+ * 
+ * @property {String} room Room ID to connect to. Used by {@link https://socket.io/docs/v3/rooms/|Socket.io} 
  */
 
 const ChatScreenContent = (props) => {

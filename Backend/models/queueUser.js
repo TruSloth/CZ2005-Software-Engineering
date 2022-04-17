@@ -9,12 +9,7 @@ const queueTemplate = new mongoose.Schema({
     type: String,
     required: true,
   },
-
-  // store: {
-  //   type: String,
-  //   required: true,
-  // },
-
+  
   queueNumber: {
     type: Number,
     required: true,

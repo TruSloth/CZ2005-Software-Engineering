@@ -5,7 +5,6 @@ import {
 	NOT_IN_QUEUE,
 	ERROR,
 	UPDATE_AVATAR_IMAGE,
-	UPDATE_AVATAR_IMAGE_URL
 } from './constants';
 
 const initialState = {
@@ -30,8 +29,8 @@ const accountReducer = (state = initialState, action) => {
 				userName: action.payload.userName,
 				accountType: action.payload.accountType,
 				serviceProviderID: action.payload.serviceProviderID,
-				avatarImageURL: action.payload.avatarImageURL
-			}
+				avatarImageURL: action.payload.avatarImageURL,
+			};
 		case TOGGLE_LOGGED_IN:
 			return {
 				...state,
@@ -42,17 +41,17 @@ const accountReducer = (state = initialState, action) => {
 				...state,
 				currentQueueName: action.payload.venueName,
 				currentQueueID: action.payload.venueID,
-				queueStatus: action.payload.queueStatus
-			}
+				queueStatus: action.payload.queueStatus,
+			};
 		case UPDATE_AVATAR_IMAGE:
 			return {
 				...state,
-				avatarImage: action.payload
-			}
+				avatarImage: action.payload,
+			};
 		case ERROR:
 			return {
-				...state
-			}
+				...state,
+			};
 		default:
 			return state;
 	}

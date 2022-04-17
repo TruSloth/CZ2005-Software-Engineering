@@ -44,7 +44,7 @@
             
              
                 <a href="index.html">
-                    <h1 class="navbar-item">My React components</h1>
+                    <h1 class="navbar-item">QQueue</h1>
                 </a>
             
         </div>
@@ -72,7 +72,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Organisms</h3><ul><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Organisms</h3><ul><li><a href="module-AccountScreenContent.html">AccountScreenContent</a></li><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-CustomerDetailsScreenContent.html">CustomerDetailsScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-InsertCustomerContent.html">InsertCustomerContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li><li><a href="module-ServiceProviderHomeScreenContent.html">ServiceProviderHomeScreenContent</a></li><li><a href="module-ServiceProviderLoginScreenContent.html">ServiceProviderLoginScreenContent</a></li></ul><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-HorizontalSectionImage.html">HorizontalSectionImage</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li><li><a href="queue.html">queue</a></li><li><a href="serviceProviders.html">serviceProviders</a></li></ul></div>
                 
             </nav>
         </div>
@@ -93,9 +93,10 @@
 import {StyleSheet, TouchableOpacity} from 'react-native';
 
 import HorizontalSection from '../../atoms/HorizontalSection';
+import HorizontalSectionImage from '../../atoms/HorizontalSectionImage';
 
 /**
- * Renders a composite component that enhances a HorizontalSection with a header portion, and multiple child sections.
+ * Renders a composite component that enhances a {@link module:HorizontalSectionImage|HorizontalSectionImage} with a header portion, and multiple child sections.
  *
  * @category Components
  * @exports HorizontalBlock
@@ -104,23 +105,24 @@ import HorizontalSection from '../../atoms/HorizontalSection';
  * @example &lt;caption>Default example&lt;/caption>
  * return(
  *   &lt;HorizontalBlock
- 		blockTitle={HorizontalBlockTitle}
-		blockElements={[
-			{
-				title: 'blockElement1',
-				onPress: () => {console.log('blockElement1 pressed)}
-			},
-			{
-				title: 'blockElement2',
-				onPress: () => {console.log('blockElement2 pressed)}
-			}
-		]}
-		blockTitleStyle={{
-			color: '#FCDDEC'
-		}}
-		blockElementTitlesStyle={{
-			color: '#A5A6F6'
-		}}							
+ *		blockTitle={HorizontalBlockTitle}
+ *		blockElements={[
+ *			{
+ *				title: 'blockElement1',
+ *				onPress: () => {console.log('blockElement1 pressed)}
+ *			},
+ *			{
+ *				title: 'blockElement2',
+ *				onPress: () => {console.log('blockElement2 pressed)}
+ *			}
+ *		]}
+ *		blockTitleStyle={{
+ *			color: '#FCDDEC'
+ *		}}
+ *		blockElementTitlesStyle={{
+ *			color: '#A5A6F6'
+ *		}}
+ *		appLogo={require('PATH_TO_LOCAL_ASSET')}
  *   &lt;/HorizontalBlock>
  * )
  *
@@ -133,17 +135,19 @@ import HorizontalSection from '../../atoms/HorizontalSection';
  * @property {object(style)} blockTitleStyle Additional style to be used for `blockTitle`
  * @property {object(style)} blockElementTitlesStyle Additional style to be used for `title` for each `blockElement`
  * @property {object(style)} style Additional style to be used for `HorizontalBlock`
+ * @property {String} appLogo ImageURI to the image to be passed to {@link module:HorizontalSectionImage|HorizontalSectionImage}. Must be a local asset and imported using require.
  */
 
-
 const HorizontalBlock = (props) => {
-	const {blockTitle, blockElements, blockTitleStyle, blockElementTitlesStyle, style} = props;
+	const {blockTitle, blockElements, blockTitleStyle, blockElementTitlesStyle, style, appLogo} = props;
 
 	return (
-		&lt;HorizontalSection
+		
+		&lt;HorizontalSectionImage
             style={[styles.horizontalBlock, style]}
             titleStyle={[styles.horizontalBlockTitle, blockTitleStyle]}
 			title={blockTitle}
+			imgsrc={appLogo}
 			child={blockElements.map((element, key) => {
 				return (
 					&lt;TouchableOpacity onPress={() => element.onPress()} key={key}>
@@ -155,21 +159,22 @@ const HorizontalBlock = (props) => {
 					&lt;/TouchableOpacity>
 				);
 			})}
-		>&lt;/HorizontalSection>
+		>&lt;/HorizontalSectionImage>
 	);
 };
 
 const styles = StyleSheet.create({
 	horizontalBlock: {
 		padding: 0,
-        backgroundColor: '#A5A6F6',
+        backgroundColor: '#FCDDEC',
 		borderTopWidth: 0,
 		borderBottomWidth: 0
 	},
 
     horizontalBlockTitle: {
         margin: 10,
-        color: '#FCDDEC'
+        color: '#000000'
+		
     },
 
     horizontalBlockElement: {
@@ -178,7 +183,7 @@ const styles = StyleSheet.create({
     },
 
     horizontalBlockElementTitle: {
-        color: '#7879F1'
+        color: '#AAAAAA'
     }
 });
 
