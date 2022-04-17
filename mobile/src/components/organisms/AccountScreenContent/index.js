@@ -13,8 +13,8 @@ import TopBanner from '../../molecules/TopBanner';
  * @subcategory Organisms
  */
 
-const AccountScreenContent = () => {
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
+const AccountScreenContent = (props) => {
+	const {navigation} = props
 
 	const account = useSelector((state) => state.account);
 
@@ -22,7 +22,7 @@ const AccountScreenContent = () => {
 		{
 			title: '8888 Points',
 			onPress: () => {
-				console.log('Points Pressed');
+				navigation.navigate('Rewards')
 			},
 		},
 	];
@@ -81,27 +81,32 @@ const AccountScreenContent = () => {
 				title={`${account.userName}`}
 				subtitle={'Edit Profile'}
 				leftAvatar={true}
-				avatarImage={reactNativeLogo}
+				avatarImage={account.avatarImageURL !== null  ? {uri: account.avatarImageURL} : account.avatarImage}
                 bannerContentContainerStyle={styles.bannerContainer}
                 titleStyle={styles.bannerTitle}
                 subtitleStyle={styles.bannerSubtitle}
 			></TopBanner>
 			<HorizontalBlock
+				blockTitleStyle={styles.accountSettingHeader}
 				blockTitle={'You have rewards ready to be used!'}
 				blockElements={accountPoints}
 				blockElementTitlesStyle={styles.accountPoints}
 			></HorizontalBlock>
 			<HorizontalBlock
+				style={styles.accountSettingHeader}
 				blockTitle={'My Account'}
 				blockElements={myAccountOptions}
+				blockTitleStyle={styles.accountSettingHeader}
 			></HorizontalBlock>
 			<HorizontalBlock
 				blockTitle={'General'}
 				blockElements={generalOptions}
+				blockTitleStyle={styles.accountSettingHeader}
 			></HorizontalBlock>
 			<HorizontalBlock
 				blockTitle={'Join the Club!'}
 				blockElements={joinTheClubOptions}
+				blockTitleStyle={styles.accountSettingHeader}
 			></HorizontalBlock>
 		</ScrollView>
 	);
@@ -121,13 +126,19 @@ const styles = StyleSheet.create({
     bannerSubtitle: {
         marginTop: 5,
         marginBottom: 20,
-        marginHorizontal: 20
+        marginHorizontal: 20,
+		color: '#000000'
     },
+
+	accountSettingHeader: {
+		fontWeight: 'bold'
+	},
 
 	accountPoints: {
 		fontWeight: 'bold',
 		fontSize: 48,
 		alignSelf: 'center',
+		color: '#E89575'
 	},
 });
 

@@ -44,7 +44,7 @@
             
              
                 <a href="index.html">
-                    <h1 class="navbar-item">My React components</h1>
+                    <h1 class="navbar-item">QQueue</h1>
                 </a>
             
         </div>
@@ -72,7 +72,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Organisms</h3><ul><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Organisms</h3><ul><li><a href="module-AccountScreenContent.html">AccountScreenContent</a></li><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-CustomerDetailsScreenContent.html">CustomerDetailsScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-InsertCustomerContent.html">InsertCustomerContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li><li><a href="module-ServiceProviderHomeScreenContent.html">ServiceProviderHomeScreenContent</a></li><li><a href="module-ServiceProviderLoginScreenContent.html">ServiceProviderLoginScreenContent</a></li></ul><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-HorizontalSectionImage.html">HorizontalSectionImage</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li><li><a href="queue.html">queue</a></li><li><a href="serviceProviders.html">serviceProviders</a></li></ul></div>
                 
             </nav>
         </div>
@@ -90,17 +90,17 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import RoundButton from '../RoundButton';
 
 /**
- * 
+ *
  * Renders the content for a Card.
- * 
+ *
  * @category Components
  * @exports CardDescription
  * @subcategory Atoms
- * 
+ *
  * @example &lt;caption>Default example&lt;/caption>
  * return(
  *   &lt;CardDescription
@@ -117,14 +117,16 @@ import RoundButton from '../RoundButton';
  *	subtextLine1Style={{
  *		color: '#7879F1',
  *	}}
- *	subtextLine2={'SubtextLine2'}	
+ *	subtextLine2={'SubtextLine2'}
  *	subtextLine2Style={{
  *		color: '#7879F1',
  *	}}
- *	onPressCardDesc={() => console.log('CardDesc Pressed')}>
- *   &lt;/CardDescription>
+ *	onPressCardDesc={() => console.log('CardDesc Pressed')}
+ *  hideCardButton={false}
+ *  disableCardDesc={false}
+ * &lt;/CardDescription>
  * )
- * 
+ *
  * @property {String} title Header text passed to the card description
  * @property {object(style)} titleStyle Header text style passed to `title`
  * @property {String} subtitle Subheader text passed to the card description that appears directly below `title`
@@ -134,6 +136,8 @@ import RoundButton from '../RoundButton';
  * @property {String} subtextLine2 Additional text that appears on the right side of card description, directly below `subtextLine1`
  * @property {object(style)} subtextLine2Style Subtext text style passed to `subtextLine2`
  * @property {Function} onPressCardDesc Callback used when `CardDescription` is pressed
+ * @property {Boolean} hideCardButton Whether the {@link module:RoundButton|RoundButton} in the card description is shown.
+ * @property {Boolean} disableCardDesc Whether the {@link module:RoundButton|RoundButton} in the card description should be disabled.
  */
 
 const CardDescription = (props) => {
@@ -147,6 +151,8 @@ const CardDescription = (props) => {
 		subtextLine2,
 		subtextLine2Style,
 		onPressCardDesc,
+		hideCardButton,
+		disableCardDesc,
 	} = props;
 	return (
 		&lt;View style={styles.cardDescriptionBox}>
@@ -161,11 +167,17 @@ const CardDescription = (props) => {
 					&lt;Text style={subtextLine1Style}>{subtextLine1}&lt;/Text>
 					&lt;Text style={subtextLine2Style}>{subtextLine2}&lt;/Text>
 				&lt;/View>
-				&lt;RoundButton
-					title={'Queue'}
-					onPress={() => onPressCardDesc()}
-					style={styles.queueButton}
-				>&lt;/RoundButton>
+				{hideCardButton ? (
+					&lt;View style={{width: 0}}>&lt;/View>
+				) : (
+					&lt;RoundButton
+						title={'Queue'}
+						onPress={() => onPressCardDesc()}
+						style={styles.queueButton}
+						btnTextStyle={styles.queueButtonText}
+						disabled={disableCardDesc}
+					>&lt;/RoundButton>
+				)}
 			&lt;/View>
 		&lt;/View>
 	);
@@ -176,6 +188,9 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		paddingVertical: 5,
 		backgroundColor: 'transparent',
+		width: Dimensions.get('window').width * 0.48,
+		height: Dimensions.get('window').height * 0.18,
+		justifyContent: 'space-evenly',
 	},
 
 	subtextBox: {
@@ -187,6 +202,11 @@ const styles = StyleSheet.create({
 	queueButton: {
 		borderWidth: 0,
 		backgroundColor: '#FCDDEC',
+	},
+
+	queueButtonText: {
+		color: '#000000',
+		fontWeight: 'bold'
 	},
 
 	subtext: {

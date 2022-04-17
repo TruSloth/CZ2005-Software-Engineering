@@ -1,4 +1,3 @@
-
 import accountReducer from './account/reducers';
 import socketReducer from './socket/reducers';
 import {combineReducers, createStore} from 'redux';
@@ -36,5 +35,3 @@ const storeConfig = () => {
 };
 
 export default storeConfig;
-
-//export default store = createStore(rootReducer)

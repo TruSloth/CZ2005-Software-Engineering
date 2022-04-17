@@ -183,6 +183,7 @@ router.post("/users/register/:id", async (req, res) => {
 
     if (!serviceProvider) {
       res.status(401).json({ serviceProviderID: "Invalid" });
+      return;
     }
 
     user.verified = true;

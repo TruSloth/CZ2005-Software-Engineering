@@ -12,13 +12,13 @@ import {StyleSheet, Text, View} from 'react-native';
  * return(
  *   <HorizontalSection
  * 		style={{
- * 			backgroundColor: '#7879F1'
+ * 			backgroundColor: '#FFF8FA'
  *		 }}							
  * 		title={'SectionTitle'}
  * 		titleStyle={{
-			color: '#7879F1'
+			color: '#000000'
 		}}>
-		<ChildComponent></ChildComponent>
+		child={<ChildComponent></ChildComponent>}
  *   </HorizontalSection>
  * )
  *
@@ -33,7 +33,8 @@ const HorizontalSection = (props) => {
 
 	return (
 		<View style={[styles.horizontalSection, style]}>
-			<Text style={titleStyle}>{title}</Text>
+			<Text style={titleStyle}>
+				{title}</Text>
 			{child}
 		</View>
 	);
@@ -43,8 +44,8 @@ const styles = StyleSheet.create({
 	horizontalSection: {
 		borderTopWidth: 1,
 		borderBottomWidth: 1,
-		borderColor: '#7879F1',
-		padding: 10,
+		borderColor: '#000000',
+		padding: 15,
 	},
 });
 

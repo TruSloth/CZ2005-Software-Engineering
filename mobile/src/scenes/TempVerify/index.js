@@ -22,7 +22,7 @@ import {verify} from '../../services/auth/verify';
 import {setCurrentUser, toggleLogIn} from '../../store/account/actions';
 
 const TempVerifyScreen = ({route}) => {
-	const {tempUserName, accountType} = route.params;
+	const {tempUserName, accountType, avatarImageURL} = route.params;
 
 	const dispatch = useDispatch();
 
@@ -49,6 +49,7 @@ const TempVerifyScreen = ({route}) => {
 							userName: tempUserName,
 							accountType: accountType,
 							serviceProviderID: null,
+							avatarImageURL: null,
 						})
 					);
 					if (!socket.connected) {
@@ -64,6 +65,7 @@ const TempVerifyScreen = ({route}) => {
 							userName: tempUserName,
 							accountType: accountType,
 							serviceProviderID: authid,
+							avatarImageURL: avatarImageURL ? avatarImageURL : null
 						})
 					);
 				}

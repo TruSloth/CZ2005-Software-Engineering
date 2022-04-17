@@ -3,13 +3,17 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StyleSheet} from 'react-native';
 
-//import InsertCustomer from '../scenes/StoreDetailedInfo';
-
 import AppSettingsScreen from '../../scenes/AppSettings';
 import { ServiceProviderHomeScreen, InsertCustomerScreen, CustomerDetailsScreen, ServiceProviderProfileScreen} from '../../scenes/ServiceProvider';
 
 /**
- * Stack navigators for the store info set of screens
+ * Stack navigators for the **ServiceProvider** set of screens
+ *
+ * Controls navigation for `ServiceProviderHomeScreen`, `InsertCustomerScreen`, `AppSettingsScreen`, `CustomerDetailsScreen` and `ServiceProviderProfileScreen`.
+ *
+ * @category Navigations
+ * @exports HomeNavigator
+ *
  */
 
 const Stack = createNativeStackNavigator();
@@ -24,13 +28,6 @@ const ServiceProviderHomeNavigator = () => {
 					headerShown: false,
 				}}
 			></Stack.Screen>
-			{/* <Stack.Screen
-				name='HomePage'
-				component={HomeScreen}
-				options={{
-					headerShown: false,
-				}}
-			></Stack.Screen> */}
 			<Stack.Screen
 				name='InsertCustomer'
 				component={InsertCustomerScreen}
@@ -51,12 +48,6 @@ const ServiceProviderHomeNavigator = () => {
 				component={ServiceProviderProfileScreen}
 				options={{title: ''}}
 			></Stack.Screen>
-			{/* NEWLY ADDED  */}
-			{/* <Stack.Screen
-				name='BusinessHome'
-				component={BusinessHomeScreen}
-				options={{title: ''}}
-			></Stack.Screen> */}
 		</Stack.Navigator>
 	);
 };
@@ -66,7 +57,7 @@ const styles = StyleSheet.create({
 		title: 'App Settings',
 		headerTitleAlign: 'center',
 		headerTintColor: '#EF5DA8',
-		headerTitleStyle: {color: '#7879F1'},
+		headerTitleStyle: {color: '#000000'},
 		headerShadowVisible: false,
 	},
 });

@@ -6,17 +6,16 @@ import AccountScreen from '../../scenes/Account';
 import HistoryScreen from '../../scenes/History';
 import {StyleSheet} from 'react-native';
 
-
 const Stack = createNativeStackNavigator();
 
 /**
  * Stack navigator for the **account** set of screens.
- * 
+ *
  * Controls navigation for `AccountScreen` and `HistoryScreen`.
- * 
+ *
  * @category Navigations
  * @exports AccountNavigator
- * 
+ *
  */
 
 const AccountNavigator = () => {

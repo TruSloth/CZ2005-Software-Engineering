@@ -115,15 +115,21 @@ dotenv.config();
     const storeQueue = await queueTemplate
       .find({ venueID: req.query.venueID }, { queueNumber: 1, user: 1, _id: 0 })
       .sort({ queueNumber: 1 });
-  
-      console.log(storeQueue)
-  
-    const intensity = await stallTemplate
-      .findOne({venueID: req.query.venueID}, {venueForecast: {hour: req.query.hour}})
-  
+
+    const stall = await stallTemplate.findOne({venueID: req.query.venueID})
     let multiplier = 1
-  
-    const venueForecast = intensity.venueForecast ?? {intensity_txt: 'Missing'} 
+    let venueForecast
+
+    if (!stall) {
+      res.status(406);
+      return
+    }
+
+    if (stall.venueForecast) {
+      venueForecast = stall.venueForecast.find(forecast => forecast.hour === Number(req.query.hour))
+    } else {
+      venueForecast = {intensity_txt: 'Missing'}
+    }
   
     if (venueForecast.intensity_txt === 'Average') {
       multiplier = 1.2
@@ -136,16 +142,6 @@ dotenv.config();
     if (venueForecast.intensity_txt === 'High') {
       multiplier = 2
     }
-  
-    // if(intensity.venueForecast.intensity_txt == 'low' || intensity.venueForecast.intensity_txt == 'Below Average'){
-    //   multiplier = 1
-    // }else if(intensity.venueForecast.intensity_txt == 'Average'){
-    //   multiplier = 1.2
-    // }else if(intensity.venueForecast.intensity_txt == 'Above Averge'){
-    //   multiplier = 1.5
-    // }else if(intensity.venueForecast.intensity_txt == "High"){
-    //   multiplier = 2
-    // }
   
     if (storeQueue.length === 0) {
       res.send({waitTime: storeQueue.length});

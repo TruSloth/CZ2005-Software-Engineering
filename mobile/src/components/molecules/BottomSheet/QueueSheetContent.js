@@ -3,6 +3,7 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
 /**
  * Renders {@link module:AppBottomSheet|AppBottomSheet} content for queueing functionality.
+ * To be passed to `AppBottomSheet`.
  *
  * @category Components
  * @exports QueueSheetContent
@@ -12,13 +13,13 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
  * 
  * return(
  *   <AppBottomSheet
- 		renderContent={QueueSheetContent}							
-		onCloseEnd={() => {console.log('Closed')}}
-		count={count}
-		onPressPlus={() => {console.log('Queue was incremented')}}
-		onPressMinus={() => {console.log('Queue was decremented')}}
-		onPressConfirm={() => {console.log('Queue was submitted')}}
-		onPressCancel={() => {console.log('Queue was cancelled')}}
+ * 		renderContent={QueueSheetContent}							
+ *		onCloseEnd={() => {console.log('Closed')}}
+ *		count={count}
+ *		onPressPlus={() => {console.log('Queue was incremented')}}
+ *		onPressMinus={() => {console.log('Queue was decremented')}}
+ *		onPressConfirm={() => {console.log('Queue was submitted')}}
+ *		onPressCancel={() => {console.log('Queue was cancelled')}}
  *   </AppBottomSheet>
  * )
  *
@@ -35,28 +36,39 @@ const QueueSheetContent = (props) => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title2}>Please select no. of pax:</Text>
+			<Text style={styles.header}>Please select no. of pax:</Text>
 
-			<View flexDirection='row'>
-				<TouchableOpacity style={[styles.btn1]} onPress={onPressMinus}>
+			<View style={styles.counterContainer}>
+				<TouchableOpacity
+					style={[styles.counterBtn]}
+					onPress={onPressMinus}
+				>
 					<Text style={styles.btnTextMinus}>-</Text>
 				</TouchableOpacity>
 
-				<Text style={styles.title}>{count}</Text>
+				<Text style={styles.count}>{count}</Text>
 
-				<TouchableOpacity style={[styles.btn1]} onPress={onPressPlus}>
+				<TouchableOpacity
+					style={[styles.counterBtn]}
+					onPress={onPressPlus}
+				>
 					<Text style={styles.btnTextPlus}>+</Text>
 				</TouchableOpacity>
 			</View>
 			<View>
 				<TouchableOpacity
-					style={[styles.btn2]}
-					onPress={onPressConfirm}
+					style={[styles.submissionBtn]}
+					onPress={() => {
+						onPressConfirm();
+					}}
 				>
 					<Text style={styles.btnTextConfirm}>Confirm</Text>
 				</TouchableOpacity>
 				<View style={{width: 15}} />
-				<TouchableOpacity style={[styles.btn2]} onPress={onPressCancel}>
+				<TouchableOpacity
+					style={[styles.submissionBtn]}
+					onPress={onPressCancel}
+				>
 					<Text style={styles.btnTextCancel}>Cancel</Text>
 				</TouchableOpacity>
 			</View>
@@ -66,13 +78,18 @@ const QueueSheetContent = (props) => {
 
 const styles = StyleSheet.create({
 	container: {
-		padding: 16,
+		padding: 48,
 		height: 450,
 		backgroundColor: 'white',
 		justifyContent: 'center',
-		alignItems: 'center',
+		alignItems: 'stretch',
 	},
-	btn1: {
+
+	counterContainer: {
+		flexDirection: 'row',
+		alignSelf: 'center',
+	},
+	counterBtn: {
 		marginTop: 15,
 		alignItems: 'center',
 		justifyContent: 'center',
@@ -82,51 +99,49 @@ const styles = StyleSheet.create({
 		borderColor: '#fff',
 	},
 
-	btn2: {
+	submissionBtn: {
 		marginTop: 15,
-		borderWidth: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
 		height: 35,
-		width: 120,
-		borderRadius: 7,
-		backgroundColor: '#fff',
-		borderColor: '#493d8a',
+		borderRadius: 10,
+		backgroundColor: '#FCDDEC',
 	},
 
 	btnTextPlus: {
 		fontWeight: 'bold',
 		fontSize: 25,
-		color: '#493d8a',
+		color: '#000000',
 	},
 
 	btnTextMinus: {
 		fontWeight: 'bold',
 		fontSize: 25,
-		color: '#493d8a',
+		color: '#000000',
 	},
 
 	btnTextConfirm: {
 		fontWeight: 'bold',
 		fontSize: 15,
-		color: '#493d8a',
+		color: '#000000',
 	},
 
 	btnTextCancel: {
 		fontWeight: 'bold',
 		fontSize: 15,
-		color: '#F178B6',
+		color: '#000000',
 	},
 
-	title: {
+	count: {
 		fontSize: 80,
-		color: '#493d8a',
+		color: '#E89575',
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-	title2: {
+	header: {
 		fontSize: 25,
-		color: '#493d8a',
+		color: '#000000',
+		alignSelf: 'center',
 	},
 });
 

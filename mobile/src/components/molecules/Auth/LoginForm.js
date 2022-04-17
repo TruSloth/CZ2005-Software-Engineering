@@ -16,8 +16,8 @@ import InputField from '../../atoms/InputField';
  * @example <caption>Default example</caption>
  * return(
  *   <LoginForm
- 		submitForm={() => {console.log('Form submitted')}}							
-		loading={false}
+ * 		submitForm={() => {console.log('Form submitted')}}							
+ *		loading={false}
  *   </LoginForm>
  * )
  *
@@ -27,7 +27,6 @@ import InputField from '../../atoms/InputField';
 
 const LoginForm = (props) => {
 	const {submitForm, loading} = props;
-
 	const [email, onChangeEmail] = useState(null);
 	const [password, onChangePassword] = useState(null);
 

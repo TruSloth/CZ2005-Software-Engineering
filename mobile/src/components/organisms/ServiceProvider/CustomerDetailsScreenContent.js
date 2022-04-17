@@ -1,10 +1,9 @@
-import React, {useEffect, useRef, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 
 import {
 	Text,
 	View,
 	StyleSheet,
-	TextInput,
 	Image,
 	Modal,
 	Alert,
@@ -20,29 +19,71 @@ import {Icon} from 'react-native-elements';
 import HorizontalSection from '../../atoms/HorizontalSection';
 import {useSelector} from 'react-redux';
 
-const CustomerDetailsScreenContent = (props) => {
-	const {navigation, queueData, pushFromQueue} = props;
+/**
+ * Renders the content for the CustomerDetails Screen on the ServiceProvider UI.
+ *
+ * @category Components
+ * @exports CustomerDetailsScreenContent
+ * @subcategory Organisms
+ *
+ * @property {Function} pushFromQueue Callback used to notify a user of their turn in the queue
+ * 
+ */
 
+const CustomerDetailsScreenContent = (props) => {
+	const {pushFromQueue} = props;
+
+	// Resource Hooks
+  	const account = useSelector((state) => state.account)
+
+	const queryClient = useQueryClient();
+
+	// State Hooks
+	const [refreshing, setRefreshing] = useState(false);
+	const [queueData, setQueueData] = useState([]);
 	const [modalVisible, setModalVisible] = useState(false);
+
+	// Named helper and callback functions
+	const advanceQueue = async (serviceProviderID, userName) => {
+		await pushFromQueue(serviceProviderID, userName);
+		updateDetails();
+	}
+
 	const RemoveCustomerOnPress = () => {
 		setModalVisible(true);
 	};
 
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
+	// Effect and Callback hooks
+	useEffect(() => {
+		const storeQueueData = queryClient.getQueryData(
+			'getStoreQueue'
+		);
 
-	const account = useSelector((state) => state.account);
+		if (storeQueueData) {
+			setQueueData(storeQueueData);
+		}
 
-	const queryClient = useQueryClient();
+		return () => {
+			setQueueData([]);
+		};
+	}, [queryClient.getQueryData('getStoreQueue')]);
 
-	const [refreshing, setRefreshing] = useState(false);
-
-	// TODO: Customer count not updating properly.
-
-	const onRefresh = useCallback(() => {
+	const onRefresh = useCallback(async () => {
 		setRefreshing(true);
-		queryClient.invalidateQueries('getStoreQueue');
+		await queryClient.invalidateQueries('getStoreQueue');
+		updateDetails();
 		setRefreshing(false);
 	}, []);
+
+	const updateDetails = useCallback(() => {
+		const storeQueueData = queryClient.getQueryData(
+			'getStoreQueue'
+		);
+
+		if (storeQueueData) {
+			setQueueData(storeQueueData);
+		}
+	}, [queryClient.getQueryData('getStoreQueue')]);
 
 	return (
 		<ScrollView
@@ -86,12 +127,9 @@ const CustomerDetailsScreenContent = (props) => {
 										/>
 										<TouchableOpacity
 											style={styles.firstContact}
-											onPress={() =>
-												pushFromQueue(
-													account.serviceProviderID,
-													customer.user
-												)
-											}
+
+                      onPress={() => advanceQueue(account.serviceProviderID, customer.user)}
+
 										>
 											<Icon
 												size={40}

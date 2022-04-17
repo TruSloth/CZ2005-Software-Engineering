@@ -44,7 +44,7 @@
             
              
                 <a href="index.html">
-                    <h1 class="navbar-item">My React components</h1>
+                    <h1 class="navbar-item">QQueue</h1>
                 </a>
             
         </div>
@@ -72,7 +72,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Organisms</h3><ul><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Organisms</h3><ul><li><a href="module-AccountScreenContent.html">AccountScreenContent</a></li><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-CustomerDetailsScreenContent.html">CustomerDetailsScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-InsertCustomerContent.html">InsertCustomerContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li><li><a href="module-ServiceProviderHomeScreenContent.html">ServiceProviderHomeScreenContent</a></li><li><a href="module-ServiceProviderLoginScreenContent.html">ServiceProviderLoginScreenContent</a></li></ul><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-HorizontalSectionImage.html">HorizontalSectionImage</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li><li><a href="queue.html">queue</a></li><li><a href="serviceProviders.html">serviceProviders</a></li></ul></div>
                 
             </nav>
         </div>
@@ -103,66 +103,103 @@ import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
  * 
  * return(
  *   &lt;AppBottomSheet
- 		renderContent={StoreInfoContent}							
-		onCloseEnd={() => {console.log('Closed')}}
-		moreInfoOnPress={() => {console.log('Displaying More info')}}
-		queueOnPress={() => {console.log('Opening Queue')}}
-		chatOnPress={() => {console.log('Opening Chat')}}
+ *		renderContent={StoreInfoContent}							
+ *		onCloseEnd={() => {console.log('Closed')}}
+ *		moreInfoOnPress={() => {console.log('Displaying More info')}}
+ *		queueOnPress={() => {console.log('Opening Queue')}}
+ *		chatOnPress={() => {console.log('Opening Chat')}}
+ *		storeImage={require('PATH_TO_LOCAL_ASSET')}
+ *		heading={'Header'}
+ *		waitTime={'~ 5 mins'}
+ *		subHeading={'Subheader'}
+ *		rating={'4.4'}
+ *		numReviews={'100'}
+ *		text={'Long text description'}
+ *		queueDisabled={false}
  *   &lt;/AppBottomSheet>
  * )
  *
  * @property {Function} moreInfoOnPress Callback used when moreInfo option is pressed
  * @property {Function} queueOnPress Callback used when queue option is pressed
  * @property {Function} chatOnPress Callback used when chat option is pressed
+ * @property {String} storeImage ImageURI to the image to be used for `StoreInfoContent`. Must be a local asset and imported using require
+ * @property {String} heading Header text to be passed to `StoreInfoContent`
+ * @property {String} waitTime Waiting time for ServiceProvider displayed within `StoreInfoContent`. Appears beside `heading`
+ * @property {String} subHeading Subheader text to be passed to `StoreInfoContent`. Appears below `heading`
+ * @property {String} rating Additional text reflecting the average ratings for ServiceProvider displayed within `StoreInfoContent`. Appears below `waitTime` alongside `numReviews`
+ * @property {String} numReviews Additional text reflecting the total number of reviews for ServiceProvider displayed within `StoreInfoContent`. Appears below `waitTime` alongside `numReviews`
+ * @property {String} text Long description text for ServiceProvider
+ * @property {Boolean} queueDisabled Whether the queue button should be disabled
  */
 
 const StoreInfoContent = (props) => {
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
-
-	const {moreInfoOnPress, queueOnPress, chatOnPress} = props;
+	const {
+		moreInfoOnPress,
+		queueOnPress,
+		chatOnPress,
+		storeImage,
+		heading,
+		waitTime,
+		subHeading,
+		rating,
+		numReviews,
+		text,
+		queueDisabled,
+	} = props;
 
 	return (
 		&lt;View style={styles.container}>
 			&lt;Image
 				style={styles.images}
-				source={{uri: reactNativeLogo}}
+				source={
+					storeImage
+						? {uri: storeImage}
+						: require('../../../assets/QQueue_Small.png')
+				}
 			>&lt;/Image>
-			&lt;View style={{flexDirection: 'row'}}>
-				&lt;Text style={styles.heading}>Location 1 ♡&lt;/Text>
-				&lt;Text style={[styles.waitTime]}>~15 mins&lt;/Text>
+			&lt;View
+				style={{flexDirection: 'row', justifyContent: 'space-between'}}
+			>
+				&lt;Text style={styles.heading}>{heading}&lt;/Text>
+				&lt;Text style={[styles.waitTime]}>{waitTime}&lt;/Text>
 			&lt;/View>
 			&lt;View style={{flexDirection: 'row'}}>
-				&lt;Text style={styles.subheading}>8 in queue&lt;/Text>
-				&lt;Text style={styles.rating}>⭐ 4.4 (505)&lt;/Text>
-			&lt;/View>
-			&lt;View style={{flexDirection: 'row'}}>
-				&lt;Text style={styles.texts}>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-					do eiusmod tempor incididunt ut labore et dolore magna
-					aliqua.
+				&lt;Text style={styles.subheading}>{subHeading}&lt;/Text>
+				&lt;Text style={styles.rating}>
+					{rating ? rating : 0} ⭐ ({numReviews})
 				&lt;/Text>
+			&lt;/View>
+			&lt;View style={{flexDirection: 'row'}}>
+				&lt;Text style={styles.texts}>{text}&lt;/Text>
 				&lt;View style={{flexDirection: 'column'}}>
 					&lt;TouchableOpacity
-						style={[styles.button, {backgroundColor: '#8fbc8f'}]}
+						style={[
+							styles.button,
+							{
+								backgroundColor: queueDisabled
+									? '#C4C4C4'
+									: '#8fbc8f',
+							},
+						]}
+						disabled={queueDisabled}
 						onPress={queueOnPress}
 					>
-						&lt;Text styles={styles.buttonText}>Queue&lt;/Text>
+						&lt;Text style={styles.buttonText}>Queue&lt;/Text>
 					&lt;/TouchableOpacity>
 					&lt;TouchableOpacity
 						style={styles.button}
 						onPress={chatOnPress}
 					>
-						&lt;Text styles={styles.buttonText}>Chat&lt;/Text>
+						&lt;Text style={styles.buttonText}>Chat&lt;/Text>
 					&lt;/TouchableOpacity>
 					&lt;TouchableOpacity
 						style={styles.button}
 						onPress={moreInfoOnPress}
 					>
-						&lt;Text styles={styles.buttonText}>More Info&lt;/Text>
+						&lt;Text style={styles.buttonText}>More Info&lt;/Text>
 					&lt;/TouchableOpacity>
 				&lt;/View>
 			&lt;/View>
-			
 		&lt;/View>
 	);
 };
@@ -181,23 +218,22 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 		marginBottom: 5,
 		fontWeight: 'bold',
-		color: '#7879F1',
+		color: '#000000',
 	},
 	subheading: {
 		fontSize: 15,
 		textAlign: 'left',
 		justifyContent: 'flex-start',
-		color: '#7879F1',
+		color: '#E89575',
 		marginBottom: 10,
 		fontWeight: 'bold',
 	},
 	waitTime: {
 		fontSize: 20,
 		textAlign: 'right',
-		alignSelf: 'flex-end',
 		marginTop: 20,
 		marginBottom: 5,
-		marginLeft: '44%',
+		paddingRight: 8,
 		fontWeight: 'bold',
 		color: 'black',
 	},
@@ -205,35 +241,36 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		textAlign: 'right',
 		justifyContent: 'flex-end',
-		color: '#7879F1',
+		color: '#E89575',
 		marginBottom: 10,
 		marginLeft: '53%',
 		fontWeight: 'bold',
 	},
 	texts: {
-		color: '#7879F1',
+		color: '#000000',
 		width: '70%',
 	},
 	button: {
 		borderRadius: 50,
-		borderWidth: 1,
 		padding: 8,
 		margin: '5%',
-		borderColor: '#7879F1',
 		alignItems: 'center',
 		width: '85%',
 		height: '15%',
 		alignContent: 'flex-end',
+		backgroundColor: '#FCDDEC',
 	},
 	buttonText: {
 		fontWeight: 'bold',
-		color: '#7879F1',
+		color: '#000000',
 	},
 	images: {
 		width: '100%',
 		height: '40%',
 		marginTop: 5,
 		borderRadius: 10,
+		borderWidth: 1,
+		borderColor: '#000000',
 	},
 });
 

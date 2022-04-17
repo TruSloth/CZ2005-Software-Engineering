@@ -6,11 +6,10 @@ import {
 	View,
 	Text,
 	StyleSheet,
-	TouchableOpacity,
-	Dimensions,
+	TouchableOpacity
 } from 'react-native';
-import {Shapes} from 'react-native-background-shapes';
 import {SafeAreaView} from 'react-native-safe-area-context';
+
 import {LoginForm, AltAuthOptions} from '../../molecules/Auth';
 
 /**
@@ -34,15 +33,10 @@ const LoginScreenContent = (props) => {
 
 	const {submitForm, registerOnPress, loading, onPressGoogleSignin} = props;
 
-	// const dimensions = Dimensions.get('window');
-	// const imageWidth = dimensions.width;
-
 	return (
 		//
 		<SafeAreaView style={styles.container}>
 			<ScrollView
-			//style={styles.centeredContainer}
-			//contentContainerStyle={{flexGrow: 1}}
 			>
 				<View style={styles.sqaure}>
 					<Image
@@ -112,6 +106,10 @@ const LoginScreenContent = (props) => {
 };
 
 const styles = StyleSheet.create({
+	container:{
+		backgroundColor: '#FCDDEC',
+		flex: 1,
+	},
 	centeredContainer: {
 		alignSelf: 'center',
 		flexGrow: 1,

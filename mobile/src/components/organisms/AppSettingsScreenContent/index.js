@@ -46,7 +46,7 @@ const AppSettingsScreenContent = () => {
 	];
 	const languageSettings = [
 		{
-			title: 'Language Setting 1',
+			title: 'Language',
 			onPress: () => {
 				console.log('Language Setting 1 Pressed');
 			},
@@ -60,6 +60,8 @@ const AppSettingsScreenContent = () => {
 			},
 		},
 	];
+
+	// On logging out, reset the redux store to its initial state, disconnect the socket.io client and sign the user out of their Google Account
 	const miscSettings = [
 		{
 			title: 'Logout',
@@ -71,7 +73,7 @@ const AppSettingsScreenContent = () => {
 					}
 
 					if (socket.connected) {
-						socket.disconnect()
+						socket.disconnect();
 					}
 
 					dispatch(toggleLogIn(false));
@@ -80,6 +82,7 @@ const AppSettingsScreenContent = () => {
 							username: null,
 							accountType: null,
 							serviceProviderID: null,
+							avatarImageURL: null
 						})
 					);
 				} catch (e) {
@@ -93,22 +96,27 @@ const AppSettingsScreenContent = () => {
 		<ScrollView>
 			<HorizontalBlock
 				blockTitle={'Notifications'}
+				appLogo = {require('../../../assets/appsetting1.png')}
 				blockElements={notificationSettings}
 			></HorizontalBlock>
 			<HorizontalBlock
 				blockTitle={'Payment'}
+				appLogo = {require('../../../assets/appsetting2.png')}
 				blockElements={paymentSettings}
 			></HorizontalBlock>
 			<HorizontalBlock
 				blockTitle={'Language'}
+				appLogo = {require('../../../assets/appsetting3.png')}
 				blockElements={languageSettings}
 			></HorizontalBlock>
 			<HorizontalBlock
 				blockTitle={'Support/Feedback'}
+				appLogo = {require('../../../assets/appsetting4.png')}
 				blockElements={supportSettings}
 			></HorizontalBlock>
 			<HorizontalBlock
-				blockTitle={'App Name App Version 1.0'}
+				blockTitle={'QQueue Version 1.000'}
+				appLogo = {require('../../../assets/QQueue_Small.png')}
 				blockElements={miscSettings}
 				blockElementTitlesStyle={styles.logoutBtn}
 			></HorizontalBlock>
@@ -118,7 +126,7 @@ const AppSettingsScreenContent = () => {
 
 const styles = StyleSheet.create({
 	logoutBtn: {
-		color: '#EF5DA8',
+		color: '#E89575',
 	},
 });
 

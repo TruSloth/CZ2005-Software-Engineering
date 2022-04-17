@@ -30,8 +30,10 @@ import RoundButton from '../RoundButton';
  *	subtextLine2Style={{
  *		color: '#7879F1',
  *	}}
- *	onPressCardDesc={() => console.log('CardDesc Pressed')}>
- *   </CardDescription>
+ *	onPressCardDesc={() => console.log('CardDesc Pressed')}
+ *  hideCardButton={false}
+ *  disableCardDesc={false}
+ * </CardDescription>
  * )
  *
  * @property {String} title Header text passed to the card description
@@ -43,6 +45,8 @@ import RoundButton from '../RoundButton';
  * @property {String} subtextLine2 Additional text that appears on the right side of card description, directly below `subtextLine1`
  * @property {object(style)} subtextLine2Style Subtext text style passed to `subtextLine2`
  * @property {Function} onPressCardDesc Callback used when `CardDescription` is pressed
+ * @property {Boolean} hideCardButton Whether the {@link module:RoundButton|RoundButton} in the card description is shown.
+ * @property {Boolean} disableCardDesc Whether the {@link module:RoundButton|RoundButton} in the card description should be disabled.
  */
 
 const CardDescription = (props) => {
@@ -79,6 +83,7 @@ const CardDescription = (props) => {
 						title={'Queue'}
 						onPress={() => onPressCardDesc()}
 						style={styles.queueButton}
+						btnTextStyle={styles.queueButtonText}
 						disabled={disableCardDesc}
 					></RoundButton>
 				)}
@@ -106,6 +111,11 @@ const styles = StyleSheet.create({
 	queueButton: {
 		borderWidth: 0,
 		backgroundColor: '#FCDDEC',
+	},
+
+	queueButtonText: {
+		color: '#000000',
+		fontWeight: 'bold'
 	},
 
 	subtext: {

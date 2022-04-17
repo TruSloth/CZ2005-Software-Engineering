@@ -20,6 +20,9 @@ import {Avatar, Icon} from 'react-native-elements';
 		}}
 		settingsOnPress={() => {
 			console.log('Settings button was pressed')
+		}}
+		chatOnPress={() => {
+			console.log('Chat button was pressed')
 		}}							
 		leftAvatar={false}
 		actionBar={true}
@@ -31,6 +34,7 @@ import {Avatar, Icon} from 'react-native-elements';
  * @property {String} avatarImage Avatar Image URL to be used
  * @property {Function} onLayout Callback to be used to set the position of the floating search bar
  * @property {Function} settingsOnPress Callback to be used when the settings button is pressed
+ * @property {Function} chatOnPress Callback to be used when the chat button is pressed
  * @property {object(style)} style Additional style to be passed to `TopBanner`
  * @property {object(style)} bannerContentContainerStyle Additional style for the content container
  * @property {object(style)} titleStyle Additional style for `title`
@@ -46,6 +50,7 @@ const TopBanner = (props) => {
 		avatarImage,
 		onLayout,
 		settingsOnPress,
+		chatOnPress,
 		style,
 		bannerContentContainerStyle,
 		titleStyle,
@@ -70,7 +75,7 @@ const TopBanner = (props) => {
 					<View style={[styles.rowContainer, {paddingRight: 0}]}>
 						<TouchableOpacity>
 							<Icon
-								name='favorite-outline'
+							name='notifications-none'
 								tvParallaxProperties={undefined}
 								style={styles.iconHorizontalPadding}
 								iconStyle={styles.iconStyle}
@@ -78,11 +83,19 @@ const TopBanner = (props) => {
 						</TouchableOpacity>
 						<TouchableOpacity>
 							<Icon
-								name='text-snippet'
+								name='favorite-outline'
 								tvParallaxProperties={undefined}
 								style={styles.iconHorizontalPadding}
 								iconStyle={styles.iconStyle}
 							></Icon>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={chatOnPress}>
+							<Icon
+								name='chat-bubble-outline'
+								tvParallaxProperties={undefined}
+									style={styles.iconHorizontalPadding}
+									iconStyle={styles.iconStyle}
+								></Icon>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -91,11 +104,11 @@ const TopBanner = (props) => {
 			)}
 
 			<View style={[styles.rowContainer, bannerContentContainerStyle]}>
-				{leftAvatar ? (
+				{leftAvatar ? (																								
 					<Avatar
 						size={64}
 						rounded
-						source={{uri: avatarImage}}
+						source={avatarImage}
 						imageProps={styles.avatarImage}
 					></Avatar>
 				) : (
@@ -116,7 +129,7 @@ const TopBanner = (props) => {
 					<Avatar
 						size={64}
 						rounded
-						source={{uri: avatarImage}}
+						source={avatarImage}
 						imageProps={styles.avatarImage}
 					></Avatar>
 				)}

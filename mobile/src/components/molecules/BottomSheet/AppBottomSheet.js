@@ -11,8 +11,9 @@ import BottomSheet from "reanimated-bottom-sheet";
  * @example <caption>Default example</caption>
  * return(
  *   <AppBottomSheet
- 		renderContent={MyReactComponent}							
-		onCloseEnd={() => {console.log('Closed')}}
+ *    ref={sheetRef}
+ *		renderContent={MyReactComponent}							
+ *		onCloseEnd={() => {console.log('Closed')}}
  *   </AppBottomSheet>
  * )
  *
@@ -22,7 +23,6 @@ import BottomSheet from "reanimated-bottom-sheet";
  */
 
 const AppBottomSheet = forwardRef((props, ref) => {
-
   const {renderContent, onCloseEnd} = props;
   
   const sheetRef = ref;

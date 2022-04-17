@@ -13,12 +13,12 @@ import HorizontalSection from '../../atoms/HorizontalSection';
  * @example <caption>Default example</caption>
  * return(
  *   <HistoryEntry
- 		date={'26/03/22'}
-        time={'12:00'}
-        imageSource={'IMAGE_URL'}
-        location={'McDonalds'}
-        ratings={4.6}							
-		points={50}
+ *		date={'26/03/22'}
+ *      time={'12:00'}
+ *      imageSource={'IMAGE_URL'}
+ *      location={'McDonalds'}
+ *      ratings={4.6}							
+ *		points={50}
  *   </HistoryEntry>
  * )
  *

@@ -1,14 +1,13 @@
-import {LOCALHOST} from '../../services/config'
-import { io } from "socket.io-client";
-import { useSelector } from 'react-redux';
+import {LOCALHOST} from '../../services/config';
+import {io} from 'socket.io-client';
 
 const socket = io(`ws://${LOCALHOST}/`, {
-    autoConnect: false,
-})
+	autoConnect: false,
+});
 
 const initialState = {
-    socket: socket,
-}
+	socket: socket,
+};
 
 const socketReducer = (state = initialState, action) => {
 	switch (action.type) {

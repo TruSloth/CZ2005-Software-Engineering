@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 
 import {useSelector} from 'react-redux';
 
@@ -8,23 +8,30 @@ import {
 	View,
 	Text,
 	StyleSheet,
-	TextInput,
+	TouchableOpacity
 } from 'react-native';
 
 import InputField from '../../../components/atoms/InputField';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
+/**
+ * Renders the content for the InsertCustomer Screen on the ServiceProvider UI.
+ *
+ * @category Components
+ * @exports InsertCustomerContent
+ * @subcategory Organisms
+ *
+ * @property {Function} insertUserToQueue Callback used to manually insert a user into the queue
+ * 
+ */
 const InsertCustomerContent = (props) => {
 	const {insertUserToQueue} = props;
-
-	//const reactNativeLogo = 'https://reactjs.org/logo-og.png';
 
 	const account = useSelector((state) => state.account);
 
 	const [userName, setUserName] = useState('');
 
 	const addUserToQueue = () => {
-		insertUserToQueue(userName, account.serviceProviderID, 1); // Pax hardcoded to 1 temporarily
+		insertUserToQueue(userName, account.serviceProviderID, 1);
 	};
 
 	return (
@@ -37,14 +44,7 @@ const InsertCustomerContent = (props) => {
 				/>
 				<View>
 					<Text style={styles.or}>OR</Text>
-					{/* <Text style={styles.paragraph}>Account ID:</Text> */}
 				</View>
-				{/* <TextInput
-					style={styles.input}
-					placeholder='Enter here'
-					onChangeText={(text) => setUserName(text)}
-					value={userName}
-				/> */}
 				<InputField
 					title='Enter Account ID:'
 					placeholder='eg. 926412'
@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
 		margin: 10,
 		fontSize: 25,
 		fontWeight: 'bold',
-		//justifyContent: 'flex-start',
 		position: 'relative',
 		color: '#000000',
 		marginBottom: 45,
@@ -90,12 +89,9 @@ const styles = StyleSheet.create({
 		margin: 10,
 		fontSize: 18,
 		fontWeight: 'bold',
-		//justifyContent: 'flex-start',
 		position: 'relative',
 		color: '#000000',
 		marginBottom: 10,
-		//alignItems: 'center',
-		//textAlign: 'left',
 		alignSelf: 'flex-start',
 	},
 	or: {
@@ -118,12 +114,9 @@ const styles = StyleSheet.create({
 		paddingVertical: 5,
 		paddingHorizontal: 20,
 		borderColor: 'transparent',
-		//alignItems: 'center',
 		marginVertical: 20,
 		backgroundColor: 'pink',
 		width: '100%',
-		//flex: 1,
-		// textAlign: 'right',
 		alignSelf: 'flex-end',
 	},
 	textButton: {

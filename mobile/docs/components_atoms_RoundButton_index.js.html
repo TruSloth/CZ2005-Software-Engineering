@@ -44,7 +44,7 @@
             
              
                 <a href="index.html">
-                    <h1 class="navbar-item">My React components</h1>
+                    <h1 class="navbar-item">QQueue</h1>
                 </a>
             
         </div>
@@ -72,7 +72,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Organisms</h3><ul><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Organisms</h3><ul><li><a href="module-AccountScreenContent.html">AccountScreenContent</a></li><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-CustomerDetailsScreenContent.html">CustomerDetailsScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-InsertCustomerContent.html">InsertCustomerContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li><li><a href="module-ServiceProviderHomeScreenContent.html">ServiceProviderHomeScreenContent</a></li><li><a href="module-ServiceProviderLoginScreenContent.html">ServiceProviderLoginScreenContent</a></li></ul><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-HorizontalSectionImage.html">HorizontalSectionImage</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li><li><a href="queue.html">queue</a></li><li><a href="serviceProviders.html">serviceProviders</a></li></ul></div>
                 
             </nav>
         </div>
@@ -91,7 +91,13 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react';
 
-import {TouchableOpacity, Text, StyleSheet, View, ActivityIndicator} from 'react-native';
+import {
+	TouchableOpacity,
+	Text,
+	StyleSheet,
+	View,
+	ActivityIndicator,
+} from 'react-native';
 
 /**
  * Renders a Round Cornered Button with an optional loading indicator.
@@ -109,6 +115,7 @@ import {TouchableOpacity, Text, StyleSheet, View, ActivityIndicator} from 'react
 		title={'Submit'}
 		onPress={() => {console.log('Button Pressed')}}
 		loading={false}
+		disabled={false}
  *   &lt;/RoundButton>
  * )
  *
@@ -116,18 +123,31 @@ import {TouchableOpacity, Text, StyleSheet, View, ActivityIndicator} from 'react
  * @property {String} title Text to be used inside `RoundButton`
  * @property {Function} onPress Callback used when `RoundButton` is pressed
  * @property {Boolean} loading Whether `RoundButton` should display a loading indicator instead of `title`
+ * @property {Boolean} disabled Whether `RoundButton` should be disabled
  */
 
 const RoundButton = (props) => {
-	const {style, title, onPress, loading} = props;
+	const {style, title, onPress, loading, disabled} = props;
 
 	return loading ? (
 		&lt;View style={[styles.loginButton, style]}>
-			&lt;ActivityIndicator color={'#7879F1'}>&lt;/ActivityIndicator>
+			&lt;ActivityIndicator color={'#000000'}>&lt;/ActivityIndicator>
 		&lt;/View>
 	) : (
-		&lt;TouchableOpacity style={[styles.loginButton, style]} onPress={onPress}>
-			&lt;Text style={[{alignContent: 'center', color: '#7879F1'}]}>
+		&lt;TouchableOpacity
+			style={[styles.loginButton, style]}
+			onPress={onPress}
+			disabled={disabled}
+		>
+			&lt;Text
+				style={[
+					{
+						alignContent: 'center',
+						color: '#000000',
+						fontWeight: 'bold',
+					},
+				]}
+			>
 				{title}
 			&lt;/Text>
 		&lt;/TouchableOpacity>
@@ -137,13 +157,17 @@ const RoundButton = (props) => {
 const styles = StyleSheet.create({
 	loginButton: {
 		borderRadius: 10,
-		borderWidth: 1,
 		paddingVertical: 5,
 		paddingHorizontal: 10,
-		borderColor: '#7879F1',
 		alignItems: 'center',
 		marginVertical: 10,
+		backgroundColor: '#FCDDEC',
 	},
+
+	btnText: {
+		alignContent: 'center', 
+		color: '#7879F1'
+	}
 });
 
 export default RoundButton;

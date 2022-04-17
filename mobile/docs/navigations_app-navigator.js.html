@@ -44,7 +44,7 @@
             
              
                 <a href="index.html">
-                    <h1 class="navbar-item">My React components</h1>
+                    <h1 class="navbar-item">QQueue</h1>
                 </a>
             
         </div>
@@ -72,7 +72,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Organisms</h3><ul><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Organisms</h3><ul><li><a href="module-AccountScreenContent.html">AccountScreenContent</a></li><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-CustomerDetailsScreenContent.html">CustomerDetailsScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-InsertCustomerContent.html">InsertCustomerContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li><li><a href="module-ServiceProviderHomeScreenContent.html">ServiceProviderHomeScreenContent</a></li><li><a href="module-ServiceProviderLoginScreenContent.html">ServiceProviderLoginScreenContent</a></li></ul><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-HorizontalSectionImage.html">HorizontalSectionImage</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li><li><a href="queue.html">queue</a></li><li><a href="serviceProviders.html">serviceProviders</a></li></ul></div>
                 
             </nav>
         </div>
@@ -90,43 +90,49 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text} from 'react-native';
 import { Icon } from 'react-native-elements';
-import { io } from 'socket.io-client';
 
-import NotificationsScreen from '../scenes/Notifications';
+import QRCodeReaderScreen from '../scenes/QRCodeReader';
 
-import HomeNavigator from './home-navigator';
-import ChatNavigator from './chat-navigator';
-import AccountNavigator from './account-navigator';
+import HomeNavigator from './UserNavigators/home-navigator';
+import ServiceProviderHomeNavigator from './ServiceProviderNavigators/home-navigator';
+import ChatNavigator from './UserNavigators/chat-navigator';
+import AccountNavigator from './UserNavigators/account-navigator';
+import {useSelector} from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
 /**
  * Tab navigator for the main application.
- * 
+ *
  * Controls tab based navigation for `Home`, `Chat`, `Notifications` and `Account` tabs.
- * 
+ *
  * @category Navigations
  * @exports AppNavigator
- * 
+ *
  */
 
 const AppNavigator = () => {
+	const account = useSelector((state) => state.account);
+
     return (
         &lt;Tab.Navigator screenOptions={({route}) => ({
-            tabBarIcon: ({focused, color, size}) => {
+            tabBarIcon: ({focused}) => {
                 let iconName;
+                let reverse = false;
+                let focusedColor = '#AAAAAA';
+                let unfocusedColor = '#C4C4C4';
                 switch (route.name) {
                     case 'Home':
                         iconName = 'home-filled'
                         break;
-                    case 'Chat':
-                        iconName = 'chat'
-                        break;
-                    case 'Notifications':
-                        iconName = 'notifications'
+                    case 'QRCodeReader':
+                        iconName = 'qr-code-scanner'
+                        reverse = true;
+                        unfocusedColor = '#E89575'
                         break;
                     case 'Account':
                         iconName = 'person'
@@ -135,24 +141,51 @@ const AppNavigator = () => {
                         break;
                 }
         
-                return &lt;Icon name={iconName} color={focused ? "#5D5FEF" : "#A5A6F6"}>&lt;/Icon>
+                return &lt;Icon name={iconName} color={focused ? focusedColor : unfocusedColor} reverse={reverse}>&lt;/Icon>
             },
-            tabBarLabel: ({focused, color}) => {
-                const textColor = focused ? "#5D5FEF" : "#A5A6F6"
+            tabBarLabel: ({focused}) => {
+                const textColor = focused ? "#AAAAAA" : "#C4C4C4"
 
-                return &lt;Text style={{color: textColor, fontSize: 10}}>{route.name}&lt;/Text>
+                return (route.name === 'QRCodeReader') || (route.name === 'Chat') ? 
+                &lt;>&lt;/> :
+                &lt;Text style={{color: textColor, fontSize: 10}}>{route.name}&lt;/Text>
             },
-            tabBarButton: props => &lt;TouchableOpacity {...props}>&lt;/TouchableOpacity>,
+            tabBarButton: (props) => {
+                return route.name === 'Chat' ? &lt;>&lt;/> :
+                &lt;TouchableOpacity {...props}>&lt;/TouchableOpacity>
+            },
             tabBarHideOnKeyboard: true,
-            tabBarItemStyle: {borderTopColor: '#7879F1'},
-            lazy: false
-        })}>
-            &lt;Tab.Group>
-                &lt;Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}>&lt;/Tab.Screen>
-                &lt;Tab.Screen name="Chat" component={ChatNavigator} options={{headerShown: false}}>&lt;/Tab.Screen>
-                &lt;Tab.Screen name="Notifications" component={NotificationsScreen} >&lt;/Tab.Screen>
-                &lt;Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}>&lt;/Tab.Screen>
-            &lt;/Tab.Group>          
+            tabBarItemStyle: {justifyContent: 'center', paddingVertical: 10},
+            lazy: false,
+            tabBarStyle: {height: 60, backgroundColor: '#FFF8FA'}
+        })} 
+        >
+            {(() => {
+                    switch(account.accountType) {
+                        case 'User':
+                            return (&lt;Tab.Group>
+                                        &lt;Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}>&lt;/Tab.Screen>
+                                        &lt;Tab.Screen name="Chat" component={ChatNavigator} options={{headerShown: false}}>&lt;/Tab.Screen>
+                                        &lt;Tab.Screen name="QRCodeReader" component={QRCodeReaderScreen} options={{headerShown: false}}>&lt;/Tab.Screen>
+                                        &lt;Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}>&lt;/Tab.Screen>
+                                    &lt;/Tab.Group>);
+                        case 'ServiceProvider':
+                            console.log('Service Provider Screens loading')
+                            return (&lt;Tab.Group>
+                                        &lt;Tab.Screen name="Home" component={ServiceProviderHomeNavigator} options={{headerShown: false}}>&lt;/Tab.Screen>
+                                        &lt;Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}>&lt;/Tab.Screen>
+                                    &lt;/Tab.Group>);
+                        // Temporary fix. Default case shouldn't occur.
+                        default:
+                            console.log('Error. Account Type not found')
+                            return (&lt;Tab.Group>
+                                &lt;Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}>&lt;/Tab.Screen>
+                                &lt;Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}>&lt;/Tab.Screen>
+                            &lt;/Tab.Group>);
+                    }
+                })()
+            }
+                      
         &lt;/Tab.Navigator>
     )
 }

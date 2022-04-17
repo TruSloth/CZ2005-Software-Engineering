@@ -1,8 +1,14 @@
 import axios from "axios";
 import {FLASKHOST} from '../config';
 
+/**
+ * @memberof serviceProviders
+ * @function getRecommendedServiceProviders
+ * @async
+ * @param {String} userName The username of the user to get recommendations for
+ * @returns {response}
+ */
 export const getRecommendedServiceProviders = async (userName) => {
-    console.log('fetching data')
     try {
         const recommendedServiceProviders = await axios.get(`http://${FLASKHOST}/recommender/`, {
             params: {

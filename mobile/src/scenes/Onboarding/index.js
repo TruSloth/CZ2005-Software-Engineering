@@ -24,12 +24,10 @@ const OnboardingScreen = ({navigation}) => {
 
 	const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current; //need be at least 50% before screen change
 
-	const reactNativeLogo = 'https://reactjs.org/logo-og.png';
-
 	const data = [
 		{
 			id: '1',
-			title: 'QQueue',
+			title: 'QQueue!',
 			description:
 				'Use the app to check for crowdiness and to queue online.',
 			imageSource: require('../../assets/QQueue_Onboarding_1.png'),
@@ -56,7 +54,7 @@ const OnboardingScreen = ({navigation}) => {
 
 	return (
 		<View style={styles.container}>
-			<View style={{flex: 3}}>
+			<View style={{flex: 2,backgroundColor: '#FFFFFF'}}>
 				<FlatList
 					data={data}
 					renderItem={({item}) => <OnboardingItem item={item} />}
@@ -77,11 +75,37 @@ const OnboardingScreen = ({navigation}) => {
 					ref={slidesRef}
 				/>
 			</View>
-			<View style={{flex: 0.3}}>
+			<View style = {{flex:0.05}}>
+
+			</View>
+			<View style={{flex: 0.25}}>
 				<Paginator data={data} scrollX={scrollX} />
 			</View>
 			{authOption ? (
-				<View style={{flexDirection: 'row'}}>
+				
+				<View style = {{flex:0.4, alignItems: 'center'}}>
+
+			
+			<TouchableOpacity style={[styles.btn1]}
+		onPress = {() => {
+				setAuthOption("")
+			}}>
+				<Text style={{
+								textAlign: 'center',
+								fontWeight: 'bold',
+								fontSize: 15,
+								color: '#000000',
+							}}>Return</Text>
+			</TouchableOpacity>
+			
+				<View style={{flexDirection: 'row', backgroundColor: '#FCDDEC', flex: 0.3 }}>
+						<TouchableOpacity 
+					onPress = {() => {
+							setAuthOption("")
+						}}>
+						
+						
+					</TouchableOpacity>
 					<TouchableOpacity
 						style={[styles.btn]}
 						onPress={() => {
@@ -98,7 +122,7 @@ const OnboardingScreen = ({navigation}) => {
 							style={{
 								fontWeight: 'bold',
 								fontSize: 15,
-								color: '#493d8a',
+								color: '#000000',
 							}}
 						>
 							User
@@ -123,15 +147,16 @@ const OnboardingScreen = ({navigation}) => {
 							style={{
 								fontWeight: 'bold',
 								fontSize: 15,
-								color: '#493d8a',
+								color: '#000000',
 							}}
 						>
 							Business
 						</Text>
 					</TouchableOpacity>
+									</View>
 				</View>
 			) : (
-				<View style={{flexDirection: 'row'}}>
+				<View style={{flexDirection: 'row',backgroundColor: '#FCDDEC',  flex: 0.3}}>
 					<TouchableOpacity
 						style={[styles.btn]}
 						onPress={() => setAuthOption('Registration')}
@@ -140,13 +165,13 @@ const OnboardingScreen = ({navigation}) => {
 							style={{
 								fontWeight: 'bold',
 								fontSize: 15,
-								color: '#493d8a',
+								color: '#000000',
 							}}
 						>
 							Register
 						</Text>
 					</TouchableOpacity>
-					<View style={{width: 15}} />
+					<View style={{width: 15,backgroundColor: '#FCDDEC'}} />
 					<TouchableOpacity
 						style={[styles.btn]}
 						onPress={() => setAuthOption('Login')}
@@ -155,7 +180,7 @@ const OnboardingScreen = ({navigation}) => {
 							style={{
 								fontWeight: 'bold',
 								fontSize: 15,
-								color: '#493d8a',
+								color: '#000000',
 							}}
 						>
 							Login
@@ -169,20 +194,19 @@ const OnboardingScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 0.65,
-		backgroundColor: '#fff',
+		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
+		backgroundColor: '#FCDDEC',
 	},
 	btn: {
-		borderWidth: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
 		height: 35,
 		width: 120,
 		borderRadius: 7,
+		marginTop: 10,
 		backgroundColor: '#fff',
-		borderColor: '#493d8a',
 	},
 });
 

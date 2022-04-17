@@ -44,7 +44,7 @@
             
              
                 <a href="index.html">
-                    <h1 class="navbar-item">My React components</h1>
+                    <h1 class="navbar-item">QQueue</h1>
                 </a>
             
         </div>
@@ -72,7 +72,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Organisms</h3><ul><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Organisms</h3><ul><li><a href="module-AccountScreenContent.html">AccountScreenContent</a></li><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-CustomerDetailsScreenContent.html">CustomerDetailsScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-InsertCustomerContent.html">InsertCustomerContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li><li><a href="module-ServiceProviderHomeScreenContent.html">ServiceProviderHomeScreenContent</a></li><li><a href="module-ServiceProviderLoginScreenContent.html">ServiceProviderLoginScreenContent</a></li></ul><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-HorizontalSectionImage.html">HorizontalSectionImage</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li><li><a href="queue.html">queue</a></li><li><a href="serviceProviders.html">serviceProviders</a></li></ul></div>
                 
             </nav>
         </div>
@@ -111,6 +111,9 @@ import {Avatar, Icon} from 'react-native-elements';
 		}}
 		settingsOnPress={() => {
 			console.log('Settings button was pressed')
+		}}
+		chatOnPress={() => {
+			console.log('Chat button was pressed')
 		}}							
 		leftAvatar={false}
 		actionBar={true}
@@ -122,6 +125,7 @@ import {Avatar, Icon} from 'react-native-elements';
  * @property {String} avatarImage Avatar Image URL to be used
  * @property {Function} onLayout Callback to be used to set the position of the floating search bar
  * @property {Function} settingsOnPress Callback to be used when the settings button is pressed
+ * @property {Function} chatOnPress Callback to be used when the chat button is pressed
  * @property {object(style)} style Additional style to be passed to `TopBanner`
  * @property {object(style)} bannerContentContainerStyle Additional style for the content container
  * @property {object(style)} titleStyle Additional style for `title`
@@ -137,6 +141,7 @@ const TopBanner = (props) => {
 		avatarImage,
 		onLayout,
 		settingsOnPress,
+		chatOnPress,
 		style,
 		bannerContentContainerStyle,
 		titleStyle,
@@ -147,52 +152,66 @@ const TopBanner = (props) => {
 
 	return (
 		&lt;View style={style} onLayout={onLayout}>
-			{actionBar ? &lt;View style={styles.actionBar}>
-				&lt;TouchableOpacity onPress={settingsOnPress}>
-					&lt;Icon
-						name={'settings'}
-						tvParallaxProperties={undefined}
-						style={styles.iconHorizontalPadding}
-						iconStyle={styles.iconStyle}
-					>&lt;/Icon>
-				&lt;/TouchableOpacity>
+			{actionBar ? (
+				&lt;View style={styles.actionBar}>
+					&lt;TouchableOpacity onPress={settingsOnPress}>
+						&lt;Icon
+							name={'settings'}
+							tvParallaxProperties={undefined}
+							style={styles.iconHorizontalPadding}
+							iconStyle={styles.iconStyle}
+						>&lt;/Icon>
+					&lt;/TouchableOpacity>
 
-				&lt;View style={[styles.rowContainer, {paddingRight: 0}]}>
-					&lt;TouchableOpacity>
-						&lt;Icon
-							name='favorite-outline'
-							tvParallaxProperties={undefined}
-							style={styles.iconHorizontalPadding}
-							iconStyle={styles.iconStyle}
-						>&lt;/Icon>
-					&lt;/TouchableOpacity>
-					&lt;TouchableOpacity>
-						&lt;Icon
-							name='text-snippet'
-							tvParallaxProperties={undefined}
-							style={styles.iconHorizontalPadding}
-							iconStyle={styles.iconStyle}
-						>&lt;/Icon>
-					&lt;/TouchableOpacity>
+					&lt;View style={[styles.rowContainer, {paddingRight: 0}]}>
+						&lt;TouchableOpacity>
+							&lt;Icon
+							name='notifications-none'
+								tvParallaxProperties={undefined}
+								style={styles.iconHorizontalPadding}
+								iconStyle={styles.iconStyle}
+							>&lt;/Icon>
+						&lt;/TouchableOpacity>
+						&lt;TouchableOpacity>
+							&lt;Icon
+								name='favorite-outline'
+								tvParallaxProperties={undefined}
+								style={styles.iconHorizontalPadding}
+								iconStyle={styles.iconStyle}
+							>&lt;/Icon>
+						&lt;/TouchableOpacity>
+						&lt;TouchableOpacity onPress={chatOnPress}>
+							&lt;Icon
+								name='chat-bubble-outline'
+								tvParallaxProperties={undefined}
+									style={styles.iconHorizontalPadding}
+									iconStyle={styles.iconStyle}
+								>&lt;/Icon>
+						&lt;/TouchableOpacity>
+					&lt;/View>
 				&lt;/View>
-			&lt;/View> : &lt;>&lt;/>}
-			
-			&lt;View
-				style={[styles.rowContainer, bannerContentContainerStyle]}
-			>
-				{leftAvatar ? (
+			) : (
+				&lt;>&lt;/>
+			)}
+
+			&lt;View style={[styles.rowContainer, bannerContentContainerStyle]}>
+				{leftAvatar ? (																								
 					&lt;Avatar
 						size={64}
 						rounded
-						source={{uri: avatarImage}}
+						source={avatarImage}
 						imageProps={styles.avatarImage}
 					>&lt;/Avatar>
 				) : (
 					&lt;>&lt;/>
 				)}
 				&lt;View>
-					&lt;Text style={[styles.titleTextBox, titleStyle]}>{title}&lt;/Text>
-					&lt;Text style={[styles.subtitleTextBox, subtitleStyle]}>{subtitle}&lt;/Text>
+					&lt;Text style={[styles.titleTextBox, titleStyle]}>
+						{title}
+					&lt;/Text>
+					&lt;Text style={[styles.subtitleTextBox, subtitleStyle]}>
+						{subtitle}
+					&lt;/Text>
 				&lt;/View>
 
 				{leftAvatar ? (
@@ -201,7 +220,7 @@ const TopBanner = (props) => {
 					&lt;Avatar
 						size={64}
 						rounded
-						source={{uri: avatarImage}}
+						source={avatarImage}
 						imageProps={styles.avatarImage}
 					>&lt;/Avatar>
 				)}
@@ -216,13 +235,14 @@ const styles = StyleSheet.create({
 	},
 
 	iconStyle: {
-		color: '#7879F1',
+		color: '#000000',
 	},
 
 	titleTextBox: {
 		marginVertical: 10,
-		color: '#7879F1',
+		color: '#000000',
 		fontSize: 32,
+		fontWeight: 'bold',
 	},
 
 	titleTextBoxTight: {
@@ -241,7 +261,6 @@ const styles = StyleSheet.create({
 		color: '#7879F1',
 	},
 
-
 	actionBar: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
@@ -252,7 +271,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		paddingHorizontal: 20,
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
 	},
 
 	avatarImage: {
