@@ -7,15 +7,13 @@ import {
 	StyleSheet,
 	Platform,
 	ScrollView,
-	Text,
 	RefreshControl,
 	Dimensions,
 } from 'react-native';
-import {ListItem, SearchBar} from 'react-native-elements';
-import {useDispatch, useSelector, useStore} from 'react-redux';
-import {useQuery, useQueryClient} from 'react-query';
+import {SearchBar} from 'react-native-elements';
+import {useDispatch, useSelector} from 'react-redux';
+import {useQueryClient} from 'react-query';
 
-import {getNearbyServiceProviders} from '../../../services/serviceProviders/getNearbyServiceProviders';
 import TappableCard from '../../atoms/TappableCard';
 import HorizontalSection from '../../atoms/HorizontalSection';
 import TopBanner from '../../molecules/TopBanner';
@@ -25,7 +23,6 @@ import {
 	StoreInfoContent,
 	QueueSheetContent,
 } from '../../molecules/BottomSheet';
-import {getQueueWaitTime} from '../../../services/queue/getQueueWaitTime';
 import QueueBar from '../../molecules/QueueBar';
 import {updateCurrentQueue} from '../../../store/account/actions';
 import PushNotification from 'react-native-push-notification';
@@ -43,6 +40,36 @@ import {
  * @subcategory Organisms
  *
  * @property {Function} joinServiceProviderQueue Callback to be passed to {@link module:QueueSheetContent|QueueSheetContent}
+ * @property {Function} leaveServiceProviderQueue Callback to be passed to {@link module:QueueBar|QueueBar}. Used when manually leaving queue
+ * @property {Function} checkOut Callback to be passed to {@link module:QueueBar|QueueBar}. Used when leaving the queue after being notified
+ * @property {object(venueAddress, venueID, location, venueName, venueType, venueRatings, numReviews, venueForecast, queueLength, waitTime)[]} serviceProviderData
+ * The data for ServiceProviders within the system.
+ * 
+ * Each entry must contain the following information:
+ * 	
+ * 
+ * 	venueAddress: Physical Address of the ServiceProvider
+ * 	venueID: ID of the venue within the system
+ * 	venueName: Name of the ServiceProvider
+ * 	venueType: Type or Category of the ServiceProvider 
+ * 	venueRatings: Average number of ratings for the ServiceProvider
+ * 	numReviews: Total number of reviews for the ServiceProvider
+ * 	location: Coordinates of the ServiceProvider's physical address. Given in the format:
+ * 				{
+ * 					type: "Point",
+ *     				coordinates: [longitude, latitude],	
+ *				}
+ *	venueForecast: Forecast of busy times obtained from {@link https://documentation.besttime.app/#forecasts}
+ *	queueLength: Number of users in the queue
+ *	waitTime: Estimated wait time from system
+ *  
+ * 
+ * @property {object(venueAddress, venueID, location, venueName, venueType, venueRatings, numReviews, venueForecast, queueLength, waitTime)[]} nearbyVenuesData
+ * The data for ServiceProviders near the user.
+ * 
+ * Each entry must contain information in the same format as `serviceProviderData`.
+ * @property {Float} currentQueueWaitTime The wait time for the queue the user is currently in
+ *  
  */
 
 const {width, height} = Dimensions.get('window');
@@ -76,21 +103,10 @@ const HomeScreenContent = (props) => {
 			prev.current = props;
 		});
 	}
-
 	//useTraceUpdate(props)
 
+	// Resource Hooks (Non-effect/Callback)
 	const queryClient = useQueryClient();
-
-	const [refreshing, setRefreshing] = useState(false);
-
-	const onRefresh = useCallback(() => {
-		setRefreshing(true);
-		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
-		queryClient.invalidateQueries('retrieveServiceProviders');
-		setRefreshing(false);
-	}, []);
-
-	const [recommendedVenues, setRecommendedVenues] = useState([]);
 
 	const sheetRef = useRef(null);
 
@@ -99,41 +115,7 @@ const HomeScreenContent = (props) => {
 
 	const dispatch = useDispatch();
 
-	// Possible redundancy here. Check if it works if we add account.queueStatus as a dependency
-	useEffect(() => {
-		//console.log('registering queue reached')
-		socket.on('queue-reached', () => {
-			//console.log('queue reached!')
-			PushNotification.localNotification({
-				channelId: 'notifications',
-				message: 'Time to head back!',
-			});
-			dispatch(
-				updateCurrentQueue(
-					account.currentQueueName,
-					account.currentQueueID,
-					QUEUE_REACHED
-				)
-			);
-			setTimeout(
-				() =>
-					dispatch(
-						updateCurrentQueue(
-							account.currentQueueName,
-							account.currentQueueID,
-							IN_STORE
-						)
-					),
-				5000
-			);
-		});
-
-		return () => {
-			//console.log('deregistering queue reached')
-			socket.off('queue-reached');
-		};
-	});
-
+	// Named helper and callback functions
 	const openStoreInfo = (venue) => {
 		setCurrentlyOpenStore(venue);
 		sheetRef.current.snapTo(0);
@@ -261,21 +243,51 @@ const HomeScreenContent = (props) => {
 		return;
 	}
 
+	// State Hooks
+	const [refreshing, setRefreshing] = useState(false);
 	const [search, setSearch] = useState('');
-
 	const [currentlyOpenStore, setCurrentlyOpenStore] = useState({});
-
 	const [filteredDataSource, setFilteredDataSource] = useState(
 		serviceProviderData ?? []
 	);
-
 	const [bannerHeight, setBannerHeight] = useState(0);
-
 	const [queuePax, setQueuePax] = useState(0);
-
 	const [isQueueSheetOpen, setIsQueueSheetOpen] = useState(false);
-
 	const [filtered, setFiltered] = useState(false);
+	const [recommendedVenues, setRecommendedVenues] = useState([]);
+
+	// Effect and Callback hooks
+	// Possible redundancy here. Check if it works if we add account.queueStatus as a dependency
+	useEffect(() => {
+		socket.on('queue-reached', () => {
+			PushNotification.localNotification({
+				channelId: 'notifications',
+				message: 'Time to head back!',
+			});
+			dispatch(
+				updateCurrentQueue(
+					account.currentQueueName,
+					account.currentQueueID,
+					QUEUE_REACHED
+				)
+			);
+			setTimeout(
+				() =>
+					dispatch(
+						updateCurrentQueue(
+							account.currentQueueName,
+							account.currentQueueID,
+							IN_STORE
+						)
+					),
+				5000
+			);
+		});
+
+		return () => {
+			socket.off('queue-reached');
+		};
+	});
 
 	useEffect(() => {
 		if (serviceProviderData !== null) {
@@ -296,6 +308,13 @@ const HomeScreenContent = (props) => {
 			}
 		}
 	}, [serviceProviderData]);
+
+	const onRefresh = useCallback(() => {
+		setRefreshing(true);
+		queryClient.invalidateQueries('retrieveNearbyServiceProviders');
+		queryClient.invalidateQueries('retrieveServiceProviders');
+		setRefreshing(false);
+	}, []);
 
 	return (
 		<>

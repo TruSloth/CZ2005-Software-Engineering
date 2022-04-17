@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
 /**
- * Renders a tappable image for filtering.
+ * Renders a tappable image meant for filtering.
  *
  * @category Components
  * @exports CategoryFilter
@@ -11,13 +11,15 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
  * @example <caption>Default example</caption>
  * return(
  *   <CategoryFilter
- * 		imageSource={'IMAGE_URL'}
+ * 		imageSource={require('PATH_TO_LOCAL_ASSET')}
  * 		title={'filterTitle'}>
+ * 		onPress={() => console.log('CategoryFilter pressed!')}
  *   </CategoryFilter>
  * )
  *
- * @property {String} imageSource ImageURI to the image to be used for the filter
+ * @property {String} imageSource ImageURI to the image to be used for the filter. Must be a local asset and imported using require.
  * @property {String} title Filter title that appears under filter image
+ * @property {Function} onPress Callback used when the `CategoryFilter` is pressed
  */
 
 const CategoryFilter = (props) => {

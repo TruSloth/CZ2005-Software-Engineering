@@ -1,10 +1,9 @@
-import React, {useEffect, useRef, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 
 import {
 	Text,
 	View,
 	StyleSheet,
-	TextInput,
 	Image,
 	Modal,
 	Alert,
@@ -20,36 +19,41 @@ import {Icon} from 'react-native-elements';
 import HorizontalSection from '../../atoms/HorizontalSection';
 import {useSelector} from 'react-redux';
 
+/**
+ * Renders the content for the CustomerDetails Screen on the ServiceProvider UI.
+ *
+ * @category Components
+ * @exports CustomerDetailsScreenContent
+ * @subcategory Organisms
+ *
+ * @property {Function} pushFromQueue Callback used to notify a user of their turn in the queue
+ * 
+ */
+
 const CustomerDetailsScreenContent = (props) => {
-	const {navigation, pushFromQueue} = props;
+	const {pushFromQueue} = props;
 
-	const [modalVisible, setModalVisible] = useState(false);
-	const RemoveCustomerOnPress = () => {
-		setModalVisible(true);
-	};
-
-  const account = useSelector((state) => state.account)
+	// Resource Hooks
+  	const account = useSelector((state) => state.account)
 
 	const queryClient = useQueryClient();
 
+	// State Hooks
 	const [refreshing, setRefreshing] = useState(false);
 	const [queueData, setQueueData] = useState([]);
+	const [modalVisible, setModalVisible] = useState(false);
 
-	const updateDetails = useCallback(() => {
-		const storeQueueData = queryClient.getQueryData(
-			'getStoreQueue'
-		);
-
-		if (storeQueueData) {
-			setQueueData(storeQueueData);
-		}
-	}, [queryClient.getQueryData('getStoreQueue')]);
-
+	// Named helper and callback functions
 	const advanceQueue = async (serviceProviderID, userName) => {
 		await pushFromQueue(serviceProviderID, userName);
 		updateDetails();
 	}
 
+	const RemoveCustomerOnPress = () => {
+		setModalVisible(true);
+	};
+
+	// Effect and Callback hooks
 	useEffect(() => {
 		const storeQueueData = queryClient.getQueryData(
 			'getStoreQueue'
@@ -64,14 +68,22 @@ const CustomerDetailsScreenContent = (props) => {
 		};
 	}, [queryClient.getQueryData('getStoreQueue')]);
 
-	// TODO: Customer count not updating properly.
-
 	const onRefresh = useCallback(async () => {
 		setRefreshing(true);
 		await queryClient.invalidateQueries('getStoreQueue');
 		updateDetails();
 		setRefreshing(false);
 	}, []);
+
+	const updateDetails = useCallback(() => {
+		const storeQueueData = queryClient.getQueryData(
+			'getStoreQueue'
+		);
+
+		if (storeQueueData) {
+			setQueueData(storeQueueData);
+		}
+	}, [queryClient.getQueryData('getStoreQueue')]);
 
 	return (
 		<ScrollView

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 
 /**
@@ -16,6 +15,7 @@ import {View, Text, TextInput, StyleSheet} from 'react-native';
  * 		placeholder={'JohnTan@email.com'}
  * 		updateFieldFunc={(text) => {console.log(`Input changed to ${text}`)}}
  * 		secureTextEntry={false}
+ *		value={email}
  *   </InputField>
  * )
  *
@@ -23,6 +23,7 @@ import {View, Text, TextInput, StyleSheet} from 'react-native';
  * @property {String} placeholder Placeholder text to be used for `InputField`
  * @property {Function} updateFieldFunc Callback to be used when the text in `InputField` changes
  * @property {Boolean} secureTextEntry Whether the text input should be hidden
+ * @property {String} value Text to be displayed within the `InputField`
  */
 
 const InputField = (props) => {

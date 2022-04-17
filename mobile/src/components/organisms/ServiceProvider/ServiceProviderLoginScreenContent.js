@@ -6,13 +6,28 @@ import {
 	View,
 	Text,
 	StyleSheet,
-	TouchableOpacity,
-	Touchable,
+	TouchableOpacity
 } from 'react-native';
-//import LoginForm from '../../molecules/Auth/LoginForm';
-//import AltAuthOptions from '../../molecules/Auth/AltAuthOptions';
 
-import {LoginForm, AltAuthOptions, BizAuthOptions} from '../../molecules/Auth';
+import {LoginForm, AltAuthOptions} from '../../molecules/Auth';
+
+/**
+ * Renders the content for the ServiceProviderLogin Screen.
+ *
+ * @category Components
+ * @exports ServiceProviderLoginScreenContent
+ * @subcategory Organisms
+ *
+ * @property {Function} submitForm Callback to be passed to {@link module:LoginForm|LoginForm}
+ * @property {Function} registerOnPress Callback to be used to navigate to `ServiceProviderRegistrationScreen`
+ * @property {Boolean} loading Whether {@link module:LoginForm|LoginForm} should display a loading indicator.
+ *
+ * Passed down to {@link module:RoundButton|RoundButton}
+ *
+ * @property {Function} onPressGoogleSignin Callback to be passed to {@link module:AltAuthOptions|AltAuthOptions} to sign in via Google.
+ * 
+ * @see {@link module:LoginScreenContent|LoginScreenContent}
+ */
 
 const ServiceProviderLoginScreenContent = (props) => {
 	const {
@@ -21,12 +36,7 @@ const ServiceProviderLoginScreenContent = (props) => {
 		backOnPress,
 		loading,
 		onPressGoogleSignin,
-		navigation,
 	} = props;
-
-	// const BizLoginOnPress = () => {
-	// 	navigation.navigate('BusinessLogin');
-	// };
 
 	return (
 		<ScrollView
@@ -56,11 +66,6 @@ const ServiceProviderLoginScreenContent = (props) => {
 				>
 					BUSINESS
 				</Text>
-				{/* <TouchableOpacity
-					onPress={() => navigation.navigate('BusinessHome')}
-				>
-					<Text>bizhome</Text>
-				</TouchableOpacity> */}
 				<Text
 					style={[
 						styles.titleText,
@@ -79,10 +84,6 @@ const ServiceProviderLoginScreenContent = (props) => {
 				</Text>
 			</View>
 			<LoginForm submitForm={submitForm} loading={loading}></LoginForm>
-			{/* <BizAuthOptions
-				altAuthTitle={'Or login with'}
-				onPressGoogleLogin={onPressGoogleSignin}
-			></BizAuthOptions> */}
 			<AltAuthOptions
 				altAuthTitle={'Or login with'}
 				onPressGoogleLogin={onPressGoogleSignin}

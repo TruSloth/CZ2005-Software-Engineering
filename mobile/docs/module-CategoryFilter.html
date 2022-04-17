@@ -42,7 +42,7 @@
             
              
                 <a href="index.html">
-                    <h1 class="navbar-item">My React components</h1>
+                    <h1 class="navbar-item">QQueue</h1>
                 </a>
             
         </div>
@@ -70,7 +70,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Organisms</h3><ul><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Organisms</h3><ul><li><a href="module-AccountScreenContent.html">AccountScreenContent</a></li><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-CustomerDetailsScreenContent.html">CustomerDetailsScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-InsertCustomerContent.html">InsertCustomerContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li><li><a href="module-ServiceProviderHomeScreenContent.html">ServiceProviderHomeScreenContent</a></li><li><a href="module-ServiceProviderLoginScreenContent.html">ServiceProviderLoginScreenContent</a></li></ul><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-HorizontalSectionImage.html">HorizontalSectionImage</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li><li><a href="queue.html">queue</a></li><li><a href="serviceProviders.html">serviceProviders</a></li></ul></div>
                 
             </nav>
         </div>
@@ -99,7 +99,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>Renders a tappable image for filtering.</p></div>
+            <div class="description"><p>Renders a tappable image meant for filtering.</p></div>
         
 
         
@@ -160,7 +160,7 @@
 
     
 
-    <td class="description last"><p>ImageURI to the image to be used for the filter</p></td>
+    <td class="description last"><p>ImageURI to the image to be used for the filter. Must be a local asset and imported using require.</p></td>
 </tr>
 
         
@@ -184,6 +184,29 @@
     
 
     <td class="description last"><p>Filter title that appears under filter image</p></td>
+</tr>
+
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>onPress</code></td>
+    
+
+    <td class="type">
+    
+        
+<code class="param-type">function</code>
+
+
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p>Callback used when the <code>CategoryFilter</code> is pressed</p></td>
 </tr>
 
         
@@ -228,7 +251,7 @@
         <p class="tag-source">
             <a href="components_atoms_CategoryFilter_index.js.html" class="button">View Source</a>
             <span>
-                <a href="components_atoms_CategoryFilter_index.js.html">components/atoms/CategoryFilter/index.js</a>, <a href="components_atoms_CategoryFilter_index.js.html#line23">line 23</a>
+                <a href="components_atoms_CategoryFilter_index.js.html">components/atoms/CategoryFilter/index.js</a>, <a href="components_atoms_CategoryFilter_index.js.html#line25">line 25</a>
             </span>
         </p>
     
@@ -259,7 +282,7 @@
         <p class="code-caption">Default example</p>
     
     
-        <pre class="prettyprint"><code>return(  &lt;CategoryFilter		imageSource={'IMAGE_URL'}		title={'filterTitle'}>			  &lt;/CategoryFilter>		)</code></pre>
+        <pre class="prettyprint"><code>return(  &lt;CategoryFilter		imageSource={require('PATH_TO_LOCAL_ASSET')}		title={'filterTitle'}>		onPress={() => console.log('CategoryFilter pressed!')}  &lt;/CategoryFilter>)</code></pre>
     
 
 

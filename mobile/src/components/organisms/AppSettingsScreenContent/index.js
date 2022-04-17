@@ -60,6 +60,8 @@ const AppSettingsScreenContent = () => {
 			},
 		},
 	];
+
+	// On logging out, reset the redux store to its initial state, disconnect the socket.io client and sign the user out of their Google Account
 	const miscSettings = [
 		{
 			title: 'Logout',

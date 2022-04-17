@@ -44,7 +44,7 @@
             
              
                 <a href="index.html">
-                    <h1 class="navbar-item">My React components</h1>
+                    <h1 class="navbar-item">QQueue</h1>
                 </a>
             
         </div>
@@ -72,7 +72,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Organisms</h3><ul><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Organisms</h3><ul><li><a href="module-AccountScreenContent.html">AccountScreenContent</a></li><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-CustomerDetailsScreenContent.html">CustomerDetailsScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-InsertCustomerContent.html">InsertCustomerContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li><li><a href="module-ServiceProviderHomeScreenContent.html">ServiceProviderHomeScreenContent</a></li><li><a href="module-ServiceProviderLoginScreenContent.html">ServiceProviderLoginScreenContent</a></li></ul><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-HorizontalSectionImage.html">HorizontalSectionImage</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li><li><a href="queue.html">queue</a></li><li><a href="serviceProviders.html">serviceProviders</a></li></ul></div>
                 
             </nav>
         </div>
@@ -91,10 +91,13 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { googleIsSignedIn, googleSignOut } from '../../../services/auth/google/googleSignIn';
-import { setCurrentUser, toggleLogIn } from '../../../store/account/actions';
+import {
+	googleIsSignedIn,
+	googleSignOut,
+} from '../../../services/auth/google/googleSignIn';
+import {setCurrentUser, toggleLogIn} from '../../../store/account/actions';
 import HorizontalBlock from '../../molecules/HorizontalBlock';
 
 /**
@@ -106,7 +109,9 @@ import HorizontalBlock from '../../molecules/HorizontalBlock';
  */
 
 const AppSettingsScreenContent = () => {
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
+
+	const socket = useSelector((state) => state.socket).socket;
 
 	const notificationSettings = [
 		{
@@ -130,55 +135,79 @@ const AppSettingsScreenContent = () => {
 			},
 		},
 	];
-	const languageSettings = [{
-        title: 'Language Setting 1',
-        onPress: () => {
-            console.log('Language Setting 1 Pressed');
-        },
-    },];
-	const supportSettings = [{
-        title: 'Support/Feedback Setting 1',
-        onPress: () => {
-            console.log('Support/Feedback Setting 1 Pressed');
-        },
-    },];
-	const miscSettings = [{
-        title: 'Logout',
-        onPress: async () => {
-			try {
-				const isGoogleSignedIn = await googleIsSignedIn();
-				if (isGoogleSignedIn) {
-					await googleSignOut();
-				}
+	const languageSettings = [
+		{
+			title: 'Language',
+			onPress: () => {
+				console.log('Language Setting 1 Pressed');
+			},
+		},
+	];
+	const supportSettings = [
+		{
+			title: 'Support/Feedback Setting 1',
+			onPress: () => {
+				console.log('Support/Feedback Setting 1 Pressed');
+			},
+		},
+	];
 
-				dispatch(setCurrentUser(null))
-            	dispatch(toggleLogIn(false))
-			} catch (e) {
-				console.log(e)
-			}
-        },
-    },];
+	// On logging out, reset the redux store to its initial state, disconnect the socket.io client and sign the user out of their Google Account
+	const miscSettings = [
+		{
+			title: 'Logout',
+			onPress: async () => {
+				try {
+					const isGoogleSignedIn = await googleIsSignedIn();
+					if (isGoogleSignedIn) {
+						await googleSignOut();
+					}
+
+					if (socket.connected) {
+						socket.disconnect();
+					}
+
+					dispatch(toggleLogIn(false));
+					dispatch(
+						setCurrentUser({
+							username: null,
+							accountType: null,
+							serviceProviderID: null,
+							avatarImageURL: null
+						})
+					);
+				} catch (e) {
+					console.log(e);
+				}
+			},
+		},
+	];
 
 	return (
 		&lt;ScrollView>
 			&lt;HorizontalBlock
 				blockTitle={'Notifications'}
+				appLogo = {require('../../../assets/appsetting1.png')}
 				blockElements={notificationSettings}
 			>&lt;/HorizontalBlock>
 			&lt;HorizontalBlock
 				blockTitle={'Payment'}
+				appLogo = {require('../../../assets/appsetting2.png')}
 				blockElements={paymentSettings}
 			>&lt;/HorizontalBlock>
 			&lt;HorizontalBlock
 				blockTitle={'Language'}
+				appLogo = {require('../../../assets/appsetting3.png')}
 				blockElements={languageSettings}
 			>&lt;/HorizontalBlock>
 			&lt;HorizontalBlock
 				blockTitle={'Support/Feedback'}
+				appLogo = {require('../../../assets/appsetting4.png')}
 				blockElements={supportSettings}
 			>&lt;/HorizontalBlock>
 			&lt;HorizontalBlock
-				blockTitle={'App Name App Version 1.0'}
+				blockTitle={'QQueue Version 1.000'}
+				appLogo = {require('../../../assets/QQueue_Small.png')}
 				blockElements={miscSettings}
 				blockElementTitlesStyle={styles.logoutBtn}
 			>&lt;/HorizontalBlock>
@@ -188,7 +217,7 @@ const AppSettingsScreenContent = () => {
 
 const styles = StyleSheet.create({
 	logoutBtn: {
-		color: '#EF5DA8',
+		color: '#E89575',
 	},
 });
 

@@ -1,0 +1,448 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/organisms/ServiceProvider/ServiceProviderHomeScreenContent.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">QQueue</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"></div><div class="category"><h2>Components</h2><h3>Modules / Organisms</h3><ul><li><a href="module-AccountScreenContent.html">AccountScreenContent</a></li><li><a href="module-AppSettingsScreenContent.html">AppSettingsScreenContent</a></li><li><a href="module-ChatScreenContent.html">ChatScreenContent</a></li><li><a href="module-CustomerDetailsScreenContent.html">CustomerDetailsScreenContent</a></li><li><a href="module-HistoryScreenContent.html">HistoryScreenContent</a></li><li><a href="module-HomeScreenContent.html">HomeScreenContent</a></li><li><a href="module-InsertCustomerContent.html">InsertCustomerContent</a></li><li><a href="module-LoginScreenContent.html">LoginScreenContent</a></li><li><a href="module-ServiceProviderHomeScreenContent.html">ServiceProviderHomeScreenContent</a></li><li><a href="module-ServiceProviderLoginScreenContent.html">ServiceProviderLoginScreenContent</a></li></ul><h3>Modules / Molecules</h3><ul><li><a href="module-AltAuthOptions.html">AltAuthOptions</a></li><li><a href="module-AppBottomSheet.html">AppBottomSheet</a></li><li><a href="module-HistoryEntry.html">HistoryEntry</a></li><li><a href="module-HorizontalBlock.html">HorizontalBlock</a></li><li><a href="module-LoginForm.html">LoginForm</a></li><li><a href="module-QRCodeReader.html">QRCodeReader</a></li><li><a href="module-QueueSheetContent.html">QueueSheetContent</a></li><li><a href="module-StoreInfoContent.html">StoreInfoContent</a></li><li><a href="module-TopBanner.html">TopBanner</a></li></ul><h3>Modules / Atoms</h3><ul><li><a href="module-CardDescription.html">CardDescription</a></li><li><a href="module-CategoryFilter.html">CategoryFilter</a></li><li><a href="module-HorizontalSection.html">HorizontalSection</a></li><li><a href="module-HorizontalSectionImage.html">HorizontalSectionImage</a></li><li><a href="module-InputField.html">InputField</a></li><li><a href="module-OnboardingItem.html">OnboardingItem</a></li><li><a href="module-Paginator.html">Paginator</a></li><li><a href="module-RoundButton.html">RoundButton</a></li><li><a href="module-TappableCard.html">TappableCard</a></li></ul></div><div class="category"><h2>Navigations</h2><h3>Modules</h3><ul><li><a href="module-AccountNavigator.html">AccountNavigator</a></li><li><a href="module-AppNavigator.html">AppNavigator</a></li><li><a href="module-AuthNavigator.html">AuthNavigator</a></li><li><a href="module-ChatNavigator.html">ChatNavigator</a></li><li><a href="module-HomeNavigator.html">HomeNavigator</a></li></ul></div><div class="category"><h2>Services</h2><h3>Namespaces</h3><ul><li><a href="auth.html">auth</a></li><li><a href="queue.html">queue</a></li><li><a href="serviceProviders.html">serviceProviders</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/organisms/ServiceProvider/ServiceProviderHomeScreenContent.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useState, useCallback} from 'react';
+
+import {
+	Text,
+	View,
+	StyleSheet,
+	Image,
+	ScrollView,
+	RefreshControl,
+} from 'react-native';
+import {useQueryClient} from 'react-query';
+import TopBanner from '../../molecules/TopBanner';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
+
+/**
+ * Renders the content for the ServiceProviderHome Screen on the ServiceProvider UI.
+ *
+ * @category Components
+ * @exports ServiceProviderHomeScreenContent
+ * @subcategory Organisms
+ *
+ * @property {object(user, venueID, queueNumber, pax)[]} queueData
+ * The data for the users currently in the queue.
+ * 
+ * Each entry must contain data on `user`, `venueID`, `queueNumber`, and `pax`. 
+ */
+const ServiceProviderHomeScreenContent = (props) => {
+	const {navigation, queueData} = props;
+
+	const settingsOnPress = () => {
+		navigation.navigate('AppSettings');
+	};
+	const BizHomeOnPress = () => {
+		navigation.navigate('BusinessHome');
+	};
+
+	const BizProfileOnPress = () => {
+		navigation.navigate('BusinessProfile');
+	};
+
+	const InsertCustomerOnPress = () => {
+		navigation.navigate('InsertCustomer');
+	};
+
+	const CustomerDetailsOnPress = () => {
+		navigation.navigate('CustomerDetails', {queueData: queueData});
+	};
+
+	const account = useSelector((state) => state.account);
+
+	const [bannerHeight, setBannerHeight] = useState(0);
+
+	const queryClient = useQueryClient();
+
+	const [refreshing, setRefreshing] = useState(false);
+
+	const onRefresh = useCallback(() => {
+		setRefreshing(true);
+		queryClient.invalidateQueries('getStoreQueue');
+		setRefreshing(false);
+	}, []);
+
+	return (
+        &lt;ScrollView
+        refreshControl={
+            &lt;RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+            >&lt;/RefreshControl>
+        }
+        >
+            &lt;View style={styles.container1}>
+			&lt;TopBanner
+				title={`Hi, ${account.userName}!`}
+				subtitle={''}
+				avatarImage={account.avatarImageURL !== null  ? {uri: account.avatarImageURL} : account.avatarImage}
+				settingsOnPress={settingsOnPress}
+				BizHomeonPress={BizHomeOnPress}
+				BizProfileOnPress={BizProfileOnPress}
+				actionBar={true}
+				style={[styles.homeBanner, {marginBottom: '5%'}]}
+				onLayout={(e) => {
+					e.persist();
+					setBannerHeight(
+						e &amp;&amp; e.nativeEvent ? e.nativeEvent.layout.height : 0
+					);
+				}}
+			>&lt;/TopBanner>
+
+				&lt;View
+					style={{
+						borderBottomColor: '#AAAAAA',
+						borderBottomWidth: 1,
+					}}
+				/>
+				&lt;View style={styles.container2}>
+					&lt;View style={{marginBottom: 20}}>
+						&lt;View>
+							&lt;Text style={styles.subheading}>Active Queue&lt;/Text>
+						&lt;/View>
+						&lt;View style={styles.innerContainer}>
+							&lt;Text
+								style={styles.queueNo}
+							>{`${queueData.length}`}&lt;/Text>
+							&lt;Image
+								style={styles.logo}
+								source={require('../../../assets/group.png')}
+							/>
+
+							&lt;View style={styles.buttonList2}>
+								&lt;View>
+									&lt;TouchableOpacity
+										style={styles.button2}
+										onPress={InsertCustomerOnPress}
+									>
+										&lt;Text style={styles.textButton}>
+											Insert
+										&lt;/Text>
+									&lt;/TouchableOpacity>
+								&lt;/View>
+								&lt;View>
+									&lt;TouchableOpacity
+										style={styles.button2}
+										onPress={CustomerDetailsOnPress}
+									>
+										&lt;Text style={styles.textButton}>
+											Remove
+										&lt;/Text>
+									&lt;/TouchableOpacity>
+								&lt;/View>
+								&lt;View>
+									&lt;TouchableOpacity
+										style={styles.button2}
+										onPress={CustomerDetailsOnPress}
+									>
+										&lt;Text style={styles.textButton}>
+											Details
+										&lt;/Text>
+									&lt;/TouchableOpacity>
+								&lt;/View>
+							&lt;/View>
+						&lt;/View>
+					&lt;/View>
+
+					&lt;View>
+						&lt;View>
+							&lt;Text style={styles.subheading}>
+								QQ Customer Count
+							&lt;/Text>
+						&lt;/View>
+						&lt;View style={styles.innerContainer}>
+							&lt;Text style={styles.queueNo}>150&lt;/Text>
+							&lt;Image
+								style={styles.logo}
+								source={require('../../../assets/group.png')}
+							/>
+
+							&lt;View
+								style={[
+									styles.buttonList2,
+									{marginLeft: '46%'},
+								]}
+							>
+								&lt;TouchableOpacity style={styles.button2}>
+									&lt;Text style={styles.textButton}>
+										Details
+									&lt;/Text>
+								&lt;/TouchableOpacity>
+							&lt;/View>
+						&lt;/View>
+					&lt;/View>
+				&lt;/View>
+
+				&lt;View
+					style={{
+						borderBottomColor: '#AAAAAA',
+						borderBottomWidth: 1,
+					}}
+				/>
+
+				&lt;View style={styles.buttonList}>
+					&lt;View>
+						&lt;TouchableOpacity style={styles.button}>
+							&lt;Text style={styles.textButton2}>
+								Publish offers
+							&lt;/Text>
+						&lt;/TouchableOpacity>
+					&lt;/View>
+					&lt;View style={{marginBottom: 100}}>
+						&lt;TouchableOpacity style={styles.button}>
+							&lt;Text style={styles.textButton2}>Close Queue&lt;/Text>
+						&lt;/TouchableOpacity>
+					&lt;/View>
+				&lt;/View>
+			&lt;/View>
+		&lt;/ScrollView>
+	);
+};
+
+const styles = StyleSheet.create({
+	container1: {
+		flex: 1,
+		justifyContent: 'center',
+		backgroundColor: 'white',
+		padding: 8,
+	},
+	sqaure: {
+		alignSelf: 'center',
+		height: 265,
+		flex: 1,
+		width: 400,
+		backgroundColor: '#FFF8FA',
+		resizeMode: 'cover',
+		marginBottom: 10,
+	},
+	input: {
+		height: 40,
+		margin: 12,
+		padding: 10,
+		borderWidth: 0.5,
+		borderRadius: 10,
+		borderColor: '#000000',
+	},
+	buttonList: {
+		marginTop: '30%',
+		margin: 5,
+		justifyContent: 'center',
+	},
+	button: {
+		borderRadius: 5,
+		borderWidth: 1,
+		paddingVertical: 5,
+		paddingHorizontal: 10,
+		borderColor: 'transparent',
+		alignItems: 'center',
+		marginTop: 10,
+		backgroundColor: '#FCDDEC',
+		width: '100%',
+		height: 40,
+		display: 'flex',
+	},
+	textButton2: {
+		fontWeight: 'bold',
+		fontSize: 20,
+		color: '#000000',
+	},
+	heading: {
+		margin: 10,
+		fontSize: 25,
+		fontWeight: 'bold',
+		textAlign: 'left',
+		justifyContent: 'flex-end',
+		position: 'relative',
+		color: '#000000',
+		marginBottom: 10,
+		textAlignVertical: 'top',
+	},
+	container2: {
+		padding: 24,
+	},
+
+	buttonList2: {
+		marginLeft: '55%',
+	},
+
+	button2: {
+		borderRadius: 5,
+		paddingVertical: 5,
+		paddingHorizontal: 10,
+		borderColor: 'transparent',
+		alignItems: 'center',
+		marginTop: 2,
+		marginBottom: 2,
+		backgroundColor: '#FCDDEC',
+		width: 80,
+		height: 28,
+		display: 'flex',
+		marginRight: 5,
+	},
+
+	textButton: {
+		fontWeight: 'bold',
+		fontSize: 13,
+		color: '#000000',
+	},
+	innerContainer: {
+		justifyContent: 'flex-start',
+		flexDirection: 'row',
+		textAlign: 'left',
+	},
+
+	subheading: {
+		//active queue
+		fontSize: 18,
+		fontWeight: 'bold',
+		textAlign: 'left',
+		color: '#000000',
+	},
+	queueNo: {
+		marginRight: 10,
+		fontSize: 25,
+		fontWeight: 'bold',
+		textAlign: 'left',
+		color: '#E89575',
+		marginBottom: 10,
+	},
+
+	logo: {
+		height: 50,
+		width: 50,
+		alignItems: 'flex-start',
+		justifyContent: 'flex-end',
+	},
+
+	searchBar: {
+		marginHorizontal: 20,
+		borderRadius: 10,
+		position: 'absolute',
+		width: '90%',
+		elevation: 5,
+		zIndex: 1,
+		height: 50,
+		justifyContent: 'center',
+	},
+});
+export default ServiceProviderHomeScreenContent;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

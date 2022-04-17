@@ -14,11 +14,12 @@
         "destination": "docs/",
         "recurse": true,
         "verbose": true,
-        "template": "node_modules/better-docs"
+        "template": "node_modules/better-docs",
+        "readme": "./readme.md"
     },
     "templates": {
         "better-docs": {
-            "name": "My React components"
+            "name": "QQueue"
         }
     }
   }

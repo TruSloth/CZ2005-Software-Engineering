@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
-
+import React from 'react';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
 /**
  * Renders {@link module:AppBottomSheet|AppBottomSheet} content for queueing functionality.
+ * To be passed to `AppBottomSheet`.
  *
  * @category Components
  * @exports QueueSheetContent
@@ -13,13 +13,13 @@ import {StyleSheet, View, Text, TouchableOpacity, ActivityIndicator} from 'react
  * 
  * return(
  *   <AppBottomSheet
- 		renderContent={QueueSheetContent}							
-		onCloseEnd={() => {console.log('Closed')}}
-		count={count}
-		onPressPlus={() => {console.log('Queue was incremented')}}
-		onPressMinus={() => {console.log('Queue was decremented')}}
-		onPressConfirm={() => {console.log('Queue was submitted')}}
-		onPressCancel={() => {console.log('Queue was cancelled')}}
+ * 		renderContent={QueueSheetContent}							
+ *		onCloseEnd={() => {console.log('Closed')}}
+ *		count={count}
+ *		onPressPlus={() => {console.log('Queue was incremented')}}
+ *		onPressMinus={() => {console.log('Queue was decremented')}}
+ *		onPressConfirm={() => {console.log('Queue was submitted')}}
+ *		onPressCancel={() => {console.log('Queue was cancelled')}}
  *   </AppBottomSheet>
  * )
  *
@@ -31,7 +31,7 @@ import {StyleSheet, View, Text, TouchableOpacity, ActivityIndicator} from 'react
  */
 
 const QueueSheetContent = (props) => {
-	const {count, onPressPlus, onPressMinus, onPressConfirm, onPressCancel, isQueueLoading} =
+	const {count, onPressPlus, onPressMinus, onPressConfirm, onPressCancel} =
 		props;
 
 	return (
@@ -39,13 +39,19 @@ const QueueSheetContent = (props) => {
 			<Text style={styles.header}>Please select no. of pax:</Text>
 
 			<View style={styles.counterContainer}>
-				<TouchableOpacity style={[styles.counterBtn]} onPress={onPressMinus}>
+				<TouchableOpacity
+					style={[styles.counterBtn]}
+					onPress={onPressMinus}
+				>
 					<Text style={styles.btnTextMinus}>-</Text>
 				</TouchableOpacity>
 
 				<Text style={styles.count}>{count}</Text>
 
-				<TouchableOpacity style={[styles.counterBtn]} onPress={onPressPlus}>
+				<TouchableOpacity
+					style={[styles.counterBtn]}
+					onPress={onPressPlus}
+				>
 					<Text style={styles.btnTextPlus}>+</Text>
 				</TouchableOpacity>
 			</View>
@@ -53,13 +59,16 @@ const QueueSheetContent = (props) => {
 				<TouchableOpacity
 					style={[styles.submissionBtn]}
 					onPress={() => {
-						onPressConfirm()
+						onPressConfirm();
 					}}
 				>
-						<Text style={styles.btnTextConfirm}>Confirm</Text>
+					<Text style={styles.btnTextConfirm}>Confirm</Text>
 				</TouchableOpacity>
 				<View style={{width: 15}} />
-				<TouchableOpacity style={[styles.submissionBtn]} onPress={onPressCancel}>
+				<TouchableOpacity
+					style={[styles.submissionBtn]}
+					onPress={onPressCancel}
+				>
 					<Text style={styles.btnTextCancel}>Cancel</Text>
 				</TouchableOpacity>
 			</View>
@@ -78,7 +87,7 @@ const styles = StyleSheet.create({
 
 	counterContainer: {
 		flexDirection: 'row',
-		alignSelf: 'center'
+		alignSelf: 'center',
 	},
 	counterBtn: {
 		marginTop: 15,
@@ -97,7 +106,6 @@ const styles = StyleSheet.create({
 		height: 35,
 		borderRadius: 10,
 		backgroundColor: '#FCDDEC',
-		
 	},
 
 	btnTextPlus: {
@@ -133,7 +141,7 @@ const styles = StyleSheet.create({
 	header: {
 		fontSize: 25,
 		color: '#000000',
-		alignSelf: 'center'
+		alignSelf: 'center',
 	},
 });
 

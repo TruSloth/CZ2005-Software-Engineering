@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
-import { useSelector, useStore } from 'react-redux';
-import { useQueryClient } from 'react-query';
 
 /**
  * Renders {@link module:AppBottomSheet|AppBottomSheet} content for short-form Store Info.
@@ -14,17 +12,33 @@ import { useQueryClient } from 'react-query';
  * 
  * return(
  *   <AppBottomSheet
- 		renderContent={StoreInfoContent}							
-		onCloseEnd={() => {console.log('Closed')}}
-		moreInfoOnPress={() => {console.log('Displaying More info')}}
-		queueOnPress={() => {console.log('Opening Queue')}}
-		chatOnPress={() => {console.log('Opening Chat')}}
+ *		renderContent={StoreInfoContent}							
+ *		onCloseEnd={() => {console.log('Closed')}}
+ *		moreInfoOnPress={() => {console.log('Displaying More info')}}
+ *		queueOnPress={() => {console.log('Opening Queue')}}
+ *		chatOnPress={() => {console.log('Opening Chat')}}
+ *		storeImage={require('PATH_TO_LOCAL_ASSET')}
+ *		heading={'Header'}
+ *		waitTime={'~ 5 mins'}
+ *		subHeading={'Subheader'}
+ *		rating={'4.4'}
+ *		numReviews={'100'}
+ *		text={'Long text description'}
+ *		queueDisabled={false}
  *   </AppBottomSheet>
  * )
  *
  * @property {Function} moreInfoOnPress Callback used when moreInfo option is pressed
  * @property {Function} queueOnPress Callback used when queue option is pressed
  * @property {Function} chatOnPress Callback used when chat option is pressed
+ * @property {String} storeImage ImageURI to the image to be used for `StoreInfoContent`. Must be a local asset and imported using require
+ * @property {String} heading Header text to be passed to `StoreInfoContent`
+ * @property {String} waitTime Waiting time for ServiceProvider displayed within `StoreInfoContent`. Appears beside `heading`
+ * @property {String} subHeading Subheader text to be passed to `StoreInfoContent`. Appears below `heading`
+ * @property {String} rating Additional text reflecting the average ratings for ServiceProvider displayed within `StoreInfoContent`. Appears below `waitTime` alongside `numReviews`
+ * @property {String} numReviews Additional text reflecting the total number of reviews for ServiceProvider displayed within `StoreInfoContent`. Appears below `waitTime` alongside `numReviews`
+ * @property {String} text Long description text for ServiceProvider
+ * @property {Boolean} queueDisabled Whether the queue button should be disabled
  */
 
 const StoreInfoContent = (props) => {
@@ -32,7 +46,6 @@ const StoreInfoContent = (props) => {
 		moreInfoOnPress,
 		queueOnPress,
 		chatOnPress,
-		venueID,
 		storeImage,
 		heading,
 		waitTime,
@@ -40,32 +53,43 @@ const StoreInfoContent = (props) => {
 		rating,
 		numReviews,
 		text,
-		queueDisabled
+		queueDisabled,
 	} = props;
 
 	return (
 		<View style={styles.container}>
 			<Image
 				style={styles.images}
-				source={storeImage ? {uri: storeImage} : require('../../../assets/QQueue_Small.png')}
+				source={
+					storeImage
+						? {uri: storeImage}
+						: require('../../../assets/QQueue_Small.png')
+				}
 			></Image>
-			<View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+			<View
+				style={{flexDirection: 'row', justifyContent: 'space-between'}}
+			>
 				<Text style={styles.heading}>{heading}</Text>
 				<Text style={[styles.waitTime]}>{waitTime}</Text>
 			</View>
 			<View style={{flexDirection: 'row'}}>
 				<Text style={styles.subheading}>{subHeading}</Text>
-				<Text style={styles.rating}>{rating
-						? rating.$numberDecimal
-						: 0} ⭐ ({numReviews})</Text>
+				<Text style={styles.rating}>
+					{rating ? rating : 0} ⭐ ({numReviews})
+				</Text>
 			</View>
 			<View style={{flexDirection: 'row'}}>
-				<Text style={styles.texts}>
-					{text}
-				</Text>
+				<Text style={styles.texts}>{text}</Text>
 				<View style={{flexDirection: 'column'}}>
 					<TouchableOpacity
-						style={[styles.button, {backgroundColor: queueDisabled ? '#C4C4C4': '#8fbc8f'}]}
+						style={[
+							styles.button,
+							{
+								backgroundColor: queueDisabled
+									? '#C4C4C4'
+									: '#8fbc8f',
+							},
+						]}
 						disabled={queueDisabled}
 						onPress={queueOnPress}
 					>
@@ -116,11 +140,9 @@ const styles = StyleSheet.create({
 	waitTime: {
 		fontSize: 20,
 		textAlign: 'right',
-		//alignSelf: 'flex-end',
 		marginTop: 20,
 		marginBottom: 5,
 		paddingRight: 8,
-		//marginLeft: '44%',
 		fontWeight: 'bold',
 		color: 'black',
 	},
@@ -145,7 +167,7 @@ const styles = StyleSheet.create({
 		width: '85%',
 		height: '15%',
 		alignContent: 'flex-end',
-		backgroundColor: '#FCDDEC'
+		backgroundColor: '#FCDDEC',
 	},
 	buttonText: {
 		fontWeight: 'bold',
@@ -157,7 +179,7 @@ const styles = StyleSheet.create({
 		marginTop: 5,
 		borderRadius: 10,
 		borderWidth: 1,
-		borderColor: '#000000'
+		borderColor: '#000000',
 	},
 });
 

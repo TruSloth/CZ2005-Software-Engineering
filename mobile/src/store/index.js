@@ -35,5 +35,3 @@ const storeConfig = () => {
 };
 
 export default storeConfig;
-
-//export default store = createStore(rootReducer)

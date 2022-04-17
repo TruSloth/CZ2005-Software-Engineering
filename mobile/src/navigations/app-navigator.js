@@ -3,10 +3,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TouchableOpacity, Text} from 'react-native';
 import { Icon } from 'react-native-elements';
-import { io } from 'socket.io-client';
 
-import NotificationsScreen from '../scenes/Notifications';
-import BottomTabBar from '../components/molecules/BottomTabBar';
 import QRCodeReaderScreen from '../scenes/QRCodeReader';
 
 import HomeNavigator from './UserNavigators/home-navigator';
@@ -41,12 +38,6 @@ const AppNavigator = () => {
                     case 'Home':
                         iconName = 'home-filled'
                         break;
-                    // case 'Chat':
-                    //     iconName = 'chat'
-                    //     break;
-                    // case 'Notifications':
-                    //     iconName = 'notifications'
-                    //     break;
                     case 'QRCodeReader':
                         iconName = 'qr-code-scanner'
                         reverse = true;
@@ -84,7 +75,6 @@ const AppNavigator = () => {
                             return (<Tab.Group>
                                         <Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}></Tab.Screen>
                                         <Tab.Screen name="Chat" component={ChatNavigator} options={{headerShown: false}}></Tab.Screen>
-                                        {/* <Tab.Screen name="Notifications" component={NotificationsScreen} ></Tab.Screen> */}
                                         <Tab.Screen name="QRCodeReader" component={QRCodeReaderScreen} options={{headerShown: false}}></Tab.Screen>
                                         <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
                                     </Tab.Group>);
@@ -92,8 +82,6 @@ const AppNavigator = () => {
                             console.log('Service Provider Screens loading')
                             return (<Tab.Group>
                                         <Tab.Screen name="Home" component={ServiceProviderHomeNavigator} options={{headerShown: false}}></Tab.Screen>
-                                        {/* <Tab.Screen name="Chat" component={ChatNavigator} options={{headerShown: false}}></Tab.Screen>
-                                        <Tab.Screen name="Notifications" component={NotificationsScreen} ></Tab.Screen> */}
                                         <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
                                     </Tab.Group>);
                         // Temporary fix. Default case shouldn't occur.
@@ -101,8 +89,6 @@ const AppNavigator = () => {
                             console.log('Error. Account Type not found')
                             return (<Tab.Group>
                                 <Tab.Screen name="Home" component={HomeNavigator} options={{headerShown: false}}></Tab.Screen>
-                                {/* <Tab.Screen name="Chat" component={ChatNavigator} options={{headerShown: false}}></Tab.Screen>
-                                <Tab.Screen name="Notifications" component={NotificationsScreen} ></Tab.Screen> */}
                                 <Tab.Screen name="Account" component={AccountNavigator} options={{headerShown: false}}></Tab.Screen>
                             </Tab.Group>);
                     }
